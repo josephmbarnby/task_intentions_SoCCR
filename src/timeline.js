@@ -14,6 +14,10 @@ timeline.push({
   show_clickable_nav: true,
 });
 
+timeline.push({
+  type: 'intentions-game',
+});
+
 // -------------------- jsPsych --------------------
 jsPsych.init({
   display_element: 'jspsych-target',

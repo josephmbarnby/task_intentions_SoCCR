@@ -12,8 +12,18 @@ jsPsych.plugins['intentions-game'] = (function() {
       name: 'parameter value',
     };
 
-    // end trial
-    jsPsych.finishTrial(trialData);
+    console.debug(`Start plugin.`);
+
+    /**
+     * Handle Button-press events in a particular trial
+     * @param {object} event information pertaining to the event
+     */
+    function choiceHandler(event) {
+      console.debug(`Event message: ${event.message}`);
+
+      // End trial
+      jsPsych.finishTrial(trialData);
+    }
   };
 
   return plugin;
