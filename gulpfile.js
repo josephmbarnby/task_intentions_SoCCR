@@ -15,9 +15,9 @@ const templateConfiguration = {
     {src: 'js/jspsych/css/jspsych.css'},
   ],
   classes: [
+    {src: 'desktop.config.js'},
     {src: 'timeline.js'},
     {src: 'lib.js'},
-    {src: 'config.js'},
   ],
 };
 
