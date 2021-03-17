@@ -1,7 +1,6 @@
 // Classes
-/**
- * Choice Screen graphics constructor
- */
+
+// eslint-disable-next-line no-unused-vars, require-jsdoc
 class ChoiceScreen {
   /**
    * Default constructor for the ChoiceScreen class.
@@ -11,11 +10,17 @@ class ChoiceScreen {
     this._target = _target;
     this._graphics = new Graphics(this._target);
   }
+
+  /**
+   * Get the Graphics instance for this ChoiceScreen.
+   * @return {Graphics}
+   */
+  getGraphics() {
+    return this._graphics;
+  }
 }
 
-/**
- * Graphics class handling displaying and interacting with the DOM.
- */
+// eslint-disable-next-line no-unused-vars, require-jsdoc
 class Graphics {
   /**
    * Default constructor for Graphics class.
@@ -50,6 +55,17 @@ class Graphics {
    * @param {Function} _handler called on Button press
    */
   addButton(_text, _parent, _id = 'button1', _handler = function() {}) {
-    return;
+    const _descriptor = {
+      type: 'button',
+      parent: _parent,
+      id: _id,
+    };
+    this._elements.push(_descriptor);
+    console.debug(_descriptor);
   }
 }
+
+module.exports = {
+  ChoiceScreen,
+  Graphics,
+};

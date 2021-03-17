@@ -7,12 +7,21 @@ jsPsych.plugins['intentions-game'] = (function() {
   };
 
   plugin.trial = function(displayElement, trial) {
-    // data saving
+    // Setup data storage
     const trialData = {
       name: 'parameter value',
     };
 
     console.debug(`Start plugin.`);
+
+    // Instantiate classes
+    const choiceScreen = new ChoiceScreen(displayElement);
+    choiceScreen.getGraphics().addButton(
+        'Test Button',
+        displayElement,
+        'Button1',
+        choiceHandler,
+    );
 
     /**
      * Handle Button-press events in a particular trial

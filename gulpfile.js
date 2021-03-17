@@ -3,29 +3,57 @@ const eslint = require('gulp-eslint');
 const mustache = require('gulp-mustache');
 const rename = require('gulp-rename');
 const del = require('del');
+const {argv} = require('yargs');
 
-const templateConfiguration = {
-  libraries: [
-    {src: 'jspsych/jspsych.js'},
-    {src: 'jspsych/plugins/jspsych-instructions.js'},
-    {src: 'plugin.js'},
-  ],
-  styles: [
-    {src: 'css/styles.css'},
-    {src: 'js/jspsych/css/jspsych.css'},
-  ],
-  classes: [
-    {src: 'desktop.config.js'},
-    {src: 'timeline.js'},
-    {src: 'lib.js'},
-  ],
-};
+const DESTKOP = 'desktop';
+const GORILLA = 'gorilla';
+
+const platforms = [
+  DESTKOP,
+  GORILLA,
+];
+
+/**
+ * Generate the configuration to be used with the templating engine
+ * @param {string} platform desired build target platform
+ * @return {object}
+ */
+function generateConfiguration(platform) {
+  // Check that a known platform has been given
+  if (!platforms.includes(platform)) {
+    platform = DESTKOP;
+  }
+
+  return {
+    libraries: [
+      {src: 'jspsych/jspsych.js'},
+      {src: 'jspsych/plugins/jspsych-instructions.js'},
+      {src: 'plugin.js'},
+    ],
+    styles: [
+      {src: 'css/styles.css'},
+      {src: 'js/jspsych/css/jspsych.css'},
+    ],
+    classes: [
+      {src: `${platform}.config.js`},
+      {src: 'timeline.js'},
+      {src: 'lib.js'},
+    ],
+  };
+}
 
 /**
  * Install and configure the web apps locally for testing
  * @param {function} cb callback function
  */
 function build(cb) {
+  let target;
+  if (argv.target === undefined) {
+    target = DESTKOP;
+  } else {
+    target = argv.target;
+  }
+
   // Copy all the items in the 'img' folder, copy jsPsych,
   // copy styling, add HTML and finally bundle all of it.
   gulp.src(`img/*`)
@@ -45,7 +73,7 @@ function build(cb) {
 
   // Generate HTML file
   gulp.src('template.mustache')
-      .pipe(mustache(templateConfiguration))
+      .pipe(mustache(generateConfiguration(target)))
       .pipe(rename('index.html'))
       .pipe(gulp.dest(`dist/`));
   cb();
