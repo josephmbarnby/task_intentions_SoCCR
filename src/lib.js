@@ -149,12 +149,28 @@ class Graphics {
       id: _id,
     };
 
+    const _width = 80;
+    const _cellWidth = _width / _columns;
+    const _parentDiv = document.createElement('div');
+    _parentDiv.style.minWidth = `${_width}vw`;
+
     // Create Table instance to be appended to DOM parent.
-    for (let x = 0; x < _columns; x++) {
-      for (let y = 0; y < _rows; y++) {
-        this._createCell(x, y, _parent, `cell[${x},${y}]`);
+    for (let y = 0; y < _rows; y++) {
+      // Create a new row
+      const _rowDiv = document.createElement('div');
+      _rowDiv.style.display = 'table-row';
+
+      // Add cells to the row
+      for (let x = 0; x < _columns; x++) {
+        this._createCell(x, y, _rowDiv, _cellWidth, `cell[${x},${y}]`);
       }
+
+      // Append the row to the parent
+      _parentDiv.appendChild(_rowDiv);
     }
+
+    // Append <div> to DOM parent.
+    _parent.appendChild(_parentDiv);
 
     // Store description of Table element.
     this._elements.push(_descriptor);
@@ -166,9 +182,10 @@ class Graphics {
    * @param {Number} _column column (x) coordinate
    * @param {Number} _row row (y) coordinate
    * @param {Object} _parent DOM element of the parent
+   * @param {Number} _maxWidth set the maximum width
    * @param {String} _id identifying tag of the cell
    */
-  _createCell(_column, _row, _parent, _id = 'cell1') {
+  _createCell(_column, _row, _parent, _maxWidth, _id = 'cell1') {
     // Append details of element.
     const _descriptor = {
       type: 'cell',
@@ -177,9 +194,9 @@ class Graphics {
     };
 
     const _cellDiv = document.createElement('div');
-    _cellDiv.style.display = 'flex';
-    _cellDiv.style.flexFlow = 'row wrap';
-    _cellDiv.style.justifyContent = 'space around';
+    _cellDiv.style.display = 'table-cell';
+    _cellDiv.style.minWidth = _maxWidth;
+    _cellDiv.innerHTML = `<p>Row: ${_row}, Col: ${_column}</p>`;
 
     // Append <div> to DOM parent.
     _parent.appendChild(_cellDiv);
