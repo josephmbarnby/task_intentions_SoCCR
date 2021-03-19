@@ -46,6 +46,7 @@ class ChoiceScreen {
         this._target,
         'optionTwoButton',
     );
+    this.getGraphics().addTable(4, 2, this._target, 'optionDisplayParent');
   }
 }
 
@@ -107,8 +108,8 @@ class Graphics {
 
   /**
    * Create a <span> element.
-   * @param {String} _text text presented on the Label
-   * @param {Object} _parent parent DOM element of the Label
+   * @param {String} _text presented on the Label
+   * @param {Object} _parent DOM element of the parent
    * @param {String} _id identifying tag of the Label
    */
   addLabel(_text, _parent, _id = 'label1') {
@@ -128,6 +129,62 @@ class Graphics {
     _parent.appendChild(_label);
 
     // Store description of Label element.
+    this._elements.push(_descriptor);
+    console.debug(_descriptor);
+  }
+
+  /**
+   * Create a flex-based <div> table-like element with a number of columns
+   * and rows.
+   * @param {Number} _columns number of columns
+   * @param {Number} _rows number of rows
+   * @param {Object} _parent DOM element of parent
+   * @param {String} _id identifying tag of the table
+   */
+  addTable(_columns, _rows, _parent, _id = 'table1') {
+    // Append details of element.
+    const _descriptor = {
+      type: 'table',
+      parent: _parent,
+      id: _id,
+    };
+
+    // Create Table instance to be appended to DOM parent.
+    for (let x = 0; x < _columns; x++) {
+      for (let y = 0; y < _rows; y++) {
+        this._createCell(x, y, _parent, `cell[${x},${y}]`);
+      }
+    }
+
+    // Store description of Table element.
+    this._elements.push(_descriptor);
+    console.debug(_descriptor);
+  }
+
+  /**
+   * Create a flex <div> acting as a table cell
+   * @param {Number} _column column (x) coordinate
+   * @param {Number} _row row (y) coordinate
+   * @param {Object} _parent DOM element of the parent
+   * @param {String} _id identifying tag of the cell
+   */
+  _createCell(_column, _row, _parent, _id = 'cell1') {
+    // Append details of element.
+    const _descriptor = {
+      type: 'cell',
+      parent: _parent,
+      id: _id,
+    };
+
+    const _cellDiv = document.createElement('div');
+    _cellDiv.style.display = 'flex';
+    _cellDiv.style.flexFlow = 'row wrap';
+    _cellDiv.style.justifyContent = 'space around';
+
+    // Append <div> to DOM parent.
+    _parent.appendChild(_cellDiv);
+
+    // Store description of cell element.
     this._elements.push(_descriptor);
     console.debug(_descriptor);
   }
