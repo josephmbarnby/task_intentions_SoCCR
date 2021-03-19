@@ -3,7 +3,9 @@ const timeline = [];
 
 const practiceGames = [
   `<h1>Intentions Game</h1>` +
-  `<p>Test</p>`,
+  `<h2>Instructions</h2>` +
+  `<p>The instructions for the task will go here. This can be ` +
+    `multi-page, or just one page.</p>`,
 ];
 
 timeline.push({

@@ -12,23 +12,21 @@ jsPsych.plugins['intentions-game'] = (function() {
       name: 'parameter value',
     };
 
-    console.debug(`Start plugin.`);
+    console.debug(`Trial started`);
 
     // Instantiate classes
     const choiceScreen = new ChoiceScreen(displayElement);
-    choiceScreen.getGraphics().addButton(
-        'Test Button',
-        displayElement,
-        'Button1',
-        choiceHandler,
-    );
+
+    choiceScreen.display();
+    choiceScreen.link(choiceHandler);
+    console.debug(`Completed display`);
 
     /**
      * Handle Button-press events in a particular trial
      * @param {object} event information pertaining to the event
      */
     function choiceHandler(event) {
-      console.debug(`Event message: ${event.message}`);
+      console.debug(`Event '${event.type}' at time ${event.timeStamp}`);
 
       // End trial
       jsPsych.finishTrial(trialData);

@@ -1,5 +1,4 @@
 // Classes
-
 // eslint-disable-next-line no-unused-vars, require-jsdoc
 class ChoiceScreen {
   /**
@@ -17,6 +16,36 @@ class ChoiceScreen {
    */
   getGraphics() {
     return this._graphics;
+  }
+
+  /**
+   * Assign handlers to all Button elements
+   * @param {Function} _handler function called by any Button elements
+   */
+  link(_handler) {
+    const _buttons = this.getGraphics().getFiltered('button');
+    for (let b = 0; b < _buttons.length; b++) {
+      this.getGraphics().setButtonHandler(_buttons[b].id, _handler);
+      console.debug(`Linked Button with ID '${_buttons[b].id}'`);
+    }
+    console.debug(`Buttons linked`);
+  }
+
+  /**
+   * Invokes displaying of the choice screen.
+   */
+  display() {
+    // Construct the view of the options.
+    this.getGraphics().addButton(
+        'Option One',
+        this._target,
+        'optionOneButton',
+    );
+    this.getGraphics().addButton(
+        'Option Two',
+        this._target,
+        'optionTwoButton',
+    );
   }
 }
 
@@ -41,7 +70,7 @@ class Graphics {
 
   /**
    * Get the list of elements being managed by the Graphics class
-   * @return {Array<Object>}
+   * @return {Array}
    */
   getElements() {
     return this._elements;
@@ -55,17 +84,107 @@ class Graphics {
    * @param {Function} _handler called on Button press
    */
   addButton(_text, _parent, _id = 'button1', _handler = function() {}) {
+    // Append details of element.
     const _descriptor = {
       type: 'button',
       parent: _parent,
       id: _id,
     };
+
+    // Create Button instance to be appended to DOM parent.
+    const _button = document.createElement('button');
+    _button.textContent = _text;
+    _button.id = _id;
+    _button.onclick = _handler;
+
+    // Append Button to DOM parent.
+    _parent.appendChild(_button);
+
+    // Store description of Button element.
     this._elements.push(_descriptor);
     console.debug(_descriptor);
   }
-}
 
-module.exports = {
-  ChoiceScreen,
-  Graphics,
-};
+  /**
+   * Create a <span> element.
+   * @param {String} _text text presented on the Label
+   * @param {Object} _parent parent DOM element of the Label
+   * @param {String} _id identifying tag of the Label
+   */
+  addLabel(_text, _parent, _id = 'label1') {
+    // Append details of element.
+    const _descriptor = {
+      type: 'label',
+      parent: _parent,
+      id: _id,
+    };
+
+    // Create Label instance to be appended to DOM parent.
+    const _label = document.createElement('span');
+    _label.textContent = _text;
+    _label.id = _id;
+
+    // Append Label to DOM parent.
+    _parent.appendChild(_label);
+
+    // Store description of Label element.
+    this._elements.push(_descriptor);
+    console.debug(_descriptor);
+  }
+
+  /**
+   * Update the text displayed by a Label
+   * @param {String} _id identifying tag of the Label
+   * @param {String} _text updated text to display
+   */
+  updateLabel(_id, _text) {
+    const _label = this._getElement(_id);
+    if (_label !== null) {
+      _label.textContent = _text;
+    }
+  }
+
+  /**
+   * Update the handler of a Button
+   * @param {String} _id identifying tag of Button
+   * @param {Function} _handler new handler function to assign
+   */
+  setButtonHandler(_id, _handler = function() {}) {
+    const _button = this._getElement(_id);
+    if (_button !== null) {
+      _button.onclick = _handler;
+    }
+  }
+
+  /**
+   * Check if element exists
+   * @param {String} _id identifying tag of element to find
+   * @return {Object} DOM element if found, null if not found
+   */
+  _getElement(_id) {
+    for (let e = 0; e < this._elements.length; e++) {
+      const _el = this._elements[e];
+      if (_el.id === _id) {
+        return document.getElementById(_id);
+      }
+    }
+    console.warn(`Element with ID '${_id}' not found`);
+    return null;
+  }
+
+  /**
+   * Retrieve all elements of a specific type
+   * @param {String} _type class of element to retrieve
+   * @return {Array} collection of elements with matching type
+   */
+  getFiltered(_type) {
+    const _result = [];
+    for (let e = 0; e < this._elements.length; e++) {
+      const _el = this._elements[e];
+      if (_el.type === _type) {
+        _result.push(_el);
+      }
+    }
+    return _result;
+  }
+}
