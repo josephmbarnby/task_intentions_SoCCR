@@ -262,3 +262,5 @@ class Graphics {
     return _result;
   }
 }
+
+module.exports = {Graphics};
