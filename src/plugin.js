@@ -9,7 +9,7 @@ jsPsych.plugins['intentions-game'] = (function() {
   plugin.trial = function(displayElement, trial) {
     // Setup data storage
     const trialData = {
-      name: 'parameter value',
+      score: 0,
     };
 
     console.debug(`Trial started`);

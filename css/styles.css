@@ -1,0 +1,35 @@
+/* Intentions view styling */
+.intentions-table {
+  display: table;
+  width: auto;
+  /* background-color: #eee; */
+  border: 1px solid #666666;
+  border-spacing: 5px;
+}
+
+.intentions-table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+
+.intentions-table-cell {
+  float: left;
+  display: table-column;
+  width: 200px;
+  /* background-color: #ccc;   */
+}
+
+.intentions-table-button {
+  width: 100%;
+}
+
+/* Instructions styling */
+.instructions-subtitle {
+  font-style: italic;
+  font-weight: lighter;
+}
+
+.instructions-emphasis {
+  font-weight: bold;
+}

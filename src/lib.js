@@ -1,9 +1,10 @@
-// Classes
-// eslint-disable-next-line no-unused-vars, require-jsdoc
+/**
+ * ChoiceScreen class
+ */
 class ChoiceScreen {
   /**
    * Default constructor for the ChoiceScreen class.
-   * @param {Object} _target DOM element used by jsPsych.
+   * @param {object} _target DOM element used by jsPsych.
    */
   constructor(_target) {
     this._target = _target;
@@ -36,17 +37,80 @@ class ChoiceScreen {
    */
   display() {
     // Construct the view of the options.
-    this.getGraphics().addButton(
-        'Option One',
-        this._target,
-        'optionOneButton',
-    );
-    this.getGraphics().addButton(
-        'Option Two',
-        this._target,
-        'optionTwoButton',
-    );
     this.getGraphics().addTable(4, 2, this._target, 'optionDisplayParent');
+
+    // Get all cells
+    const _elements = this.getGraphics().getFiltered('cell');
+
+    // Construct layout
+    _elements.forEach((cell) => {
+      const _cell = document.getElementById(cell.id);
+      console.debug(`Locating cell ID '${cell.id}'`);
+      console.debug(_cell);
+
+      // Construct the arrangement of elements
+      if (cell.attr.column === 3) {
+        // Fourth column
+        if (cell.attr.row === 0) {
+          this.getGraphics().addButton(
+              'Option One',
+              _cell,
+              'optionOneButton',
+          );
+        } else if (cell.attr.row === 1) {
+          this.getGraphics().addButton(
+              'Option Two',
+              _cell,
+              'optionTwoButton',
+          );
+        }
+      } else if (cell.attr.column === 2) {
+        // Third column
+        if (cell.attr.row === 0) {
+          this.getGraphics().addLabel(
+              'Partner Option One',
+              _cell,
+              'optionOneLabelPartner',
+          );
+        } else if (cell.attr.row === 1) {
+          this.getGraphics().addLabel(
+              'Partner Option Two',
+              _cell,
+              'optionTwoLabelPartner',
+          );
+        }
+      } else if (cell.attr.column === 1) {
+        // Second column
+        if (cell.attr.row === 0) {
+          this.getGraphics().addLabel(
+              'You Option One',
+              _cell,
+              'optionOneLabelYou',
+          );
+        } else if (cell.attr.row === 1) {
+          this.getGraphics().addLabel(
+              'You Option Two',
+              _cell,
+              'optionTwoLabelYou',
+          );
+        }
+      } else if (cell.attr.column === 0) {
+        // First column
+        if (cell.attr.row === 0) {
+          this.getGraphics().addLabel(
+              'Blank',
+              _cell,
+              'optionOneLabelBlank',
+          );
+        } else if (cell.attr.row === 1) {
+          this.getGraphics().addLabel(
+              'Blank',
+              _cell,
+              'optionTwoLabelBlank',
+          );
+        }
+      }
+    });
   }
 }
 
@@ -94,6 +158,7 @@ class Graphics {
 
     // Create Button instance to be appended to DOM parent.
     const _button = document.createElement('button');
+    _button.className = 'intentions-table-button';
     _button.textContent = _text;
     _button.id = _id;
     _button.onclick = _handler;
@@ -152,13 +217,13 @@ class Graphics {
     const _width = 80;
     const _cellWidth = _width / _columns;
     const _parentDiv = document.createElement('div');
-    _parentDiv.style.minWidth = `${_width}vw`;
+    _parentDiv.className = 'intentions-table';
 
     // Create Table instance to be appended to DOM parent.
     for (let y = 0; y < _rows; y++) {
       // Create a new row
       const _rowDiv = document.createElement('div');
-      _rowDiv.style.display = 'table-row';
+      _rowDiv.className = 'intentions-table-row';
 
       // Add cells to the row
       for (let x = 0; x < _columns; x++) {
@@ -191,12 +256,15 @@ class Graphics {
       type: 'cell',
       parent: _parent,
       id: _id,
+      attr: {
+        row: _row,
+        column: _column,
+      },
     };
 
     const _cellDiv = document.createElement('div');
-    _cellDiv.style.display = 'table-cell';
-    _cellDiv.style.minWidth = _maxWidth;
-    _cellDiv.innerHTML = `<p>Row: ${_row}, Col: ${_column}</p>`;
+    _cellDiv.id = `cell[${_column},${_row}]`;
+    _cellDiv.className = 'intentions-table-cell';
 
     // Append <div> to DOM parent.
     _parent.appendChild(_cellDiv);
@@ -263,4 +331,4 @@ class Graphics {
   }
 }
 
-module.exports = {Graphics};
+module.exports = {ChoiceScreen, Graphics};
