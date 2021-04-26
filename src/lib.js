@@ -29,7 +29,6 @@ class ChoiceScreen {
       this.getGraphics().setButtonHandler(_buttons[b].id, _handler);
       console.debug(`Linked Button with ID '${_buttons[b].id}'`);
     }
-    console.debug(`Buttons linked`);
   }
 
   /**
@@ -45,8 +44,6 @@ class ChoiceScreen {
     // Construct layout
     _elements.forEach((cell) => {
       const _cell = document.getElementById(cell.id);
-      console.debug(`Locating cell ID '${cell.id}'`);
-      console.debug(_cell);
 
       // Construct the arrangement of elements
       if (cell.attr.column === 3) {
@@ -97,18 +94,21 @@ class ChoiceScreen {
       } else if (cell.attr.column === 0) {
         // First column
         if (cell.attr.row === 0) {
-          this.getGraphics().addLabel(
-              'Blank',
+          this.getGraphics().addSpacer(
+              '200px',
               _cell,
               'optionOneLabelBlank',
           );
         } else if (cell.attr.row === 1) {
-          this.getGraphics().addLabel(
-              'Blank',
+          this.getGraphics().addSpacer(
+              '200px',
               _cell,
               'optionTwoLabelBlank',
           );
         }
+      } else {
+        console.warn(`Unknown layout data: ` +
+            `'${cell.attr.col},${cell.attr.row}'`);
       }
     });
   }
@@ -194,6 +194,34 @@ class Graphics {
     _parent.appendChild(_label);
 
     // Store description of Label element.
+    this._elements.push(_descriptor);
+    console.debug(_descriptor);
+  }
+
+  /**
+   * Create and place a spacer element
+   * @param {int} _width the width of the cell
+   * @param {object} _parent the parent of the spacer
+   * @param {string} _id identifier
+   */
+  addSpacer(_width, _parent, _id = 'space1') {
+    // Append details of element.
+    const _descriptor = {
+      type: 'spacer',
+      parent: _parent,
+      id: _id,
+    };
+
+    // Create Spacer instance to be appended to DOM parent.
+    const _spacer = document.createElement('div');
+    _spacer.style.width = _width;
+    _spacer.innerHTML = '&nbsp;';
+    _spacer.id = _id;
+
+    // Append Spacer to DOM parent.
+    _parent.appendChild(_spacer);
+
+    // Store description of Spacer element.
     this._elements.push(_descriptor);
     console.debug(_descriptor);
   }
