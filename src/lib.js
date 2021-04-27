@@ -36,7 +36,7 @@ class ChoiceScreen {
    */
   display() {
     // Construct the view of the options.
-    this.getGraphics().addTable(4, 2, this._target, 'optionDisplayParent');
+    this.getGraphics().addTable(4, 3, this._target, 'optionDisplayParent');
 
     // Get all cells
     const _elements = this.getGraphics().getFiltered('cell');
@@ -49,12 +49,18 @@ class ChoiceScreen {
       if (cell.attr.column === 3) {
         // Fourth column
         if (cell.attr.row === 0) {
+          this.getGraphics().addSpacer(
+              '200px',
+              _cell,
+              'optionButtonBlankHeader',
+          );
+        } else if (cell.attr.row === 1) {
           this.getGraphics().addButton(
               'Option One',
               _cell,
               'optionOneButton',
           );
-        } else if (cell.attr.row === 1) {
+        } else if (cell.attr.row === 2) {
           this.getGraphics().addButton(
               'Option Two',
               _cell,
@@ -65,11 +71,18 @@ class ChoiceScreen {
         // Third column
         if (cell.attr.row === 0) {
           this.getGraphics().addLabel(
+              'Points for your partner',
+              _cell,
+              'optionPartnerHeader',
+              true,
+          );
+        } else if (cell.attr.row === 1) {
+          this.getGraphics().addLabel(
               'Partner Option One',
               _cell,
               'optionOneLabelPartner',
           );
-        } else if (cell.attr.row === 1) {
+        } else if (cell.attr.row === 2) {
           this.getGraphics().addLabel(
               'Partner Option Two',
               _cell,
@@ -80,11 +93,18 @@ class ChoiceScreen {
         // Second column
         if (cell.attr.row === 0) {
           this.getGraphics().addLabel(
+              'Points for you',
+              _cell,
+              'optionYouHeader',
+              true,
+          );
+        } else if (cell.attr.row === 1) {
+          this.getGraphics().addLabel(
               'You Option One',
               _cell,
               'optionOneLabelYou',
           );
-        } else if (cell.attr.row === 1) {
+        } else if (cell.attr.row === 2) {
           this.getGraphics().addLabel(
               'You Option Two',
               _cell,
@@ -97,9 +117,15 @@ class ChoiceScreen {
           this.getGraphics().addSpacer(
               '200px',
               _cell,
-              'optionOneLabelBlank',
+              'optionBlankHeader',
           );
         } else if (cell.attr.row === 1) {
+          this.getGraphics().addSpacer(
+              '200px',
+              _cell,
+              'optionOneLabelBlank',
+          );
+        } else if (cell.attr.row === 2) {
           this.getGraphics().addSpacer(
               '200px',
               _cell,
@@ -173,11 +199,12 @@ class Graphics {
 
   /**
    * Create a <span> element.
-   * @param {String} _text presented on the Label
-   * @param {Object} _parent DOM element of the parent
-   * @param {String} _id identifying tag of the Label
+   * @param {string} _text presented on the Label
+   * @param {object} _parent DOM element of the parent
+   * @param {string} _id identifying tag of the Label
+   * @param {boolean} _bold style text or not
    */
-  addLabel(_text, _parent, _id = 'label1') {
+  addLabel(_text, _parent, _id = 'label1', _bold = false) {
     // Append details of element.
     const _descriptor = {
       type: 'label',
@@ -189,6 +216,10 @@ class Graphics {
     const _label = document.createElement('span');
     _label.textContent = _text;
     _label.id = _id;
+
+    if (_bold === true) {
+      _label.style.fontWeight = 'bold';
+    }
 
     // Append Label to DOM parent.
     _parent.appendChild(_label);
