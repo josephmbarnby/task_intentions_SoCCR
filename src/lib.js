@@ -26,15 +26,19 @@ class ChoiceScreen {
   link(_handler) {
     const _buttons = this.getGraphics().getFiltered('button');
     for (let b = 0; b < _buttons.length; b++) {
-      this.getGraphics().setButtonHandler(_buttons[b].id, _handler);
+      this.getGraphics().setButtonHandler(_buttons[b].id, function(e) {
+        e.buttonId = _buttons[b].id;
+        _handler(e);
+      });
       console.debug(`Linked Button with ID '${_buttons[b].id}'`);
     }
   }
 
   /**
    * Invokes displaying of the choice screen.
+   * @param {object} spreadsheetData information about choice options
    */
-  display() {
+  display(spreadsheetData) {
     // Construct the view of the options.
     this.getGraphics().addTable(4, 3, this._target, 'optionDisplayParent');
 
@@ -78,13 +82,13 @@ class ChoiceScreen {
           );
         } else if (cell.attr.row === 1) {
           this.getGraphics().addLabel(
-              'Partner Option One',
+              `${spreadsheetData['Option1_Partner']}`,
               _cell,
               'optionOneLabelPartner',
           );
         } else if (cell.attr.row === 2) {
           this.getGraphics().addLabel(
-              'Partner Option Two',
+              `${spreadsheetData['Option2_Partner']}`,
               _cell,
               'optionTwoLabelPartner',
           );
@@ -100,13 +104,13 @@ class ChoiceScreen {
           );
         } else if (cell.attr.row === 1) {
           this.getGraphics().addLabel(
-              'You Option One',
+              `${spreadsheetData['Option1_PPT']}`,
               _cell,
               'optionOneLabelYou',
           );
         } else if (cell.attr.row === 2) {
           this.getGraphics().addLabel(
-              'You Option Two',
+              `${spreadsheetData['Option2_PPT']}`,
               _cell,
               'optionTwoLabelYou',
           );

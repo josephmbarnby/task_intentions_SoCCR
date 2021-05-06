@@ -36,6 +36,7 @@ function generateConfiguration(platform) {
     ],
     classes: [
       {src: `${platform}.config.js`},
+      {src: 'spreadsheet.data.js'},
       {src: 'timeline.js'},
       {src: 'lib.js'},
     ],

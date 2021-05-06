@@ -47,6 +47,7 @@ timeline.push({
 
 timeline.push({
   type: 'intentions-game',
+  row: 0,
 });
 
 // -------------------- jsPsych --------------------
