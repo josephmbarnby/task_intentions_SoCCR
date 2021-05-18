@@ -5,12 +5,9 @@
   "scripts": {
     "start": "npm-watch & http-server dist/",
     "watch": "npm-watch",
-    "build": "gulp build --target desktop",
-    "build:desktop": "gulp build --target desktop",
-    "build:gorilla": "gulp build --target gorilla",
+    "build": "gulp build",
     "clean": "gulp clean",
-    "style": "gulp clean && gulp style",
-    "test": "jest"
+    "style": "gulp clean && gulp style"
   },
   "watch": {
     "build": {
