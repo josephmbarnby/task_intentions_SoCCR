@@ -1,12 +1,8 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-// const mustache = require('gulp-mustache');
-// const rename = require('gulp-rename');
 const del = require('del');
-// const {argv} = require('yargs');
-
 const browserify = require('browserify');
-const fs = require('fs');
+const source = require('vinyl-source-stream');
 
 /**
  * Install and configure the web apps locally for testing
@@ -29,7 +25,8 @@ function build(cb) {
           ])
       .plugin('tsify', {noImplicitAny: false})
       .bundle()
-      .pipe(fs.createWriteStream('./built/js/task.js'));
+      .pipe(source('task.js'))
+      .pipe(gulp.dest(`built/js`));
 
   // Copy jsPsych files and install plugin.
   gulp.src(`node_modules/jspsych/**/*`)
