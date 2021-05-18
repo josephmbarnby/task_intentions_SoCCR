@@ -1,12 +1,14 @@
 /**
  * ChoiceScreen class
  */
-class ChoiceScreen {
+export class ChoiceScreen {
+  private _target: HTMLElement;
+  private _graphics: Graphics;
   /**
    * Default constructor for the ChoiceScreen class.
    * @param {object} _target DOM element used by jsPsych.
    */
-  constructor(_target) {
+  constructor(_target: HTMLElement) {
     this._target = _target;
     this._graphics = new Graphics(this._target);
   }
@@ -23,13 +25,13 @@ class ChoiceScreen {
    * Assign handlers to all Button elements
    * @param {Function} _handler function called by any Button elements
    */
-  link(_handler) {
+  link(_handler: { (event: any): void; (arg0: any): void; }) {
     const _buttons = this.getGraphics().getFiltered('button');
     for (let b = 0; b < _buttons.length; b++) {
-      this.getGraphics().setButtonHandler(_buttons[b].id, function(e) {
-        e.buttonId = _buttons[b].id;
-        _handler(e);
-      });
+      this.getGraphics().setButtonHandler(_buttons[b].id, e => {
+          e.buttonId = _buttons[b].id;
+          _handler(e);
+        });
       console.debug(`Linked Button with ID '${_buttons[b].id}'`);
     }
   }
@@ -38,7 +40,7 @@ class ChoiceScreen {
    * Invokes displaying of the choice screen.
    * @param {object} spreadsheetData information about choice options
    */
-  display(spreadsheetData) {
+  display(spreadsheetData: object) {
     // Construct the view of the options.
     this.getGraphics().addTable(4, 3, this._target, 'optionDisplayParent');
 
@@ -145,12 +147,14 @@ class ChoiceScreen {
 }
 
 // eslint-disable-next-line no-unused-vars, require-jsdoc
-class Graphics {
+export class Graphics {
+  private _elements: any[];
+  private _target: object;
   /**
    * Default constructor for Graphics class.
    * @param {Object} _target DOM element used by jsPsych
    */
-  constructor(_target) {
+  constructor(_target: object) {
     this._target = _target;
     this._elements = [];
   }
@@ -178,7 +182,7 @@ class Graphics {
    * @param {String} _id identifying tag of the Button
    * @param {Function} _handler called on Button press
    */
-  addButton(_text, _parent, _id = 'button1', _handler = function() {}) {
+  addButton(_text: string, _parent: HTMLElement, _id: string = 'button1', _handler = function() {}) {
     // Append details of element.
     const _descriptor = {
       type: 'button',
@@ -208,7 +212,7 @@ class Graphics {
    * @param {string} _id identifying tag of the Label
    * @param {boolean} _bold style text or not
    */
-  addLabel(_text, _parent, _id = 'label1', _bold = false) {
+  addLabel(_text: string, _parent: HTMLElement, _id: string = 'label1', _bold: boolean = false) {
     // Append details of element.
     const _descriptor = {
       type: 'label',
@@ -235,11 +239,11 @@ class Graphics {
 
   /**
    * Create and place a spacer element
-   * @param {int} _width the width of the cell
+   * @param {string} _width the width of the cell
    * @param {object} _parent the parent of the spacer
    * @param {string} _id identifier
    */
-  addSpacer(_width, _parent, _id = 'space1') {
+  addSpacer(_width: string, _parent: HTMLElement, _id: string = 'space1') {
     // Append details of element.
     const _descriptor = {
       type: 'spacer',
@@ -269,7 +273,7 @@ class Graphics {
    * @param {Object} _parent DOM element of parent
    * @param {String} _id identifying tag of the table
    */
-  addTable(_columns, _rows, _parent, _id = 'table1') {
+  addTable(_columns: number, _rows: number, _parent: HTMLElement, _id: string = 'table1') {
     // Append details of element.
     const _descriptor = {
       type: 'table',
@@ -342,8 +346,8 @@ class Graphics {
    * @param {String} _id identifying tag of the Label
    * @param {String} _text updated text to display
    */
-  updateLabel(_id, _text) {
-    const _label = this._getElement(_id);
+  updateLabel(_id: string, _text: string) {
+    const _label: any = this._getElement(_id);
     if (_label !== null) {
       _label.textContent = _text;
     }
@@ -354,8 +358,8 @@ class Graphics {
    * @param {String} _id identifying tag of Button
    * @param {Function} _handler new handler function to assign
    */
-  setButtonHandler(_id, _handler = function() {}) {
-    const _button = this._getElement(_id);
+  setButtonHandler(_id: string, _handler: Function) {
+    const _button: any = this._getElement(_id);
     if (_button !== null) {
       _button.onclick = _handler;
     }
@@ -366,7 +370,7 @@ class Graphics {
    * @param {String} _id identifying tag of element to find
    * @return {Object} DOM element if found, null if not found
    */
-  _getElement(_id) {
+  _getElement(_id: string): object {
     for (let e = 0; e < this._elements.length; e++) {
       const _el = this._elements[e];
       if (_el.id === _id) {
@@ -382,7 +386,7 @@ class Graphics {
    * @param {String} _type class of element to retrieve
    * @return {Array} collection of elements with matching type
    */
-  getFiltered(_type) {
+  getFiltered(_type: string): Array<any> {
     const _result = [];
     for (let e = 0; e < this._elements.length; e++) {
       const _el = this._elements[e];
@@ -394,4 +398,4 @@ class Graphics {
   }
 }
 
-module.exports = {ChoiceScreen, Graphics};
+export default {ChoiceScreen, Graphics};

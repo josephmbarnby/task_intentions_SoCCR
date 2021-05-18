@@ -1,5 +1,4 @@
 // Configuration and other required data
-// eslint-disable-next-line no-unused-vars
 const config = {
   name: 'Intentions game',
   pluginName: 'intentions-game',
@@ -9,11 +8,4 @@ const config = {
   images: {},
 };
 
-// eslint-disable-next-line no-unused-vars
-const data = {
-  types: {
-    prosocial: {},
-    competitive: {},
-    individualistic: {},
-  },
-};
+export default {config};

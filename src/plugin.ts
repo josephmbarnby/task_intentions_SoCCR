@@ -1,11 +1,24 @@
-jsPsych.plugins['intentions-game'] = (function() {
-  const plugin = {};
+import * as spreadsheetData from "./spreadsheet.data";
+import {ChoiceScreen} from "./lib";
+
+// Configure jsPsych window variable
+declare global {
+  interface Window {
+    jsPsych: any;
+  }
+}
+
+window.jsPsych.plugins['intentions-game'] = (function() {
+  const plugin = {
+    info: {},
+    trial: function(displayElement: any, trial: any) {},
+  };
 
   plugin.info = {
     name: 'intentions-game',
     parameters: {
       row: {
-        type: jsPsych.plugins.parameterType.INT,
+        type: window.jsPsych.plugins.parameterType.INT,
         pretty_name: 'Spreadsheet row',
         default: undefined,
         description: 'The row to extract spreadsheet data from.',
@@ -13,7 +26,7 @@ jsPsych.plugins['intentions-game'] = (function() {
     },
   };
 
-  plugin.trial = function(displayElement, trial) {
+  plugin.trial = function(displayElement: any, trial: any) {
     // Setup data storage
     const trialData = {
       playerPoints: 0,
@@ -22,16 +35,17 @@ jsPsych.plugins['intentions-game'] = (function() {
       selectionDuration: -1,
     };
 
-    const spreadsheetData = spreadsheet.rows[trial.row];
+    // Retrieve the data from the spreadsheet
+    const data = spreadsheetData.default.spreadsheet.rows[trial.row];
     console.debug(`Loaded data from spreadsheet for row '${trial.row}'.`);
-    console.debug(spreadsheetData);
+    console.debug(data);
 
     console.debug(`Trial started`);
 
     // Instantiate classes
     const choiceScreen = new ChoiceScreen(displayElement);
 
-    choiceScreen.display(spreadsheetData);
+    choiceScreen.display(data);
     choiceScreen.link(choiceHandler);
     console.debug(`Completed display`);
 
@@ -55,22 +69,22 @@ jsPsych.plugins['intentions-game'] = (function() {
         trialData.selectionOption = 1;
 
         // Update the score with values of option 1
-        trialData.playerPoints += spreadsheetData['Option1_PPT'];
-        trialData.partnerPoints += spreadsheetData['Option1_Partner'];
+        trialData.playerPoints += data['Option1_PPT'];
+        trialData.partnerPoints += data['Option1_Partner'];
       } else if (event.buttonId.startsWith('optionTwo')) {
         // Participant chose option 2
         console.debug(`Selected option 2 in ${_duration}ms.`);
         trialData.selectionOption = 2;
 
         // Update the score with values of option 2
-        trialData.playerPoints += spreadsheetData['Option2_PPT'];
-        trialData.partnerPoints += spreadsheetData['Option2_Partner'];
+        trialData.playerPoints += data['Option2_PPT'];
+        trialData.partnerPoints += data['Option2_Partner'];
       }
 
       console.debug(trialData);
 
       // End trial
-      jsPsych.finishTrial(trialData);
+      window.jsPsych.finishTrial(trialData);
     }
   };
 

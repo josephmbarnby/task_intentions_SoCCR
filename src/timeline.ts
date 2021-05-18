@@ -1,15 +1,25 @@
+import * as spreadsheetData from "./spreadsheet.data";
+import * as config from "./desktop.config";
+
+// Configure jsPsych window variable
+declare global {
+  interface Window {
+    jsPsych: any;
+  }
+}
+
 // Timeline setup
 const timeline = [];
 
 const instructionsIntroduction = [
-  `<h1>${config.name}</h1>` +
+  `<h1>${config.default.config.name}</h1>` +
   `<span class="instructions-subtitle">` +
     `Please read these instructions carefully</span>` +
   `<h2>Instructions</h2>` +
   `<p>You will now take part in a series of interactions ` +
     `with ONE partner. You will be matched with your ` +
     `partner in a moment.</p>` +
-  `<p>You will play your partner for ${config.trials.main} ` +
+  `<p>You will play your partner for ${config.default.config.trials.main} ` +
     `trials. </p>` +
   `<p>Their ID and your ID has been hidden to preserve ` +
     `anonymity.</p>` +
@@ -37,6 +47,11 @@ const instructionsPracticeGames = [
     `multi-page, or just one page.</p>`,
 ];
 
+// 36
+// 72
+// 36
+
+
 timeline.push({
   type: 'instructions',
   pages: instructionsPracticeGames,
@@ -45,17 +60,19 @@ timeline.push({
   show_clickable_nav: true,
 });
 
-timeline.push({
-  type: 'intentions-game',
-  row: 0,
-});
+for (let i = 0; i < spreadsheetData.default.spreadsheet.rows.length; i++) {
+  timeline.push({
+    type: 'intentions-game',
+    row: i,
+  });
+}
 
 // -------------------- jsPsych --------------------
-jsPsych.init({
+window.jsPsych.init({
   display_element: 'jspsych-target',
   timeline: timeline,
   on_finish: function() {
-    jsPsych.data.displayData('csv');
+    window.jsPsych.data.displayData('csv');
   },
   show_progress_bar: true,
   show_preload_progress_bar: true,
