@@ -37,17 +37,12 @@ window.jsPsych.plugins['intentions-game'] = (function() {
 
     // Retrieve the data from the spreadsheet
     const data = spreadsheetData.default.spreadsheet.rows[trial.row];
-    console.debug(`Loaded data from spreadsheet for row '${trial.row}'.`);
-    console.debug(data);
-
-    console.debug(`Trial started`);
 
     // Instantiate classes
     const choiceScreen = new ChoiceScreen(displayElement);
 
     choiceScreen.display(data);
     choiceScreen.link(choiceHandler);
-    console.debug(`Completed display`);
 
     // Start timing
     const _startTime = performance.now();
@@ -61,11 +56,8 @@ window.jsPsych.plugins['intentions-game'] = (function() {
       const _duration = _endTime - _startTime;
       trialData.selectionDuration = _duration;
 
-      console.debug(`Event '${event.type}' at time ${event.timeStamp}`);
-      console.debug(`Button pressed: ${event.buttonId}`);
       if (event.buttonId.startsWith('optionOne')) {
         // Participant chose option 1
-        console.debug(`Selected option 1 in ${_duration}ms.`);
         trialData.selectionOption = 1;
 
         // Update the score with values of option 1
@@ -73,7 +65,6 @@ window.jsPsych.plugins['intentions-game'] = (function() {
         trialData.partnerPoints += data['Option1_Partner'];
       } else if (event.buttonId.startsWith('optionTwo')) {
         // Participant chose option 2
-        console.debug(`Selected option 2 in ${_duration}ms.`);
         trialData.selectionOption = 2;
 
         // Update the score with values of option 2
@@ -81,9 +72,11 @@ window.jsPsych.plugins['intentions-game'] = (function() {
         trialData.partnerPoints += data['Option2_Partner'];
       }
 
-      console.debug(trialData);
+      // Clear the graphics
+      choiceScreen.finish();
 
       // End trial
+      console.debug('Finished trial:', trialData);
       window.jsPsych.finishTrial(trialData);
     }
   };

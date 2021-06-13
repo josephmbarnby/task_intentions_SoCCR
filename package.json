@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Intentions game",
   "scripts": {
-    "start": "npm-watch & http-server dist/",
+    "start": "npm-watch & http-server built/",
     "watch": "npm-watch",
     "build": "gulp build",
     "clean": "gulp clean",
@@ -14,7 +14,7 @@
       "patterns": [
         "src/"
       ],
-      "extensions": "js",
+      "extensions": "ts",
       "quiet": false
     }
   },

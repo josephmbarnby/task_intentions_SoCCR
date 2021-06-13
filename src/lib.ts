@@ -32,7 +32,6 @@ export class ChoiceScreen {
           e.buttonId = _buttons[b].id;
           _handler(e);
         });
-      console.debug(`Linked Button with ID '${_buttons[b].id}'`);
     }
   }
 
@@ -144,6 +143,13 @@ export class ChoiceScreen {
       }
     });
   }
+
+  /**
+   * Function called when display is finished.
+   */
+  finish() {
+    this._graphics.clearGraphics();
+  }
 }
 
 // eslint-disable-next-line no-unused-vars, require-jsdoc
@@ -202,7 +208,6 @@ export class Graphics {
 
     // Store description of Button element.
     this._elements.push(_descriptor);
-    console.debug(_descriptor);
   }
 
   /**
@@ -234,7 +239,6 @@ export class Graphics {
 
     // Store description of Label element.
     this._elements.push(_descriptor);
-    console.debug(_descriptor);
   }
 
   /**
@@ -262,7 +266,6 @@ export class Graphics {
 
     // Store description of Spacer element.
     this._elements.push(_descriptor);
-    console.debug(_descriptor);
   }
 
   /**
@@ -306,7 +309,6 @@ export class Graphics {
 
     // Store description of Table element.
     this._elements.push(_descriptor);
-    console.debug(_descriptor);
   }
 
   /**
@@ -338,7 +340,6 @@ export class Graphics {
 
     // Store description of cell element.
     this._elements.push(_descriptor);
-    console.debug(_descriptor);
   }
 
   /**
@@ -395,6 +396,15 @@ export class Graphics {
       }
     }
     return _result;
+  }
+
+  clearGraphics() {
+    // Clear the HTML target.
+    const _targetID = 'jspsych-content';
+    document.getElementById(_targetID).innerHTML = '';
+
+    // Remove all elements.
+    this._elements = [];
   }
 }
 

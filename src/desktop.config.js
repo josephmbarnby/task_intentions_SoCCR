@@ -2,6 +2,7 @@
 const config = {
   name: 'Intentions game',
   pluginName: 'intentions-game',
+  locale: 'en-AU',
   trials: {
     main: 18,
   },
