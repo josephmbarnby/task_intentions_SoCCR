@@ -3,10 +3,16 @@ const config = {
   name: 'Intentions game',
   pluginName: 'intentions-game',
   locale: 'en-AU',
+  target: 'desktop',
   trials: {
-    main: 18,
+    phaseOne: 36,
+    phaseTwo: 72,
+    phaseThree: 36,
   },
-  images: {},
+  images: {
+    'partnerOne': '',
+    'partnerTwo': '',
+  },
 };
 
 export default {config};

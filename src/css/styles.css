@@ -1,3 +1,9 @@
+/* Global jsPsych styling */
+.jspsych-content {
+  font-size: x-large;
+  line-height: normal;
+}
+
 /* Intentions view styling */
 .intentions-table {
   display: table;

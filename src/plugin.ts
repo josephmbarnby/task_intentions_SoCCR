@@ -1,5 +1,6 @@
 import * as spreadsheetData from "./spreadsheet.data";
 import {ChoiceScreen} from "./lib";
+import desktopConfig from "./desktop.config";
 
 // Configure jsPsych window variable
 declare global {
@@ -11,11 +12,11 @@ declare global {
 window.jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
     info: {},
-    trial: function(displayElement: any, trial: any) {},
+    trial: function(displayElement: HTMLElement, trial: any) {},
   };
 
   plugin.info = {
-    name: 'intentions-game',
+    name: desktopConfig.config.name,
     parameters: {
       row: {
         type: window.jsPsych.plugins.parameterType.INT,
@@ -26,13 +27,14 @@ window.jsPsych.plugins['intentions-game'] = (function() {
     },
   };
 
-  plugin.trial = function(displayElement: any, trial: any) {
+  plugin.trial = function(displayElement: HTMLElement, trial: any) {
     // Setup data storage
     const trialData = {
       playerPoints: 0,
       partnerPoints: 0,
-      selectionOption: -1,
-      selectionDuration: -1,
+      playerSelection: -1,
+      partnerSelection: -1,
+      rt: 0,
     };
 
     // Retrieve the data from the spreadsheet
@@ -54,18 +56,18 @@ window.jsPsych.plugins['intentions-game'] = (function() {
     function choiceHandler(event) {
       const _endTime = performance.now();
       const _duration = _endTime - _startTime;
-      trialData.selectionDuration = _duration;
+      trialData.rt = _duration;
 
       if (event.buttonId.startsWith('optionOne')) {
         // Participant chose option 1
-        trialData.selectionOption = 1;
+        trialData.playerSelection = 1;
 
         // Update the score with values of option 1
         trialData.playerPoints += data['Option1_PPT'];
         trialData.partnerPoints += data['Option1_Partner'];
       } else if (event.buttonId.startsWith('optionTwo')) {
         // Participant chose option 2
-        trialData.selectionOption = 2;
+        trialData.playerSelection = 2;
 
         // Update the score with values of option 2
         trialData.playerPoints += data['Option2_PPT'];

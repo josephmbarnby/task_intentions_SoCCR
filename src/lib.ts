@@ -1,9 +1,22 @@
 /**
+ * Screen interface defining the methods and attributes of
+ * stimuli screens.
+ */
+interface Screen {
+  _target: HTMLElement,
+  _graphics: Graphics,
+  getGraphics: Function,
+  link: Function,
+  display: Function
+}
+
+/**
  * ChoiceScreen class
  */
-export class ChoiceScreen {
-  private _target: HTMLElement;
-  private _graphics: Graphics;
+export class ChoiceScreen implements Screen {
+  _target: HTMLElement;
+  _graphics: Graphics;
+
   /**
    * Default constructor for the ChoiceScreen class.
    * @param {object} _target DOM element used by jsPsych.
@@ -17,7 +30,7 @@ export class ChoiceScreen {
    * Get the Graphics instance for this ChoiceScreen.
    * @return {Graphics}
    */
-  getGraphics() {
+  getGraphics(): Graphics {
     return this._graphics;
   }
 
@@ -40,6 +53,9 @@ export class ChoiceScreen {
    * @param {object} spreadsheetData information about choice options
    */
   display(spreadsheetData: object) {
+    // Clean any existing HTML & event handlers in the target
+    this.getGraphics().clearGraphics();
+
     // Construct the view of the options.
     this.getGraphics().addTable(4, 3, this._target, 'optionDisplayParent');
 
@@ -152,15 +168,15 @@ export class ChoiceScreen {
   }
 }
 
-// eslint-disable-next-line no-unused-vars, require-jsdoc
 export class Graphics {
   private _elements: any[];
-  private _target: object;
+  private _target: HTMLElement;
+
   /**
    * Default constructor for Graphics class.
    * @param {Object} _target DOM element used by jsPsych
    */
-  constructor(_target: object) {
+  constructor(_target: HTMLElement) {
     this._target = _target;
     this._elements = [];
   }
@@ -169,7 +185,7 @@ export class Graphics {
    * Get the target element for the Graphics class
    * @return {Object}
    */
-  getTarget() {
+  getTarget(): object {
     return this._target;
   }
 
@@ -177,7 +193,7 @@ export class Graphics {
    * Get the list of elements being managed by the Graphics class
    * @return {Array}
    */
-  getElements() {
+  getElements(): Array<any> {
     return this._elements;
   }
 
@@ -319,7 +335,7 @@ export class Graphics {
    * @param {Number} _maxWidth set the maximum width
    * @param {String} _id identifying tag of the cell
    */
-  _createCell(_column, _row, _parent, _maxWidth, _id = 'cell1') {
+  _createCell(_column: number, _row: number, _parent: HTMLDivElement, _maxWidth: number, _id: string = 'cell1') {
     // Append details of element.
     const _descriptor = {
       type: 'cell',
@@ -371,7 +387,7 @@ export class Graphics {
    * @param {String} _id identifying tag of element to find
    * @return {Object} DOM element if found, null if not found
    */
-  _getElement(_id: string): object {
+  _getElement(_id: string): HTMLElement {
     for (let e = 0; e < this._elements.length; e++) {
       const _el = this._elements[e];
       if (_el.id === _id) {
@@ -398,12 +414,21 @@ export class Graphics {
     return _result;
   }
 
+  /**
+   * Clear the graphics view, essentially resets the Graphics instance.
+   */
   clearGraphics() {
-    // Clear the HTML target.
-    const _targetID = 'jspsych-content';
-    document.getElementById(_targetID).innerHTML = '';
+    // Clear the HTML
+    this._target.innerHTML = '';
 
-    // Remove all elements.
+    // Remove event listeners
+    this._elements.forEach(_el => {
+      if (_el._type === 'button') {
+        document.removeEventListener('click', this._getElement(_el._id).onclick);
+      }
+    });
+
+    // Empty the list of elements
     this._elements = [];
   }
 }
