@@ -1,33 +1,48 @@
-import * as spreadsheetData from "./spreadsheet.data";
-import {ChoiceScreen} from "./lib";
-import desktopConfig from "./desktop.config";
+import {spreadsheet} from "./spreadsheet.data";
+import {ChoiceScreen, MatchScreen} from "./lib";
+import {config} from "./config";
 
 // Configure jsPsych window variable
-declare global {
-  interface Window {
-    jsPsych: any;
-  }
-}
+declare var jsPsych: any;
 
-window.jsPsych.plugins['intentions-game'] = (function() {
+jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
     info: {},
     trial: function(displayElement: HTMLElement, trial: any) {},
   };
 
   plugin.info = {
-    name: desktopConfig.config.name,
+    name: config.name,
     parameters: {
       row: {
-        type: window.jsPsych.plugins.parameterType.INT,
+        type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Spreadsheet row',
         default: undefined,
         description: 'The row to extract spreadsheet data from.',
       },
+      stage: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Type of trial screen',
+        default: undefined,
+        description: 'The type of trial screen to display'
+      }
     },
   };
 
   plugin.trial = function(displayElement: HTMLElement, trial: any) {
+    // Present a different screen based on the stage of the trial
+    if (trial.stage === 'choice') {
+      trialChoice(displayElement, trial);
+    } else if (trial.stage === 'match') {
+      trialMatching(displayElement, trial);
+    } else {
+      // Log an error message and finish the trial
+      console.error(`Unknown trial stage '${trial.stage}'.`);
+      jsPsych.finishTrial({});
+    }
+  };
+
+  function trialChoice(displayElement: HTMLElement, trial: any) {
     // Setup data storage
     const trialData = {
       playerPoints: 0,
@@ -38,7 +53,7 @@ window.jsPsych.plugins['intentions-game'] = (function() {
     };
 
     // Retrieve the data from the spreadsheet
-    const data = spreadsheetData.default.spreadsheet.rows[trial.row];
+    const data = spreadsheet.rows[trial.row];
 
     // Instantiate classes
     const choiceScreen = new ChoiceScreen(displayElement);
@@ -51,9 +66,9 @@ window.jsPsych.plugins['intentions-game'] = (function() {
 
     /**
      * Handle Button-press events in a particular trial
-     * @param {object} event information pertaining to the event
+     * @param {any} event information pertaining to the event
      */
-    function choiceHandler(event) {
+    function choiceHandler(event: any) {
       const _endTime = performance.now();
       const _duration = _endTime - _startTime;
       trialData.rt = _duration;
@@ -79,9 +94,16 @@ window.jsPsych.plugins['intentions-game'] = (function() {
 
       // End trial
       console.debug('Finished trial:', trialData);
-      window.jsPsych.finishTrial(trialData);
+      jsPsych.finishTrial(trialData);
     }
-  };
+  }
+
+  function trialMatching(displayElement: HTMLElement, trial: any) {
+    // Instantiate classes
+    const matchScreen = new MatchScreen(displayElement);
+
+    matchScreen.display({});
+  }
 
   return plugin;
 })();

@@ -3,11 +3,13 @@
  * stimuli screens.
  */
 interface Screen {
-  _target: HTMLElement,
-  _graphics: Graphics,
-  getGraphics: Function,
-  link: Function,
-  display: Function
+  _target: HTMLElement;
+  _graphics: Graphics;
+
+  getGraphics(): Graphics;
+  link(_handler: { (event: any): void; (arg0: any): void; }): void;
+  display(data: any): void;
+  finish(): void;
 }
 
 /**
@@ -50,9 +52,9 @@ export class ChoiceScreen implements Screen {
 
   /**
    * Invokes displaying of the choice screen.
-   * @param {object} spreadsheetData information about choice options
+   * @param {any} data information about choice options
    */
-  display(spreadsheetData: object) {
+  display(data: any) {
     // Clean any existing HTML & event handlers in the target
     this.getGraphics().clearGraphics();
 
@@ -99,13 +101,13 @@ export class ChoiceScreen implements Screen {
           );
         } else if (cell.attr.row === 1) {
           this.getGraphics().addLabel(
-              `${spreadsheetData['Option1_Partner']}`,
+              `${data['Option1_Partner']}`,
               _cell,
               'optionOneLabelPartner',
           );
         } else if (cell.attr.row === 2) {
           this.getGraphics().addLabel(
-              `${spreadsheetData['Option2_Partner']}`,
+              `${data['Option2_Partner']}`,
               _cell,
               'optionTwoLabelPartner',
           );
@@ -121,13 +123,13 @@ export class ChoiceScreen implements Screen {
           );
         } else if (cell.attr.row === 1) {
           this.getGraphics().addLabel(
-              `${spreadsheetData['Option1_PPT']}`,
+              `${data['Option1_PPT']}`,
               _cell,
               'optionOneLabelYou',
           );
         } else if (cell.attr.row === 2) {
           this.getGraphics().addLabel(
-              `${spreadsheetData['Option2_PPT']}`,
+              `${data['Option2_PPT']}`,
               _cell,
               'optionTwoLabelYou',
           );
@@ -158,6 +160,44 @@ export class ChoiceScreen implements Screen {
             `'${cell.attr.col},${cell.attr.row}'`);
       }
     });
+  }
+
+  /**
+   * Function called when display is finished.
+   */
+  finish() {
+    this._graphics.clearGraphics();
+  }
+}
+
+export class MatchScreen implements Screen {
+  _target: HTMLElement;
+  _graphics: Graphics;
+  
+  /**
+   * Default constructor for the ChoiceScreen class.
+   * @param {object} _target DOM element used by jsPsych.
+   */
+     constructor(_target: HTMLElement) {
+      this._target = _target;
+      this._graphics = new Graphics(this._target);
+    }
+
+  getGraphics() {
+    return this._graphics;
+  }
+
+  link(_handler: { (event: any): void; (arg0: any): void; }) {
+
+  }
+
+  /**
+   * Invokes displaying of the choice screen.
+   * @param {any} data information about choice options
+   */
+  display(data: any) {
+    // Clean any existing HTML & event handlers in the target
+    this.getGraphics().clearGraphics();
   }
 
   /**

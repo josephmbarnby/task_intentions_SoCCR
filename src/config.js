@@ -1,5 +1,5 @@
 // Configuration and other required data
-const config = {
+export const config = {
   name: 'Intentions game',
   pluginName: 'intentions-game',
   locale: 'en-AU',
@@ -14,5 +14,3 @@ const config = {
     'partnerTwo': '',
   },
 };
-
-export default {config};

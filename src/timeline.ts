@@ -1,25 +1,21 @@
-import desktopConfig from "./desktop.config";
-import * as spreadsheetData from "./spreadsheet.data";
+import {config} from "./config";
+import {spreadsheet} from "./spreadsheet.data";
 
 // Configure jsPsych window variable
-declare global {
-  interface Window {
-    jsPsych: any;
-  }
-}
+declare var jsPsych: any;
 
 // Timeline setup
 const timeline = [];
 
 const instructionsIntroduction = [
-  `<h1>${desktopConfig.config.name}</h1>` +
+  `<h1>${config.name}</h1>` +
   `<span class="instructions-subtitle">` +
     `Please read these instructions carefully</span>` +
   `<h2>Instructions</h2>` +
   `<p>You will now take part in a series of interactions ` +
     `with ONE partner. You will be matched with your ` +
     `partner in a moment.</p>` +
-  `<p>You will play your partner for ${desktopConfig.config.trials.main} ` +
+  `<p>You will play your partner for ${config.trials.main} ` +
     `trials. </p>` +
   `<p>Their ID and your ID has been hidden to preserve ` +
     `anonymity.</p>` +
@@ -55,20 +51,27 @@ timeline.push({
   show_clickable_nav: true,
 });
 
-for (let i = 0; i < spreadsheetData.default.spreadsheet.rows.length; i++) {
+timeline.push({
+  type: 'intentions-game',
+  row: -1,
+  stage: 'match',
+});
+
+for (let i = 0; i < spreadsheet.rows.length; i++) {
   timeline.push({
     type: 'intentions-game',
     row: i,
+    stage: 'choice',
   });
 }
 
 // -------------------- jsPsych --------------------
-window.jsPsych.init({
+jsPsych.init({
   display_element: 'jspsych-target',
   timeline: timeline,
   on_finish: function() {
-    if (desktopConfig.config.target === 'desktop') {
-      window.jsPsych.data.get().localSave(`csv`, `intentions_${Date.now()}.csv`);
+    if (config.target === 'desktop') {
+      jsPsych.data.get().localSave(`csv`, `intentions_${Date.now()}.csv`);
     }
   },
   show_progress_bar: true,

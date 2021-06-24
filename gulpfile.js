@@ -20,7 +20,7 @@ function build(cb) {
             'src/plugin.ts',
             'src/timeline.ts',
             'src/lib.ts',
-            'src/desktop.config.js',
+            'src/config.js',
             'src/spreadsheet.data.js',
           ])
       .plugin('tsify', {noImplicitAny: false})

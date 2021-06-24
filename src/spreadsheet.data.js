@@ -1,7 +1,7 @@
-import desktopConfig from './desktop.config';
+import {config} from './config';
 
 // Default data spreadsheet used in the intentions game
-const spreadsheet = {
+export const spreadsheet = {
   // Define the headings of the columns here
   columns: [
     'Option1_PPT',
@@ -20,15 +20,13 @@ const spreadsheet = {
   partners: [
     {
       name: 'partnerOne',
-      image: desktopConfig.config.images['partnerOne'],
+      image: config.images['partnerOne'],
       type: 'competitive',
     },
     {
       name: 'partnerTwo',
-      image: desktopConfig.config.images['partnerTwo'],
+      image: config.images['partnerTwo'],
       type: 'competitive',
     },
   ],
 };
-
-export default {spreadsheet};
