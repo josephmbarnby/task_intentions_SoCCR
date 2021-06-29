@@ -473,4 +473,147 @@ export class Graphics {
   }
 }
 
-export default {ChoiceScreen, Graphics};
+export class TrialDataManager {
+  private _dataObject: any
+  private _options: any
+  private _recordKeypresses: boolean
+  private _recordMouse: boolean
+  private _mouseData: any[]
+  private _lastMouseTime = 0
+  private _mouseDelta = 100
+  private _keypressData: any[]
+
+  constructor(_dataObject: any, _options: any) {
+    this._dataObject = _dataObject
+    this._options = _options
+
+    // Data collections
+    this._keypressData = []
+    this._mouseData = []
+
+    // Read in any options
+    this._extractOptions()
+
+    // Gather accessible system information
+    this._extractSystemInformation()
+  }
+
+  _extractOptions() {
+    // Record keypresses
+    if (this._options.keypress !== undefined) {
+      if (this._options.keypress === true || this._options.keypress === false) {
+        this._recordKeypresses = this._options.keypress
+      } else {
+        console.warn(`Invalid option '${this._options.keypress}'!`)
+      }
+    }
+
+    // Record mouse position
+    if (this._options.mouse !== undefined) {
+      if (this._options.mouse === true || this._options.mouse === false) {
+        this._recordMouse = this._options.mouse
+      } else {
+        console.warn(`Invalid option '${this._options.mouse}'!`)
+      }
+    }
+
+    // Mouse recording delta
+    if (this._options.delta !== undefined) {
+      if (!isNaN(parseInt(this._options.delta))) {
+        this._mouseDelta = parseInt(this._options.delta)
+      } else {
+        console.warn(`Invalid delta '${this._options.delta}'!`)
+      }
+    }
+  }
+
+  _extractSystemInformation() {
+    const _systemInformation = {
+      viewWidth: window.innerWidth,
+      viewHeight: window.innerHeight,
+      language: navigator.language,
+      automated: navigator.webdriver,
+      agent: navigator.userAgent,
+      vendor: navigator.vendor,
+    }
+    console.debug(`System information:`, _systemInformation)
+  }
+
+  start() {
+    if (this._recordKeypresses) {
+      document.addEventListener('keypress', this._keypressEvent.bind(this))
+    }
+
+    if (this._recordMouse) {
+      document.addEventListener('mousemove', this._mouseEvent.bind(this))
+    }
+  }
+
+  getField(_id: string) {
+    if (this._dataObject[_id] !== undefined) {
+      return this._dataObject[_id]
+    }
+    console.warn(`Attempting to get unknown field '${_id}'`)
+    return null
+  }
+
+  setField(_id: string, _value: any) {
+    this._dataObject[_id] = _value
+  }
+
+  _keypressEvent(_event: any) {
+    this._keypressData.push({
+      time: performance.now(),
+      key: _event.code,
+    })
+  }
+
+  _mouseEvent(_event: any) {
+    const _time = performance.now()
+    // Restrict the frequency of updates
+    if (_time - this._lastMouseTime > this._mouseDelta) {
+      this._mouseData.push({
+        time: _time,
+        x: _event.clientX,
+        y: _event.clientY,
+      })
+      this._lastMouseTime = _time
+    }
+  }
+
+  /**
+   * Clean up any listeners
+   */
+  _tidy() {
+    // Remove keypress listener
+    if (this._recordKeypresses) {
+      document.removeEventListener('keypress', this._keypressEvent.bind(this))
+    }
+
+    // Remove mouse listener
+    if (this._recordMouse) {
+      document.removeEventListener('mousemove', this._mouseEvent.bind(this))
+    }
+  }
+
+  /**
+   * Extract and return the data gathered throughout the trial
+   * @returns {any} the trial data
+   */
+  export(): any {
+    if (this._recordKeypresses) {
+      this._dataObject.keypresses = this._keypressData
+    }
+
+    if (this._recordMouse) {
+      this._dataObject.mousemovement = this._mouseData
+    }
+
+    // Clean up any event listeners
+    this._tidy()
+
+    return this._dataObject
+  }
+}
+
+export default {ChoiceScreen, Graphics, TrialDataManager};
