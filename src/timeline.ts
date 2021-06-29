@@ -51,6 +51,12 @@ timeline.push({
   show_clickable_nav: true,
 });
 
+timeline.push({
+  type: 'intentions-game',
+  row: -1,
+  stage: 'match',
+});
+
 for (let i = 0; i < spreadsheet.rows.length; i++) {
   timeline.push({
     type: 'intentions-game',

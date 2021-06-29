@@ -1,3 +1,5 @@
+import { Spinner } from 'spin.js'
+
 /**
  * Screen interface defining the methods and attributes of
  * stimuli screens.
@@ -198,13 +200,34 @@ export class MatchScreen implements Screen {
   display(data: any) {
     // Clean any existing HTML & event handlers in the target
     this.getGraphics().clearGraphics();
+
+    // Construct the view of the options.
+    this.getGraphics().addTable(1, 1, this._target, 'optionDisplayParent');
+
+    // Get all cells
+    const _elements = this.getGraphics().getFiltered('cell');
+
+    // Construct layout
+    _elements.forEach((cell) => {
+      const _cell = document.getElementById(cell.id);
+
+      // Add an image
+      // this.getGraphics().addImage(
+      //   `https://source.boringavatars.com/beam/120/Henry?colors=264653,2a9d8f,e9c46a,f4a261,e76f51`,
+      //   _cell,
+      //   `avatar`
+      // );
+
+      // Add a spinner
+      this.getGraphics().addSpinner(_cell, `spinner`);
+    });
   }
 
   /**
    * Function called when display is finished.
    */
   finish() {
-    this._graphics.clearGraphics();
+    this.getGraphics().clearGraphics();
   }
 }
 
@@ -292,6 +315,79 @@ export class Graphics {
 
     // Append Label to DOM parent.
     _parent.appendChild(_label);
+
+    // Store description of Label element.
+    this._elements.push(_descriptor);
+  }
+
+  /**
+   * Create a <img> element.
+   * @param {string} _src source URL of the Image
+   * @param {object} _parent DOM element of the parent
+   * @param {string} _id identifying tag of the Label
+   * @param {boolean} _bold style text or not
+   */
+    addImage(_src: string, _parent: HTMLElement, _id: string = 'image1') {
+    // Append details of element.
+    const _descriptor = {
+      type: 'image',
+      parent: _parent,
+      id: _id,
+    };
+
+    // Create Label instance to be appended to DOM parent.
+    const _img = document.createElement('img');
+    _img.src = _src;
+    _img.id = _id;
+
+    // Update the style of the parent
+    _parent.style.height = 'auto';
+
+    // Append Label to DOM parent.
+    _parent.appendChild(_img);
+
+    // Store description of Label element.
+    this._elements.push(_descriptor);
+  }
+
+  /**
+   * Create a <img> element.
+   * @param {string} _src source URL of the Image
+   * @param {object} _parent DOM element of the parent
+   * @param {string} _id identifying tag of the Label
+   * @param {boolean} _bold style text or not
+   */
+   addSpinner(_parent: HTMLElement, _id: string = 'spinner1') {
+    // Append details of element.
+    const _descriptor = {
+      type: 'spinner',
+      parent: _parent,
+      id: _id,
+    };
+
+    // Append Spinner to DOM parent.
+    const _spinner = new Spinner(
+      {
+        lines: 13,
+        length: 38,
+        width: 17,
+        radius: 45,
+        scale: 1,
+        corners: 1,
+        speed: 1,
+        rotate: 0,
+        animation: 'spinner-line-fade-quick',
+        direction: 1,
+        color: '#ffffff',
+        fadeColor: 'transparent',
+        top: '50%',
+        left: '50%',
+        shadow: '0 0 1px transparent',
+        zIndex: 2000000000,
+        className: 'spinner',
+        position: 'absolute',
+      }
+    ).spin(_parent);
 
     // Store description of Label element.
     this._elements.push(_descriptor);
