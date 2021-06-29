@@ -1,11 +1,6 @@
-<<<<<<< Updated upstream
 import {spreadsheet} from "./spreadsheet.data";
-import {ChoiceScreen, MatchScreen} from "./lib";
+import {ChoiceScreen, MatchScreen, TrialDataManager} from "./lib";
 import {config} from "./config";
-=======
-import * as spreadsheetData from "./spreadsheet.data";
-import {ChoiceScreen, TrialDataManager} from "./lib";
->>>>>>> Stashed changes
 
 // Configure jsPsych window variable
 declare var jsPsych: any;
@@ -52,14 +47,9 @@ jsPsych.plugins['intentions-game'] = (function() {
     const trialData = {
       playerPoints: 0,
       partnerPoints: 0,
-<<<<<<< Updated upstream
       playerSelection: -1,
       partnerSelection: -1,
       rt: 0,
-=======
-      selectionOption: -1,
-      selectionReactionTime: -1,
->>>>>>> Stashed changes
     };
 
     // Retrieve the data from the spreadsheet
@@ -90,30 +80,18 @@ jsPsych.plugins['intentions-game'] = (function() {
     function choiceHandler(event: any) {
       const _endTime = performance.now();
       const _duration = _endTime - _startTime;
-<<<<<<< Updated upstream
-      trialData.rt = _duration;
-
-      if (event.buttonId.startsWith('optionOne')) {
-        // Participant chose option 1
-        trialData.playerSelection = 1;
-=======
-      dataManager.setField('selectionReactionTime', _duration)
+      dataManager.setField('rt', _duration)
 
       if (event.buttonId.startsWith('optionOne')) {
         // Participant chose option 1
         dataManager.setField('selectionOption', 1)
->>>>>>> Stashed changes
 
         // Update the score with values of option 1
         dataManager.setField('playerPoints', data['Option1_PPT'])
         dataManager.setField('partnerPoints', data['Option1_Partner'])
       } else if (event.buttonId.startsWith('optionTwo')) {
         // Participant chose option 2
-<<<<<<< Updated upstream
-        trialData.playerSelection = 2;
-=======
         dataManager.setField('selectionOption', 2)
->>>>>>> Stashed changes
 
         // Update the score with values of option 2
         dataManager.setField('playerPoints', data['Option2_PPT'])
@@ -124,13 +102,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       choiceScreen.finish();
 
       // End trial
-<<<<<<< Updated upstream
-      console.debug('Finished trial:', trialData);
-      jsPsych.finishTrial(trialData);
-=======
-      console.debug('Finished trial:', dataManager.export());
-      window.jsPsych.finishTrial(dataManager.export());
->>>>>>> Stashed changes
+      jsPsych.finishTrial(dataManager.export());
     }
   }
 

@@ -536,7 +536,7 @@ export class TrialDataManager {
       agent: navigator.userAgent,
       vendor: navigator.vendor,
     }
-    console.debug(`System information:`, _systemInformation)
+    return _systemInformation
   }
 
   start() {
@@ -562,21 +562,18 @@ export class TrialDataManager {
   }
 
   _keypressEvent(_event: any) {
-    this._keypressData.push({
-      time: performance.now(),
-      key: _event.code,
-    })
+    this._keypressData.push(
+      `${performance.now()}:${_event.code}`
+    )
   }
 
   _mouseEvent(_event: any) {
     const _time = performance.now()
     // Restrict the frequency of updates
     if (_time - this._lastMouseTime > this._mouseDelta) {
-      this._mouseData.push({
-        time: _time,
-        x: _event.clientX,
-        y: _event.clientY,
-      })
+      this._mouseData.push(
+        `${performance.now()}:(${_event.clientX},${_event.clientY})`
+      )
       this._lastMouseTime = _time
     }
   }
@@ -602,11 +599,11 @@ export class TrialDataManager {
    */
   export(): any {
     if (this._recordKeypresses) {
-      this._dataObject.keypresses = this._keypressData
+      this._dataObject.keypresses = this._keypressData.toString()
     }
 
     if (this._recordMouse) {
-      this._dataObject.mousemovement = this._mouseData
+      this._dataObject.mousemovement = this._mouseData.toString()
     }
 
     // Clean up any event listeners
