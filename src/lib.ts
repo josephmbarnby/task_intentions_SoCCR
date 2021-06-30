@@ -1,4 +1,5 @@
 import { Spinner } from 'spin.js'
+import 'spin.js/spin.css'
 
 /**
  * Screen interface defining the methods and attributes of
@@ -202,7 +203,7 @@ export class MatchScreen implements Screen {
     this.getGraphics().clearGraphics();
 
     // Construct the view of the options.
-    this.getGraphics().addTable(1, 1, this._target, 'optionDisplayParent');
+    this.getGraphics().addTable(1, 2, this._target, 'optionDisplayParent');
 
     // Get all cells
     const _elements = this.getGraphics().getFiltered('cell');
@@ -211,15 +212,13 @@ export class MatchScreen implements Screen {
     _elements.forEach((cell) => {
       const _cell = document.getElementById(cell.id);
 
-      // Add an image
-      // this.getGraphics().addImage(
-      //   `https://source.boringavatars.com/beam/120/Henry?colors=264653,2a9d8f,e9c46a,f4a261,e76f51`,
-      //   _cell,
-      //   `avatar`
-      // );
-
-      // Add a spinner
-      this.getGraphics().addSpinner(_cell, `spinner`);
+      if (cell.attr.row === 0) {
+        // Add a label
+        this.getGraphics().addLabel(`Matching you with a partner...`, _cell, `match-label`, true)
+      } else if (cell.attr.row === 1) {
+        // Add a spinner
+        this.getGraphics().addSpinner(_cell, `spinner`);
+      }      
     });
   }
 
@@ -366,31 +365,11 @@ export class Graphics {
     };
 
     // Append Spinner to DOM parent.
-    const _spinner = new Spinner(
-      {
-        lines: 13,
-        length: 38,
-        width: 17,
-        radius: 45,
-        scale: 1,
-        corners: 1,
-        speed: 1,
-        rotate: 0,
-        animation: 'spinner-line-fade-quick',
-        direction: 1,
-        color: '#ffffff',
-        fadeColor: 'transparent',
-        top: '50%',
-        left: '50%',
-        shadow: '0 0 1px transparent',
-        zIndex: 2000000000,
-        className: 'spinner',
-        position: 'absolute',
-      }
-    ).spin(_parent);
+    const _spinner = new Spinner().spin();
+    _parent.appendChild(_spinner.el)
 
     // Store description of Label element.
-    this._elements.push(_descriptor);
+    this._elements.push(_descriptor)
   }
 
   /**

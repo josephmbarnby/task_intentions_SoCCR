@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Intentions game",
   "scripts": {
-    "start": "npm-watch & http-server built/",
-    "watch": "npm-watch",
+    "start": "parcel src/index.html",
     "build": "gulp build",
     "clean": "gulp clean",
     "style": "gulp clean && gulp style"
@@ -37,6 +36,7 @@
     "gulp-eslint": "^6.0.0",
     "gulp-rename": "^2.0.0",
     "jest": "^26.6.3",
+    "parcel": "^2.0.0-beta.2",
     "tsify": "^5.0.4",
     "typescript": "^4.2.4",
     "vinyl-source-stream": "^2.0.0"
@@ -44,7 +44,6 @@
   "dependencies": {
     "boring-avatars": "^1.5.8",
     "jspsych": "^6.0.0",
-    "npm-watch": "^0.9.0",
     "spin.js": "^4.1.0"
   }
 }

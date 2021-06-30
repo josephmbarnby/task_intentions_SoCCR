@@ -1,9 +1,15 @@
+import 'jspsych/jspsych'
+
+// Make TypeScript happy by declaring jsPsych
+declare var jsPsych: any;
+
+// Stylesheets
+import 'jspsych/css/jspsych.css'
+import './css/styles.css'
+
 import {spreadsheet} from "./spreadsheet.data";
 import {ChoiceScreen, MatchScreen, TrialDataManager} from "./lib";
 import {config} from "./config";
-
-// Configure jsPsych window variable
-declare var jsPsych: any;
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {

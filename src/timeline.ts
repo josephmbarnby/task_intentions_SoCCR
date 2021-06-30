@@ -1,8 +1,16 @@
-import {config} from "./config";
-import {spreadsheet} from "./spreadsheet.data";
+// jsPsych imports
+import 'jspsych/jspsych'
+import 'jspsych/plugins/jspsych-instructions'
 
-// Configure jsPsych window variable
-declare var jsPsych: any;
+// Configure jsPsych window variable to make TypeScript happy
+declare var jsPsych: any
+
+// Import the plugin before adding it to the timeline
+import './plugin'
+
+// Configuration and data
+import {config} from "./config"
+import {spreadsheet} from "./spreadsheet.data"
 
 // Timeline setup
 const timeline = [];
