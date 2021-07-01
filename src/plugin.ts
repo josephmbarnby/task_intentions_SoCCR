@@ -124,11 +124,19 @@ jsPsych.plugins['intentions-game'] = (function() {
     // Set a timer to display the matched screen
     setTimeout(_updateMatched, 3000)
 
+    function _continue() {
+      matchScreen.finish()
+      jsPsych.finishTrial({});
+    }
+
     function _updateMatched() {
       // Display the matched screen and avatar
       matchScreen.display({
         stage: 'matched',
       });
+
+      // Link the 'Continue' button
+      matchScreen.link(_continue)
     }
   }
 

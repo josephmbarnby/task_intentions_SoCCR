@@ -191,7 +191,13 @@ export class MatchScreen implements Screen {
   }
 
   link(_handler: { (event: any): void; (arg0: any): void; }) {
-
+    const _buttons = this.getGraphics().getFiltered('button');
+    for (let b = 0; b < _buttons.length; b++) {
+      this.getGraphics().setButtonHandler(_buttons[b].id, e => {
+          e.buttonId = _buttons[b].id;
+          _handler(e);
+        });
+    }
   }
 
   /**
@@ -203,7 +209,7 @@ export class MatchScreen implements Screen {
     this.getGraphics().clearGraphics();
 
     // Construct the view of the options.
-    this.getGraphics().addTable(1, 2, this._target, 'optionDisplayParent');
+    this.getGraphics().addTable(1, 3, this._target, 'optionDisplayParent');
 
     // Get all cells
     const _elements = this.getGraphics().getFiltered('cell');
@@ -234,7 +240,10 @@ export class MatchScreen implements Screen {
             _cell,
             'avatar'
           )
-        }      
+        } else if (cell.attr.row === 2) {
+          // Add the continue button
+          this.getGraphics().addButton('Continue', _cell, 'match-continue-btn', () => {}, 'jspsych')
+        } 
       });
     } else if (data.hasOwnProperty('stage') && data.stage === 'matching') {
       // Construct layout
@@ -296,7 +305,7 @@ export class Graphics {
    * @param {String} _id identifying tag of the Button
    * @param {Function} _handler called on Button press
    */
-  addButton(_text: string, _parent: HTMLElement, _id: string = 'button1', _handler = function() {}) {
+  addButton(_text: string, _parent: HTMLElement, _id: string = 'button1', _handler = function() {}, _style = 'default') {
     // Append details of element.
     const _descriptor = {
       type: 'button',
@@ -306,7 +315,11 @@ export class Graphics {
 
     // Create Button instance to be appended to DOM parent.
     const _button = document.createElement('button');
-    _button.className = 'intentions-table-button';
+    if (_style === 'jspsych') {
+      _button.className = 'jspsych-btn';
+    } else {
+      _button.className = 'intentions-table-button';
+    }
     _button.textContent = _text;
     _button.id = _id;
     _button.onclick = _handler;
@@ -446,7 +459,9 @@ export class Graphics {
     };
 
     const _width = 80;
+    const _height = 80;
     const _cellWidth = _width / _columns;
+    const _cellHeight = _height / _rows;
     const _parentDiv = document.createElement('div');
     _parentDiv.className = 'intentions-table';
 
@@ -458,7 +473,7 @@ export class Graphics {
 
       // Add cells to the row
       for (let x = 0; x < _columns; x++) {
-        this._createCell(x, y, _rowDiv, _cellWidth, `cell[${x},${y}]`);
+        this._createCell(x, y, _rowDiv, _cellWidth, _cellHeight, `cell[${x},${y}]`);
       }
 
       // Append the row to the parent
@@ -480,7 +495,7 @@ export class Graphics {
    * @param {Number} _maxWidth set the maximum width
    * @param {String} _id identifying tag of the cell
    */
-  _createCell(_column: number, _row: number, _parent: HTMLDivElement, _maxWidth: number, _id: string = 'cell1') {
+  _createCell(_column: number, _row: number, _parent: HTMLDivElement, _maxWidth: number, _maxHeight: number, _id: string = 'cell1') {
     // Append details of element.
     const _descriptor = {
       type: 'cell',
@@ -495,6 +510,9 @@ export class Graphics {
     const _cellDiv = document.createElement('div');
     _cellDiv.id = `cell[${_column},${_row}]`;
     _cellDiv.className = 'intentions-table-cell';
+    _cellDiv.style.width = `${_maxWidth}%`
+    _cellDiv.style.height = `${_maxHeight.toFixed(0)}%`
+    console.debug(_maxHeight.toFixed(0))
 
     // Append <div> to DOM parent.
     _parent.appendChild(_cellDiv);

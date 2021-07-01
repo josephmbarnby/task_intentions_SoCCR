@@ -5,27 +5,18 @@
 }
 
 /* Intentions view styling */
-.intentions-table {
-  display: table;
-  width: auto;
-}
-
 .intentions-table-row {
-  display: table-row;
-  width: auto;
-  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .intentions-table-cell {
-  float: left;
-  display: table-column;
-  width: 200px;
-  height: 60px;
+  flex: 1 1 auto;
   margin: 10px;
-}
-
-.intentions-table-cell span {
-  padding: 30px 0px;
 }
 
 .intentions-table-button {
