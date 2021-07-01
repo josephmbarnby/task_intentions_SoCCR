@@ -13,4 +13,5 @@ export const config = {
     'partnerOne': '',
     'partnerTwo': '',
   },
+  seed: 'intentions',
 };

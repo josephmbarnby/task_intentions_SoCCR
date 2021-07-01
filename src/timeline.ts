@@ -12,6 +12,10 @@ import './plugin'
 import {config} from "./config"
 import {spreadsheet} from "./spreadsheet.data"
 
+// Import and configure seedrandom
+import * as seedrandom from 'seedrandom'
+window.Math.random = seedrandom(config.seed)
+
 // Timeline setup
 const timeline = [];
 

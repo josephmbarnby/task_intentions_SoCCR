@@ -208,18 +208,48 @@ export class MatchScreen implements Screen {
     // Get all cells
     const _elements = this.getGraphics().getFiltered('cell');
 
-    // Construct layout
-    _elements.forEach((cell) => {
-      const _cell = document.getElementById(cell.id);
+    if (data.hasOwnProperty('stage') && data.stage === 'matched') {
+      // Construct layout
+      _elements.forEach((cell) => {
+        const _cell = document.getElementById(cell.id);
 
-      if (cell.attr.row === 0) {
-        // Add a label
-        this.getGraphics().addLabel(`Matching you with a partner...`, _cell, `match-label`, true)
-      } else if (cell.attr.row === 1) {
-        // Add a spinner
-        this.getGraphics().addSpinner(_cell, `spinner`);
-      }      
-    });
+        if (cell.attr.row === 0) {
+          // Add a label
+          this.getGraphics().addLabel(`Matched with partner!`, _cell, `match-label`, true)
+        } else if (cell.attr.row === 1) {
+          // Randomly select a name
+          const _names = [
+            'Henry',
+            'Linda',
+            'Lisa',
+            'Joe',
+            'Jeff',
+            'Ryan'
+          ]
+          const _name = Math.floor(Math.random() * _names.length)
+
+          // Add an avatar
+          this.getGraphics().addImage(
+            `https://source.boringavatars.com/beam/120/${_names[_name]}`,
+            _cell,
+            'avatar'
+          )
+        }      
+      });
+    } else if (data.hasOwnProperty('stage') && data.stage === 'matching') {
+      // Construct layout
+      _elements.forEach((cell) => {
+        const _cell = document.getElementById(cell.id);
+
+        if (cell.attr.row === 0) {
+          // Add a label
+          this.getGraphics().addLabel(`Matching you with a partner...`, _cell, `match-label`, true)
+        } else if (cell.attr.row === 1) {
+          // Add a spinner
+          this.getGraphics().addSpinner(_cell, `spinner`);
+        }      
+      });
+    }
   }
 
   /**

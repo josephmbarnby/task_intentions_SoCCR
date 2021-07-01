@@ -44,6 +44,7 @@
   "dependencies": {
     "boring-avatars": "^1.5.8",
     "jspsych": "^6.0.0",
+    "seedrandom": "^3.0.5",
     "spin.js": "^4.1.0"
   }
 }

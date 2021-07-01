@@ -116,7 +116,20 @@ jsPsych.plugins['intentions-game'] = (function() {
     // Instantiate classes
     const matchScreen = new MatchScreen(displayElement);
 
-    matchScreen.display({});
+    // Display the matching screen and animation
+    matchScreen.display({
+      stage: 'matching',
+    });
+
+    // Set a timer to display the matched screen
+    setTimeout(_updateMatched, 3000)
+
+    function _updateMatched() {
+      // Display the matched screen and avatar
+      matchScreen.display({
+        stage: 'matched',
+      });
+    }
   }
 
   return plugin;
