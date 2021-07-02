@@ -1,20 +1,20 @@
 // Configuration and data
-import {config} from "./config"
-import {spreadsheet} from "./spreadsheet.data"
+import {config} from './config';
+import {spreadsheet} from './spreadsheet.data';
 
 // jsPsych imports
-import 'jspsych/jspsych'
-import 'jspsych/plugins/jspsych-instructions'
+import 'jspsych/jspsych';
+import 'jspsych/plugins/jspsych-instructions';
 
 // Configure jsPsych window variable to make TypeScript happy
-declare var jsPsych: any
+declare const jsPsych: any;
 
 // Import the plugin before adding it to the timeline
-import './plugin'
+import './plugin';
 
 // Import and configure seedrandom
-import * as seedrandom from 'seedrandom'
-window.Math.random = seedrandom(config.seed)
+import * as seedrandom from 'seedrandom';
+window.Math.random = seedrandom(config.seed);
 
 // Timeline setup
 const timeline = [];

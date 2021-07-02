@@ -1,4 +1,4 @@
-import { Spinner } from 'spin.js'
+import {Spinner} from 'spin.js';
 
 /**
  * Screen interface defining the methods and attributes of
@@ -45,10 +45,10 @@ export class ChoiceScreen implements Screen {
   link(_handler: { (event: any): void; (arg0: any): void; }) {
     const _buttons = this.getGraphics().getFiltered('button');
     for (let b = 0; b < _buttons.length; b++) {
-      this.getGraphics().setButtonHandler(_buttons[b].id, e => {
-          e.buttonId = _buttons[b].id;
-          _handler(e);
-        });
+      this.getGraphics().setButtonHandler(_buttons[b].id, (e) => {
+        e.buttonId = _buttons[b].id;
+        _handler(e);
+      });
     }
   }
 
@@ -172,30 +172,41 @@ export class ChoiceScreen implements Screen {
   }
 }
 
+/**
+ * MatchScreen class that displays the matching process
+ * to participants.
+ */
 export class MatchScreen implements Screen {
   _target: HTMLElement;
   _graphics: Graphics;
-  
   /**
    * Default constructor for the ChoiceScreen class.
    * @param {object} _target DOM element used by jsPsych.
    */
-     constructor(_target: HTMLElement) {
-      this._target = _target;
-      this._graphics = new Graphics(this._target);
-    }
+  constructor(_target: HTMLElement) {
+    this._target = _target;
+    this._graphics = new Graphics(this._target);
+  }
 
+  /**
+   * Get the Graphics instance
+   * @return {Graphics} the graphics component
+   */
   getGraphics() {
     return this._graphics;
   }
 
-  link(_handler: { (event: any): void; (arg0: any): void; }) {
+  /**
+   * Bind a handler function to buttons
+   * @param {Function} _handler function to run on button press
+   */
+  link(_handler: { (event: any): void; (arg0: any): void; }): void {
     const _buttons = this.getGraphics().getFiltered('button');
     for (let b = 0; b < _buttons.length; b++) {
-      this.getGraphics().setButtonHandler(_buttons[b].id, e => {
-          e.buttonId = _buttons[b].id;
-          _handler(e);
-        });
+      this.getGraphics().setButtonHandler(_buttons[b].id, (e) => {
+        e.buttonId = _buttons[b].id;
+        _handler(e);
+      });
     }
   }
 
@@ -220,7 +231,12 @@ export class MatchScreen implements Screen {
 
         if (cell.attr.row === 0) {
           // Add a label
-          this.getGraphics().addLabel(`Matched with partner!`, _cell, `match-label`, true)
+          this.getGraphics().addLabel(
+              `Matched with partner!`,
+              _cell,
+              `match-label`,
+              true
+          );
         } else if (cell.attr.row === 1) {
           // Randomly select a name
           const _names = [
@@ -229,20 +245,25 @@ export class MatchScreen implements Screen {
             'Lisa',
             'Joe',
             'Jeff',
-            'Ryan'
-          ]
-          const _name = Math.floor(Math.random() * _names.length)
+            'Ryan',
+          ];
+          const _name = Math.floor(Math.random() * _names.length);
 
           // Add an avatar
           this.getGraphics().addImage(
-            `https://source.boringavatars.com/beam/120/${_names[_name]}`,
-            _cell,
-            'avatar'
-          )
+              `https://source.boringavatars.com/beam/120/${_names[_name]}`,
+              _cell,
+              'avatar'
+          );
         } else if (cell.attr.row === 2) {
           // Add the continue button
-          this.getGraphics().addButton('Continue', _cell, 'match-continue-btn', () => {}, 'jspsych')
-        } 
+          this.getGraphics().addButton(
+              'Continue',
+              _cell,
+              'match-continue-btn',
+              () => {}, 'jspsych'
+          );
+        }
       });
     } else if (data.hasOwnProperty('stage') && data.stage === 'matching') {
       // Construct layout
@@ -251,11 +272,16 @@ export class MatchScreen implements Screen {
 
         if (cell.attr.row === 0) {
           // Add a label
-          this.getGraphics().addLabel(`Matching you with a partner...`, _cell, `match-label`, true)
+          this.getGraphics().addLabel(
+              `Matching you with a partner...`,
+              _cell,
+              `match-label`,
+              true
+          );
         } else if (cell.attr.row === 1) {
           // Add a spinner
           this.getGraphics().addSpinner(_cell, `spinner`);
-        }      
+        }
       });
     }
   }
@@ -268,6 +294,9 @@ export class MatchScreen implements Screen {
   }
 }
 
+/**
+ * Graphics class to handle setup and display of stimuli
+ */
 export class Graphics {
   private _elements: any[];
   private _target: HTMLElement;
@@ -303,8 +332,14 @@ export class Graphics {
    * @param {Object} _parent parent DOM element of the Button
    * @param {String} _id identifying tag of the Button
    * @param {Function} _handler called on Button press
+   * @param {String} _style styling to use on the Button
    */
-  addButton(_text: string, _parent: HTMLElement, _id: string = 'button1', _handler = function() {}, _style = 'default') {
+  addButton(
+      _text: string,
+      _parent: HTMLElement,
+      _id: string = 'button1',
+      _handler = function() {},
+      _style = 'default'): void {
     // Append details of element.
     const _descriptor = {
       type: 'button',
@@ -337,7 +372,11 @@ export class Graphics {
    * @param {string} _id identifying tag of the Label
    * @param {boolean} _bold style text or not
    */
-  addLabel(_text: string, _parent: HTMLElement, _id: string = 'label1', _bold: boolean = false) {
+  addLabel(
+      _text: string,
+      _parent: HTMLElement,
+      _id: string = 'label1',
+      _bold: boolean = false) {
     // Append details of element.
     const _descriptor = {
       type: 'label',
@@ -368,7 +407,7 @@ export class Graphics {
    * @param {string} _id identifying tag of the Label
    * @param {boolean} _bold style text or not
    */
-    addImage(_src: string, _parent: HTMLElement, _id: string = 'image1') {
+  addImage(_src: string, _parent: HTMLElement, _id: string = 'image1') {
     // Append details of element.
     const _descriptor = {
       type: 'image',
@@ -393,12 +432,11 @@ export class Graphics {
 
   /**
    * Create a <img> element.
-   * @param {string} _src source URL of the Image
    * @param {object} _parent DOM element of the parent
    * @param {string} _id identifying tag of the Label
    * @param {boolean} _bold style text or not
    */
-   addSpinner(_parent: HTMLElement, _id: string = 'spinner1') {
+  addSpinner(_parent: HTMLElement, _id: string = 'spinner1') {
     // Append details of element.
     const _descriptor = {
       type: 'spinner',
@@ -408,10 +446,10 @@ export class Graphics {
 
     // Append Spinner to DOM parent.
     const _spinner = new Spinner().spin();
-    _parent.appendChild(_spinner.el)
+    _parent.appendChild(_spinner.el);
 
     // Store description of Label element.
-    this._elements.push(_descriptor)
+    this._elements.push(_descriptor);
   }
 
   /**
@@ -449,7 +487,11 @@ export class Graphics {
    * @param {Object} _parent DOM element of parent
    * @param {String} _id identifying tag of the table
    */
-  addTable(_columns: number, _rows: number, _parent: HTMLElement, _id: string = 'table1') {
+  addTable(
+      _columns: number,
+      _rows: number,
+      _parent: HTMLElement,
+      _id: string = 'table1') {
     // Append details of element.
     const _descriptor = {
       type: 'table',
@@ -472,7 +514,14 @@ export class Graphics {
 
       // Add cells to the row
       for (let x = 0; x < _columns; x++) {
-        this._createCell(x, y, _rowDiv, _cellWidth, _cellHeight, `cell[${x},${y}]`);
+        this._createCell(
+            x,
+            y,
+            _rowDiv,
+            _cellWidth,
+            _cellHeight,
+            `cell[${x},${y}]`
+        );
       }
 
       // Append the row to the parent
@@ -492,9 +541,16 @@ export class Graphics {
    * @param {Number} _row row (y) coordinate
    * @param {Object} _parent DOM element of the parent
    * @param {Number} _maxWidth set the maximum width
+   * @param {Number} _maxHeight set the maximum height
    * @param {String} _id identifying tag of the cell
    */
-  _createCell(_column: number, _row: number, _parent: HTMLDivElement, _maxWidth: number, _maxHeight: number, _id: string = 'cell1') {
+  _createCell(
+      _column: number,
+      _row: number,
+      _parent: HTMLDivElement,
+      _maxWidth: number,
+      _maxHeight: number,
+      _id: string = 'cell1') {
     // Append details of element.
     const _descriptor = {
       type: 'cell',
@@ -509,9 +565,8 @@ export class Graphics {
     const _cellDiv = document.createElement('div');
     _cellDiv.id = `cell[${_column},${_row}]`;
     _cellDiv.className = 'intentions-table-cell';
-    _cellDiv.style.width = `${_maxWidth}%`
-    _cellDiv.style.height = `${_maxHeight.toFixed(0)}%`
-    console.debug(_maxHeight.toFixed(0))
+    _cellDiv.style.width = `${_maxWidth}%`;
+    _cellDiv.style.height = `${_maxHeight.toFixed(0)}%`;
 
     // Append <div> to DOM parent.
     _parent.appendChild(_cellDiv);
@@ -584,9 +639,12 @@ export class Graphics {
     this._target.innerHTML = '';
 
     // Remove event listeners
-    this._elements.forEach(_el => {
+    this._elements.forEach((_el) => {
       if (_el._type === 'button') {
-        document.removeEventListener('click', this._getElement(_el._id).onclick);
+        document.removeEventListener(
+            'click',
+            this._getElement(_el._id).onclick
+        );
       }
     });
 
@@ -595,6 +653,10 @@ export class Graphics {
   }
 }
 
+/**
+ * Class to handle data collection and storage outside
+ * the individual trials
+ */
 export class TrialDataManager {
   private _dataObject: any
   private _options: any
@@ -605,50 +667,63 @@ export class TrialDataManager {
   private _mouseDelta = 100
   private _keypressData: any[]
 
+  /**
+   * Default constructor
+   * @param {any} _dataObject existing data structure
+   * @param {any} _options set of custom parameters
+   */
   constructor(_dataObject: any, _options: any) {
-    this._dataObject = _dataObject
-    this._options = _options
+    this._dataObject = _dataObject;
+    this._options = _options;
 
     // Data collections
-    this._keypressData = []
-    this._mouseData = []
+    this._keypressData = [];
+    this._mouseData = [];
 
     // Read in any options
-    this._extractOptions()
+    this._extractOptions();
 
     // Gather accessible system information
-    this._extractSystemInformation()
+    this._extractSystemInformation();
   }
 
-  _extractOptions() {
+  /**
+   * Extract the options from the options
+   * parameters
+   */
+  _extractOptions(): void {
     // Record keypresses
     if (this._options.keypress !== undefined) {
       if (this._options.keypress === true || this._options.keypress === false) {
-        this._recordKeypresses = this._options.keypress
+        this._recordKeypresses = this._options.keypress;
       } else {
-        console.warn(`Invalid option '${this._options.keypress}'!`)
+        console.warn(`Invalid option '${this._options.keypress}'!`);
       }
     }
 
     // Record mouse position
     if (this._options.mouse !== undefined) {
       if (this._options.mouse === true || this._options.mouse === false) {
-        this._recordMouse = this._options.mouse
+        this._recordMouse = this._options.mouse;
       } else {
-        console.warn(`Invalid option '${this._options.mouse}'!`)
+        console.warn(`Invalid option '${this._options.mouse}'!`);
       }
     }
 
     // Mouse recording delta
     if (this._options.delta !== undefined) {
       if (!isNaN(parseInt(this._options.delta))) {
-        this._mouseDelta = parseInt(this._options.delta)
+        this._mouseDelta = parseInt(this._options.delta);
       } else {
-        console.warn(`Invalid delta '${this._options.delta}'!`)
+        console.warn(`Invalid delta '${this._options.delta}'!`);
       }
     }
   }
 
+  /**
+   * Extract system information of participants device
+   * @return {any} collection of system information
+   */
   _extractSystemInformation() {
     const _systemInformation = {
       viewWidth: window.innerWidth,
@@ -657,46 +732,67 @@ export class TrialDataManager {
       automated: navigator.webdriver,
       agent: navigator.userAgent,
       vendor: navigator.vendor,
-    }
-    return _systemInformation
+    };
+    return _systemInformation;
   }
 
+  /**
+   * Start data collection
+   */
   start() {
     if (this._recordKeypresses) {
-      document.addEventListener('keypress', this._keypressEvent.bind(this))
+      document.addEventListener('keypress', this._keypressEvent.bind(this));
     }
 
     if (this._recordMouse) {
-      document.addEventListener('mousemove', this._mouseEvent.bind(this))
+      document.addEventListener('mousemove', this._mouseEvent.bind(this));
     }
   }
 
+  /**
+   * Get the value of a field stored in the trial data
+   * @param {string} _id ID of the field
+   * @return {any} field value
+   */
   getField(_id: string) {
     if (this._dataObject[_id] !== undefined) {
-      return this._dataObject[_id]
+      return this._dataObject[_id];
     }
-    console.warn(`Attempting to get unknown field '${_id}'`)
-    return null
+    console.warn(`Attempting to get unknown field '${_id}'`);
+    return null;
   }
 
+  /**
+   * Set the value of a field stored in the trial data
+   * @param {string} _id ID of the field
+   * @param {any} _value field value
+   */
   setField(_id: string, _value: any) {
-    this._dataObject[_id] = _value
+    this._dataObject[_id] = _value;
   }
 
+  /**
+   * Store information on a keypress event
+   * @param {any} _event event object
+   */
   _keypressEvent(_event: any) {
     this._keypressData.push(
-      `${performance.now()}:${_event.code}`
-    )
+        `${performance.now()}:${_event.code}`
+    );
   }
 
+  /**
+   * Store information on a mouse movement event
+   * @param {any} _event event object
+   */
   _mouseEvent(_event: any) {
-    const _time = performance.now()
+    const _time = performance.now();
     // Restrict the frequency of updates
     if (_time - this._lastMouseTime > this._mouseDelta) {
       this._mouseData.push(
-        `${performance.now()}:(${_event.clientX},${_event.clientY})`
-      )
-      this._lastMouseTime = _time
+          `${performance.now()}:(${_event.clientX},${_event.clientY})`
+      );
+      this._lastMouseTime = _time;
     }
   }
 
@@ -706,32 +802,32 @@ export class TrialDataManager {
   _tidy() {
     // Remove keypress listener
     if (this._recordKeypresses) {
-      document.removeEventListener('keypress', this._keypressEvent.bind(this))
+      document.removeEventListener('keypress', this._keypressEvent.bind(this));
     }
 
     // Remove mouse listener
     if (this._recordMouse) {
-      document.removeEventListener('mousemove', this._mouseEvent.bind(this))
+      document.removeEventListener('mousemove', this._mouseEvent.bind(this));
     }
   }
 
   /**
    * Extract and return the data gathered throughout the trial
-   * @returns {any} the trial data
+   * @return {any} the trial data
    */
   export(): any {
     if (this._recordKeypresses) {
-      this._dataObject.keypresses = this._keypressData.toString()
+      this._dataObject.keypresses = this._keypressData.toString();
     }
 
     if (this._recordMouse) {
-      this._dataObject.mousemovement = this._mouseData.toString()
+      this._dataObject.mousemovement = this._mouseData.toString();
     }
 
     // Clean up any event listeners
-    this._tidy()
+    this._tidy();
 
-    return this._dataObject
+    return this._dataObject;
   }
 }
 

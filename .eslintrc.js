@@ -1,15 +1,10 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es2020': true,
-  },
-  'extends': [
+  root: true,
+  parser: '@typescript-eslint/parser',
+  plugins: [
+    '@typescript-eslint',
+  ],
+  extends: [
     'google',
   ],
-  'parserOptions': {
-    'ecmaVersion': 11,
-    'sourceType': 'module',
-  },
-  'rules': {
-  },
 };

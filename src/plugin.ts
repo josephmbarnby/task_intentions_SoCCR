@@ -1,14 +1,14 @@
-import 'jspsych/jspsych'
+import 'jspsych/jspsych';
 
 // Make TypeScript happy by declaring jsPsych
-declare var jsPsych: any;
+declare const jsPsych: any;
 
 // Stylesheets
-import './css/styles.css'
+import './css/styles.css';
 
-import {spreadsheet} from "./spreadsheet.data";
-import {ChoiceScreen, MatchScreen, TrialDataManager} from "./lib";
-import {config} from "./config";
+import {spreadsheet} from './spreadsheet.data';
+import {ChoiceScreen, MatchScreen, TrialDataManager} from './lib';
+import {config} from './config';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -29,8 +29,8 @@ jsPsych.plugins['intentions-game'] = (function() {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Type of trial screen',
         default: undefined,
-        description: 'The type of trial screen to display'
-      }
+        description: 'The type of trial screen to display',
+      },
     },
   };
 
@@ -47,7 +47,12 @@ jsPsych.plugins['intentions-game'] = (function() {
     }
   };
 
-  function trialChoice(displayElement: HTMLElement, trial: any) {
+  /**
+   * Run a 'choice' type trial
+   * @param {HTMLElement} displayElement target HTML element
+   * @param {any} trial jsPsych trial data
+   */
+  function trialChoice(displayElement: HTMLElement, trial: any): void {
     // Setup data storage
     const trialData = {
       playerPoints: 0,
@@ -64,7 +69,7 @@ jsPsych.plugins['intentions-game'] = (function() {
     const dataManager = new TrialDataManager(trialData, {
       mouse: true,
       keypress: true,
-    })
+    });
 
     // Instantiate classes
     const choiceScreen = new ChoiceScreen(displayElement);
@@ -74,9 +79,9 @@ jsPsych.plugins['intentions-game'] = (function() {
 
     // Start timing
     const _startTime = performance.now();
-    
+
     // Start data collection
-    dataManager.start()
+    dataManager.start();
 
     /**
      * Handle Button-press events in a particular trial
@@ -85,22 +90,22 @@ jsPsych.plugins['intentions-game'] = (function() {
     function choiceHandler(event: any) {
       const _endTime = performance.now();
       const _duration = _endTime - _startTime;
-      dataManager.setField('rt', _duration)
+      dataManager.setField('rt', _duration);
 
       if (event.buttonId.startsWith('optionOne')) {
         // Participant chose option 1
-        dataManager.setField('selectionOption', 1)
+        dataManager.setField('selectionOption', 1);
 
         // Update the score with values of option 1
-        dataManager.setField('playerPoints', data['Option1_PPT'])
-        dataManager.setField('partnerPoints', data['Option1_Partner'])
+        dataManager.setField('playerPoints', data['Option1_PPT']);
+        dataManager.setField('partnerPoints', data['Option1_Partner']);
       } else if (event.buttonId.startsWith('optionTwo')) {
         // Participant chose option 2
-        dataManager.setField('selectionOption', 2)
+        dataManager.setField('selectionOption', 2);
 
         // Update the score with values of option 2
-        dataManager.setField('playerPoints', data['Option2_PPT'])
-        dataManager.setField('partnerPoints', data['Option2_Partner'])
+        dataManager.setField('playerPoints', data['Option2_PPT']);
+        dataManager.setField('partnerPoints', data['Option2_Partner']);
       }
 
       // Clear the graphics
@@ -111,6 +116,11 @@ jsPsych.plugins['intentions-game'] = (function() {
     }
   }
 
+  /**
+   * Run a 'match' type trial
+   * @param {HTMLElement} displayElement target HTML element
+   * @param {any} trial jsPsych trial data
+   */
   function trialMatching(displayElement: HTMLElement, trial: any) {
     // Instantiate classes
     const matchScreen = new MatchScreen(displayElement);
@@ -121,13 +131,19 @@ jsPsych.plugins['intentions-game'] = (function() {
     });
 
     // Set a timer to display the matched screen
-    setTimeout(_updateMatched, 3000)
+    setTimeout(_updateMatched, 3000);
 
+    /**
+     * Event function to continue
+     */
     function _continue() {
-      matchScreen.finish()
+      matchScreen.finish();
       jsPsych.finishTrial({});
     }
 
+    /**
+     * Event function called to update display
+     */
     function _updateMatched() {
       // Display the matched screen and avatar
       matchScreen.display({
@@ -135,7 +151,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       });
 
       // Link the 'Continue' button
-      matchScreen.link(_continue)
+      matchScreen.link(_continue);
     }
   }
 
