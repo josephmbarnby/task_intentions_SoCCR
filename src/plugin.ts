@@ -6,6 +6,7 @@ declare const jsPsych: any;
 // Stylesheets
 import './css/styles.css';
 
+// Core modules
 import {spreadsheet} from './spreadsheet.data';
 import {ChoiceScreen, MatchScreen, TrialDataManager} from './lib';
 import {config} from './config';

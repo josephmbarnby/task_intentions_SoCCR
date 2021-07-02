@@ -44,9 +44,9 @@ module.exports = {
     filename: '[name].bundle.js',
     clean: true,
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all',
+  //   },
+  // },
 };

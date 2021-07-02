@@ -3,7 +3,7 @@ export const config = {
   name: 'Intentions game',
   pluginName: 'intentions-game',
   locale: 'en-AU',
-  target: 'desktop',
+  target: 'gorilla',
   trials: {
     phaseOne: 36,
     phaseTwo: 72,

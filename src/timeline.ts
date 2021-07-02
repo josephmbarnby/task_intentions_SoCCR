@@ -2,12 +2,9 @@
 import {config} from './config';
 import {spreadsheet} from './spreadsheet.data';
 
-// jsPsych imports
-import 'jspsych/jspsych';
-import 'jspsych/plugins/jspsych-instructions';
-
 // Configure jsPsych window variable to make TypeScript happy
-declare const jsPsych: any;
+import 'jspsych/jspsych';
+import * as $ from 'jquery';
 
 // Import the plugin before adding it to the timeline
 import './plugin';
@@ -47,7 +44,6 @@ timeline.push({
   show_clickable_nav: true,
 });
 
-
 const instructionsPracticeGames = [
   `<h1>Intentions Game</h1>` +
   `<h2>Instructions</h2>` +
@@ -77,16 +73,36 @@ for (let i = 0; i < spreadsheet.rows.length; i++) {
   });
 }
 
-// -------------------- jsPsych --------------------
-jsPsych.init({
-  display_element: 'gorilla',
-  timeline: timeline,
-  on_finish: function() {
-    if (config.target === 'desktop') {
-      jsPsych.data.get().localSave(`csv`, `intentions_${Date.now()}.csv`);
-    }
-  },
-  show_progress_bar: true,
-  show_preload_progress_bar: true,
-  // preload_images: desktopConfig.config.images,
-});
+if (config.target === 'gorilla') {
+  window.onload = (e) => {
+    console.debug(`Loaded page @ ${performance.now()}`);
+    const _gorilla = window['gorilla'];
+    const _jsPsych = window['jsPsych'];
+    require('jspsych/plugins/jspsych-instructions');
+    _gorilla.ready(function() {
+      _jsPsych.init({
+        display_element: $('#gorilla')[0],
+        timeline: timeline,
+        on_data_update: function(data) {
+          _gorilla.metric(data);
+        },
+        on_finish: function() {
+          _gorilla.finish();
+        },
+      });
+    });
+  };
+} else {
+  const _jsPsych = window['jsPsych'];
+  require('jspsych/plugins/jspsych-instructions');
+  _jsPsych.init({
+    display_element: 'gorilla',
+    timeline: timeline,
+    on_finish: function() {
+      _jsPsych.data.get().localSave(`csv`, `intentions_${Date.now()}.csv`);
+    },
+    show_progress_bar: true,
+    show_preload_progress_bar: true,
+    // preload_images: desktopConfig.config.images,
+  });
+}
