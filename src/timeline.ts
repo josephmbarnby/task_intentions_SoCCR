@@ -74,10 +74,16 @@ for (let i = 0; i < spreadsheet.rows.length; i++) {
 }
 
 if (config.target === 'gorilla') {
-  window.onload = (e) => {
-    console.debug(`Loaded page @ ${performance.now()}`);
+  // Wait for the entire page to be loaded before initialising
+  // jsPsych
+  window.onload = () => {
+    // Once all modules are loaded into the window,
+    // access Gorilla API and jsPsych library
     const _gorilla = window['gorilla'];
     const _jsPsych = window['jsPsych'];
+
+    // Require any jsPsych plugins, so that they are
+    // loaded here
     require('jspsych/plugins/jspsych-instructions');
     _gorilla.ready(function() {
       _jsPsych.init({
@@ -89,20 +95,25 @@ if (config.target === 'gorilla') {
         on_finish: function() {
           _gorilla.finish();
         },
+        show_progress_bar: true,
+        show_preload_progress_bar: true,
       });
     });
   };
 } else {
+  // Once all modules are loaded into the window,
+  // access jsPsych library
   const _jsPsych = window['jsPsych'];
+
+  // Require any jsPsych plugins, so that they are
+  // loaded here
   require('jspsych/plugins/jspsych-instructions');
   _jsPsych.init({
-    display_element: 'gorilla',
     timeline: timeline,
     on_finish: function() {
       _jsPsych.data.get().localSave(`csv`, `intentions_${Date.now()}.csv`);
     },
     show_progress_bar: true,
     show_preload_progress_bar: true,
-    // preload_images: desktopConfig.config.images,
   });
 }

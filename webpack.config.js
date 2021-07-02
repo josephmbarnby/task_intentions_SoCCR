@@ -12,7 +12,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Intentions Game',
-      template: 'template.html',
     }),
   ],
   devServer: {
@@ -44,9 +43,4 @@ module.exports = {
     filename: '[name].bundle.js',
     clean: true,
   },
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: 'all',
-  //   },
-  // },
 };
