@@ -51,6 +51,7 @@ const instructionsPracticeGames = [
     `multi-page, or just one page.</p>`,
 ];
 
+// Insert the instructions into the timeline
 timeline.push({
   type: 'instructions',
   pages: instructionsPracticeGames,
@@ -59,12 +60,14 @@ timeline.push({
   show_clickable_nav: true,
 });
 
+// Insert a 'match' screen into the timeline
 timeline.push({
   type: 'intentions-game',
   row: -1,
   stage: 'match',
 });
 
+// Insert the 'choice' screens into the timeline
 for (let i = 0; i < spreadsheet.rows.length; i++) {
   timeline.push({
     type: 'intentions-game',
@@ -73,6 +76,7 @@ for (let i = 0; i < spreadsheet.rows.length; i++) {
   });
 }
 
+// Initialise jsPsych and Gorilla (if required)
 if (config.target === 'gorilla') {
   // Wait for the entire page to be loaded before initialising
   // jsPsych

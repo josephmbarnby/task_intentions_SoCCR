@@ -61,7 +61,7 @@ export class ChoiceScreen implements Screen {
     this.getGraphics().clearGraphics();
 
     // Construct the view of the options.
-    this.getGraphics().addTable(4, 3, this._target, 'optionDisplayParent');
+    this.getGraphics().addTable(3, 3, this._target, 'optionDisplayParent');
 
     // Get all cells
     const _elements = this.getGraphics().getFiltered('cell');
@@ -71,7 +71,7 @@ export class ChoiceScreen implements Screen {
       const _cell = document.getElementById(cell.id);
 
       // Construct the arrangement of elements
-      if (cell.attr.column === 3) {
+      if (cell.attr.column === 2) {
         // Fourth column
         if (cell.attr.row === 0) {
           this.getGraphics().addSpacer(
@@ -84,15 +84,17 @@ export class ChoiceScreen implements Screen {
               'Option One',
               _cell,
               'optionOneButton',
+              'jspsych',
           );
         } else if (cell.attr.row === 2) {
           this.getGraphics().addButton(
               'Option Two',
               _cell,
               'optionTwoButton',
+              'jspsych',
           );
         }
-      } else if (cell.attr.column === 2) {
+      } else if (cell.attr.column === 1) {
         // Third column
         if (cell.attr.row === 0) {
           this.getGraphics().addLabel(
@@ -114,7 +116,7 @@ export class ChoiceScreen implements Screen {
               'optionTwoLabelPartner',
           );
         }
-      } else if (cell.attr.column === 1) {
+      } else if (cell.attr.column === 0) {
         // Second column
         if (cell.attr.row === 0) {
           this.getGraphics().addLabel(
@@ -134,27 +136,6 @@ export class ChoiceScreen implements Screen {
               `${data['Option2_PPT']}`,
               _cell,
               'optionTwoLabelYou',
-          );
-        }
-      } else if (cell.attr.column === 0) {
-        // First column
-        if (cell.attr.row === 0) {
-          this.getGraphics().addSpacer(
-              '200px',
-              _cell,
-              'optionBlankHeader',
-          );
-        } else if (cell.attr.row === 1) {
-          this.getGraphics().addSpacer(
-              '200px',
-              _cell,
-              'optionOneLabelBlank',
-          );
-        } else if (cell.attr.row === 2) {
-          this.getGraphics().addSpacer(
-              '200px',
-              _cell,
-              'optionTwoLabelBlank',
           );
         }
       } else {
@@ -261,7 +242,7 @@ export class MatchScreen implements Screen {
               'Continue',
               _cell,
               'match-continue-btn',
-              () => {}, 'jspsych'
+              'jspsych',
           );
         }
       });
@@ -331,15 +312,15 @@ export class Graphics {
    * @param {String} _text presented on the Button
    * @param {Object} _parent parent DOM element of the Button
    * @param {String} _id identifying tag of the Button
-   * @param {Function} _handler called on Button press
    * @param {String} _style styling to use on the Button
+   * @param {Function} _handler called on Button press
    */
   addButton(
       _text: string,
       _parent: HTMLElement,
       _id: string = 'button1',
-      _handler = function() {},
-      _style = 'default'): void {
+      _style = 'default',
+      _handler = function() {}): void {
     // Append details of element.
     const _descriptor = {
       type: 'button',
@@ -445,7 +426,9 @@ export class Graphics {
     };
 
     // Append Spinner to DOM parent.
-    const _spinner = new Spinner().spin();
+    const _spinner = new Spinner({
+      position: 'relative',
+    }).spin();
     _parent.appendChild(_spinner.el);
 
     // Store description of Label element.
@@ -565,8 +548,8 @@ export class Graphics {
     const _cellDiv = document.createElement('div');
     _cellDiv.id = `cell[${_column},${_row}]`;
     _cellDiv.className = 'intentions-table-cell';
-    _cellDiv.style.width = `${_maxWidth}%`;
-    _cellDiv.style.height = `${_maxHeight.toFixed(0)}%`;
+    _cellDiv.style.width = `${_maxWidth.toFixed(0)}%`;
+    _cellDiv.style.minHeight = `${_maxHeight.toFixed(0)}%`;
 
     // Append <div> to DOM parent.
     _parent.appendChild(_cellDiv);

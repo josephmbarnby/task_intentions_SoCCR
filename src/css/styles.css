@@ -1,9 +1,3 @@
-/* Import jsPsych styling */
-@import url("/node_modules/jspsych/css/jspsych.css");
-
-/* Import spin.js styling */
-@import url("/node_modules/spin.js/spin.css");
-
 /* Global jsPsych styling */
 .jspsych-content {
   font-size: x-large;
@@ -22,7 +16,7 @@
 
 .intentions-table-cell {
   flex: 1 1 auto;
-  margin: 10px;
+  margin: 14px;
 }
 
 .intentions-table-button {

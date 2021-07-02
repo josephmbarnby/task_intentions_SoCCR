@@ -4,6 +4,8 @@ import 'jspsych/jspsych';
 declare const jsPsych: any;
 
 // Stylesheets
+import 'jspsych/css/jspsych.css';
+import 'spin.js/spin.css';
 import './css/styles.css';
 
 // Core modules
