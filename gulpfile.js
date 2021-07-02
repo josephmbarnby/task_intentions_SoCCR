@@ -7,7 +7,7 @@ const del = require('del');
  * @param {function} cb callback function
  */
 function style(cb) {
-  gulp.src(['src/*.js', '!node_modules/**'])
+  gulp.src(['src/*.ts', '!node_modules/**', '!dist/**'])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failAfterError());

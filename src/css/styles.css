@@ -1,3 +1,9 @@
+/* Import jsPsych styling */
+@import url("/node_modules/jspsych/css/jspsych.css");
+
+/* Import spin.js styling */
+@import url("/node_modules/spin.js/spin.css");
+
 /* Global jsPsych styling */
 .jspsych-content {
   font-size: x-large;

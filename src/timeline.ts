@@ -1,3 +1,7 @@
+// Configuration and data
+import {config} from "./config"
+import {spreadsheet} from "./spreadsheet.data"
+
 // jsPsych imports
 import 'jspsych/jspsych'
 import 'jspsych/plugins/jspsych-instructions'
@@ -7,10 +11,6 @@ declare var jsPsych: any
 
 // Import the plugin before adding it to the timeline
 import './plugin'
-
-// Configuration and data
-import {config} from "./config"
-import {spreadsheet} from "./spreadsheet.data"
 
 // Import and configure seedrandom
 import * as seedrandom from 'seedrandom'
@@ -79,7 +79,7 @@ for (let i = 0; i < spreadsheet.rows.length; i++) {
 
 // -------------------- jsPsych --------------------
 jsPsych.init({
-  display_element: 'jspsych-target',
+  display_element: 'gorilla',
   timeline: timeline,
   on_finish: function() {
     if (config.target === 'desktop') {

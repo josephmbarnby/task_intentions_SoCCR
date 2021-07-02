@@ -4,7 +4,6 @@ import 'jspsych/jspsych'
 declare var jsPsych: any;
 
 // Stylesheets
-import 'jspsych/css/jspsych.css'
 import './css/styles.css'
 
 import {spreadsheet} from "./spreadsheet.data";

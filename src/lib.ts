@@ -1,5 +1,4 @@
 import { Spinner } from 'spin.js'
-import 'spin.js/spin.css'
 
 /**
  * Screen interface defining the methods and attributes of
