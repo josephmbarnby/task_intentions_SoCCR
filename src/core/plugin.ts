@@ -43,18 +43,30 @@ jsPsych.plugins['intentions-game'] = (function() {
   plugin.trial = function(displayElement: HTMLElement, trial: any) {
     const _graphics = new Graphics(displayElement);
 
-    ReactDOM.render(ScreenLayout({screen: ChoicesScreen()}), displayElement)
+    const data = spreadsheet.rows[trial.row];
+
+    ReactDOM.render(ScreenLayout({screen: ChoicesScreen({
+      rowData: data
+    })}), displayElement);
 
     // Present a different screen based on the stage of the trial
-    // if (trial.stage === 'choice') {
-    //   trialChoice(displayElement, trial);
-    // } else if (trial.stage === 'match') {
-    //   trialMatching(displayElement, trial);
-    // } else {
-    //   // Log an error message and finish the trial
-    //   console.error(`Unknown trial stage '${trial.stage}'.`);
-    //   jsPsych.finishTrial({});
-    // }
+    if (trial.stage === 'choice') {
+      ReactDOM.render(
+        ScreenLayout({
+          screen: ChoicesScreen({
+            rowData: data
+          })
+        }),
+        displayElement
+      );
+      // trialChoice(displayElement, trial);
+    } else if (trial.stage === 'match') {
+      trialMatching(displayElement, trial);
+    } else {
+      // Log an error message and finish the trial
+      console.error(`Unknown trial stage '${trial.stage}'.`);
+      jsPsych.finishTrial({});
+    }
   };
 
   /**
