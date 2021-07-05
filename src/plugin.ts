@@ -10,8 +10,9 @@ import './css/styles.css';
 
 // Core modules
 import {spreadsheet} from './spreadsheet.data';
-import {ChoiceScreen, MatchScreen, TrialDataManager} from './lib';
+import {ChoiceScreen, MatchScreen, TrialDataManager} from './core/lib';
 import {config} from './config';
+import { Graphics } from './core/graphics';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -38,16 +39,19 @@ jsPsych.plugins['intentions-game'] = (function() {
   };
 
   plugin.trial = function(displayElement: HTMLElement, trial: any) {
+    const _graphics = new Graphics(displayElement);
+    _graphics.renderComponent();
+
     // Present a different screen based on the stage of the trial
-    if (trial.stage === 'choice') {
-      trialChoice(displayElement, trial);
-    } else if (trial.stage === 'match') {
-      trialMatching(displayElement, trial);
-    } else {
-      // Log an error message and finish the trial
-      console.error(`Unknown trial stage '${trial.stage}'.`);
-      jsPsych.finishTrial({});
-    }
+    // if (trial.stage === 'choice') {
+    //   trialChoice(displayElement, trial);
+    // } else if (trial.stage === 'match') {
+    //   trialMatching(displayElement, trial);
+    // } else {
+    //   // Log an error message and finish the trial
+    //   console.error(`Unknown trial stage '${trial.stage}'.`);
+    //   jsPsych.finishTrial({});
+    // }
   };
 
   /**

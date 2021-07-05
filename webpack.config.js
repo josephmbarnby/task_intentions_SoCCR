@@ -4,7 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    lib: './src/lib.ts',
+    lib: './src/core/lib.ts',
+    graphics: './src/core/graphics.ts',
+    components: './src/core/components.tsx',
     plugin: './src/plugin.ts',
     timeline: './src/timeline.ts',
   },
@@ -22,7 +24,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: 'babel-loader',
         exclude: /node_modules/,
       },
       {
