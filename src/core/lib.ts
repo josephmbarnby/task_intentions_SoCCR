@@ -1,4 +1,4 @@
-import { Graphics } from "./graphics";
+import { Graphics } from "./graphics/graphics";
 
 /**
  * Screen interface defining the methods and attributes of

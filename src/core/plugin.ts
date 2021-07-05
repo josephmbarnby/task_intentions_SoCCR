@@ -6,13 +6,13 @@ declare const jsPsych: any;
 // Stylesheets
 import 'jspsych/css/jspsych.css';
 import 'spin.js/spin.css';
-import './css/styles.css';
+import '../css/styles.css';
 
 // Core modules
-import {spreadsheet} from './spreadsheet.data';
-import {ChoiceScreen, MatchScreen, TrialDataManager} from './core/lib';
-import {config} from './config';
-import { Graphics } from './core/graphics';
+import {spreadsheet} from '../data';
+import {ChoiceScreen, MatchScreen, TrialDataManager} from './lib';
+import {config} from '../config';
+import { Graphics } from './graphics/graphics';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {

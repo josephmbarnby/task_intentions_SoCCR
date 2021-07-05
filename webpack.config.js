@@ -5,10 +5,10 @@ module.exports = {
   mode: 'development',
   entry: {
     lib: './src/core/lib.ts',
-    graphics: './src/core/graphics.ts',
-    components: './src/core/components.tsx',
-    plugin: './src/plugin.ts',
-    timeline: './src/timeline.ts',
+    graphics: './src/core/graphics/graphics.ts',
+    components: './src/core/graphics/components.tsx',
+    plugin: './src/core/plugin.ts',
+    main: './src/main.ts',
   },
   devtool: 'inline-source-map',
   plugins: [

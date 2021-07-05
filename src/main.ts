@@ -1,16 +1,16 @@
 // Configuration and data
 import {config} from './config';
-import {spreadsheet} from './spreadsheet.data';
+import {spreadsheet} from './data';
 
 // Configure jsPsych window variable to make TypeScript happy
 import 'jspsych/jspsych';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 // Import the plugin before adding it to the timeline
-import './plugin';
+import './core/plugin';
 
 // Import and configure seedrandom
-import * as seedrandom from 'seedrandom';
+import seedrandom from 'seedrandom';
 window.Math.random = seedrandom(config.seed);
 
 // Timeline setup
