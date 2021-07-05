@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import { Spinner } from 'spin.js';
-import { Greeting } from './components';
+// import { Greeting } from './components';
 
 /**
  * Graphics class to handle setup and display of stimuli
@@ -16,15 +16,6 @@ import { Greeting } from './components';
   constructor(_target: HTMLElement) {
     this._target = _target;
     this._elements = [];
-  }
-
-  renderComponent() {
-    ReactDOM.render(
-      Greeting({
-        name: 'Henry'
-      }),
-      this._target
-    )
   }
 
   /**

@@ -1,4 +1,5 @@
 import 'jspsych/jspsych';
+import ReactDOM from 'react-dom'
 
 // Make TypeScript happy by declaring jsPsych
 declare const jsPsych: any;
@@ -13,6 +14,7 @@ import {spreadsheet} from '../data';
 import {ChoiceScreen, MatchScreen, TrialDataManager} from './lib';
 import {config} from '../config';
 import { Graphics } from './graphics/graphics';
+import { ChoicesScreen, ScreenLayout } from './graphics/screens';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -40,7 +42,8 @@ jsPsych.plugins['intentions-game'] = (function() {
 
   plugin.trial = function(displayElement: HTMLElement, trial: any) {
     const _graphics = new Graphics(displayElement);
-    _graphics.renderComponent();
+
+    ReactDOM.render(ScreenLayout({screen: ChoicesScreen()}), displayElement)
 
     // Present a different screen based on the stage of the trial
     // if (trial.stage === 'choice') {

@@ -7,6 +7,7 @@ module.exports = {
     lib: './src/core/lib.ts',
     graphics: './src/core/graphics/graphics.ts',
     components: './src/core/graphics/components.tsx',
+    screens: './src/core/graphics/screens.tsx',
     plugin: './src/core/plugin.ts',
     main: './src/main.ts',
   },
