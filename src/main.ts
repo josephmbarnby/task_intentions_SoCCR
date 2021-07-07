@@ -6,6 +6,10 @@ import {spreadsheet} from './data';
 import 'jspsych/jspsych';
 import $ from 'jquery';
 
+// Stylesheets
+import 'jspsych/css/jspsych.css';
+import './css/styles.css';
+
 // Import the plugin before adding it to the timeline
 import './core/plugin';
 
@@ -60,12 +64,19 @@ timeline.push({
   show_clickable_nav: true,
 });
 
+// Insert a 'avatarSelection' screen into the timeline
+timeline.push({
+  type: 'intentions-game',
+  row: -1,
+  stage: 'avatarSelection',
+});
+
 // Insert a 'match' screen into the timeline
-// timeline.push({
-//   type: 'intentions-game',
-//   row: -1,
-//   stage: 'match',
-// });
+timeline.push({
+  type: 'intentions-game',
+  row: -1,
+  stage: 'match',
+});
 
 // Insert the 'choice' screens into the timeline
 for (let i = 0; i < spreadsheet.rows.length; i++) {

@@ -9,9 +9,14 @@ export const config = {
     phaseTwo: 72,
     phaseThree: 36,
   },
-  images: {
-    'partnerOne': '',
-    'partnerTwo': '',
-  },
   seed: 'intentions',
+  // List of avatar names (not displayed, only used to generate avatars)
+  avatars: [
+    'henry',
+    'joe',
+    'jeff',
+    'ryan',
+    'linda',
+    'lisa',
+  ],
 };

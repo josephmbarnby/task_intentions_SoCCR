@@ -1,5 +1,3 @@
-import {config} from './config';
-
 // Default data spreadsheet used in the intentions game
 export const spreadsheet = {
   // Define the headings of the columns here
@@ -15,18 +13,5 @@ export const spreadsheet = {
     {Option1_PPT: 8, Option1_Partner: 2, Option2_PPT: 10, Option2_Partner: 5},
     {Option1_PPT: 8, Option1_Partner: 7, Option2_PPT: 10, Option2_Partner: 7},
     {Option1_PPT: 8, Option1_Partner: 4, Option2_PPT: 34, Option2_Partner: 1},
-  ],
-  // List of partners and their associated graphics
-  partners: [
-    {
-      name: 'partnerOne',
-      image: config.images['partnerOne'],
-      type: 'competitive',
-    },
-    {
-      name: 'partnerTwo',
-      image: config.images['partnerTwo'],
-      type: 'competitive',
-    },
   ],
 };

@@ -1,5 +1,6 @@
 body {
-  background-color: teal;
+  /* background-color: teal; */
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,128,128,1) 0%, rgba(1,198,198,1) 100%);
   color: azure;
 }
 
