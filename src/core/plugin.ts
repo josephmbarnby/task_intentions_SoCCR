@@ -13,7 +13,6 @@ import '../css/styles.css';
 import {spreadsheet} from '../data';
 import {ChoiceScreen, MatchScreen, TrialDataManager} from './lib';
 import {config} from '../config';
-import { Graphics } from './graphics/graphics';
 import { AvatarSelectionScreen, ChoicesScreen, ScreenLayout } from './graphics/screens';
 
 jsPsych.plugins['intentions-game'] = (function() {
@@ -43,19 +42,29 @@ jsPsych.plugins['intentions-game'] = (function() {
   };
 
   plugin.trial = function(displayElement: HTMLElement, trial: any) {
-    const _graphics = new Graphics(displayElement);
+    // Record the starting time
+    const _startTime = performance.now();
+
+    // Setup data storage
+    const trialData = {
+      playerPoints: 0,
+      partnerPoints: 0,
+      selectionOption: -1,
+      rt: 0,
+    };
 
     // Present a different screen based on the stage of the trial
     if (trial.stage === 'choice') {
-      const data = spreadsheet.rows[trial.row];
       ReactDOM.render(
         ScreenLayout({
           screen: ChoicesScreen({
-            rowData: data
+            rowData: spreadsheet.rows[trial.row],
+            buttonHandler: choiceSelectionHandler,
           })
         }),
         displayElement
       );
+
       // trialChoice(displayElement, trial);
     } else if (trial.stage === 'match') {
       ReactDOM.render(
@@ -70,76 +79,37 @@ jsPsych.plugins['intentions-game'] = (function() {
       console.error(`Unknown trial stage '${trial.stage}'.`);
       jsPsych.finishTrial({});
     }
-  };
-
-  /**
-   * Run a 'choice' type trial
-   * @param {HTMLElement} displayElement target HTML element
-   * @param {any} trial jsPsych trial data
-   */
-  function trialChoice(displayElement: HTMLElement, trial: any): void {
-    // Setup data storage
-    const trialData = {
-      playerPoints: 0,
-      partnerPoints: 0,
-      playerSelection: -1,
-      partnerSelection: -1,
-      rt: 0,
-    };
-
-    // Retrieve the data from the spreadsheet
-    const data = spreadsheet.rows[trial.row];
-
-    // Instantiate data listeners
-    const dataManager = new TrialDataManager(trialData, {
-      mouse: true,
-      keypress: true,
-    });
-
-    // Instantiate classes
-    const choiceScreen = new ChoiceScreen(displayElement);
-
-    choiceScreen.display(data);
-    choiceScreen.link(choiceHandler);
-
-    // Start timing
-    const _startTime = performance.now();
-
-    // Start data collection
-    dataManager.start();
 
     /**
      * Handle Button-press events in a particular trial
-     * @param {any} event information pertaining to the event
+     * @param {string} _option selected option
      */
-    function choiceHandler(event: any) {
+    function choiceSelectionHandler(_option: string) {
       const _endTime = performance.now();
       const _duration = _endTime - _startTime;
-      dataManager.setField('rt', _duration);
+      trialData.rt = _duration;
 
-      if (event.buttonId.startsWith('optionOne')) {
+      if (_option === 'optionOne') {
         // Participant chose option 1
-        dataManager.setField('selectionOption', 1);
+        trialData.selectionOption = 1;
 
         // Update the score with values of option 1
-        dataManager.setField('playerPoints', data['Option1_PPT']);
-        dataManager.setField('partnerPoints', data['Option1_Partner']);
-      } else if (event.buttonId.startsWith('optionTwo')) {
+        trialData.playerPoints = spreadsheet.rows[trial.row]['Option1_PPT'];
+        trialData.partnerPoints = spreadsheet.rows[trial.row]['Option1_Partner'];
+      } else if (_option === 'optionTwo') {
         // Participant chose option 2
-        dataManager.setField('selectionOption', 2);
+        trialData.selectionOption = 2;
 
         // Update the score with values of option 2
-        dataManager.setField('playerPoints', data['Option2_PPT']);
-        dataManager.setField('partnerPoints', data['Option2_Partner']);
+        trialData.playerPoints = spreadsheet.rows[trial.row]['Option2_PPT'];
+        trialData.partnerPoints = spreadsheet.rows[trial.row]['Option2_Partner'];
       }
 
-      // Clear the graphics
-      choiceScreen.finish();
-
       // End trial
-      jsPsych.finishTrial(dataManager.export());
+      jsPsych.finishTrial(trialData);
     }
-  }
+  };
+  
 
   /**
    * Run a 'match' type trial

@@ -51,7 +51,15 @@ function ChoicesGrid(props) {
           fontSize="2xl"
           padding={6}
         >
-          <Button colorScheme="teal" size="lg">Option 1</Button>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => {
+              props.buttonHandler('optionOne');
+            }}
+          >
+            Option 1
+          </Button>
         </Box>
 
         {/* Second Option */}
@@ -77,7 +85,15 @@ function ChoicesGrid(props) {
           fontSize="2xl"
           padding={6}
         >
-          <Button colorScheme="teal" size="lg">Option 2</Button>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => {
+              props.buttonHandler('optionTwo');
+            }}
+          >
+            Option 2
+          </Button>
         </Box>
       </SimpleGrid>
     </div>
@@ -92,9 +108,9 @@ export function ScreenLayout(props: { screen: any; }) {
   );
 }
 
-export function ChoicesScreen(props: { rowData: any }) {
+export function ChoicesScreen(props: { rowData: any, buttonHandler: any }) {
   return (
-    <ChoicesGrid rowData={props.rowData} />
+    <ChoicesGrid rowData={props.rowData} buttonHandler={props.buttonHandler} />
   );
 }
 
