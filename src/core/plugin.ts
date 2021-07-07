@@ -14,12 +14,14 @@ import {spreadsheet} from '../data';
 import {ChoiceScreen, MatchScreen, TrialDataManager} from './lib';
 import {config} from '../config';
 import { Graphics } from './graphics/graphics';
-import { ChoicesScreen, ScreenLayout } from './graphics/screens';
+import { AvatarSelectionScreen, ChoicesScreen, ScreenLayout } from './graphics/screens';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
     info: {},
-    trial: function(displayElement: HTMLElement, trial: any) {},
+    trial: (displayElement: HTMLElement, trial: any) => {
+      console.error(`Trial not implemented correctly.`);
+    },
   };
 
   plugin.info = {
@@ -43,14 +45,9 @@ jsPsych.plugins['intentions-game'] = (function() {
   plugin.trial = function(displayElement: HTMLElement, trial: any) {
     const _graphics = new Graphics(displayElement);
 
-    const data = spreadsheet.rows[trial.row];
-
-    ReactDOM.render(ScreenLayout({screen: ChoicesScreen({
-      rowData: data
-    })}), displayElement);
-
     // Present a different screen based on the stage of the trial
     if (trial.stage === 'choice') {
+      const data = spreadsheet.rows[trial.row];
       ReactDOM.render(
         ScreenLayout({
           screen: ChoicesScreen({
@@ -61,7 +58,13 @@ jsPsych.plugins['intentions-game'] = (function() {
       );
       // trialChoice(displayElement, trial);
     } else if (trial.stage === 'match') {
-      trialMatching(displayElement, trial);
+      ReactDOM.render(
+        ScreenLayout({
+          screen: AvatarSelectionScreen()
+        }),
+        displayElement
+      );
+      // trialMatching(displayElement, trial);
     } else {
       // Log an error message and finish the trial
       console.error(`Unknown trial stage '${trial.stage}'.`);

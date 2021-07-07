@@ -1,85 +1,94 @@
+// UI components
 import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+import { ChakraProvider } from '@chakra-ui/react';
+import { SimpleGrid, Button, Container, Box } from '@chakra-ui/react';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(4),
-      textAlign: 'center',
-      color: theme.palette.text.primary,
-      background: theme.palette.primary.light,
-    },
-    selectButton: {
-      padding: theme.spacing(4),
-      width: '100%',
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    }
-  }),
-);
+// Additional components
+import Avatar from 'boring-avatars';
 
 function ChoicesGrid(props) {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <Grid container spacing={4} alignItems='center' justify='center'>
-        {/* Heading row */}
-        <Grid item xs={4}>
-          <h1>Points for you</h1>
-        </Grid>
-        <Grid item xs={4}>
-          <h1>Points for your partner</h1>
-        </Grid>
-        <Grid item xs={4}>
-          {/* <Paper className={classes.paper}>xs=4</Paper> */}
-        </Grid>
+    <div>
+      <SimpleGrid columns={3} gap={6}>
+        <Box
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="3xl"
+        >
+          Points for you
+        </Box>
+        <Box
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="3xl"
+        >
+          Points for your partner
+        </Box>
+        <Box>
+          {/* Empty */}
+        </Box>
 
-        {/* First points row */}
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <h2>{props.rowData.Option1_PPT}</h2>
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <h2>{props.rowData.Option1_Partner}</h2>
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Button className={classes.selectButton} variant="contained">Option 1</Button>
-        </Grid>
+        {/* First Option */}
+        <Box
+          fontWeight="regular"
+          letterSpacing="wide"
+          fontSize="2xl"
+          padding={6}
+        >
+          {props.rowData.Option1_PPT}
+        </Box>
+        <Box
+          fontWeight="regular"
+          letterSpacing="wide"
+          fontSize="2xl"
+          padding={6}
+        >
+          {props.rowData.Option1_Partner}
+        </Box>
+        <Box
+          fontWeight="regular"
+          letterSpacing="wide"
+          fontSize="2xl"
+          padding={6}
+        >
+          <Button colorScheme="teal" size="lg">Option 1</Button>
+        </Box>
 
-        {/* Second points row */}
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <h2>{props.rowData.Option2_PPT}</h2>
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <h2>{props.rowData.Option2_Partner}</h2>
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Button className={classes.selectButton} variant="contained">Option 2</Button>
-        </Grid>
-      </Grid>
+        {/* Second Option */}
+        <Box
+          fontWeight="regular"
+          letterSpacing="wide"
+          fontSize="2xl"
+          padding={6}
+        >
+          {props.rowData.Option2_PPT}
+        </Box>
+        <Box
+          fontWeight="regular"
+          letterSpacing="wide"
+          fontSize="2xl"
+          padding={6}
+        >
+          {props.rowData.Option2_Partner}
+        </Box>
+        <Box
+          fontWeight="regular"
+          letterSpacing="wide"
+          fontSize="2xl"
+          padding={6}
+        >
+          <Button colorScheme="teal" size="lg">Option 2</Button>
+        </Box>
+      </SimpleGrid>
     </div>
   );
 }
 
 export function ScreenLayout(props: { screen: any; }) {
   return (
-    <Container>
+    <ChakraProvider>
       {props.screen}
-    </Container>
+    </ChakraProvider>
   );
 }
 
@@ -92,7 +101,12 @@ export function ChoicesScreen(props: { rowData: any }) {
 export function AvatarSelectionScreen() {
   return (
     <Container>
-
+      <Avatar
+        size={40}
+        name="Maria Mitchell"
+        variant="beam"
+        colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+      />
     </Container>
   );
 }
