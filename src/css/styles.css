@@ -1,6 +1,7 @@
+@import 'jspsych/css/jspsych.css';
+
 body {
-  /* background-color: teal; */
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,128,128,1) 0%, rgba(1,198,198,1) 100%);
+  background: teal;
   color: azure;
 }
 
@@ -38,4 +39,10 @@ body {
 
 .instructions-emphasis {
   font-weight: bold;
+}
+
+/* Custom buttons */
+.btn-teal {
+  background-color: azure;
+  color: teal;
 }

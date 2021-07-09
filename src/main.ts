@@ -6,10 +6,6 @@ import {spreadsheet} from './data';
 import 'jspsych/jspsych';
 import $ from 'jquery';
 
-// Stylesheets
-import 'jspsych/css/jspsych.css';
-import './css/styles.css';
-
 // Import the plugin before adding it to the timeline
 import './core/plugin';
 

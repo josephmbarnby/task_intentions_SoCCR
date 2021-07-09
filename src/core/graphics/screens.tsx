@@ -1,8 +1,12 @@
 // UI components
 import React from 'react';
 import { render } from 'react-dom';
-import { ChakraProvider, Heading, LinkBox, Select, Skeleton, Spinner, Stack, SimpleGrid, Button, Container, Box } from '@chakra-ui/react';
+import { Container, Row, Col, Button, Card, CardGroup, Form, Spinner } from 'react-bootstrap';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+
+// Import styling
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../css/styles.css';
 
 // Additional components
 import Avatar from 'boring-avatars';
@@ -13,103 +17,69 @@ import { spreadsheet } from '../../data';
 
 function ChoicesGrid(props) {
   return (
-    <div>
-      <SimpleGrid columns={3} gap={6}>
-        <Box
-          fontWeight="semibold"
-          letterSpacing="wide"
-          fontSize="3xl"
-        >
-          Points for you
-        </Box>
-        <Box
-          fontWeight="semibold"
-          letterSpacing="wide"
-          fontSize="3xl"
-        >
-          Points for your partner
-        </Box>
-        <Box>
-          {/* Empty */}
-        </Box>
+    <Container>
+      <Container>
+        <Row>
+          <Col>
+            Points for you
+          </Col>
+          <Col>
+            Points for your partner
+          </Col>
+          <Col>
+            {/* Empty */}
+          </Col>
+        </Row>
 
         {/* First Option */}
-        <Box
-          fontWeight="regular"
-          letterSpacing="wide"
-          fontSize="2xl"
-          padding={6}
-        >
-          {props.rowData.Option1_PPT}
-        </Box>
-        <Box
-          fontWeight="regular"
-          letterSpacing="wide"
-          fontSize="2xl"
-          padding={6}
-        >
-          {props.rowData.Option1_Partner}
-        </Box>
-        <Box
-          fontWeight="regular"
-          letterSpacing="wide"
-          fontSize="2xl"
-          padding={6}
-        >
-          <Button
-            colorScheme="teal"
-            size="lg"
-            onClick={() => {
-              props.buttonHandler('optionOne');
-            }}
-          >
-            Option 1
-          </Button>
-        </Box>
+        <Row>
+          <Col>
+            {props.rowData.Option1_PPT}
+          </Col>
+          <Col>
+            {props.rowData.Option1_Partner}
+          </Col>
+          <Col>
+            <Button
+              size="lg"
+              onClick={() => {
+                props.buttonHandler('optionOne');
+              }}
+            >
+              Option 1
+            </Button>
+          </Col>
+        </Row>
 
         {/* Second Option */}
-        <Box
-          fontWeight="regular"
-          letterSpacing="wide"
-          fontSize="2xl"
-          padding={6}
-        >
-          {props.rowData.Option2_PPT}
-        </Box>
-        <Box
-          fontWeight="regular"
-          letterSpacing="wide"
-          fontSize="2xl"
-          padding={6}
-        >
-          {props.rowData.Option2_Partner}
-        </Box>
-        <Box
-          fontWeight="regular"
-          letterSpacing="wide"
-          fontSize="2xl"
-          padding={6}
-        >
-          <Button
-            colorScheme="teal"
-            size="lg"
-            onClick={() => {
-              props.buttonHandler('optionTwo');
-            }}
-          >
-            Option 2
-          </Button>
-        </Box>
-      </SimpleGrid>
-    </div>
+        <Row>
+          <Col>
+            {props.rowData.Option2_PPT}
+          </Col>
+          <Col>
+            {props.rowData.Option2_Partner}
+          </Col>
+          <Col>
+            <Button
+              size="lg"
+              onClick={() => {
+                props.buttonHandler('optionTwo');
+              }}
+            >
+              Option 1
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+    </Container>
   );
 }
 
 function ScreenLayout(props: { screen: any; }) {
   return (
-    <ChakraProvider>
+    <Container>
       {props.screen}
-    </ChakraProvider>
+    </Container>
   );
 }
 
@@ -124,17 +94,24 @@ function AvatarSelectionScreen(props) {
   const _selectComponents = [];
   for (let a = 0; a < config.avatars.length; a++) {
     _avatarComponents.push(
-      <LinkBox key={a} as="article" maxW="sm" p="5" borderWidth="1px" rounded="md">
-        <Heading size="md" my="2">
-          {a + 1}
-        </Heading>
-        <Avatar
-          size={64}
-          name={config.avatars[a]}
-          variant="beam"
-          colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
-        />
-      </LinkBox>
+      <Col>
+        <Card
+          className="m-2"
+          style={{
+            color: 'black',
+          }}
+        >
+          <Card.Header>{a + 1}</Card.Header>
+          <Card.Body>
+            <Avatar
+              size={64}
+              name={config.avatars[a]}
+              variant="beam"
+              colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+            />
+          </Card.Body>
+        </Card>
+      </Col>
     );
     _selectComponents.push(
         <option key={a} value={`avatar${a + 1}`}>Avatar {a + 1}</option>
@@ -143,28 +120,33 @@ function AvatarSelectionScreen(props) {
 
   return (
     <Container>
-      <Heading padding={4}>
+      <h1>
         Select your avatar!
-      </Heading>
-      <Skeleton isLoaded>
-        <SimpleGrid columns={config.avatars.length} gap={4} padding={4}>
+      </h1>
+        <Row className="m-1">
           {_avatarComponents}
-        </SimpleGrid>
-        <Stack direction="row" spacing={4} padding={4}>
-        <Select id={'avatarSelection'}>
-          {_selectComponents}
-        </Select>
-        <Button
-          rightIcon={<AiOutlineArrowRight />}
-          colorScheme="teal"
-          onClick={() => {
-            props.avatarSelectionHandler()
-          }}
-        >
-          Select
-        </Button>
-      </Stack>
-      </Skeleton>
+        </Row>
+        <Form className="p-4">
+          <Row>
+            <Col>
+              <Form.Control as="select" >
+                {_selectComponents}
+              </Form.Control>
+            </Col>
+            <Col xs="auto">
+              <Button
+                variant="teal"
+                onClick={() => {
+                  props.avatarSelectionHandler()
+                }}
+              >
+                Select <AiOutlineArrowRight />
+              </Button>
+            </Col>
+          </Row>
+          
+        </Form>
+        
     </Container>
   );
 }
@@ -172,17 +154,10 @@ function AvatarSelectionScreen(props) {
 function MatchScreen(props) {
   return (
     <Container>
-      <Heading padding={4}>
+      <h1>
         Matching you with another user...
-      </Heading>
-      <Spinner
-        padding={4}
-        thickness="4px"
-        speed="1.25s"
-        emptyColor="teal.200"
-        color="teal.400"
-        size="xl"
-      />
+      </h1>
+      <Spinner animation="border" role="status"></Spinner>
     </Container>
   )
 }
