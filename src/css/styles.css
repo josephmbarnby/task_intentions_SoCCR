@@ -1,10 +1,5 @@
 @import 'jspsych/css/jspsych.css';
 
-body {
-  background: teal;
-  color: azure;
-}
-
 /* Global jsPsych styling */
 .jspsych-content {
   font-size: x-large;

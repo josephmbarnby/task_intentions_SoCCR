@@ -68,11 +68,11 @@ timeline.push({
 });
 
 // Insert a 'match' screen into the timeline
-timeline.push({
-  type: 'intentions-game',
-  row: -1,
-  stage: 'match',
-});
+// timeline.push({
+//   type: 'intentions-game',
+//   row: -1,
+//   stage: 'match',
+// });
 
 // Insert the 'choice' screens into the timeline
 for (let i = 0; i < spreadsheet.rows.length; i++) {

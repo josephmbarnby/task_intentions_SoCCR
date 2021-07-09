@@ -1,11 +1,12 @@
 // UI components
 import React from 'react';
 import { render } from 'react-dom';
-import { Container, Row, Col, Button, Card, CardGroup, Form, Spinner } from 'react-bootstrap';
+// import { Container, Row, Col, Button, Card, CardGroup, Form, Spinner } from 'react-bootstrap';
+import { Grid, Box, Grommet, Heading, Card, Button, CardHeader, CardBody, CardFooter, DropButton, Menu, Select } from 'grommet';
+import { Favorite, ShareOption } from 'grommet-icons';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
 // Import styling
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/styles.css';
 
 // Additional components
@@ -17,69 +18,79 @@ import { spreadsheet } from '../../data';
 
 function ChoicesGrid(props) {
   return (
-    <Container>
-      <Container>
-        <Row>
-          <Col>
-            Points for you
-          </Col>
-          <Col>
-            Points for your partner
-          </Col>
-          <Col>
-            {/* Empty */}
-          </Col>
-        </Row>
+    <>
+      {/* <Row className="m-2 g-2">
+        <Col xs="auto">
+          Points for you
+        </Col>
+        <Col xs="auto">
+          Points for your partner
+        </Col>
+        <Col>
+        </Col>
+      </Row>
 
-        {/* First Option */}
-        <Row>
-          <Col>
-            {props.rowData.Option1_PPT}
-          </Col>
-          <Col>
-            {props.rowData.Option1_Partner}
-          </Col>
-          <Col>
-            <Button
-              size="lg"
-              onClick={() => {
-                props.buttonHandler('optionOne');
-              }}
-            >
-              Option 1
-            </Button>
-          </Col>
-        </Row>
+      <Row className="m-2 g-2">
+        <Col xs="auto">
+          <Card
+            style={{
+              color: 'black',
+            }}
+          >
+            <Card.Body>{props.rowData.Option1_PPT}</Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card
+            style={{
+              color: 'black',
+            }}
+          >
+            <Card.Body>{props.rowData.Option1_Partner}</Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Button
+            size="lg"
+            variant="teal"
+            onClick={() => {
+              props.buttonHandler('optionOne');
+            }}
+          >
+            Option 1
+          </Button>
+        </Col>
+      </Row> */}
 
-        {/* Second Option */}
-        <Row>
-          <Col>
-            {props.rowData.Option2_PPT}
-          </Col>
-          <Col>
-            {props.rowData.Option2_Partner}
-          </Col>
-          <Col>
-            <Button
-              size="lg"
-              onClick={() => {
-                props.buttonHandler('optionTwo');
-              }}
-            >
-              Option 1
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-    </Container>
+      {/* <Row className="m-2 g-2">
+        <Col>
+          {props.rowData.Option2_PPT}
+        </Col>
+        <Col>
+          {props.rowData.Option2_Partner}
+        </Col>
+        <Col>
+          <Button
+            size="lg"
+            variant="teal"
+            onClick={() => {
+              props.buttonHandler('optionTwo');
+            }}
+          >
+            Option 1
+          </Button>
+        </Col>
+      </Row>
+      <div class="w-100"></div> */}
+    </>
   );
 }
 
 function ScreenLayout(props: { screen: any; }) {
   return (
-    <Container>
+    <Grommet>
       {props.screen}
-    </Container>
+    </Grommet>
   );
 }
 
@@ -89,76 +100,120 @@ function ChoicesScreen(props: { rowData: any, buttonHandler: any }) {
   );
 }
 
+function AvatarSelect(props) {
+  const [value, setValue] = React.useState('medium');
+  return (
+    <Select
+      options={props.items}
+      value={value}
+      onChange={({ option }) => setValue(option)}
+      placeholder="Select an Avatar..."
+    />
+  );
+}
+
 function AvatarSelectionScreen(props) {
   const _avatarComponents = [];
   const _selectComponents = [];
+  const _areas = [];
+  const _items = [];
+  const _columns = [];
   for (let a = 0; a < config.avatars.length; a++) {
     _avatarComponents.push(
-      <Col>
-        <Card
-          className="m-2"
-          style={{
-            color: 'black',
-          }}
-        >
-          <Card.Header>{a + 1}</Card.Header>
-          <Card.Body>
+      <Box gridArea={`avatar${a+1}`}>
+        <Card height="small" width="small" background="light-1">
+          <CardBody
+            pad="medium"
+            alignContent="center"
+            alignSelf="center"
+            animation={
+              "pulse"
+            }
+          >
             <Avatar
-              size={64}
+              size={120}
               name={config.avatars[a]}
               variant="beam"
               colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
             />
-          </Card.Body>
-        </Card>
-      </Col>
+          </CardBody>
+          <CardFooter pad={{horizontal: "small"}} background="light-2" alignContent="center">   
+          Avatar {a + 1}
+          </CardFooter>
+      </Card>
+    </Box>
     );
+  
     _selectComponents.push(
         <option key={a} value={`avatar${a + 1}`}>Avatar {a + 1}</option>
     );
+
+    _areas.push(
+      {
+        name: `avatar${a + 1}`,
+        start: [a, 0],
+        end: [a, 0]
+      }
+    );
+
+    _items.push(
+      `Avatar ${a + 1}`
+    );
+
+    _columns.push('small');
   }
 
+  _areas.push({
+    name: 'continue',
+    start: [config.avatars.length - 1, 1],
+    end: [config.avatars.length - 1, 1]
+  });
+
+  _areas.push({
+    name: 'select',
+    start: [0, 1],
+    end: [config.avatars.length - 2, 1]
+  });
+
   return (
-    <Container>
-      <h1>
+    <Box>
+      <Heading>
         Select your avatar!
-      </h1>
-        <Row className="m-1">
-          {_avatarComponents}
-        </Row>
-        <Form className="p-4">
-          <Row>
-            <Col>
-              <Form.Control as="select" >
-                {_selectComponents}
-              </Form.Control>
-            </Col>
-            <Col xs="auto">
-              <Button
-                variant="teal"
-                onClick={() => {
-                  props.avatarSelectionHandler()
-                }}
-              >
-                Select <AiOutlineArrowRight />
-              </Button>
-            </Col>
-          </Row>
-          
-        </Form>
-        
-    </Container>
+      </Heading>
+      {/* {_avatarComponents} */}
+      <Grid
+        rows={['small', 'auto']}
+        columns={_columns}
+        gap="small"
+        areas={_areas}
+        alignContent="center"
+        justifyContent="center"
+      >
+        {_avatarComponents}
+        <Box gridArea="select">
+          <AvatarSelect items={_items} />
+        </Box>
+        <Box
+          gridArea="continue"
+          alignContent="center"
+          justify="center"
+          alignSelf="center"
+        >
+          <Button primary label="Continue"></Button>
+        </Box>
+      </Grid>        
+    </Box>
   );
 }
 
 function MatchScreen(props) {
   return (
-    <Container>
+    <Box>
       <h1>
         Matching you with another user...
       </h1>
-      <Spinner animation="border" role="status"></Spinner>
-    </Container>
+      {/* <Spinner animation="border" role="status"></Spinner> */}
+    </Box>
   )
 }
 
