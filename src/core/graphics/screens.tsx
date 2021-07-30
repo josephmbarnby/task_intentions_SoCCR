@@ -1,7 +1,6 @@
 // UI components
 import React from 'react';
 import { render } from 'react-dom';
-// import { Container, Row, Col, Button, Card, CardGroup, Form, Spinner } from 'react-bootstrap';
 import { Grid, Box, Grommet, Heading, Card, Button, CardHeader, CardBody, CardFooter, DropButton, Menu, Select } from 'grommet';
 import { Favorite, ShareOption } from 'grommet-icons';
 import { AiOutlineArrowRight } from 'react-icons/ai';
@@ -101,14 +100,45 @@ function ChoicesScreen(props: { rowData: any, buttonHandler: any }) {
 }
 
 function AvatarSelect(props) {
+  // Configure relevant states
   const [value, setValue] = React.useState('medium');
+  const [isDisabled, setDisabled] = React.useState(true);
+
   return (
-    <Select
-      options={props.items}
-      value={value}
-      onChange={({ option }) => setValue(option)}
-      placeholder="Select an Avatar..."
-    />
+    <Grid
+        rows={['small', 'auto']}
+        columns={props.columns}
+        gap="small"
+        areas={props.gridAreas}
+        alignContent="center"
+        justifyContent="center"
+    >
+      {props.avatars}
+      <Box gridArea="select">
+      <Select
+          options={props.items}
+          value={value}
+          onChange={({ option }) => {
+            setValue(option);
+            setDisabled(false);
+          }}
+          placeholder="Select an Avatar..."
+        />
+      </Box>
+      <Box
+        gridArea="continue"
+        alignContent="center"
+        justify="center"
+        alignSelf="center"
+      >
+        <Button
+          primary
+          label="Continue"
+          disabled={isDisabled}
+          onClick={props.avatarSelectionHandler}
+        ></Button>
+      </Box>
+    </Grid>
   );
 }
 
@@ -138,10 +168,10 @@ function AvatarSelectionScreen(props) {
             />
           </CardBody>
           <CardFooter pad={{horizontal: "small"}} background="light-2" alignContent="center">   
-          Avatar {a + 1}
+            Avatar {a + 1}
           </CardFooter>
-      </Card>
-    </Box>
+        </Card>
+      </Box>
     );
   
     _selectComponents.push(
@@ -180,28 +210,13 @@ function AvatarSelectionScreen(props) {
       <Heading>
         Select your avatar!
       </Heading>
-      {/* {_avatarComponents} */}
-      <Grid
-        rows={['small', 'auto']}
+      <AvatarSelect 
         columns={_columns}
-        gap="small"
-        areas={_areas}
-        alignContent="center"
-        justifyContent="center"
-      >
-        {_avatarComponents}
-        <Box gridArea="select">
-          <AvatarSelect items={_items} />
-        </Box>
-        <Box
-          gridArea="continue"
-          alignContent="center"
-          justify="center"
-          alignSelf="center"
-        >
-          <Button primary label="Continue"></Button>
-        </Box>
-      </Grid>        
+        gridAreas={_areas}
+        avatars={_avatarComponents}
+        items={_items}
+        avatarSelectionHandler={props.avatarSelectionHandler}
+      />
     </Box>
   );
 }

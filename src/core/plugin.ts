@@ -134,6 +134,7 @@ jsPsych.plugins['intentions-game'] = (function() {
         _avatar = _selection.selectedIndex;
       }
       trialData.avatar = _avatar;
+      console.debug(`Selected avatar: `, trialData.avatar);
 
       // End trial
       jsPsych.finishTrial(trialData);
