@@ -99,7 +99,7 @@ function ChoicesScreen(props: { rowData: any, buttonHandler: any }) {
   );
 }
 
-function AvatarSelect(props) {
+function AvatarSelect(props: { columns: any; gridAreas: any; avatars: any; items: any; avatarSelectionHandler: any; }) {
   // Configure relevant states
   const [value, setValue] = React.useState('medium');
   const [isDisabled, setDisabled] = React.useState(true);
@@ -120,6 +120,7 @@ function AvatarSelect(props) {
           value={value}
           onChange={({ option }) => {
             setValue(option);
+            // Enable the 'Continue' button
             setDisabled(false);
           }}
           placeholder="Select an Avatar..."
@@ -135,7 +136,9 @@ function AvatarSelect(props) {
           primary
           label="Continue"
           disabled={isDisabled}
-          onClick={props.avatarSelectionHandler}
+          onClick={() => {
+            props.avatarSelectionHandler(value);
+          }}
         ></Button>
       </Box>
     </Grid>

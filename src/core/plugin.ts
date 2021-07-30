@@ -1,5 +1,4 @@
 import 'jspsych/jspsych';
-// import ReactDOM from 'react-dom'
 
 // Make TypeScript happy by declaring jsPsych
 declare const jsPsych: any;
@@ -13,7 +12,7 @@ jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
     info: {},
     trial: (displayElement: HTMLElement, trial: any) => {
-      console.error(`Trial not implemented correctly.`);
+      console.error(`Not implemented.`);
     },
   };
 
@@ -47,7 +46,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       partnerPoints: 0,
       selectionOption: -1,
       rt: 0,
-      avatar: -1,
+      avatar: '',
     };
     console.debug(`Running trial stage '${trial.stage}'`);
 
@@ -58,39 +57,13 @@ jsPsych.plugins['intentions-game'] = (function() {
           buttonHandler: choiceSelectionHandler,
         }
       );
-      // Get the selected avatar
-      // ReactDOM.render(
-      //   ScreenLayout({
-      //     screen: ChoicesScreen({
-      //       rowData: spreadsheet.rows[trial.row],
-      //       buttonHandler: choiceSelectionHandler,
-      //     })
-      //   }),
-      //   displayElement
-      // );
     } else if (trial.stage === 'avatarSelection') {
       displayScreen('avatarSelection', displayElement, {
         avatarSelectionHandler: avatarSelectionHandler
       });
-      // ReactDOM.render(
-      //   ScreenLayout({
-      //     screen: AvatarSelectionScreen({
-      //       avatarSelectionHandler: avatarSelectionHandler
-      //     })
-      //   }),
-      //   displayElement
-      // );
     } else if (trial.stage === 'match') {
       displayScreen('match', displayElement, {});
-      // ReactDOM.render(
-      //   ScreenLayout({
-      //     screen: MatchScreen({})
-      //   }),
-      //   displayElement
-      // );
-
       // Set a timeout to move on
-
     } else {
       // Log an error message and finish the trial
       console.error(`Unknown trial stage '${trial.stage}'`);
@@ -126,14 +99,9 @@ jsPsych.plugins['intentions-game'] = (function() {
       jsPsych.finishTrial(trialData);
     }
 
-    function avatarSelectionHandler() {
+    function avatarSelectionHandler(_selection: string) {
       // Obtain the selected avatar
-      const _selection = document.getElementById('avatarSelection') as HTMLSelectElement;
-      let _avatar = 0;
-      if (_selection) {
-        _avatar = _selection.selectedIndex;
-      }
-      trialData.avatar = _avatar;
+      trialData.avatar = _selection;
       console.debug(`Selected avatar: `, trialData.avatar);
 
       // End trial
