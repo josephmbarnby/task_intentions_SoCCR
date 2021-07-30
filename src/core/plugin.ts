@@ -46,7 +46,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       partnerPoints: 0,
       selectionOption: -1,
       rt: 0,
-      avatar: '',
+      avatar: -1,
     };
     console.debug(`Running trial stage '${trial.stage}'`);
 
@@ -101,7 +101,8 @@ jsPsych.plugins['intentions-game'] = (function() {
 
     function avatarSelectionHandler(_selection: string) {
       // Obtain the selected avatar
-      trialData.avatar = _selection;
+      const _avatarSelection = _selection.split(' ')
+      trialData.avatar = parseInt(_avatarSelection[1]);
       console.debug(`Selected avatar: `, trialData.avatar);
 
       // End trial
