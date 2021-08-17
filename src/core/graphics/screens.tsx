@@ -1,7 +1,7 @@
 // UI components
 import React from 'react';
 import { render } from 'react-dom';
-import { Grid, Box, Grommet, Heading, Card, Button, CardBody, CardFooter, Select } from 'grommet';
+import { Grid, Box, Grommet, Heading, Card, Button, CardBody, CardFooter, Select, Spinner, WorldMap } from 'grommet';
 
 // Import styling
 import '../../css/styles.css';
@@ -11,7 +11,6 @@ import Avatar from 'boring-avatars';
 
 // Configuration
 import { config } from '../../config';
-import { spreadsheet } from '../../data';
 
 function ChoicesGrid(props) {
   return (
@@ -49,7 +48,7 @@ function ChoicesGrid(props) {
           }}>
             <h2>You</h2>
           </Box>
-          <Box align="center">
+          <Box align="center" animation={["pulse"]}>
             {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
           </Box>
         </Box>
@@ -121,7 +120,7 @@ function ChoicesGrid(props) {
             primary
             label="Select Option 1"
             onClick={() => {
-              // props.avatarSelectionHandler(value);
+              props.buttonHandler("optionOne");
             }}
           />
         </Box>
@@ -164,7 +163,7 @@ function ChoicesGrid(props) {
             primary
             label="Select Option 2"
             onClick={() => {
-              // props.avatarSelectionHandler(value);
+              props.buttonHandler("optionTwo");
             }}
           />
         </Box>
@@ -318,13 +317,24 @@ function getAvatar(_name: string, _size=120) {
   )
 }
 
-function MatchScreen(props) {
+function MatchingScreen(props) {
   return (
-    <Box>
-      <h1>
-        Matching you with another user...
-      </h1>
-      {/* <Spinner animation="border" role="status"></Spinner> */}
+    <Box align="center" animation={["fadeIn"]}>
+      <h1>Matching you with another user...</h1>
+      <Spinner size="large"/>
+      <WorldMap
+        color="brand"
+        selectColor="accent-2"
+      />
+    </Box>
+  )
+}
+
+function MatchedScreen(props) {
+  return (
+    <Box align="center" animation={["fadeIn"]}>
+      <h1>Matched you with a partner!</h1>
+      {getAvatar(config.partners[0], 240)}
     </Box>
   )
 }
@@ -344,10 +354,17 @@ export function displayScreen(_type: string, _target: HTMLElement, _screenProps:
       }),
       _target
     );
-  } else if (_type === 'match') {
+  } else if (_type === 'matching') {
     render(
       ScreenLayout({
-        screen: MatchScreen(_screenProps)
+        screen: MatchingScreen(_screenProps)
+      }),
+      _target
+    );
+  } else if (_type === 'matched') {
+    render(
+      ScreenLayout({
+        screen: MatchedScreen(_screenProps)
       }),
       _target
     );

@@ -67,12 +67,18 @@ timeline.push({
   stage: 'avatarSelection',
 });
 
-// Insert a 'match' screen into the timeline
-// timeline.push({
-//   type: 'intentions-game',
-//   row: -1,
-//   stage: 'match',
-// });
+// Insert a 'match' sequence into the timeline
+timeline.push({
+  type: 'intentions-game',
+  row: -1,
+  stage: 'matching',
+});
+
+timeline.push({
+  type: 'intentions-game',
+  row: -1,
+  stage: 'matched',
+});
 
 // Insert the 'choice' screens into the timeline
 for (let i = 0; i < spreadsheet.rows.length; i++) {

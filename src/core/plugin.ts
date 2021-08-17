@@ -54,9 +54,10 @@ jsPsych.plugins['intentions-game'] = (function() {
     if (trial.stage === 'choice') {
       // Get the selected avatar from the previous trial
       const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
+      trialData.avatar = _previousData.avatar;
       displayScreen('choice', displayElement, {
           rowData: spreadsheet.rows[trial.row],
-          avatar: _previousData.avatar,
+          avatar: trialData.avatar,
           buttonHandler: choiceSelectionHandler,
         }
       );
@@ -64,8 +65,17 @@ jsPsych.plugins['intentions-game'] = (function() {
       displayScreen('avatarSelection', displayElement, {
         avatarSelectionHandler: avatarSelectionHandler
       });
-    } else if (trial.stage === 'match') {
-      displayScreen('match', displayElement, {});
+    } else if (trial.stage === 'matching') {
+      displayScreen('matching', displayElement, {});
+      setTimeout(() => {
+        continueAfterMatch();
+      }, 5000);
+      // Set a timeout to move on
+    } else if (trial.stage === 'matched') {
+      displayScreen('matched', displayElement, {});
+      setTimeout(() => {
+        continueAfterMatch();
+      }, 5000);
       // Set a timeout to move on
     } else {
       // Log an error message and finish the trial
@@ -108,6 +118,10 @@ jsPsych.plugins['intentions-game'] = (function() {
       trialData.avatar = parseInt(_avatarSelection[1]);
 
       // End trial
+      jsPsych.finishTrial(trialData);
+    }
+
+    function continueAfterMatch() {
       jsPsych.finishTrial(trialData);
     }
   };

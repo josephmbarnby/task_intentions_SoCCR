@@ -20,4 +20,10 @@ export const config = {
     'linda',
     'lisa',
   ],
+  partners: [
+    'a',
+    'b',
+    'c',
+    'd',
+  ]
 };
