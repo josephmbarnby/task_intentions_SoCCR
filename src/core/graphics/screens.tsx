@@ -1,9 +1,7 @@
 // UI components
 import React from 'react';
 import { render } from 'react-dom';
-import { Grid, Box, Grommet, Heading, Card, Button, CardHeader, CardBody, CardFooter, DropButton, Menu, Select } from 'grommet';
-import { Favorite, ShareOption } from 'grommet-icons';
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import { Grid, Box, Grommet, Heading, Card, Button, CardBody, CardFooter, Select } from 'grommet';
 
 // Import styling
 import '../../css/styles.css';
@@ -18,69 +16,76 @@ import { spreadsheet } from '../../data';
 function ChoicesGrid(props) {
   return (
     <>
-      {/* <Row className="m-2 g-2">
-        <Col xs="auto">
-          Points for you
-        </Col>
-        <Col xs="auto">
-          Points for your partner
-        </Col>
-        <Col>
-        </Col>
-      </Row>
-
-      <Row className="m-2 g-2">
-        <Col xs="auto">
-          <Card
-            style={{
-              color: 'black',
-            }}
-          >
-            <Card.Body>{props.rowData.Option1_PPT}</Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card
-            style={{
-              color: 'black',
-            }}
-          >
-            <Card.Body>{props.rowData.Option1_Partner}</Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Button
-            size="lg"
-            variant="teal"
-            onClick={() => {
-              props.buttonHandler('optionOne');
-            }}
-          >
-            Option 1
-          </Button>
-        </Col>
-      </Row> */}
-
-      {/* <Row className="m-2 g-2">
-        <Col>
-          {props.rowData.Option2_PPT}
-        </Col>
-        <Col>
-          {props.rowData.Option2_Partner}
-        </Col>
-        <Col>
-          <Button
-            size="lg"
-            variant="teal"
-            onClick={() => {
-              props.buttonHandler('optionTwo');
-            }}
-          >
-            Option 1
-          </Button>
-        </Col>
-      </Row>
-      <div class="w-100"></div> */}
+      <Grid
+        rows={['xsmall','xxsmall', 'xsmall', 'xsmall']}
+        columns={['medium', 'medium', 'medium']}
+        gap="medium"
+        areas={[
+          { name: 'header', start: [0, 0], end: [1, 0] },
+          { name: 'avatarArea', start: [2, 0], end: [2, 0] },
+          { name: 'colOneHeader', start: [0, 1], end: [0, 1] },
+          { name: 'colTwoHeader', start: [1, 1], end: [1, 1] },
+          { name: 'colSelectHeader', start: [2, 1], end: [2, 1] },
+          { name: 'colOneOptionOne', start: [0, 2], end: [0, 2] },
+          { name: 'colTwoOptionOne', start: [1, 2], end: [1, 2] },
+          { name: 'colSelectOptionOne', start: [2, 2], end: [2, 2] },
+          { name: 'colOneOptionTwo', start: [0, 3], end: [0, 3] },
+          { name: 'colTwoOptionTwo', start: [1, 3], end: [1, 3] },
+          { name: 'colSelectOptionTwo', start: [2, 3], end: [2, 3] },
+        ]}
+      >
+        <Box gridArea="header" background="white" />
+        <Box
+          gridArea="avatarArea"
+          background="light-1"
+          round
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <Box align="center" margin={{
+            right: "small"
+          }}>
+            <h2>You</h2>
+          </Box>
+          <Box align="center">
+            {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
+          </Box>
+        </Box>
+        <Box
+          gridArea="colOneHeader"
+          background="light-5"
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <h3>Points for You</h3>
+        </Box>
+        <Box
+          gridArea="colTwoHeader"
+          background="light-5"
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <h3>Points for Your Partner</h3>
+        </Box>
+        <Box
+          gridArea="colSelectHeader"
+          background="light-2"
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <h3>Select</h3>
+        </Box>
+        <Box gridArea="colOneOptionOne" background="light-5" />
+        <Box gridArea="colTwoOptionOne" background="light-5" />
+        <Box gridArea="colSelectOptionOne" background="light-2" />
+        <Box gridArea="colOneOptionTwo" background="light-5" />
+        <Box gridArea="colTwoOptionTwo" background="light-5" />
+        <Box gridArea="colSelectOptionTwo" background="light-2" />
+      </Grid>
     </>
   );
 }
@@ -93,9 +98,9 @@ function ScreenLayout(props: { screen: any; }) {
   );
 }
 
-function ChoicesScreen(props: { rowData: any, buttonHandler: any }) {
+function ChoicesScreen(props: { rowData: any, avatar: number, buttonHandler: any }) {
   return (
-    <ChoicesGrid rowData={props.rowData} buttonHandler={props.buttonHandler} />
+    <ChoicesGrid rowData={props.rowData} buttonHandler={props.buttonHandler} avatar={props.avatar} />
   );
 }
 
@@ -163,12 +168,7 @@ function AvatarSelectionScreen(props) {
               "pulse"
             }
           >
-            <Avatar
-              size={120}
-              name={config.avatars[a]}
-              variant="beam"
-              colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
-            />
+            {getAvatar(config.avatars[a])}
           </CardBody>
           <CardFooter pad={{horizontal: "small"}} background="light-2" alignContent="center">   
             Avatar {a + 1}
@@ -224,6 +224,17 @@ function AvatarSelectionScreen(props) {
   );
 }
 
+function getAvatar(_name: string, _size=120) {
+  return (
+    <Avatar
+      size={_size}
+      name={_name}
+      variant="beam"
+      colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+    />
+  )
+}
+
 function MatchScreen(props) {
   return (
     <Box>
@@ -235,7 +246,7 @@ function MatchScreen(props) {
   )
 }
 
-export function displayScreen(_type: string, _target: HTMLElement, _screenProps: any) {
+export function displayScreen(_type: string, _target: HTMLElement, _screenProps: any): void {
   if (_type === 'choice') {
     render(
       ScreenLayout({

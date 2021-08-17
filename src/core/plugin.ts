@@ -52,8 +52,11 @@ jsPsych.plugins['intentions-game'] = (function() {
 
     // Present a different screen based on the stage of the trial
     if (trial.stage === 'choice') {
+      // Get the selected avatar from the previous trial
+      const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
       displayScreen('choice', displayElement, {
           rowData: spreadsheet.rows[trial.row],
+          avatar: _previousData.avatar,
           buttonHandler: choiceSelectionHandler,
         }
       );
@@ -103,7 +106,6 @@ jsPsych.plugins['intentions-game'] = (function() {
       // Obtain the selected avatar
       const _avatarSelection = _selection.split(' ')
       trialData.avatar = parseInt(_avatarSelection[1]);
-      console.debug(`Selected avatar: `, trialData.avatar);
 
       // End trial
       jsPsych.finishTrial(trialData);
