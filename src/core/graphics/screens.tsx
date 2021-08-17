@@ -34,10 +34,11 @@ function ChoicesGrid(props) {
           { name: 'colSelectOptionTwo', start: [2, 3], end: [2, 3] },
         ]}
       >
+        {/* Avatar row */}
         <Box gridArea="header" background="white" />
         <Box
           gridArea="avatarArea"
-          background="light-1"
+          background="brand"
           round
           justify="center"
           align="center"
@@ -52,9 +53,11 @@ function ChoicesGrid(props) {
             {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
           </Box>
         </Box>
+
+        {/* Header row */}
         <Box
           gridArea="colOneHeader"
-          background="light-5"
+          background="white"
           justify="center"
           align="center"
           direction="row-responsive"
@@ -63,7 +66,7 @@ function ChoicesGrid(props) {
         </Box>
         <Box
           gridArea="colTwoHeader"
-          background="light-5"
+          background="white"
           justify="center"
           align="center"
           direction="row-responsive"
@@ -72,19 +75,99 @@ function ChoicesGrid(props) {
         </Box>
         <Box
           gridArea="colSelectHeader"
+          background="white"
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          {/* <h3>Select</h3> */}
+        </Box>
+
+        {/* Option one row */}
+        <Box
+          gridArea="colOneOptionOne"
+          background="light-5"
+          round={{
+            size: "small",
+            corner: "left",
+          }}
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <h4>{props.rowData.Option1_PPT}</h4>
+        </Box>
+        <Box
+          gridArea="colTwoOptionOne"
+          background="light-5"
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <h4>{props.rowData.Option1_Partner}</h4>
+        </Box>
+        <Box
+          gridArea="colSelectOptionOne"
+          background="light-5"
+          round={{
+            size: "small",
+            corner: "right",
+          }}
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <Button
+            primary
+            label="Select Option 1"
+            onClick={() => {
+              // props.avatarSelectionHandler(value);
+            }}
+          />
+        </Box>
+
+        {/* Option two row */}
+        <Box
+          gridArea="colOneOptionTwo"
+          background="light-2"
+          round={{
+            size: "small",
+            corner: "left",
+          }}
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <h4>{props.rowData.Option2_PPT}</h4>
+        </Box>
+        <Box
+          gridArea="colTwoOptionTwo"
           background="light-2"
           justify="center"
           align="center"
           direction="row-responsive"
         >
-          <h3>Select</h3>
+          <h4>{props.rowData.Option2_Partner}</h4>
         </Box>
-        <Box gridArea="colOneOptionOne" background="light-5" />
-        <Box gridArea="colTwoOptionOne" background="light-5" />
-        <Box gridArea="colSelectOptionOne" background="light-2" />
-        <Box gridArea="colOneOptionTwo" background="light-5" />
-        <Box gridArea="colTwoOptionTwo" background="light-5" />
-        <Box gridArea="colSelectOptionTwo" background="light-2" />
+        <Box
+          gridArea="colSelectOptionTwo"
+          background="light-2"
+          round={{
+            size: "small",
+            corner: "right",
+          }}
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <Button
+            primary
+            label="Select Option 2"
+            onClick={() => {
+              // props.avatarSelectionHandler(value);
+            }}
+          />
+        </Box>
       </Grid>
     </>
   );
@@ -144,7 +227,7 @@ function AvatarSelect(props: { columns: any; gridAreas: any; avatars: any; items
           onClick={() => {
             props.avatarSelectionHandler(value);
           }}
-        ></Button>
+        />
       </Box>
     </Grid>
   );
