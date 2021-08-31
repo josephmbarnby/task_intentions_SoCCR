@@ -38,8 +38,6 @@ jsPsych.plugins['intentions-game'] = (function() {
     // Record the starting time
     const _startTime = performance.now();
 
-    console.debug(`Running React through displayElement `, displayElement);
-
     // Setup data storage
     const trialData = {
       playerPoints: 0,
@@ -50,11 +48,13 @@ jsPsych.plugins['intentions-game'] = (function() {
     };
     console.debug(`Running trial stage '${trial.stage}'`);
 
+    // Load the avatar that was selected (will default to '-1' if not selected yet)
+    const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
+    trialData.avatar = _previousData.avatar;
+
     // Present a different screen based on the stage of the trial
     if (trial.stage === 'choice') {
       // Get the selected avatar from the previous trial
-      const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
-      trialData.avatar = _previousData.avatar;
       displayScreen('choice', displayElement, {
           rowData: spreadsheet.rows[trial.row],
           avatar: trialData.avatar,
@@ -114,7 +114,7 @@ jsPsych.plugins['intentions-game'] = (function() {
 
     function avatarSelectionHandler(_selection: string) {
       // Obtain the selected avatar
-      const _avatarSelection = _selection.split(' ')
+      const _avatarSelection = _selection.split(' ');
       trialData.avatar = parseInt(_avatarSelection[1]);
 
       // End trial
