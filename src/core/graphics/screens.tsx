@@ -16,43 +16,26 @@ function ChoicesGrid(props) {
   return (
     <>
       <Grid
-        rows={['xsmall','xxsmall', 'xsmall', 'xsmall']}
+        rows={['xsmall','xsmall', 'xxsmall', 'xsmall', 'xsmall']}
         columns={['medium', 'medium', 'medium']}
         gap="medium"
         areas={[
-          { name: 'pointsArea', start: [0, 0], end: [0, 0] },
+          { name: 'avatarArea', start: [0, 0], end: [0, 0] },
           { name: 'placeholder', start: [1, 0], end: [1, 0] },
-          { name: 'avatarArea', start: [2, 0], end: [2, 0] },
-          { name: 'colOneHeader', start: [0, 1], end: [0, 1] },
-          { name: 'colTwoHeader', start: [1, 1], end: [1, 1] },
-          { name: 'colSelectHeader', start: [2, 1], end: [2, 1] },
-          { name: 'colOneOptionOne', start: [0, 2], end: [0, 2] },
-          { name: 'colTwoOptionOne', start: [1, 2], end: [1, 2] },
-          { name: 'colSelectOptionOne', start: [2, 2], end: [2, 2] },
-          { name: 'colOneOptionTwo', start: [0, 3], end: [0, 3] },
-          { name: 'colTwoOptionTwo', start: [1, 3], end: [1, 3] },
-          { name: 'colSelectOptionTwo', start: [2, 3], end: [2, 3] },
+          { name: 'pointsArea', start: [2, 0], end: [2, 0] },
+          { name: 'break', start: [0, 1], end: [2, 1] },
+          { name: 'colOneHeader', start: [0, 2], end: [0, 2] },
+          { name: 'colTwoHeader', start: [1, 2], end: [1, 2] },
+          { name: 'colSelectHeader', start: [2, 2], end: [2, 2] },
+          { name: 'colOneOptionOne', start: [0, 3], end: [0, 3] },
+          { name: 'colTwoOptionOne', start: [1, 3], end: [1, 3] },
+          { name: 'colSelectOptionOne', start: [2, 3], end: [2, 3] },
+          { name: 'colOneOptionTwo', start: [0, 4], end: [0, 4] },
+          { name: 'colTwoOptionTwo', start: [1, 4], end: [1, 4] },
+          { name: 'colSelectOptionTwo', start: [2, 4], end: [2, 4] },
         ]}
       >
         {/* Avatar row */}
-        <Box
-          gridArea="pointsArea"
-          background="neutral-1"
-          round
-          justify="center"
-          align="center"
-          direction="row-responsive"
-        >
-          <Box align="center" margin={{
-            right: "small"
-          }}>
-            <Heading level={2}>Points:</Heading>
-          </Box>
-          <Box align="center" animation={["pulse"]}>
-            <Heading level={2}>{props.points}</Heading>
-          </Box>
-        </Box>
-        <Box gridArea="placeholder" background="white" />
         <Box
           gridArea="avatarArea"
           background="brand"
@@ -70,6 +53,26 @@ function ChoicesGrid(props) {
             {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
           </Box>
         </Box>
+        <Box gridArea="placeholder" background="white" />
+        <Box
+          gridArea="pointsArea"
+          background="neutral-1"
+          round
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <Box align="center" margin={{
+            right: "small"
+          }}>
+            <Heading level={2}>Points:</Heading>
+          </Box>
+          <Box align="center" animation={["pulse"]}>
+            <Heading level={2}>{props.points}</Heading>
+          </Box>
+        </Box>
+
+        <Box gridArea="break" background="white" />
 
         {/* Header row */}
         <Box
