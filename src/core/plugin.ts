@@ -54,10 +54,12 @@ jsPsych.plugins['intentions-game'] = (function() {
 
     // Present a different screen based on the stage of the trial
     if (trial.stage === 'choice') {
-      // Get the selected avatar from the previous trial
+      // Sum the number of points
+      const _points = jsPsych.data.get().select('playerPoints').sum();
       displayScreen('choice', displayElement, {
           rowData: spreadsheet.rows[trial.row],
           avatar: trialData.avatar,
+          points: _points,
           buttonHandler: choiceSelectionHandler,
         }
       );

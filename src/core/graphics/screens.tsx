@@ -1,7 +1,7 @@
 // UI components
 import React from 'react';
 import { render } from 'react-dom';
-import { Grid, Box, Grommet, Heading, Card, Button, CardBody, CardFooter, Select, Spinner, WorldMap } from 'grommet';
+import { Grid, Box, Grommet, Heading, Card, Button, CardBody, CardFooter, Select, Spinner, Text, WorldMap } from 'grommet';
 
 // Import styling
 import '../../css/styles.css';
@@ -20,7 +20,8 @@ function ChoicesGrid(props) {
         columns={['medium', 'medium', 'medium']}
         gap="medium"
         areas={[
-          { name: 'header', start: [0, 0], end: [1, 0] },
+          { name: 'pointsArea', start: [0, 0], end: [0, 0] },
+          { name: 'placeholder', start: [1, 0], end: [1, 0] },
           { name: 'avatarArea', start: [2, 0], end: [2, 0] },
           { name: 'colOneHeader', start: [0, 1], end: [0, 1] },
           { name: 'colTwoHeader', start: [1, 1], end: [1, 1] },
@@ -34,7 +35,24 @@ function ChoicesGrid(props) {
         ]}
       >
         {/* Avatar row */}
-        <Box gridArea="header" background="white" />
+        <Box
+          gridArea="pointsArea"
+          background="neutral-1"
+          round
+          justify="center"
+          align="center"
+          direction="row-responsive"
+        >
+          <Box align="center" margin={{
+            right: "small"
+          }}>
+            <Heading level={2}>Points:</Heading>
+          </Box>
+          <Box align="center" animation={["pulse"]}>
+            <Heading level={2}>{props.points}</Heading>
+          </Box>
+        </Box>
+        <Box gridArea="placeholder" background="white" />
         <Box
           gridArea="avatarArea"
           background="brand"
@@ -46,7 +64,7 @@ function ChoicesGrid(props) {
           <Box align="center" margin={{
             right: "small"
           }}>
-            <h2>You</h2>
+            <Heading>You</Heading>
           </Box>
           <Box align="center" animation={["pulse"]}>
             {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
@@ -61,7 +79,7 @@ function ChoicesGrid(props) {
           align="center"
           direction="row-responsive"
         >
-          <h3>Points for You</h3>
+          <Heading level={2}>Points for You</Heading>
         </Box>
         <Box
           gridArea="colTwoHeader"
@@ -70,7 +88,7 @@ function ChoicesGrid(props) {
           align="center"
           direction="row-responsive"
         >
-          <h3>Points for Your Partner</h3>
+          <Heading level={2}>Points for Your Partner</Heading>
         </Box>
         <Box
           gridArea="colSelectHeader"
@@ -94,7 +112,7 @@ function ChoicesGrid(props) {
           align="center"
           direction="row-responsive"
         >
-          <h4>{props.rowData.Option1_PPT}</h4>
+          <Heading level={3}>{props.rowData.Option1_PPT}</Heading>
         </Box>
         <Box
           gridArea="colTwoOptionOne"
@@ -103,7 +121,7 @@ function ChoicesGrid(props) {
           align="center"
           direction="row-responsive"
         >
-          <h4>{props.rowData.Option1_Partner}</h4>
+          <Heading level={3}>{props.rowData.Option1_Partner}</Heading>
         </Box>
         <Box
           gridArea="colSelectOptionOne"
@@ -137,7 +155,7 @@ function ChoicesGrid(props) {
           align="center"
           direction="row-responsive"
         >
-          <h4>{props.rowData.Option2_PPT}</h4>
+          <Heading level={3}>{props.rowData.Option2_PPT}</Heading>
         </Box>
         <Box
           gridArea="colTwoOptionTwo"
@@ -146,7 +164,7 @@ function ChoicesGrid(props) {
           align="center"
           direction="row-responsive"
         >
-          <h4>{props.rowData.Option2_Partner}</h4>
+          <Heading level={3}>{props.rowData.Option2_Partner}</Heading>
         </Box>
         <Box
           gridArea="colSelectOptionTwo"
@@ -180,9 +198,9 @@ function ScreenLayout(props: { screen: any; }) {
   );
 }
 
-function ChoicesScreen(props: { rowData: any, avatar: number, buttonHandler: any }) {
+function ChoicesScreen(props: { rowData: any, avatar: number, points: number, buttonHandler: any }) {
   return (
-    <ChoicesGrid rowData={props.rowData} buttonHandler={props.buttonHandler} avatar={props.avatar} />
+    <ChoicesGrid rowData={props.rowData} buttonHandler={props.buttonHandler} avatar={props.avatar} points={props.points} />
   );
 }
 
@@ -252,15 +270,15 @@ function AvatarSelectionScreen(props) {
           >
             {getAvatar(config.avatars[a])}
           </CardBody>
-          <CardFooter pad={{horizontal: "small"}} background="light-2" alignContent="center">   
-            Avatar {a + 1}
+          <CardFooter pad={{horizontal: "small"}} background="light-2">   
+            <Heading level={4}>Avatar {a + 1}</Heading>
           </CardFooter>
         </Card>
       </Box>
     );
   
     _selectComponents.push(
-        <option key={a} value={`avatar${a + 1}`}>Avatar {a + 1}</option>
+        <option key={a} value={`avatar${a + 1}`}><Text level={4}>Avatar {a + 1}</Text></option>
     );
 
     _areas.push(
@@ -320,7 +338,7 @@ function getAvatar(_name: string, _size=120) {
 function MatchingScreen(props) {
   return (
     <Box align="center" animation={["fadeIn"]}>
-      <h1>Matching you with another user...</h1>
+      <Heading>Matching you with another user...</Heading>
       <Spinner size="large"/>
       <WorldMap
         color="brand"
@@ -333,7 +351,7 @@ function MatchingScreen(props) {
 function MatchedScreen(props) {
   return (
     <Box align="center" animation={["fadeIn"]}>
-      <h1>Matched you with a partner!</h1>
+      <Heading>Matched you with a partner!</Heading>
       {getAvatar(config.partners[0], 240)}
     </Box>
   )
