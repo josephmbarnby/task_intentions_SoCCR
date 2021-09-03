@@ -154,4 +154,4 @@ export class DataCapture {
   }
 }
 
-export default { DataCapture};
+export default { DataCapture };
