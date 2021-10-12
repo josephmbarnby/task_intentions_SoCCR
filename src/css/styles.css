@@ -41,3 +41,14 @@
   background-color: azure;
   color: teal;
 }
+
+/* Custom hover behaviour */
+.grow { 
+  transition: all .4s ease-in-out; 
+  background-color: aqua;
+}
+  
+.grow:hover { 
+  transform: scale(1.1); 
+  background-color: aquamarine;
+}

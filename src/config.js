@@ -25,5 +25,6 @@ export const config = {
     'b',
     'c',
     'd',
-  ]
+  ],
+  enableFullscreen: false
 };

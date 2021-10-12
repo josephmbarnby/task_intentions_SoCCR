@@ -12,46 +12,50 @@ import Avatar from 'boring-avatars';
 // Configuration
 import { config } from '../../config';
 
-function ChoicesGrid(props) {
+function ChoicesGrid(props: { avatar: number; points: any; rowData: { Option1_PPT: number; Option1_Partner: number; Option2_PPT: number; Option2_Partner: number; }; buttonHandler: (arg0: string) => void; }) {
   return (
     <>
       <Grid
-        rows={['xsmall','xsmall', 'xxsmall', 'xsmall', 'xsmall']}
+        rows={['small','xsmall']}
         columns={['medium', 'medium', 'medium']}
-        gap="medium"
+        gap='medium'
         areas={[
           { name: 'avatarArea', start: [0, 0], end: [0, 0] },
           { name: 'placeholder', start: [1, 0], end: [1, 0] },
           { name: 'pointsArea', start: [2, 0], end: [2, 0] },
           { name: 'break', start: [0, 1], end: [2, 1] },
-          { name: 'colOneHeader', start: [0, 2], end: [0, 2] },
-          { name: 'colTwoHeader', start: [1, 2], end: [1, 2] },
-          { name: 'colSelectHeader', start: [2, 2], end: [2, 2] },
-          { name: 'colOneOptionOne', start: [0, 3], end: [0, 3] },
-          { name: 'colTwoOptionOne', start: [1, 3], end: [1, 3] },
-          { name: 'colSelectOptionOne', start: [2, 3], end: [2, 3] },
-          { name: 'colOneOptionTwo', start: [0, 4], end: [0, 4] },
-          { name: 'colTwoOptionTwo', start: [1, 4], end: [1, 4] },
-          { name: 'colSelectOptionTwo', start: [2, 4], end: [2, 4] },
         ]}
       >
         {/* Avatar row */}
         <Box
-          gridArea="avatarArea"
-          background="brand"
+          gridArea='avatarArea'
+          background='brand'
           round
-          justify="center"
-          align="center"
-          direction="row-responsive"
+          justify='center'
+          align='center'
+          direction='row-responsive'
         >
-          <Box align="center" margin={{
-            right: "small"
-          }}>
-            <Heading>You</Heading>
-          </Box>
-          <Box align="center" animation={["pulse"]}>
-            {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
-          </Box>
+          {/* Grid here */}
+          <Grid 
+            rows={['xsmall', 'xsmall']}
+            columns={['xsmall', 'xsmall']}
+            gap='small'
+            areas={[
+              { name: 'youAvatarArea', start: [0, 0], end: [0, 0] },
+              { name: 'youNameArea', start: [1, 0], end: [1, 0] },
+              { name: 'youPointsArea', start: [0, 1], end: [1, 1] }
+            ]}
+          >
+            <Box align="center" animation={["pulse"]} gridArea="youAvatarArea" alignSelf="center">
+              {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
+            </Box>
+            <Box align="center" gridArea="youNameArea" alignSelf="center">
+              <Heading>You</Heading>
+            </Box>
+            <Box align="center" gridArea="youPointsArea" alignSelf="center">
+              <Heading level={2}>&nbsp;{props.points}&nbsp;points</Heading>
+            </Box>
+          </Grid>
         </Box>
         <Box gridArea="placeholder" background="white" />
         <Box
@@ -75,7 +79,7 @@ function ChoicesGrid(props) {
         <Box gridArea="break" background="white" />
 
         {/* Header row */}
-        <Box
+        {/* <Box
           gridArea="colOneHeader"
           background="white"
           justify="center"
@@ -100,54 +104,11 @@ function ChoicesGrid(props) {
           align="center"
           direction="row-responsive"
         >
-          {/* <h3>Select</h3> */}
-        </Box>
-
-        {/* Option one row */}
-        <Box
-          gridArea="colOneOptionOne"
-          background="light-5"
-          round={{
-            size: "small",
-            corner: "left",
-          }}
-          justify="center"
-          align="center"
-          direction="row-responsive"
-        >
-          <Heading level={3}>{props.rowData.Option1_PPT}</Heading>
-        </Box>
-        <Box
-          gridArea="colTwoOptionOne"
-          background="light-5"
-          justify="center"
-          align="center"
-          direction="row-responsive"
-        >
-          <Heading level={3}>{props.rowData.Option1_Partner}</Heading>
-        </Box>
-        <Box
-          gridArea="colSelectOptionOne"
-          background="light-5"
-          round={{
-            size: "small",
-            corner: "right",
-          }}
-          justify="center"
-          align="center"
-          direction="row-responsive"
-        >
-          <Button
-            primary
-            label="Select Option 1"
-            onClick={() => {
-              props.buttonHandler("optionOne");
-            }}
-          />
-        </Box>
+          <h3>Select</h3>
+        </Box> */}
 
         {/* Option two row */}
-        <Box
+        {/* <Box
           gridArea="colOneOptionTwo"
           background="light-2"
           round={{
@@ -187,10 +148,101 @@ function ChoicesGrid(props) {
               props.buttonHandler("optionTwo");
             }}
           />
-        </Box>
+        </Box> */}
       </Grid>
+      {/* Option one row */}
+      <Option pointsPPT={props.rowData.Option1_PPT} pointsParter={props.rowData.Option1_Partner} />
     </>
   );
+}
+
+function Option(props: { pointsPPT: number, pointsParter: number}) {
+  return (
+    <Grid 
+      rows={['xsmall']}
+      columns={['xsmall', 'xsmall']}
+      gap='small'
+      areas={[
+        { name: 'pointsYou', start: [0, 0], end: [0, 0] },
+        { name: 'pointsPartner', start: [1, 0], end: [1, 0] },
+      ]}
+      className={'grow'}
+    >
+      <Box
+        gridArea="pointsYou"
+        background="light-5"
+        round={{
+          size: "small",
+          corner: "left",
+        }}
+        justify="center"
+        align="center"
+        direction="row-responsive"
+      >
+        <Heading level={3}>{props.pointsPPT}</Heading>
+      </Box>
+      <Box
+        gridArea="pointsPartner"
+        background="light-5"
+        justify="center"
+        align="center"
+        direction="row-responsive"
+      >
+        <Heading level={3}>{props.pointsParter}</Heading>
+      </Box>
+    </Grid>
+  )
+}
+
+function OptionOne(props: { rowData: { Option1_PPT: number; Option1_Partner: number; }, buttonHandler: (arg0: string) => void;}) {
+  return (
+    <>
+      <Box
+        gridArea="colOneOptionOne"
+        background="light-5"
+        round={{
+          size: "small",
+          corner: "left",
+        }}
+        justify="center"
+        align="center"
+        direction="row-responsive"
+        onMouseEnter={() => {
+          console.debug(`Weeeow`);
+        }}
+      >
+        <Heading level={3}>{props.rowData.Option1_PPT}</Heading>
+      </Box>
+      <Box
+        gridArea="colTwoOptionOne"
+        background="light-5"
+        justify="center"
+        align="center"
+        direction="row-responsive"
+      >
+        <Heading level={3}>{props.rowData.Option1_Partner}</Heading>
+      </Box>
+      <Box
+        gridArea="colSelectOptionOne"
+        background="light-5"
+        round={{
+          size: "small",
+          corner: "right",
+        }}
+        justify="center"
+        align="center"
+        direction="row-responsive"
+      >
+        <Button
+          primary
+          label="Select Option 1"
+          onClick={() => {
+            props.buttonHandler("optionOne");
+          }}
+        />
+      </Box>
+    </>
+  )
 }
 
 function ScreenLayout(props: { screen: any; }) {
