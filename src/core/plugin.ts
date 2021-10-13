@@ -6,7 +6,7 @@ declare const jsPsych: any;
 // Core modules
 import {spreadsheet} from '../data';
 import {config} from '../config';
-import { displayScreen, } from './graphics/screens';
+import {displayScreen} from './graphics/screens';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -48,7 +48,8 @@ jsPsych.plugins['intentions-game'] = (function() {
     };
     console.debug(`Running trial stage '${trial.stage}'`);
 
-    // Load the avatar that was selected (will default to '-1' if not selected yet)
+    // Load the avatar that was selected
+    // (will default to '-1' if not selected yet)
     const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
     trialData.avatar = _previousData.avatar;
 
@@ -57,15 +58,14 @@ jsPsych.plugins['intentions-game'] = (function() {
       // Sum the number of points
       const _points = jsPsych.data.get().select('playerPoints').sum();
       displayScreen('choice', displayElement, {
-          rowData: spreadsheet.rows[trial.row],
-          avatar: trialData.avatar,
-          points: _points,
-          buttonHandler: choiceSelectionHandler,
-        }
-      );
+        rowData: spreadsheet.rows[trial.row],
+        avatar: trialData.avatar,
+        points: _points,
+        buttonHandler: choiceSelectionHandler,
+      });
     } else if (trial.stage === 'avatarSelection') {
       displayScreen('avatarSelection', displayElement, {
-        avatarSelectionHandler: avatarSelectionHandler
+        avatarSelectionHandler: avatarSelectionHandler,
       });
     } else if (trial.stage === 'matching') {
       displayScreen('matching', displayElement, {});
@@ -100,21 +100,27 @@ jsPsych.plugins['intentions-game'] = (function() {
 
         // Update the score with values of option 1
         trialData.playerPoints = spreadsheet.rows[trial.row]['Option1_PPT'];
-        trialData.partnerPoints = spreadsheet.rows[trial.row]['Option1_Partner'];
+        trialData.partnerPoints =
+            spreadsheet.rows[trial.row]['Option1_Partner'];
       } else if (_option === 'optionTwo') {
         // Participant chose option 2
         trialData.selectionOption = 2;
 
         // Update the score with values of option 2
         trialData.playerPoints = spreadsheet.rows[trial.row]['Option2_PPT'];
-        trialData.partnerPoints = spreadsheet.rows[trial.row]['Option2_Partner'];
+        trialData.partnerPoints =
+            spreadsheet.rows[trial.row]['Option2_Partner'];
       }
 
       // End trial
       jsPsych.finishTrial(trialData);
     }
 
-    function avatarSelectionHandler(_selection: string) {
+    /**
+     * Handler called after avatar selected
+     * @param {string} _selection avatar selection key
+     */
+    function avatarSelectionHandler(_selection: string): void {
       // Obtain the selected avatar
       const _avatarSelection = _selection.split(' ');
       trialData.avatar = parseInt(_avatarSelection[1]);
@@ -123,7 +129,10 @@ jsPsych.plugins['intentions-game'] = (function() {
       jsPsych.finishTrial(trialData);
     }
 
-    function continueAfterMatch() {
+    /**
+     * Function to continue without participant input
+     */
+    function continueAfterMatch(): void {
       jsPsych.finishTrial(trialData);
     }
   };

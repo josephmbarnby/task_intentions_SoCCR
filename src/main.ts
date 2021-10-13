@@ -1,7 +1,7 @@
 // Configuration and data
 import {config} from './config';
 import {spreadsheet} from './data';
-import { ManipulationAPI } from './core/util';
+import {ManipulationAPI} from './core/util';
 
 // Configure jsPsych window variable to make TypeScript happy
 import 'jspsych/jspsych';
@@ -26,8 +26,10 @@ window.onload = () => {
   // Calculate the number of trials in total
   let totalTrials = 0;
   for (const _field in config.trials) {
-    totalTrials += parseInt(config.trials[`${_field}`]);
-    console.debug(`${_field}`)
+    if (Object.prototype.hasOwnProperty.call(config.trials, `${_field}`)) {
+      totalTrials += parseInt(config.trials[`${_field}`]);
+      console.debug(`${_field}`);
+    }
   }
 
   const instructionsIntroduction = [
@@ -49,7 +51,7 @@ window.onload = () => {
     `<p>The total number of points you earn in this task will ` +
       `be the the sum of the points you earn in each trial.</p>`,
   ];
-  
+
   timeline.push({
     type: 'instructions',
     pages: instructionsIntroduction,
@@ -57,14 +59,14 @@ window.onload = () => {
     show_page_number: true,
     show_clickable_nav: true,
   });
-  
+
   const instructionsPracticeGames = [
     `<h1>Intentions Game</h1>` +
     `<h2>Instructions</h2>` +
     `<p>The instructions for the task will go here. This can be ` +
       `multi-page, or just one page.</p>`,
   ];
-  
+
   // Insert the instructions into the timeline
   timeline.push({
     type: 'instructions',
@@ -73,27 +75,27 @@ window.onload = () => {
     show_page_number: true,
     show_clickable_nav: true,
   });
-  
+
   // Insert a 'avatarSelection' screen into the timeline
   timeline.push({
     type: 'intentions-game',
     row: -1,
     stage: 'avatarSelection',
   });
-  
+
   // Insert a 'match' sequence into the timeline
   timeline.push({
     type: 'intentions-game',
     row: -1,
     stage: 'matching',
   });
-  
+
   timeline.push({
     type: 'intentions-game',
     row: -1,
     stage: 'matched',
   });
-  
+
   // Insert the 'choice' screens into the timeline
   for (let i = 0; i < spreadsheet.rows.length; i++) {
     timeline.push({
@@ -144,4 +146,4 @@ window.onload = () => {
       show_preload_progress_bar: true,
     });
   }
-}
+};
