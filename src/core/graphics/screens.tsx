@@ -33,35 +33,41 @@ function ChoicesGrid(props: {
   return (
     <>
       <Grid
-        rows={['small', 'xsmall']}
-        columns={['medium', 'medium', 'medium']}
+        rows={['small']}
+        columns={['flex', 'medium', 'flex']}
         gap='medium'
+        fill={true}
+        margin={
+          {
+            bottom: 'large',
+          }
+        }
         areas={[
-          {name: 'avatarArea', start: [0, 0], end: [0, 0]},
-          {name: 'placeholder', start: [1, 0], end: [1, 0]},
-          {name: 'pointsArea', start: [2, 0], end: [2, 0]},
-          {name: 'break', start: [0, 1], end: [2, 1]},
+          {name: 'youArea', start: [0, 0], end: [0, 0]},
+          {name: 'partnerArea', start: [2, 0], end: [2, 0]},
         ]}
+        direction='row-responsive'
       >
-        {/* Avatar row */}
+        {/* Participant's Avatar */}
         <Box
-          gridArea='avatarArea'
+          gridArea='youArea'
           background='brand'
           round
           justify='center'
           align='center'
           direction='row-responsive'
         >
-          {/* Grid here */}
           <Grid
-            rows={['xsmall', 'xsmall']}
-            columns={['xsmall', 'xsmall']}
-            gap='small'
+            rows={['flex', 'flex']}
+            columns={['flex', 'flex']}
+            gap='xsmall'
+            fill={true}
             areas={[
-              {name: 'youAvatarArea', start: [0, 0], end: [0, 0]},
-              {name: 'youNameArea', start: [1, 0], end: [1, 0]},
+              {name: 'youNameArea', start: [0, 0], end: [0, 0]},
+              {name: 'youAvatarArea', start: [1, 0], end: [1, 0]},
               {name: 'youPointsArea', start: [0, 1], end: [1, 1]},
             ]}
+            pad='small'
           >
             <Box
               align='center'
@@ -69,113 +75,47 @@ function ChoicesGrid(props: {
               gridArea='youAvatarArea'
               alignSelf='center'
             >
-              {getAvatar(`${config.avatars[props.avatar - 1]}`, 50)}
+              {getAvatar(`${config.avatars[props.avatar - 1]}`, 64)}
             </Box>
             <Box align='center' gridArea='youNameArea' alignSelf='center'>
               <Heading>You</Heading>
             </Box>
             <Box align='center' gridArea='youPointsArea' alignSelf='center'>
-              <Heading level={2}>&nbsp;{props.points}&nbsp;points</Heading>
+              <Heading level={2}>Points:&nbsp;{props.points}</Heading>
             </Box>
           </Grid>
         </Box>
-        <Box gridArea='placeholder' background='white' />
+
+        {/* Partner's Avatar */}
         <Box
-          gridArea='pointsArea'
+          gridArea='partnerArea'
           background='neutral-1'
           round
           justify='center'
           align='center'
           direction='row-responsive'
         >
-          <Box align='center' margin={{
-            right: 'small',
-          }}>
+          <Box align='center'>
             <Heading level={2}>Points:</Heading>
           </Box>
           <Box align='center' animation={['pulse']}>
-            <Heading level={2}>{props.points}</Heading>
+            <Heading level={2}>&nbsp;{props.points}</Heading>
           </Box>
         </Box>
-
-        <Box gridArea='break' background='white' />
-
-        {/* Header row */}
-        {/* <Box
-          gridArea='colOneHeader'
-          background='white'
-          justify='center'
-          align='center'
-          direction='row-responsive'
-        >
-          <Heading level={2}>Points for You</Heading>
-        </Box>
-        <Box
-          gridArea='colTwoHeader'
-          background='white'
-          justify='center'
-          align='center'
-          direction='row-responsive'
-        >
-          <Heading level={2}>Points for Your Partner</Heading>
-        </Box>
-        <Box
-          gridArea='colSelectHeader'
-          background='white'
-          justify='center'
-          align='center'
-          direction='row-responsive'
-        >
-          <h3>Select</h3>
-        </Box> */}
-
-        {/* Option two row */}
-        {/* <Box
-          gridArea='colOneOptionTwo'
-          background='light-2'
-          round={{
-            size: 'small',
-            corner: 'left',
-          }}
-          justify='center'
-          align='center'
-          direction='row-responsive'
-        >
-          <Heading level={3}>{props.rowData.Option2_PPT}</Heading>
-        </Box>
-        <Box
-          gridArea='colTwoOptionTwo'
-          background='light-2'
-          justify='center'
-          align='center'
-          direction='row-responsive'
-        >
-          <Heading level={3}>{props.rowData.Option2_Partner}</Heading>
-        </Box>
-        <Box
-          gridArea='colSelectOptionTwo'
-          background='light-2'
-          round={{
-            size: 'small',
-            corner: 'right',
-          }}
-          justify='center'
-          align='center'
-          direction='row-responsive'
-        >
-          <Button
-            primary
-            label='Select Option 2'
-            onClick={() => {
-              props.buttonHandler('optionTwo');
-            }}
-          />
-        </Box> */}
       </Grid>
-      {/* Option one row */}
+
       <Option
+        optionKey='option1'
+        optionName='Option 1'
         pointsPPT={props.rowData.Option1_PPT}
         pointsParter={props.rowData.Option1_Partner}
+      />
+
+      <Option
+        optionKey='option2'
+        optionName='Option 2'
+        pointsPPT={props.rowData.Option2_PPT}
+        pointsParter={props.rowData.Option2_Partner}
       />
     </>
   );
@@ -186,38 +126,46 @@ function ChoicesGrid(props: {
  * @param {any} props collection of props
  * @return {any}
  */
-function Option(props: { pointsPPT: number, pointsParter: number}): any {
+function Option(props: {
+  optionKey: string,
+  optionName: string,
+  pointsPPT: number,
+  pointsParter: number,
+}): any {
   return (
     <Grid
       rows={['xsmall']}
-      columns={['med', 'med']}
-      fill={true}
+      columns={['flex', 'flex']}
+      fill='horizontal'
       gap='small'
+      margin={
+        {
+          bottom: 'large',
+        }
+      }
       areas={[
         {name: 'pointsYou', start: [0, 0], end: [0, 0]},
         {name: 'pointsPartner', start: [1, 0], end: [1, 0]},
       ]}
       className={'grow'}
+      onClick={() => {
+        console.debug(`Clicked ${props.optionName} (${props.optionKey})`);
+      }}
     >
       <Box
         gridArea='pointsYou'
         background='light-5'
-        round={{
-          size: 'small',
-          corner: 'left',
-        }}
         justify='center'
-        align='center'
-        direction='row-responsive'
+        alignSelf='center'
       >
         <Heading level={3}>{props.pointsPPT}</Heading>
       </Box>
+
       <Box
         gridArea='pointsPartner'
         background='light-5'
         justify='center'
-        align='center'
-        direction='row-responsive'
+        alignSelf='center'
       >
         <Heading level={3}>{props.pointsParter}</Heading>
       </Box>
