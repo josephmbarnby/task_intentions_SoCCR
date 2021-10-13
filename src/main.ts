@@ -52,13 +52,13 @@ window.onload = () => {
       `be the the sum of the points you earn in each trial.</p>`,
   ];
 
-  timeline.push({
-    type: 'instructions',
-    pages: instructionsIntroduction,
-    allow_keys: false,
-    show_page_number: true,
-    show_clickable_nav: true,
-  });
+  // timeline.push({
+  //   type: 'instructions',
+  //   pages: instructionsIntroduction,
+  //   allow_keys: false,
+  //   show_page_number: true,
+  //   show_clickable_nav: true,
+  // });
 
   const instructionsPracticeGames = [
     `<h1>Intentions Game</h1>` +
@@ -97,13 +97,13 @@ window.onload = () => {
   });
 
   // Insert the 'choice' screens into the timeline
-  for (let i = 0; i < spreadsheet.rows.length; i++) {
-    timeline.push({
-      type: 'intentions-game',
-      row: i,
-      stage: 'choice',
-    });
-  }
+  // for (let i = 0; i < 2; i++) {
+  //   timeline.push({
+  //     type: 'intentions-game',
+  //     row: i,
+  //     stage: 'choice',
+  //   });
+  // }
 
   // Initialise jsPsych and Gorilla (if required)
   if (config.target === 'gorilla') {

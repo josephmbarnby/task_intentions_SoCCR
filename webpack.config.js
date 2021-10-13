@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   entry: {
     data: './src/core/data.ts',
-    screens: './src/core/graphics/screens.tsx',
+    screen: './src/core/graphics/screen.tsx',
     plugin: './src/core/plugin.ts',
     main: './src/main.ts',
   },
