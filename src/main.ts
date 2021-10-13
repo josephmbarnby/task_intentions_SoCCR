@@ -84,26 +84,26 @@ window.onload = () => {
   });
 
   // Insert a 'match' sequence into the timeline
-  timeline.push({
-    type: 'intentions-game',
-    row: -1,
-    stage: 'matching',
-  });
+  // timeline.push({
+  //   type: 'intentions-game',
+  //   row: -1,
+  //   stage: 'matching',
+  // });
 
-  timeline.push({
-    type: 'intentions-game',
-    row: -1,
-    stage: 'matched',
-  });
+  // timeline.push({
+  //   type: 'intentions-game',
+  //   row: -1,
+  //   stage: 'matched',
+  // });
 
   // Insert the 'choice' screens into the timeline
-  // for (let i = 0; i < 2; i++) {
-  //   timeline.push({
-  //     type: 'intentions-game',
-  //     row: i,
-  //     stage: 'choice',
-  //   });
-  // }
+  for (let i = 0; i < spreadsheet.rows.length; i++) {
+    timeline.push({
+      type: 'intentions-game',
+      row: i,
+      stage: 'choice',
+    });
+  }
 
   // Initialise jsPsych and Gorilla (if required)
   if (config.target === 'gorilla') {

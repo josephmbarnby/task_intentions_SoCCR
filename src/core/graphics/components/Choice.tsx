@@ -1,9 +1,8 @@
 // React import
-import React, {ReactElement} from 'react';
-import ReactCSSTransitionGroup from 'react-transition-group';
+import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Grid, Heading} from 'grommet';
+import {Box, Grid, Heading, Main} from 'grommet';
 
 // Text Transition component
 import TextTransition, {presets} from 'react-text-transition';
@@ -21,7 +20,8 @@ import {config} from '../../../config';
  * @return {ReactElement}
  */
 export function Choice(props: {
-  avatar: number; points: number;
+  avatar: number;
+  points: number;
   rowData: {
     // eslint-disable-next-line camelcase
     Option1_PPT: number;
@@ -33,15 +33,21 @@ export function Choice(props: {
     Option2_Partner: number;
   };
   buttonHandler: (selection: string) => void; }): ReactElement {
+  const [participantPoints, setParticipantPoints] = useState(props.points);
+  const [partnerPoints, setPartnerPoints] = useState(props.points);
+
+  /**
+   * Update the points state for the participant and the partner
+   * @param {number} _participant updated points for the participant
+   * @param {number} _partner updated points for the partner
+   */
+  function updatePointsDisplay(_participant: number, _partner: number): void {
+    setParticipantPoints(participantPoints + _participant);
+    setPartnerPoints(partnerPoints + _partner);
+  }
+
   return (
-    <>
-      {/* // <ReactCSSTransitionGroup
-      //   transitionName="example"
-      //   transitionAppear={true}
-      //   transitionAppearTimeout={500}
-      //   transitionEnter={false}
-      //   transitionLeave={false}
-      // > */}
+    <div id='fadeable-screen' className='fadein'>
       <Grid
         rows={['small']}
         columns={['medium', 'medium']}
@@ -94,7 +100,7 @@ export function Choice(props: {
               <Heading level={2}>
                 Points:&nbsp;
                 <TextTransition
-                  text={props.points}
+                  text={participantPoints}
                   springConfig={presets.wobbly}
                   inline={true}
                 />
@@ -113,12 +119,14 @@ export function Choice(props: {
           direction='row-responsive'
           id='partnerInfo'
         >
-          <Box align='center'>
-            <Heading level={2}>Points:</Heading>
-          </Box>
-          <Box align='center' animation={['pulse']}>
-            <Heading level={2}>&nbsp;{props.points}</Heading>
-          </Box>
+          <Heading level={2}>
+            Points:&nbsp;
+            <TextTransition
+              text={partnerPoints}
+              springConfig={presets.wobbly}
+              inline={true}
+            />
+          </Heading>
         </Box>
       </Grid>
 
@@ -127,6 +135,7 @@ export function Choice(props: {
         optionName='Option 1'
         pointsPPT={props.rowData.Option1_PPT}
         pointsParter={props.rowData.Option1_Partner}
+        update={updatePointsDisplay}
         buttonHandler={props.buttonHandler}
       />
 
@@ -135,9 +144,9 @@ export function Choice(props: {
         optionName='Option 2'
         pointsPPT={props.rowData.Option2_PPT}
         pointsParter={props.rowData.Option2_Partner}
+        update={updatePointsDisplay}
         buttonHandler={props.buttonHandler}
       />
-      {/* </ReactCSSTransitionGroup> */}
-    </>
+    </div>
   );
 }

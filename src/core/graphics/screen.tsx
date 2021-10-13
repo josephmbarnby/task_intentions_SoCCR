@@ -1,5 +1,5 @@
 // React import
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {ReactElement} from 'react';
 import {render} from 'react-dom';
 
 // Grommet component
@@ -43,6 +43,8 @@ export function Screen(props:
     screenComponent = <Matched />;
   } else if (props.screenType === 'matching') {
     screenComponent = <Matching />;
+  } else {
+    screenComponent = <div>Transition...</div>;
   }
 
   return (

@@ -56,11 +56,12 @@ jsPsych.plugins['intentions-game'] = (function() {
     // Present a different screen based on the stage of the trial
     if (trial.stage === 'choice') {
       // Sum the number of points
-      const _points = jsPsych.data.get().select('playerPoints').sum();
+      const _participantPoints =
+          jsPsych.data.get().select('playerPoints').sum();
       displayScreen('choice', displayElement, {
         rowData: spreadsheet.rows[trial.row],
         avatar: trialData.avatar,
-        points: _points,
+        points: _participantPoints,
         buttonHandler: choiceSelectionHandler,
       });
     } else if (trial.stage === 'avatarSelection') {
@@ -71,13 +72,13 @@ jsPsych.plugins['intentions-game'] = (function() {
       displayScreen('matching', displayElement, {});
       setTimeout(() => {
         continueAfterMatch();
-      }, 5000);
+      }, 2000);
       // Set a timeout to move on
     } else if (trial.stage === 'matched') {
       displayScreen('matched', displayElement, {});
       setTimeout(() => {
         continueAfterMatch();
-      }, 5000);
+      }, 2000);
       // Set a timeout to move on
     } else {
       // Log an error message and finish the trial
@@ -111,6 +112,9 @@ jsPsych.plugins['intentions-game'] = (function() {
         trialData.partnerPoints =
             spreadsheet.rows[trial.row]['Option2_Partner'];
       }
+
+      // Trigger transition screen
+      displayScreen('transition', displayElement, {});
 
       // End trial
       jsPsych.finishTrial(trialData);

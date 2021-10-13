@@ -17,6 +17,7 @@ export function Option(props: {
   optionName: string,
   pointsPPT: number,
   pointsParter: number,
+  update: (participant: number, partner: number) => void,
   buttonHandler: (selection: string) => void,
 }): ReactElement {
   return (
@@ -37,8 +38,6 @@ export function Option(props: {
       className={'grow'}
       id={props.optionKey}
       onClick={() => {
-        console.debug(`Clicked ${props.optionName} (${props.optionKey})`);
-
         // Calculate the distance to the grids
         // Option row
         const optionElement = document.getElementById(props.optionKey);
@@ -57,9 +56,30 @@ export function Option(props: {
           targets: `#${props.optionKey}`,
           translateY: -(optionY - participantY),
           complete: function() {
+            // Add the 'fadeout' class, triggering the transition
             optionElement.classList.add('fadeout');
-            // Call the selection handler
-            props.buttonHandler(props.optionKey);
+
+            // Apply the points display update
+            // This propagates up to a setState(...) call
+            props.update(props.pointsPPT, props.pointsParter);
+
+            // Create a timeout to allow the fade and effect to finish
+            const updateTimeout = setTimeout(() => {
+              // Clear the timeout
+              clearTimeout(updateTimeout);
+
+              // Add the 'fadeout' class to the main screen
+              const mainScreen = document.getElementById('fadeable-screen');
+              mainScreen.classList.add('fadeout');
+            }, 500);
+
+            const fadeTimeout = setTimeout(() => {
+              // Clear the timeout
+              clearTimeout(fadeTimeout);
+
+              // Call the selection handler to finish the trial
+              props.buttonHandler(props.optionKey);
+            }, 1200);
           },
         });
       }}
