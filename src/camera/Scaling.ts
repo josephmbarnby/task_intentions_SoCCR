@@ -5,7 +5,7 @@ import { Scene } from "phaser";
  * @param {Scene} scene Phaser scene
  * @return {number[]}
  */
-export function center(scene: Scene): number[] {
+export function center(scene: Scene): [number, number] {
   return [scene.cameras.main.width / 2, scene.cameras.main.height / 2];
 }
 
@@ -16,7 +16,7 @@ export function center(scene: Scene): number[] {
  * @param height Height of the object to be scaled
  * @return {number[]}
  */
-export function scale(scene: Scene, width: number, height: number): number[] {
+export function scale(scene: Scene, width: number, height: number): [number, number] {
   const scaleX = scene.cameras.main.width / width;
   const scaleY = scene.cameras.main.height / height;
 

@@ -1,20 +1,32 @@
 import Phaser from 'phaser';
+import { Assets } from '../assets';
+import { Background } from '../entities/background/Background';
+import { Entity } from '../entities/Entity';
 
 export default class Choice extends Phaser.Scene {
+  private entities: Entity[];
+
   constructor() {
     super('GameScene');
+
+    // Initialise empty collection of Entities
+    this.entities = [];
   }
 
   preload() {
-    this.load.image('background', 'assets/backgrounds/temp_background.png');
+    // Load any assets required for the new Scene
+    this.entities.push(new Background(this, 'background', Assets.Images.background));
+
+    // Preload all the entities
+    for (let e of this.entities) {
+      e.preload();
+    }
   }
 
   create() {
-    const background = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background');
-    const scaleX = this.cameras.main.width / background.width;
-    const scaleY = this.cameras.main.height / background.height;
-
-    background.setScrollFactor(0);
-    background.setScale(scaleX, scaleY);
+    // Place all the entities
+    for (let e of this.entities) {
+      e.create();
+    }
   }
 }
