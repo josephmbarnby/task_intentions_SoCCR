@@ -5,6 +5,6 @@ import Start from './scenes/Start';
 
 new Phaser.Game(
   Object.assign(config, {
-    scene: [Start]
+    scene: [Choice]
   })
 );

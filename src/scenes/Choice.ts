@@ -6,19 +6,15 @@ export default class Choice extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('logo', 'assets/phaser3-logo.png');
+    this.load.image('background', 'assets/backgrounds/temp_background.png');
   }
 
   create() {
-    const logo = this.add.image(400, 70, 'logo');
+    const background = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background');
+    const scaleX = this.cameras.main.width / background.width;
+    const scaleY = this.cameras.main.height / background.height;
 
-    this.tweens.add({
-      targets: logo,
-      y: 350,
-      duration: 1500,
-      ease: 'Sine.inOut',
-      yoyo: true,
-      repeat: -1
-    });
+    background.setScrollFactor(0);
+    background.setScale(scaleX, scaleY);
   }
 }
