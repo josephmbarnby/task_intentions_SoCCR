@@ -1,5 +1,5 @@
-import { Outdoor } from "./Outdoor";
+import {Outdoor} from './Outdoor';
 
 export const Backgrounds = {
   Outdoor: Outdoor,
-}
+};

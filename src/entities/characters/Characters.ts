@@ -1,5 +1,5 @@
-import { Robot } from './Robot';
+import {Robot} from './Robot';
 
 export const Characters = {
   Robot: Robot,
-}
+};

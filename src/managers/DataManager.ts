@@ -1,3 +1,4 @@
-export class DataManager {
-  
-}
+/**
+ * DataManager
+ */
+export class DataManager {}
