@@ -3,7 +3,7 @@ import { center, scale } from '../../camera/Scaling';
 
 import { Entity } from '../Entity';
 
-export class Background implements Entity {
+export class Outdoor implements Entity {
   scene: Scene;
   key: string;
   url: string;
@@ -22,7 +22,7 @@ export class Background implements Entity {
   create() {
     // Place background
     const [centerX, centerY] = center(this.scene);
-    const background = this.scene.add.image(centerX, centerY, 'background');
+    const background = this.scene.add.image(centerX, centerY, this.key);
 
     // Scale background
     const [scaleX, scaleY] = scale(this.scene, background.width, background.height);
