@@ -7,10 +7,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    data: './src/lib/data.ts',
-    screen: './src/lib/graphics/Screen.tsx',
-    plugin: './src/lib/Plugin.ts',
-    main: './src/Main.ts',
+    data: './src/core/data.ts',
+    screen: './src/core/graphics/screen.tsx',
+    plugin: './src/core/plugin.ts',
+    main: './src/main.ts',
   },
   devtool: 'inline-source-map',
   plugins: [

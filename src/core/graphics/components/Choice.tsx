@@ -2,7 +2,7 @@
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Grid, Heading} from 'grommet';
+import {Box, Grid, Heading, Main} from 'grommet';
 
 // Text Transition component
 import TextTransition, {presets} from 'react-text-transition';
@@ -32,8 +32,7 @@ export function Choice(props: {
     // eslint-disable-next-line camelcase
     Option2_Partner: number;
   };
-  buttonHandler: (selection: string) => void; }
-): ReactElement {
+  buttonHandler: (selection: string) => void; }): ReactElement {
   const [participantPoints, setParticipantPoints] = useState(props.points);
   const [partnerPoints, setPartnerPoints] = useState(props.points);
 
