@@ -3,11 +3,9 @@
 /* Custom hover behaviour */
 .grow { 
   transition: all .2s ease-in-out; 
-  background-color: aqua;
 }
   
 .grow:hover { 
-  transform: scale(1.1); 
-  background-color: aquamarine;
+  transform: scale(1.05); 
   cursor: pointer;
 }
