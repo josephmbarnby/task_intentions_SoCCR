@@ -14,46 +14,43 @@ export function Option(props: {
   optionName: string,
   pointsPPT: number,
   pointsParter: number,
-  update: (participant: number, partner: number) => void,
-  buttonHandler: (selection: string) => void,
 }): ReactElement {
   return (
-    <Grid
-      rows={['xsmall']}
-      columns={['flex', 'flex']}
-      fill='horizontal'
-      gap='small'
-      margin={
-        {
-          bottom: 'large',
-        }
-      }
-      areas={[
-        {name: 'pointsYou', start: [0, 0], end: [0, 0]},
-        {name: 'pointsPartner', start: [1, 0], end: [1, 0]},
-      ]}
-      id={props.optionKey}
-      onClick={() => {
-        props.update(props.pointsPPT, props.pointsParter);
-      }}
-    >
+    <div>
       <Box
-        gridArea='pointsYou'
-        background='light-5'
         justify='center'
-        alignSelf='center'
+        alignContent='center'
+        fill='horizontal'
       >
-        <Heading level={3}>{props.pointsPPT}</Heading>
+        <Heading level={3} fill>{props.optionName}</Heading>
       </Box>
+      <Grid
+        rows={['flex']}
+        columns={['flex', 'flex']}
+        gap='small'
+        areas={[
+          {name: 'pointsYou', start: [0, 0], end: [0, 0]},
+          {name: 'pointsPartner', start: [1, 0], end: [1, 0]},
+        ]}
+        id={props.optionKey}
+        fill='vertical'
+      >
+        <Box
+          gridArea='pointsYou'
+          justify='center'
+          alignSelf='center'
+        >
+          <Heading level={3}>{props.pointsPPT}</Heading>
+        </Box>
 
-      <Box
-        gridArea='pointsPartner'
-        background='light-5'
-        justify='center'
-        alignSelf='center'
-      >
-        <Heading level={3}>{props.pointsParter}</Heading>
-      </Box>
-    </Grid>
+        <Box
+          gridArea='pointsPartner'
+          justify='center'
+          alignSelf='center'
+        >
+          <Heading level={3}>{props.pointsParter}</Heading>
+        </Box>
+      </Grid>
+    </div>
   );
 }

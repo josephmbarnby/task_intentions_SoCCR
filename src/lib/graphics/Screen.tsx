@@ -32,7 +32,7 @@ export function Screen(props:
         avatar={props.screenProps.avatar}
         points={props.screenProps.points}
         rowData={props.screenProps.rowData}
-        buttonHandler={props.screenProps.buttonHandler}
+        callback={props.screenProps.callback}
       />;
   } else if (props.screenType === 'avatarSelection') {
     screenComponent =
@@ -43,8 +43,6 @@ export function Screen(props:
     screenComponent = <Matched />;
   } else if (props.screenType === 'matching') {
     screenComponent = <Matching />;
-  } else {
-    screenComponent = <div>Transition...</div>;
   }
 
   return (

@@ -62,7 +62,7 @@ jsPsych.plugins['intentions-game'] = (function() {
         rowData: spreadsheet.rows[trial.row],
         avatar: trialData.avatar,
         points: _participantPoints,
-        buttonHandler: choiceSelectionHandler,
+        callback: choiceSelectionHandler,
       });
     } else if (trial.stage === 'avatarSelection') {
       displayScreen('avatarSelection', displayElement, {
@@ -112,9 +112,6 @@ jsPsych.plugins['intentions-game'] = (function() {
         trialData.partnerPoints =
             spreadsheet.rows[trial.row]['Option2_Partner'];
       }
-
-      // Trigger transition screen
-      displayScreen('transition', displayElement, {});
 
       // End trial
       jsPsych.finishTrial(trialData);
