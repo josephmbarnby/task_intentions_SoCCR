@@ -6,7 +6,7 @@ declare const jsPsych: any;
 // Core modules
 import {spreadsheet} from '../data';
 import {config} from '../config';
-import {displayScreen} from './graphics/screen';
+import {displayScreen} from './graphics/Screen';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {

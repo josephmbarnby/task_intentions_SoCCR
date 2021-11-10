@@ -1,14 +1,14 @@
 // Configuration and data
 import {config} from './config';
 import {spreadsheet} from './data';
-import {ManipulationAPI} from './core/util';
+import {ManipulationAPI} from './lib/util';
 
 // Configure jsPsych window variable to make TypeScript happy
 import 'jspsych/jspsych';
 import $ from 'jquery';
 
 // Import the plugin before adding it to the timeline
-import './core/plugin';
+import './lib/Plugin';
 
 // Import and configure seedrandom
 import seedrandom from 'seedrandom';
