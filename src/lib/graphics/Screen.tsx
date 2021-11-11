@@ -38,7 +38,7 @@ export function Screen(props:
         avatar={props.screenProps.avatar}
         points={props.screenProps.points}
         rowData={props.screenProps.rowData}
-        selectionHandler={props.screenProps.callback}
+        selectionHandler={props.screenProps.selectionHandler}
         stage={props.screenType}
       />;
   } else if (props.screenType === STAGES.SELECTION) {
