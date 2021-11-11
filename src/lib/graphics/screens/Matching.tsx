@@ -11,7 +11,7 @@ import {Box, Heading, Spinner, WorldMap} from 'grommet';
 export function Matching(): ReactElement {
   return (
     <Box align='center' animation={['fadeIn']}>
-      <Heading>Matching you with another user...</Heading>
+      <Heading>Finding you a partner...</Heading>
       <Spinner size='large'/>
       <WorldMap
         color='brand'

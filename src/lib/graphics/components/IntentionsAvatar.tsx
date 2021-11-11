@@ -19,7 +19,7 @@ export function IntentionsAvatar(props: {
   size: number,
   name: string,
   state: string,
-  stateUpdate: (avatar: string) => void,
+  setState: (avatar: string) => void,
 }): ReactElement {
   const ref = useRef(null);
   return (
@@ -32,7 +32,7 @@ export function IntentionsAvatar(props: {
       }
       onClick={() => {
         // Call the state update function with the name
-        props.stateUpdate(props.name);
+        props.setState(props.name);
       }}
     >
       <Avatar

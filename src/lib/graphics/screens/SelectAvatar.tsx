@@ -6,6 +6,7 @@ import {
   Box, Button,
   Heading,
 } from 'grommet';
+import {LinkNext} from 'grommet-icons';
 
 // Configuration
 import {config} from '../../../config';
@@ -32,7 +33,7 @@ export function SelectAvatar(props: {
           size={128}
           name={avatarName}
           state={selectedAvatar}
-          stateUpdate={setAvatar}
+          setState={setAvatar}
         />
     );
   }
@@ -58,6 +59,9 @@ export function SelectAvatar(props: {
         primary
         label='Continue'
         disabled={selectedAvatar === 'none'}
+        size='large'
+        icon={<LinkNext />}
+        reverse
         onClick={() => {
           props.selectionHandler(selectedAvatar);
         }}

@@ -153,5 +153,3 @@ export class DataCapture {
     return this._dataObject;
   }
 }
-
-export default {DataCapture};

@@ -24,32 +24,63 @@ export function Trial(props: {
   avatar: number,
   points: number,
   stage: string,
-  rowData: {
-    // eslint-disable-next-line camelcase
-    Option1_PPT: number;
-    // eslint-disable-next-line camelcase
-    Option1_Partner: number;
-    // eslint-disable-next-line camelcase
-    Option2_PPT: number;
-    // eslint-disable-next-line camelcase
-    Option2_Partner: number;
+  data: {
+    optionOne: {
+      participant: number,
+      partner: number,
+    },
+    optionTwo: {
+      participant: number,
+      partner: number,
+    }
   },
-  selectionHandler: (selection: string) => void,
+  endTrial: (selection: string) => void,
 }): ReactElement {
+  // Configure state
   const [participantPoints, setParticipantPoints] = useState(props.points);
   const [partnerPoints, setPartnerPoints] = useState(props.points);
 
-  const optionOneRef = useRef(null);
-  const optionTwoRef = useRef(null);
+  // Create ref objects
+  const refs = {
+    optionOne: useRef(null),
+    optionTwo: useRef(null),
+  };
 
   /**
    * Update the points state for the participant and the partner
-   * @param {number} _participant updated points for the participant
-   * @param {number} _partner updated points for the partner
+   * @param {number} participant updated points for the participant
+   * @param {number} partner updated points for the partner
    */
-  function updatePointsDisplay(_participant: number, _partner: number): void {
-    setParticipantPoints(participantPoints + _participant);
-    setPartnerPoints(partnerPoints + _partner);
+  function addPoints(participant: number, partner: number): void {
+    setParticipantPoints(participantPoints + participant);
+    setPartnerPoints(partnerPoints + partner);
+  }
+
+  /**
+   * Selection handler
+   * @param {string} option the selected option
+   */
+  function selectionHandler(option: string) {
+    // Get the references to the nodes
+    const optionOneNode = refs.optionOne.current as HTMLElement;
+    const optionTwoNode = refs.optionTwo.current as HTMLElement;
+
+    // Update the styling
+    optionOneNode.style.opacity = '0';
+    optionTwoNode.style.opacity = '0';
+    optionOneNode.style.pointerEvents = 'none';
+    optionTwoNode.style.pointerEvents = 'none';
+
+    // Set a timeout for continuing
+    window.setTimeout(() => {
+      // Reset the styling
+      optionOneNode.style.opacity = '1';
+      optionTwoNode.style.opacity = '1';
+      optionOneNode.style.pointerEvents = 'auto';
+      optionTwoNode.style.pointerEvents = 'auto';
+
+      props.endTrial(option);
+    }, 1000);
   }
 
   return (
@@ -126,25 +157,13 @@ export function Trial(props: {
 
         <Box
           gridArea='choiceOneArea'
-          ref={optionOneRef}
+          ref={refs.optionOne}
           onClick={() => {
-            updatePointsDisplay(
-                props.rowData.Option1_PPT,
-                props.rowData.Option1_Partner
+            addPoints(
+                props.data.optionOne.participant,
+                props.data.optionOne.partner
             );
-            const optionOneNode = optionOneRef.current as HTMLElement;
-            const optionTwoNode = optionTwoRef.current as HTMLElement;
-            optionOneNode.style.opacity = '0';
-            optionTwoNode.style.opacity = '0';
-            optionOneNode.style.pointerEvents = 'none';
-            optionTwoNode.style.pointerEvents = 'none';
-            window.setTimeout(() => {
-              props.selectionHandler('optionOne');
-              optionOneNode.style.opacity = '1';
-              optionTwoNode.style.opacity = '1';
-              optionOneNode.style.pointerEvents = 'auto';
-              optionTwoNode.style.pointerEvents = 'auto';
-            }, 1000);
+            selectionHandler('optionOne');
           }}
           className='grow'
           round
@@ -153,32 +172,20 @@ export function Trial(props: {
           <Option
             optionKey='optionOne'
             optionName='Option 1'
-            pointsParticipant={props.rowData.Option1_PPT}
-            pointsParter={props.rowData.Option1_Partner}
+            pointsParticipant={props.data.optionOne.participant}
+            pointsParter={props.data.optionOne.partner}
           />
         </Box>
 
         <Box
           gridArea='choiceTwoArea'
-          ref={optionTwoRef}
+          ref={refs.optionTwo}
           onClick={() => {
-            updatePointsDisplay(
-                props.rowData.Option2_PPT,
-                props.rowData.Option2_Partner
+            addPoints(
+                props.data.optionTwo.participant,
+                props.data.optionTwo.partner
             );
-            const optionOneNode = optionOneRef.current as HTMLElement;
-            const optionTwoNode = optionTwoRef.current as HTMLElement;
-            optionOneNode.style.opacity = '0';
-            optionTwoNode.style.opacity = '0';
-            optionOneNode.style.pointerEvents = 'none';
-            optionTwoNode.style.pointerEvents = 'none';
-            window.setTimeout(() => {
-              props.selectionHandler('optionTwo');
-              optionOneNode.style.opacity = '1';
-              optionTwoNode.style.opacity = '1';
-              optionOneNode.style.pointerEvents = 'auto';
-              optionTwoNode.style.pointerEvents = 'auto';
-            }, 1000);
+            selectionHandler('optionTwo');
           }}
           className='grow'
           round
@@ -187,8 +194,8 @@ export function Trial(props: {
           <Option
             optionKey='optionTwo'
             optionName='Option 2'
-            pointsParticipant={props.rowData.Option2_PPT}
-            pointsParter={props.rowData.Option2_Partner}
+            pointsParticipant={props.data.optionTwo.participant}
+            pointsParter={props.data.optionTwo.partner}
           />
         </Box>
 
@@ -208,16 +215,16 @@ export function Trial(props: {
             columns={['flex']}
             gap='xsmall'
             areas={[
-              {name: 'friendNameArea', start: [0, 0], end: [0, 0]},
-              {name: 'friendAvatarArea', start: [0, 1], end: [0, 1]},
-              {name: 'friendPointsArea', start: [0, 2], end: [0, 2]},
+              {name: 'partnerNameArea', start: [0, 0], end: [0, 0]},
+              {name: 'partnerAvatarArea', start: [0, 1], end: [0, 1]},
+              {name: 'partnerPointsArea', start: [0, 2], end: [0, 2]},
             ]}
             pad='small'
           >
             <Box
               align='center'
               animation={['pulse']}
-              gridArea='friendAvatarArea'
+              gridArea='partnerAvatarArea'
               alignSelf='center'
             >
               <Avatar
@@ -227,10 +234,10 @@ export function Trial(props: {
                 colors={COLORS}
               />
             </Box>
-            <Box align='center' gridArea='friendNameArea' alignSelf='center'>
-              <Heading>Friend</Heading>
+            <Box align='center' gridArea='partnerNameArea' alignSelf='center'>
+              <Heading>Partner</Heading>
             </Box>
-            <Box align='center' gridArea='friendPointsArea' alignSelf='center'>
+            <Box align='center' gridArea='partnerPointsArea' alignSelf='center'>
               <Heading level={2}>
                 Points:&nbsp;
                 <TextTransition

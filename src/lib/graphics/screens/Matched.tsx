@@ -18,7 +18,7 @@ import {AVATAR_VARIANT, COLORS} from '../../Parameters';
 export function Matched(): ReactElement {
   return (
     <Box align='center' animation={['fadeIn']}>
-      <Heading>Matched you with a partner!</Heading>
+      <Heading>Partner found!</Heading>
       <Avatar
         size={240}
         name={config.partners[0]}

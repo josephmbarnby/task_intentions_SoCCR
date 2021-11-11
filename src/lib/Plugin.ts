@@ -7,7 +7,7 @@ declare const jsPsych: any;
 // Core modules
 import {spreadsheet} from '../data';
 import {config} from '../config';
-import {displayScreen} from './graphics/Functions';
+import {display} from './graphics/Functions';
 import {STAGES} from './Parameters';
 
 jsPsych.plugins['intentions-game'] = (function() {
@@ -44,7 +44,7 @@ jsPsych.plugins['intentions-game'] = (function() {
     const trialData = {
       playerPoints: 0,
       partnerPoints: 0,
-      selectionOption: -1,
+      selectedOption: -1,
       rt: 0,
       avatar: -1,
     };
@@ -69,27 +69,39 @@ jsPsych.plugins['intentions-game'] = (function() {
         const participantPoints =
           jsPsych.data.get().select('playerPoints').sum();
         props = {
-          rowData: spreadsheet.rows[trial.row],
+          data: {
+            optionOne: {
+              participant: spreadsheet.rows[trial.row].Option1_PPT,
+              partner: spreadsheet.rows[trial.row].Option1_Partner,
+            },
+            optionTwo: {
+              participant: spreadsheet.rows[trial.row].Option2_PPT,
+              partner: spreadsheet.rows[trial.row].Option2_Partner,
+            },
+          },
           avatar: trialData.avatar,
           points: participantPoints,
-          selectionHandler: choiceSelectionHandler,
+          endTrial: endTrial,
           stage: trial.stage,
         };
         break;
       }
+
       // Matching and matched stages
       case STAGES.MATCHED:
       case STAGES.MATCHING:
         props = {};
         timeoutDuration = 2000;
-        timeoutCallback = continueAfterMatch;
+        timeoutCallback = continueTrial;
         break;
+
       // Selection screen
       case STAGES.SELECTION:
         props = {
           selectionHandler: avatarSelectionHandler,
         };
         break;
+
       // Default error state
       default:
         // Log an error message and finish the trial
@@ -99,7 +111,7 @@ jsPsych.plugins['intentions-game'] = (function() {
     }
 
     // Display the screen with the generated props
-    displayScreen(
+    display(
         trial.stage,
         displayElement,
         props,
@@ -111,27 +123,27 @@ jsPsych.plugins['intentions-game'] = (function() {
      * Handle Button-press events in a particular trial
      * @param {string} _option selected option
      */
-    function choiceSelectionHandler(_option: string) {
+    function endTrial(_option: string) {
       const _endTime = performance.now();
       const _duration = _endTime - _startTime;
       trialData.rt = _duration;
 
       if (_option === 'optionOne') {
         // Participant chose option 1
-        trialData.selectionOption = 1;
+        trialData.selectedOption = 1;
 
         // Update the score with values of option 1
-        trialData.playerPoints = spreadsheet.rows[trial.row]['Option1_PPT'];
+        trialData.playerPoints = spreadsheet.rows[trial.row].Option1_PPT;
         trialData.partnerPoints =
-            spreadsheet.rows[trial.row]['Option1_Partner'];
+            spreadsheet.rows[trial.row].Option1_Partner;
       } else if (_option === 'optionTwo') {
         // Participant chose option 2
-        trialData.selectionOption = 2;
+        trialData.selectedOption = 2;
 
         // Update the score with values of option 2
-        trialData.playerPoints = spreadsheet.rows[trial.row]['Option2_PPT'];
+        trialData.playerPoints = spreadsheet.rows[trial.row].Option2_PPT;
         trialData.partnerPoints =
-            spreadsheet.rows[trial.row]['Option2_Partner'];
+            spreadsheet.rows[trial.row].Option2_Partner;
       }
 
       // End trial
@@ -153,7 +165,7 @@ jsPsych.plugins['intentions-game'] = (function() {
     /**
      * Function to continue without participant input
      */
-    function continueAfterMatch(): void {
+    function continueTrial(): void {
       jsPsych.finishTrial(trialData);
     }
   };

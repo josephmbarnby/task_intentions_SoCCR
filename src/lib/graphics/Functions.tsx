@@ -3,7 +3,7 @@ import React from 'react';
 import {render} from 'react-dom';
 
 // Screen component
-import {Screen} from './Screen';
+import {Switcher} from './Switcher';
 
 // Other imports
 import consola from 'consola';
@@ -16,7 +16,7 @@ import consola from 'consola';
  * @param {number} timeout duration
  * @param {Function} callback function to run
  */
-export function displayScreen(
+export function display(
     type: string,
     target: HTMLElement,
     props: any,
@@ -26,7 +26,7 @@ export function displayScreen(
     },
 ): void {
   render(
-      <Screen
+      <Switcher
         screenType={type}
         screenProps={props}
       />,

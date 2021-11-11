@@ -1,7 +1,7 @@
 // Configuration and data
 import {config} from './config';
 import {spreadsheet} from './data';
-import {ManipulationAPI} from './lib/util';
+import {ManipulationAPI} from './lib/api/Manipulations';
 import {STAGES} from './lib/Parameters';
 
 // Configure jsPsych window variable to make TypeScript happy

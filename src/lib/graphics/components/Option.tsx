@@ -21,7 +21,7 @@ export function Option(props: {
       columns={['flex', 'flex']}
       gap='small'
       areas={[
-        {name: 'choiceHeader', start: [0, 0], end: [1, 0]},
+        {name: 'optionHeader', start: [0, 0], end: [1, 0]},
         {name: 'pointsYou', start: [0, 1], end: [0, 1]},
         {name: 'pointsPartner', start: [1, 1], end: [1, 1]},
       ]}
@@ -30,7 +30,7 @@ export function Option(props: {
     >
       {/* Choice header */}
       <Box
-        gridArea='choiceHeader'
+        gridArea='optionHeader'
         justify='center'
         alignContent='center'
         fill='horizontal'
@@ -44,7 +44,7 @@ export function Option(props: {
         justify='center'
         alignSelf='center'
       >
-        <Heading level={2}>{props.pointsParticipant}</Heading>
+        <Heading>+{props.pointsParticipant}</Heading>
       </Box>
 
       {/* Partner points */}
@@ -53,7 +53,7 @@ export function Option(props: {
         justify='center'
         alignSelf='center'
       >
-        <Heading level={2}>{props.pointsParter}</Heading>
+        <Heading>+{props.pointsParter}</Heading>
       </Box>
     </Grid>
   );
