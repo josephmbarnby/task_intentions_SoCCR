@@ -8,6 +8,7 @@ declare const jsPsych: any;
 import {spreadsheet} from '../data';
 import {config} from '../config';
 import {displayScreen} from './graphics/Functions';
+import {STAGES} from './Parameters';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -54,38 +55,57 @@ jsPsych.plugins['intentions-game'] = (function() {
     const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
     trialData.avatar = _previousData.avatar;
 
-    // Present a different screen based on the stage of the trial
-    if (trial.stage === 'trial') {
-      // Sum the number of points
-      const _participantPoints =
+    // Generate and configure props based on the stage
+    let props: any;
+
+    // Timeout information
+    let timeoutDuration = 0;
+    let timeoutCallback: () => void;
+
+    switch (trial.stage) {
+      // Phase one and two trials
+      case STAGES.TRIAL_PHASE_ONE:
+      case STAGES.TRIAL_PHASE_TWO: {
+        const participantPoints =
           jsPsych.data.get().select('playerPoints').sum();
-      displayScreen('trial', displayElement, {
-        rowData: spreadsheet.rows[trial.row],
-        avatar: trialData.avatar,
-        points: _participantPoints,
-        callback: choiceSelectionHandler,
-      });
-    } else if (trial.stage === 'selection') {
-      displayScreen('selection', displayElement, {
-        avatarSelectionHandler: avatarSelectionHandler,
-      });
-    } else if (trial.stage === 'matching') {
-      displayScreen('matching', displayElement, {});
-      setTimeout(() => {
-        continueAfterMatch();
-      }, 2000);
-      // Set a timeout to move on
-    } else if (trial.stage === 'matched') {
-      displayScreen('matched', displayElement, {});
-      setTimeout(() => {
-        continueAfterMatch();
-      }, 2000);
-      // Set a timeout to move on
-    } else {
-      // Log an error message and finish the trial
-      consola.error(`Unknown trial stage '${trial.stage}'`);
-      jsPsych.finishTrial({});
+        props = {
+          rowData: spreadsheet.rows[trial.row],
+          avatar: trialData.avatar,
+          points: participantPoints,
+          selectionHandler: choiceSelectionHandler,
+          stage: trial.stage,
+        };
+        break;
+      }
+      // Matching and matched stages
+      case STAGES.MATCHED:
+      case STAGES.MATCHING:
+        props = {};
+        timeoutDuration = 2000;
+        timeoutCallback = continueAfterMatch;
+        break;
+      // Selection screen
+      case STAGES.SELECTION:
+        props = {
+          selectionHandler: avatarSelectionHandler,
+        };
+        break;
+      // Default error state
+      default:
+        // Log an error message and finish the trial
+        consola.error(`Unknown trial stage '${trial.stage}'`);
+        jsPsych.finishTrial({});
+        break;
     }
+
+    // Display the screen with the generated props
+    displayScreen(
+        trial.stage,
+        displayElement,
+        props,
+        timeoutDuration,
+        timeoutCallback
+    );
 
     /**
      * Handle Button-press events in a particular trial

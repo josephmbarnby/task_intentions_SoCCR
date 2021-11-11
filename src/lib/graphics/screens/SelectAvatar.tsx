@@ -11,16 +11,13 @@ import {
 import {config} from '../../../config';
 import {IntentionsAvatar} from '../components/IntentionsAvatar';
 
-// Other imports
-import consola from 'consola';
-
 /**
  * Generic structure for the Avatar Selection Screen
  * @param {any} props collection of props
  * @return {ReactElement}
  */
 export function SelectAvatar(props: {
-  avatarSelectionHandler: (value: string) => void;
+  selectionHandler: (value: string) => void;
 }): ReactElement {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
@@ -31,6 +28,7 @@ export function SelectAvatar(props: {
   for (const avatarName of avatars) {
     avatarComponents.push(
         <IntentionsAvatar
+          key={avatarName}
           size={128}
           name={avatarName}
           state={selectedAvatar}
@@ -61,11 +59,7 @@ export function SelectAvatar(props: {
         label='Continue'
         disabled={selectedAvatar === 'none'}
         onClick={() => {
-          for (const component of avatarComponents) {
-            consola.log(component);
-            // if ((component as ReactElement).props)
-          }
-          props.avatarSelectionHandler(selectedAvatar);
+          props.selectionHandler(selectedAvatar);
         }}
       />
     </div>

@@ -5,23 +5,38 @@ import {render} from 'react-dom';
 // Screen component
 import {Screen} from './Screen';
 
-// We need state-based switching between different stages
-// If state is 'choice', render the Choice components etc.
+// Other imports
+import consola from 'consola';
 
 /**
  * Switch between different screens
- * @param {string} _type screen type
- * @param {HTMLElement} _target target DOM element
- * @param {any} _screenProps collection of props
+ * @param {string} type screen type
+ * @param {HTMLElement} target target DOM element
+ * @param {any} props collection of props
+ * @param {number} timeout duration
+ * @param {Function} callback function to run
  */
 export function displayScreen(
-    _type: string, _target: HTMLElement, _screenProps: any
+    type: string,
+    target: HTMLElement,
+    props: any,
+    timeout=0,
+    callback=() => {
+      consola.info('No callback defined for timeout');
+    },
 ): void {
   render(
       <Screen
-        screenType={_type}
-        screenProps={_screenProps}
+        screenType={type}
+        screenProps={props}
       />,
-      _target,
+      target,
   );
+
+  // Setup a timeout to execute the callback
+  if (timeout > 0) {
+    setTimeout(() => {
+      callback();
+    }, timeout);
+  }
 }

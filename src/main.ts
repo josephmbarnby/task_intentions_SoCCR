@@ -2,6 +2,7 @@
 import {config} from './config';
 import {spreadsheet} from './data';
 import {ManipulationAPI} from './lib/util';
+import {STAGES} from './lib/Parameters';
 
 // Configure jsPsych window variable to make TypeScript happy
 import 'jspsych/jspsych';
@@ -79,7 +80,7 @@ window.onload = () => {
   timeline.push({
     type: 'intentions-game',
     row: -1,
-    stage: 'selection',
+    stage: STAGES.SELECTION,
   });
 
   // Insert a 'match' sequence into the timeline
@@ -100,7 +101,7 @@ window.onload = () => {
     timeline.push({
       type: 'intentions-game',
       row: i,
-      stage: 'trial',
+      stage: STAGES.TRIAL_PHASE_ONE,
     });
   }
 

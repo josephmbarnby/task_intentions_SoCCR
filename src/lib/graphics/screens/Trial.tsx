@@ -13,7 +13,7 @@ import {Option} from '../components/Option';
 // Configuration
 import {config} from '../../../config';
 import Avatar from 'boring-avatars';
-import {AVATAR_VARIANT, COLORS} from '../../Parameters';
+import {AVATAR_VARIANT, COLORS, STAGES} from '../../Parameters';
 
 /**
  * Generate the choices grid with options
@@ -21,8 +21,9 @@ import {AVATAR_VARIANT, COLORS} from '../../Parameters';
  * @return {ReactElement}
  */
 export function Trial(props: {
-  avatar: number;
-  points: number;
+  avatar: number,
+  points: number,
+  stage: string,
   rowData: {
     // eslint-disable-next-line camelcase
     Option1_PPT: number;
@@ -32,9 +33,9 @@ export function Trial(props: {
     Option2_PPT: number;
     // eslint-disable-next-line camelcase
     Option2_Partner: number;
-  };
-  callback: (selection: string) => void; }
-): ReactElement {
+  },
+  selectionHandler: (selection: string) => void,
+}): ReactElement {
   const [participantPoints, setParticipantPoints] = useState(props.points);
   const [partnerPoints, setPartnerPoints] = useState(props.points);
 
@@ -52,9 +53,13 @@ export function Trial(props: {
   }
 
   return (
-    <>
+    <div>
       <Heading>
-        Choose an Option
+        {
+          props.stage === STAGES.TRIAL_PHASE_ONE ?
+            'Choose an Option' :
+            'What will your opponent choose?'
+        }
       </Heading>
       <Grid
         rows={['flex', 'flex']}
@@ -134,7 +139,7 @@ export function Trial(props: {
             optionOneNode.style.pointerEvents = 'none';
             optionTwoNode.style.pointerEvents = 'none';
             window.setTimeout(() => {
-              props.callback('optionOne');
+              props.selectionHandler('optionOne');
               optionOneNode.style.opacity = '1';
               optionTwoNode.style.opacity = '1';
               optionOneNode.style.pointerEvents = 'auto';
@@ -168,7 +173,7 @@ export function Trial(props: {
             optionOneNode.style.pointerEvents = 'none';
             optionTwoNode.style.pointerEvents = 'none';
             window.setTimeout(() => {
-              props.callback('optionTwo');
+              props.selectionHandler('optionTwo');
               optionOneNode.style.opacity = '1';
               optionTwoNode.style.opacity = '1';
               optionOneNode.style.pointerEvents = 'auto';
@@ -238,6 +243,6 @@ export function Trial(props: {
           </Grid>
         </Box>
       </Grid>
-    </>
+    </div>
   );
 }

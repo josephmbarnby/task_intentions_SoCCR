@@ -13,9 +13,16 @@ import {SelectAvatar} from './screens/SelectAvatar';
 import {Matching} from './screens/Matching';
 import {Matched} from './screens/Matched';
 
+// Parameters
+import {STAGES} from '../Parameters';
+
+// Other imports
+import consola from 'consola';
+
 /**
  * Generic container for all Grommet components
- * @param {any} props collection of props
+ * @param {any} props collection of props for the primary
+ * child component
  * @return {ReactElement}
  */
 export function Screen(props:
@@ -25,23 +32,26 @@ export function Screen(props:
   }): ReactElement {
   // Define the exact component that is rendered
   let screenComponent: ReactElement;
-  if (props.screenType === 'trial') {
+  if (props.screenType.startsWith('trial')) {
     screenComponent =
       <Trial
         avatar={props.screenProps.avatar}
         points={props.screenProps.points}
         rowData={props.screenProps.rowData}
-        callback={props.screenProps.callback}
+        selectionHandler={props.screenProps.callback}
+        stage={props.screenType}
       />;
-  } else if (props.screenType === 'selection') {
+  } else if (props.screenType === STAGES.SELECTION) {
     screenComponent =
       <SelectAvatar
-        avatarSelectionHandler={props.screenProps.avatarSelectionHandler}
+        selectionHandler={props.screenProps.selectionHandler}
       />;
-  } else if (props.screenType === 'matched') {
+  } else if (props.screenType === STAGES.MATCHED) {
     screenComponent = <Matched />;
-  } else if (props.screenType === 'matching') {
+  } else if (props.screenType === STAGES.MATCHING) {
     screenComponent = <Matching />;
+  } else {
+    consola.error(`Unknown screen type '${props.screenType}'`);
   }
 
   return (
