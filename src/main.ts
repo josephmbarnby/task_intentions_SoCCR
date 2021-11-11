@@ -75,11 +75,11 @@ window.onload = () => {
     show_clickable_nav: true,
   });
 
-  // Insert a 'avatarSelection' screen into the timeline
+  // Insert a 'selection' screen into the timeline
   timeline.push({
     type: 'intentions-game',
     row: -1,
-    stage: 'avatarSelection',
+    stage: 'selection',
   });
 
   // Insert a 'match' sequence into the timeline
@@ -100,7 +100,7 @@ window.onload = () => {
     timeline.push({
       type: 'intentions-game',
       row: i,
-      stage: 'choice',
+      stage: 'trial',
     });
   }
 

@@ -1,6 +1,5 @@
 // React import
 import React, {ReactElement} from 'react';
-import {render} from 'react-dom';
 
 // Grommet component
 import {Grommet} from 'grommet';
@@ -8,11 +7,11 @@ import {Grommet} from 'grommet';
 // Import styling
 import '../../css/styles.css';
 
-// Custom components
-import {Choice} from './components/Choice';
-import {SelectAvatar} from './components/SelectAvatar';
-import {Matching} from './components/Matching';
-import {Matched} from './components/Matched';
+// Custom Screens
+import {Trial} from './screens/Trial';
+import {SelectAvatar} from './screens/SelectAvatar';
+import {Matching} from './screens/Matching';
+import {Matched} from './screens/Matched';
 
 /**
  * Generic container for all Grommet components
@@ -26,15 +25,15 @@ export function Screen(props:
   }): ReactElement {
   // Define the exact component that is rendered
   let screenComponent: ReactElement;
-  if (props.screenType === 'choice') {
+  if (props.screenType === 'trial') {
     screenComponent =
-      <Choice
+      <Trial
         avatar={props.screenProps.avatar}
         points={props.screenProps.points}
         rowData={props.screenProps.rowData}
         callback={props.screenProps.callback}
       />;
-  } else if (props.screenType === 'avatarSelection') {
+  } else if (props.screenType === 'selection') {
     screenComponent =
       <SelectAvatar
         avatarSelectionHandler={props.screenProps.avatarSelectionHandler}
@@ -49,26 +48,5 @@ export function Screen(props:
     <Grommet>
       {screenComponent}
     </Grommet>
-  );
-}
-
-// We need state-based switching between different stages
-// If state is 'choice', render the Choice components etc.
-
-/**
- * Switch between different screens
- * @param {string} _type screen type
- * @param {HTMLElement} _target target DOM element
- * @param {any} _screenProps collection of props
- */
-export function displayScreen(
-    _type: string, _target: HTMLElement, _screenProps: any
-): void {
-  render(
-      <Screen
-        screenType={_type}
-        screenProps={_screenProps}
-      />,
-      _target,
   );
 }

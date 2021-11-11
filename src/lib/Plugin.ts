@@ -7,7 +7,7 @@ declare const jsPsych: any;
 // Core modules
 import {spreadsheet} from '../data';
 import {config} from '../config';
-import {displayScreen} from './graphics/Screen';
+import {displayScreen} from './graphics/Functions';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -55,18 +55,18 @@ jsPsych.plugins['intentions-game'] = (function() {
     trialData.avatar = _previousData.avatar;
 
     // Present a different screen based on the stage of the trial
-    if (trial.stage === 'choice') {
+    if (trial.stage === 'trial') {
       // Sum the number of points
       const _participantPoints =
           jsPsych.data.get().select('playerPoints').sum();
-      displayScreen('choice', displayElement, {
+      displayScreen('trial', displayElement, {
         rowData: spreadsheet.rows[trial.row],
         avatar: trialData.avatar,
         points: _participantPoints,
         callback: choiceSelectionHandler,
       });
-    } else if (trial.stage === 'avatarSelection') {
-      displayScreen('avatarSelection', displayElement, {
+    } else if (trial.stage === 'selection') {
+      displayScreen('selection', displayElement, {
         avatarSelectionHandler: avatarSelectionHandler,
       });
     } else if (trial.stage === 'matching') {

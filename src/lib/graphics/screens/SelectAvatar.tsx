@@ -1,44 +1,41 @@
 // React import
-import React, {ReactElement, useRef} from 'react';
+import React, {ReactElement} from 'react';
 
 // Grommet UI components
 import {
   Box, Button,
-  Card, CardBody, CardFooter,
-  Grid, Heading, Image, Select,
+  Heading,
 } from 'grommet';
-
-// Custom components
-import {getStyledAvatar} from './StyledAvatar';
 
 // Configuration
 import {config} from '../../../config';
+import {IntentionsAvatar} from '../components/IntentionsAvatar';
+
+// Other imports
+import consola from 'consola';
 
 /**
  * Generic structure for the Avatar Selection Screen
  * @param {any} props collection of props
- * @return {any}
+ * @return {ReactElement}
  */
 export function SelectAvatar(props: {
   avatarSelectionHandler: (value: string) => void;
 }): ReactElement {
   // Configure relevant states
-  const [value, setValue] = React.useState('none');
+  const [selectedAvatar, setAvatar] = React.useState('none');
 
   const avatars = config.avatars;
   const avatarComponents = [];
 
-  for (const avatar of avatars) {
+  for (const avatarName of avatars) {
     avatarComponents.push(
-        <Box
-          animation='pulse'
-          margin='small'
-          onClick={() => {
-            setValue(avatar);
-          }}
-        >
-          {getStyledAvatar(avatar, value === avatar ? 172 : 128)}
-        </Box>
+        <IntentionsAvatar
+          size={128}
+          name={avatarName}
+          state={selectedAvatar}
+          stateUpdate={setAvatar}
+        />
     );
   }
 
@@ -62,9 +59,13 @@ export function SelectAvatar(props: {
       <Button
         primary
         label='Continue'
-        disabled={value === 'none'}
+        disabled={selectedAvatar === 'none'}
         onClick={() => {
-          props.avatarSelectionHandler(value);
+          for (const component of avatarComponents) {
+            consola.log(component);
+            // if ((component as ReactElement).props)
+          }
+          props.avatarSelectionHandler(selectedAvatar);
         }}
       />
     </div>

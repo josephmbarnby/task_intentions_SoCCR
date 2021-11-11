@@ -12,7 +12,7 @@ import {Box, Grid, Heading} from 'grommet';
 export function Option(props: {
   optionKey: string,
   optionName: string,
-  pointsPPT: number,
+  pointsParticipant: number,
   pointsParter: number,
 }): ReactElement {
   return (
@@ -44,7 +44,7 @@ export function Option(props: {
         justify='center'
         alignSelf='center'
       >
-        <Heading level={2}>{props.pointsPPT}</Heading>
+        <Heading level={2}>{props.pointsParticipant}</Heading>
       </Box>
 
       {/* Partner points */}

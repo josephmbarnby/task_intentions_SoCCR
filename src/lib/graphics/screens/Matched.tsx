@@ -4,14 +4,14 @@ import React, {ReactElement} from 'react';
 // Grommet UI components
 import {Box, Heading} from 'grommet';
 
-// Custom components
-import {getStyledAvatar} from './StyledAvatar';
 
 // Configuration
 import {config} from '../../../config';
+import Avatar from 'boring-avatars';
+import {AVATAR_VARIANT, COLORS} from '../../Parameters';
 
 /**
- * Generate layout of Matched Screen
+ * Generate layout of Matched Screena
  * @param {any} props collection of props
  * @return {any}
  */
@@ -19,7 +19,12 @@ export function Matched(): ReactElement {
   return (
     <Box align='center' animation={['fadeIn']}>
       <Heading>Matched you with a partner!</Heading>
-      {getStyledAvatar(config.partners[0], 240)}
+      <Avatar
+        size={240}
+        name={config.partners[0]}
+        variant={AVATAR_VARIANT}
+        colors={COLORS}
+      />
     </Box>
   );
 }

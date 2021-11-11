@@ -1,11 +1,24 @@
 @import 'jspsych/css/jspsych.css';
 
-/* Custom hover behaviour */
+/* Grow behaviour for Option component */
 .grow { 
   transition: all .2s ease-in-out; 
 }
-  
+
 .grow:hover { 
   transform: scale(1.05); 
   cursor: pointer;
+}
+
+/* Size behaviour for IntentionsAvatar component */
+.selectable {
+  transition: all 0.3s linear;
+}
+
+.selectable:hover {
+  transform: scale(1.2); 
+}
+
+.selectable.selected {
+  transform: scale(1.4) translateY(-40%);
 }
