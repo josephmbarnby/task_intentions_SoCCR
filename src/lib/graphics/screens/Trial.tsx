@@ -1,18 +1,19 @@
 // React import
 import React, {ReactElement, useRef, useState} from 'react';
 
-// Grommet UI components
+// UI components
 import {Box, Grid, Heading} from 'grommet';
+import Avatar from 'boring-avatars';
 
 // Text Transition component
 import TextTransition, {presets} from 'react-text-transition';
 
 // Custom components
 import {Option} from '../components/Option';
+import {PlayerAvatar} from '../components/PlayerAvatar';
 
 // Configuration
 import {config} from '../../../config';
-import Avatar from 'boring-avatars';
 import {AVATAR_VARIANT, COLORS, STAGES} from '../../Parameters';
 
 /**
@@ -105,55 +106,12 @@ export function Trial(props: {
         responsive
       >
         {/* Participant's Avatar */}
-        <Box
+        <PlayerAvatar
           gridArea='playerArea'
-          background='brand'
-          round
-          justify='center'
-          align='center'
-          direction='row-responsive'
-          id='participantInfo'
-          margin={{right: 'small'}}
-        >
-          <Grid
-            rows={['small', 'flex', 'small']}
-            columns={['flex']}
-            gap='xsmall'
-            areas={[
-              {name: 'youNameArea', start: [0, 0], end: [0, 0]},
-              {name: 'youAvatarArea', start: [0, 1], end: [0, 1]},
-              {name: 'youPointsArea', start: [0, 2], end: [0, 2]},
-            ]}
-            pad='small'
-          >
-            <Box
-              align='center'
-              animation={['pulse']}
-              gridArea='youAvatarArea'
-              alignSelf='center'
-            >
-              <Avatar
-                size={128}
-                name={config.avatars[props.avatar]}
-                variant={AVATAR_VARIANT}
-                colors={COLORS}
-              />
-            </Box>
-            <Box align='center' gridArea='youNameArea' alignSelf='center'>
-              <Heading>You</Heading>
-            </Box>
-            <Box align='center' gridArea='youPointsArea' alignSelf='center'>
-              <Heading level={2}>
-                Points:&nbsp;
-                <TextTransition
-                  text={participantPoints}
-                  springConfig={presets.wobbly}
-                  inline={true}
-                />
-              </Heading>
-            </Box>
-          </Grid>
-        </Box>
+          name='You'
+          points={participantPoints}
+          avatar={config.avatars[props.avatar]}
+        />
 
         <Box
           gridArea='choiceOneArea'
@@ -167,7 +125,7 @@ export function Trial(props: {
           }}
           className='grow'
           round
-          background='neutral-3'
+          background='neutral-2'
         >
           <Option
             optionKey='optionOne'
@@ -189,7 +147,7 @@ export function Trial(props: {
           }}
           className='grow'
           round
-          background='neutral-3'
+          background='neutral-2'
         >
           <Option
             optionKey='optionTwo'
@@ -200,55 +158,12 @@ export function Trial(props: {
         </Box>
 
         {/* Partner's Avatar */}
-        <Box
+        <PlayerAvatar
           gridArea='partnerArea'
-          background='neutral-1'
-          round
-          justify='center'
-          align='center'
-          direction='row-responsive'
-          id='partnerInfo'
-          margin={{left: 'small'}}
-        >
-          <Grid
-            rows={['small', 'flex', 'small']}
-            columns={['flex']}
-            gap='xsmall'
-            areas={[
-              {name: 'partnerNameArea', start: [0, 0], end: [0, 0]},
-              {name: 'partnerAvatarArea', start: [0, 1], end: [0, 1]},
-              {name: 'partnerPointsArea', start: [0, 2], end: [0, 2]},
-            ]}
-            pad='small'
-          >
-            <Box
-              align='center'
-              animation={['pulse']}
-              gridArea='partnerAvatarArea'
-              alignSelf='center'
-            >
-              <Avatar
-                size={128}
-                name={'test'}
-                variant={AVATAR_VARIANT}
-                colors={COLORS}
-              />
-            </Box>
-            <Box align='center' gridArea='partnerNameArea' alignSelf='center'>
-              <Heading>Partner</Heading>
-            </Box>
-            <Box align='center' gridArea='partnerPointsArea' alignSelf='center'>
-              <Heading level={2}>
-                Points:&nbsp;
-                <TextTransition
-                  text={partnerPoints}
-                  springConfig={presets.wobbly}
-                  inline={true}
-                />
-              </Heading>
-            </Box>
-          </Grid>
-        </Box>
+          name='Partner'
+          points={partnerPoints}
+          avatar='partner'
+        />
       </Grid>
     </div>
   );

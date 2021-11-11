@@ -21,26 +21,36 @@ export function Option(props: {
       columns={['flex', 'flex']}
       gap='small'
       areas={[
-        {name: 'optionHeader', start: [0, 0], end: [1, 0]},
-        {name: 'pointsYou', start: [0, 1], end: [0, 1]},
-        {name: 'pointsPartner', start: [1, 1], end: [1, 1]},
+        {name: 'participantHeader', start: [0, 0], end: [0, 0]},
+        {name: 'partnerHeader', start: [1, 0], end: [1, 0]},
+        {name: 'participantPoints', start: [0, 1], end: [0, 1]},
+        {name: 'partnerPoints', start: [1, 1], end: [1, 1]},
       ]}
       id={props.optionKey}
       fill='vertical'
     >
       {/* Choice header */}
       <Box
-        gridArea='optionHeader'
+        gridArea='participantHeader'
         justify='center'
         alignContent='center'
         fill='horizontal'
       >
-        <Heading level={2} fill>{props.optionName}</Heading>
+        <Heading level={2} fill>Points for you</Heading>
+      </Box>
+
+      <Box
+        gridArea='partnerHeader'
+        justify='center'
+        alignContent='center'
+        fill='horizontal'
+      >
+        <Heading level={2} fill>Points for your partner</Heading>
       </Box>
 
       {/* Participant points */}
       <Box
-        gridArea='pointsYou'
+        gridArea='participantPoints'
         justify='center'
         alignSelf='center'
       >
@@ -49,7 +59,7 @@ export function Option(props: {
 
       {/* Partner points */}
       <Box
-        gridArea='pointsPartner'
+        gridArea='partnerPoints'
         justify='center'
         alignSelf='center'
       >
