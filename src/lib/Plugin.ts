@@ -1,4 +1,5 @@
 import 'jspsych/jspsych';
+import consola from 'consola';
 
 // Make TypeScript happy by declaring jsPsych
 declare const jsPsych: any;
@@ -12,7 +13,7 @@ jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
     info: {},
     trial: (displayElement: HTMLElement, trial: any) => {
-      console.error(`Not implemented.`);
+      consola.error(`Not implemented.`);
     },
   };
 
@@ -46,10 +47,10 @@ jsPsych.plugins['intentions-game'] = (function() {
       rt: 0,
       avatar: -1,
     };
-    console.debug(`Running trial stage '${trial.stage}'`);
+
+    consola.info(`Running trial stage '${trial.stage}'`);
 
     // Load the avatar that was selected
-    // (will default to '-1' if not selected yet)
     const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
     trialData.avatar = _previousData.avatar;
 
@@ -82,7 +83,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       // Set a timeout to move on
     } else {
       // Log an error message and finish the trial
-      console.error(`Unknown trial stage '${trial.stage}'`);
+      consola.error(`Unknown trial stage '${trial.stage}'`);
       jsPsych.finishTrial({});
     }
 
@@ -123,8 +124,7 @@ jsPsych.plugins['intentions-game'] = (function() {
      */
     function avatarSelectionHandler(_selection: string): void {
       // Obtain the selected avatar
-      const _avatarSelection = _selection.split(' ');
-      trialData.avatar = parseInt(_avatarSelection[1]);
+      trialData.avatar = config.avatars.indexOf(_selection);
 
       // End trial
       jsPsych.finishTrial(trialData);

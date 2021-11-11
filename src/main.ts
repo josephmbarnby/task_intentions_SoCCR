@@ -28,7 +28,6 @@ window.onload = () => {
   for (const _field in config.trials) {
     if (Object.prototype.hasOwnProperty.call(config.trials, `${_field}`)) {
       totalTrials += parseInt(config.trials[`${_field}`]);
-      console.debug(`${_field}`);
     }
   }
 

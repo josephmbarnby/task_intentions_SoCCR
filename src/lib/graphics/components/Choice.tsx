@@ -91,7 +91,7 @@ export function Choice(props: {
             gridArea='youAvatarArea'
             alignSelf='center'
           >
-            {getStyledAvatar(`${config.avatars[props.avatar - 1]}`, 128)}
+            {getStyledAvatar(`${config.avatars[props.avatar]}`, 128)}
           </Box>
           <Box align='center' gridArea='youNameArea' alignSelf='center'>
             <Heading>You</Heading>
