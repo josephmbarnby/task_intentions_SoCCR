@@ -31,7 +31,7 @@ export function PlayerAvatar(props: {
       align='center'
       direction='row-responsive'
       id='playerInfo'
-      margin={{left: 'small'}}
+      margin={{left: 'small', right: 'small'}}
     >
       <Grid
         rows={['flex', 'flex', 'flex']}
