@@ -1,5 +1,5 @@
 // Configuration and other required data
-export const config = {
+export const Configuration = {
   name: 'Intentions game',
   pluginName: 'intentions-game',
   locale: 'en-AU',
@@ -11,6 +11,7 @@ export const config = {
     phaseThree: 36,
   },
   seed: 'intentions',
+  individualType: 'Competitive',
   // List of avatar names (not displayed, only used to generate avatars)
   avatars: [
     'henry',

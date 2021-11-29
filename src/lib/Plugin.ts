@@ -5,10 +5,13 @@ import consola from 'consola';
 declare const jsPsych: any;
 
 // Core modules
-import {spreadsheet} from '../data';
-import {config} from '../config';
-import {display} from './graphics/Functions';
+import {Configuration} from '../Configuration';
+import {display} from './view/Functions';
 import {STAGES} from './Parameters';
+
+// Custom types
+import {DisplayType} from '../types/data';
+import {SelectionScreenProps, TrialScreenProps} from '../types/screens';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -19,15 +22,45 @@ jsPsych.plugins['intentions-game'] = (function() {
   };
 
   plugin.info = {
-    name: config.name,
+    name: Configuration.name,
     parameters: {
-      row: {
+      optionOneParticipant: {
         type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Spreadsheet row',
-        default: undefined,
-        description: 'The row to extract spreadsheet data from.',
+        pretty_name: 'Option One Participant',
+        default: 0,
+        description: 'Number of points for the participant in option one.',
       },
-      stage: {
+      optionOnePartner: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Option One Partner',
+        default: 0,
+        description: 'Number of points for the partner in option one.',
+      },
+      optionTwoParticipant: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Option Two Participant',
+        default: 0,
+        description: 'Number of points for the participant in option two.',
+      },
+      optionTwoPartner: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Option Two Partner',
+        default: 0,
+        description: 'Number of points for the partner in option two.',
+      },
+      typeOne: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Type One',
+        default: '',
+        description: 'The type of option one.',
+      },
+      typeTwo: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Type Two',
+        default: '',
+        description: 'The type of option two',
+      },
+      display: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Type of trial screen',
         default: undefined,
@@ -49,54 +82,57 @@ jsPsych.plugins['intentions-game'] = (function() {
       avatar: -1,
     };
 
-    consola.info(`Running trial stage '${trial.stage}'`);
+    consola.info(`Running trial stage '${trial.display}'`);
 
     // Load the avatar that was selected
     const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
     trialData.avatar = _previousData.avatar;
 
     // Generate and configure props based on the stage
-    let props: any;
+    let props:
+      TrialScreenProps |
+      SelectionScreenProps |
+      Record<string, unknown>;
 
     // Timeout information
     let timeoutDuration = 0;
     let timeoutCallback: () => void;
 
-    switch (trial.stage) {
+    switch (trial.display as DisplayType) {
       // Phase one and two trials
-      case STAGES.TRIAL_PHASE_ONE:
-      case STAGES.TRIAL_PHASE_TWO: {
+      case 'playerChoice':
+      case 'playerGuess': {
         const participantPoints =
           jsPsych.data.get().select('playerPoints').sum();
         props = {
           data: {
             optionOne: {
-              participant: spreadsheet.rows[trial.row].Option1_PPT,
-              partner: spreadsheet.rows[trial.row].Option1_Partner,
+              participant: trial.optionOneParticipant,
+              partner: trial.optionOnePartner,
             },
             optionTwo: {
-              participant: spreadsheet.rows[trial.row].Option2_PPT,
-              partner: spreadsheet.rows[trial.row].Option2_Partner,
+              participant: trial.optionTwoParticipant,
+              partner: trial.optionTwoPartner,
             },
           },
           avatar: trialData.avatar,
           points: participantPoints,
           endTrial: endTrial,
-          stage: trial.stage,
+          display: trial.display,
         };
         break;
       }
 
       // Matching and matched stages
-      case STAGES.MATCHED:
-      case STAGES.MATCHING:
+      case 'matched':
+      case 'matching':
         props = {};
         timeoutDuration = 2000;
         timeoutCallback = continueTrial;
         break;
 
       // Selection screen
-      case STAGES.SELECTION:
+      case 'selection':
         props = {
           selectionHandler: avatarSelectionHandler,
         };
@@ -105,14 +141,14 @@ jsPsych.plugins['intentions-game'] = (function() {
       // Default error state
       default:
         // Log an error message and finish the trial
-        consola.error(`Unknown trial stage '${trial.stage}'`);
+        consola.error(`Unknown trial stage '${trial.display}'`);
         jsPsych.finishTrial({});
         break;
     }
 
     // Display the screen with the generated props
     display(
-        trial.stage,
+        trial.display,
         displayElement,
         props,
         timeoutDuration,
@@ -133,17 +169,15 @@ jsPsych.plugins['intentions-game'] = (function() {
         trialData.selectedOption = 1;
 
         // Update the score with values of option 1
-        trialData.playerPoints = spreadsheet.rows[trial.row].Option1_PPT;
-        trialData.partnerPoints =
-            spreadsheet.rows[trial.row].Option1_Partner;
+        trialData.playerPoints = trial.optionOneParticipant;
+        trialData.partnerPoints = trial.optionOnePartner;
       } else if (_option === 'optionTwo') {
         // Participant chose option 2
         trialData.selectedOption = 2;
 
         // Update the score with values of option 2
-        trialData.playerPoints = spreadsheet.rows[trial.row].Option2_PPT;
-        trialData.partnerPoints =
-            spreadsheet.rows[trial.row].Option2_Partner;
+        trialData.playerPoints = trial.optionTwoParticipant;
+        trialData.partnerPoints = trial.optionTwoPartner;
       }
 
       // End trial
@@ -156,7 +190,7 @@ jsPsych.plugins['intentions-game'] = (function() {
      */
     function avatarSelectionHandler(_selection: string): void {
       // Obtain the selected avatar
-      trialData.avatar = config.avatars.indexOf(_selection);
+      trialData.avatar = Configuration.avatars.indexOf(_selection);
 
       // End trial
       jsPsych.finishTrial(trialData);

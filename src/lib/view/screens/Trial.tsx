@@ -9,10 +9,10 @@ import {Option} from '../components/Option';
 import {PlayerAvatar} from '../components/PlayerAvatar';
 
 // Custom types
-import {TrialProps} from '../../types/game';
+import {TrialProps} from '../../../types/game';
 
 // Configuration
-import {config} from '../../../config';
+import {Configuration} from '../../../Configuration';
 import {STAGES} from '../../Parameters';
 
 /**
@@ -51,8 +51,8 @@ export function Trial(props: TrialProps): ReactElement {
     const optionTwoNode = refs.optionTwo.current as HTMLElement;
 
     // Check the stage of the trial
-    switch (props.stage) {
-      case STAGES.TRIAL_PHASE_ONE: {
+    switch (props.display) {
+      case 'playerChoice': {
         // First stage of trials: participant selecting the option
         // they want for points
 
@@ -74,7 +74,7 @@ export function Trial(props: TrialProps): ReactElement {
         }, 1000);
         break;
       }
-      case STAGES.TRIAL_PHASE_TWO: {
+      case 'playerGuess': {
         // Second stage of trials: participant selecting the option
         // they think their opponent will select
 
@@ -106,7 +106,7 @@ export function Trial(props: TrialProps): ReactElement {
         fill
       >
         {
-          props.stage === STAGES.TRIAL_PHASE_ONE ?
+          props.display === 'playerChoice' ?
             'How will you split the points?' :
             'How will your parter split the points?'
         }
@@ -128,7 +128,7 @@ export function Trial(props: TrialProps): ReactElement {
           gridArea='playerArea'
           name='You'
           points={participantPoints}
-          avatar={config.avatars[props.avatar]}
+          avatar={Configuration.avatars[props.avatar]}
         />
 
         <Box

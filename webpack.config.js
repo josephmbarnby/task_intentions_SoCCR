@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    switcher: './src/lib/graphics/Switcher.tsx',
+    switcher: './src/lib/view/Switcher.tsx',
     plugin: './src/lib/Plugin.ts',
     main: './src/Main.ts',
   },

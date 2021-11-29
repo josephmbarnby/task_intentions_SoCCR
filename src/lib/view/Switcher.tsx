@@ -14,10 +14,11 @@ import {Matching} from './screens/Matching';
 import {Matched} from './screens/Matched';
 
 // Custom types
-import {SelectionScreenProps, TrialScreenProps} from '../types/screens';
-
-// Parameters
-import {STAGES} from '../Parameters';
+import {
+  SelectionScreenProps,
+  SwitcherProps,
+  TrialScreenProps,
+} from '../../types/screens';
 
 // Other imports
 import consola from 'consola';
@@ -28,30 +29,26 @@ import consola from 'consola';
  * child component
  * @return {ReactElement}
  */
-export function Switcher(props:
-  {
-    screenType: string;
-    screenProps: TrialScreenProps | SelectionScreenProps;
-  }): ReactElement {
+export function Switcher(props: SwitcherProps): ReactElement {
   let screen: ReactElement;
 
   // Define the exact component that is rendered
-  switch (props.screenType) {
+  switch (props.display) {
     // Trial stages
-    case STAGES.TRIAL_PHASE_ONE:
-    case STAGES.TRIAL_PHASE_TWO:
+    case 'playerChoice':
+    case 'playerGuess':
       screen =
         <Trial
           avatar={(props.screenProps as TrialScreenProps).avatar}
           points={(props.screenProps as TrialScreenProps).points}
           data={(props.screenProps as TrialScreenProps).data}
-          stage={props.screenType}
+          display={props.display}
           endTrial={(props.screenProps as TrialScreenProps).endTrial}
         />;
       break;
 
     // Selection screen
-    case STAGES.SELECTION:
+    case 'selection':
       screen =
         <SelectAvatar
           selectionHandler={
@@ -61,16 +58,16 @@ export function Switcher(props:
       break;
 
     // Match screens
-    case STAGES.MATCHED:
+    case 'matched':
       screen = <Matched />;
       break;
-    case STAGES.MATCHING:
+    case 'matching':
       screen = <Matching />;
       break;
 
     // Likely a mistake
     default:
-      consola.error(`Unknown screen type '${props.screenType}'`);
+      consola.error(`Unknown display type '${props.display}'`);
   }
 
   return (

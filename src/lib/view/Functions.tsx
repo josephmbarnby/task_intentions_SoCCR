@@ -5,9 +5,12 @@ import {render} from 'react-dom';
 // Screen component
 import {Switcher} from './Switcher';
 
+// Custom types
+import {SelectionScreenProps, TrialScreenProps} from '../../types/screens';
+import {DisplayType} from '../../types/data';
+
 // Other imports
 import consola from 'consola';
-import {SelectionScreenProps, TrialScreenProps} from '../types/screens';
 
 /**
  * Switch between different screens
@@ -18,9 +21,11 @@ import {SelectionScreenProps, TrialScreenProps} from '../types/screens';
  * @param {Function} callback function to run
  */
 export function display(
-    type: string,
+    type: DisplayType,
     target: HTMLElement,
-    props: TrialScreenProps | SelectionScreenProps,
+    props: TrialScreenProps |
+        SelectionScreenProps |
+        Record<string, unknown>,
     timeout=0,
     callback=() => {
       consola.info('No callback defined for timeout');
@@ -28,7 +33,7 @@ export function display(
 ): void {
   render(
       <Switcher
-        screenType={type}
+        display={type}
         screenProps={props}
       />,
       target,

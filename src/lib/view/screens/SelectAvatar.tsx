@@ -9,7 +9,9 @@ import {
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
-import {config} from '../../../config';
+import {Configuration} from '../../../Configuration';
+
+// Components
 import {IntentionsAvatar} from '../components/IntentionsAvatar';
 
 /**
@@ -23,7 +25,7 @@ export function SelectAvatar(props: {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
 
-  const avatars = config.avatars;
+  const avatars = Configuration.avatars;
   const avatarComponents = [];
 
   for (const avatarName of avatars) {

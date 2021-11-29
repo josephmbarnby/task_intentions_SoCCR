@@ -6,7 +6,7 @@ import {Box, Heading} from 'grommet';
 
 
 // Configuration
-import {config} from '../../../config';
+import {Configuration} from '../../../Configuration';
 import Avatar from 'boring-avatars';
 import {AVATAR_VARIANT, COLORS} from '../../Parameters';
 
@@ -21,7 +21,7 @@ export function Matched(): ReactElement {
       <Heading>Partner found!</Heading>
       <Avatar
         size={240}
-        name={config.partners[0]}
+        name={Configuration.partners[0]}
         variant={AVATAR_VARIANT}
         colors={COLORS}
       />

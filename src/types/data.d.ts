@@ -16,7 +16,9 @@ export type Row = {
 };
 
 // The three display types (similar to 'stages')
-export type DisplayType = 'playerChoice' | 'mid' | 'playerGuess' | 'mid2';
+export type DisplayType =
+    'playerChoice' | 'playerChoice2' | 'mid' | 'mid2' |
+    'playerGuess' | 'matching' | 'matched' | 'selection';
 
 // The three individual types
 export type IndividualType = 'Prosocial' | 'Individual' | 'Competitive';

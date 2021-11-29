@@ -1,3 +1,5 @@
+import {DisplayType} from './data';
+
 // TrialData type
 export type TrialData = {
     optionOne: {
@@ -14,7 +16,7 @@ export type TrialData = {
 export type TrialProps = {
   avatar: number,
   points: number,
-  stage: string,
+  display: DisplayType,
   data: TrialData,
   endTrial: (selection: string) => void,
 };

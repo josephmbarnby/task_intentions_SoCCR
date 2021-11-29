@@ -1,6 +1,5 @@
 // Configuration and data
-import {config} from './config';
-import {spreadsheet} from './data';
+import {Configuration} from './Configuration';
 import {ManipulationAPI} from './lib/api/Manipulations';
 import {STAGES} from './lib/Parameters';
 
@@ -19,32 +18,34 @@ import consola from 'consola';
 
 // Import and configure seedrandom
 import seedrandom from 'seedrandom';
-window.Math.random = seedrandom(config.seed);
+window.Math.random = seedrandom(Configuration.seed);
 
 // Import data spreadsheets
-import Competitive from './lib/data/competitive.csv';
-import Individualist from './lib/data/individualist.csv';
-import Prosocial from './lib/data/prosocial.csv';
+import Competitive from './data/competitive.csv';
+import Individualist from './data/individualist.csv';
+import Prosocial from './data/prosocial.csv';
+import {Row, IndividualType} from './types/data';
 
 // Timeline setup
 const timeline = [];
 
 window.onload = () => {
-  if (config.target === 'gorilla') {
+  if (Configuration.target === 'gorilla') {
     // Configure the manipulations in the configuration file as required
-    new ManipulationAPI(config.trials, ['phaseOne', 'phaseTwo', 'phaseThree']);
+    new ManipulationAPI(
+        Configuration.trials,
+        ['phaseOne', 'phaseTwo', 'phaseThree']
+    );
   }
 
   // Calculate the number of trials in total
   let totalTrials = 0;
-  for (const _field in config.trials) {
-    if (Object.prototype.hasOwnProperty.call(config.trials, `${_field}`)) {
-      totalTrials += parseInt(config.trials[`${_field}`]);
-    }
+  for (const _field of Object.keys(Configuration.trials)) {
+    totalTrials += parseInt(Configuration.trials[`${_field}`]);
   }
 
   const instructionsIntroduction = [
-    `<h1>${config.name}</h1>` +
+    `<h1>${Configuration.name}</h1>` +
     `<span class="instructions-subtitle">` +
       `Please read these instructions carefully</span>` +
     `<h2>Instructions</h2>` +
@@ -91,7 +92,7 @@ window.onload = () => {
   timeline.push({
     type: 'intentions-game',
     row: -1,
-    stage: STAGES.SELECTION,
+    display: 'selection',
   });
 
   // Insert a 'match' sequence into the timeline
@@ -107,17 +108,46 @@ window.onload = () => {
   //   stage: 'matched',
   // });
 
+  let dataCollection;
+
   // Insert the 'choice' screens into the timeline
-  for (let i = 0; i < spreadsheet.rows.length; i++) {
+  switch (Configuration.individualType as IndividualType) {
+    case 'Competitive': {
+      dataCollection = Competitive;
+      break;
+    }
+    case 'Individual': {
+      dataCollection = Individualist;
+      break;
+    }
+    case 'Prosocial': {
+      dataCollection = Prosocial;
+      break;
+    }
+    default:
+      throw new Error(
+          `Unknown individual type '${Configuration.individualType}'`
+      );
+  }
+
+  consola.info(`Loading '${Configuration.individualType}' configuration`);
+
+  for (let i = 0; i < dataCollection.length; i++) {
+    const row = dataCollection[i] as Row;
     timeline.push({
       type: 'intentions-game',
-      row: i,
-      stage: STAGES.TRIAL_PHASE_TWO,
+      optionOneParticipant: row.Option1_PPT,
+      optionOnePartner: row.Option1_Partner,
+      optionTwoParticipant: row.Option2_PPT,
+      optionTwoPartner: row.Option2_Partner,
+      typeOne: row.Type1,
+      typeTwo: row.Type2,
+      display: row.display,
     });
   }
 
   // Initialise jsPsych and Gorilla (if required)
-  if (config.target === 'gorilla') {
+  if (Configuration.target === 'gorilla') {
     // Once all modules are loaded into the window,
     // access Gorilla API and jsPsych library
     const _gorilla = window['gorilla'];
@@ -149,7 +179,10 @@ window.onload = () => {
     _jsPsych.init({
       timeline: timeline,
       on_finish: function() {
-        _jsPsych.data.get().localSave(`csv`, `intentions_${Date.now()}.csv`);
+        _jsPsych.data.get().localSave(
+            `csv`,
+            `intentions_complete_${Date.now()}.csv`
+        );
       },
       show_progress_bar: true,
       show_preload_progress_bar: true,
