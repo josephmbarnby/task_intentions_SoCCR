@@ -5,6 +5,12 @@ module.exports = {
     '@typescript-eslint',
     'react-hooks',
   ],
+  ignorePatterns: [
+    '.eslintrc.js',
+    'webpack.config.js',
+    'node_modules/',
+    '*.d.ts',
+  ],
   extends: [
     'eslint:recommended',
     'google',

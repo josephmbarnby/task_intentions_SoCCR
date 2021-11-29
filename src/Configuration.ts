@@ -1,17 +1,24 @@
 // Configuration and other required data
 export const Configuration = {
-  name: 'Intentions game',
+  studyName: 'Intentions game',
   pluginName: 'intentions-game',
   locale: 'en-AU',
-  // Targets: 'gorilla' or 'desktop'
-  target: 'desktop',
-  trials: {
-    phaseOne: 36,
-    phaseTwo: 72,
-    phaseThree: 36,
+  allowParticipantContact: false,
+  contact: 'henry.burgess@wustl.edu',
+
+  manipulations: {
+    phaseOneTrials: 36,
+    phaseTwoTrials: 72,
+    phaseThreeTrials: 36,
+    individualType: 'Competitive',
   },
+
+  stimuli: {
+
+  },
+
   seed: 'intentions',
-  individualType: 'Competitive',
+
   // List of avatar names (not displayed, only used to generate avatars)
   avatars: [
     'henry',
@@ -21,11 +28,13 @@ export const Configuration = {
     'linda',
     'lisa',
   ],
+
   partners: [
     'a',
     'b',
     'c',
     'd',
   ],
-  enableFullscreen: false,
+
+  fullscreen: false,
 };

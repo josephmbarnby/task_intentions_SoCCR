@@ -8,7 +8,7 @@ import {Box, Heading} from 'grommet';
 // Configuration
 import {Configuration} from '../../../Configuration';
 import Avatar from 'boring-avatars';
-import {AVATAR_VARIANT, COLORS} from '../../Parameters';
+import {AVATAR_VARIANT, COLORS} from '../../Constants';
 
 /**
  * Generate layout of Matched Screena

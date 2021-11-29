@@ -8,7 +8,7 @@ import {
 } from 'grommet';
 
 // Parameters
-import {AVATAR_VARIANT, COLORS} from '../../Parameters';
+import {AVATAR_VARIANT, COLORS} from '../../Constants';
 
 /**
  * A selectable avatar with grow behaviour

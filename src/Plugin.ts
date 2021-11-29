@@ -5,13 +5,12 @@ import consola from 'consola';
 declare const jsPsych: any;
 
 // Core modules
-import {Configuration} from '../Configuration';
-import {display} from './view/Functions';
-import {STAGES} from './Parameters';
+import {Configuration} from './Configuration';
+import {display} from './lib/view/Functions';
 
 // Custom types
-import {DisplayType} from '../types/data';
-import {SelectionScreenProps, TrialScreenProps} from '../types/screens';
+import {DisplayType} from './lib/types/typing';
+import {SelectionScreenProps, TrialScreenProps} from './lib/types/typing';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -22,7 +21,7 @@ jsPsych.plugins['intentions-game'] = (function() {
   };
 
   plugin.info = {
-    name: Configuration.name,
+    name: Configuration.studyName,
     parameters: {
       optionOneParticipant: {
         type: jsPsych.plugins.parameterType.INT,

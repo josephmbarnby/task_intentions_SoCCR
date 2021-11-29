@@ -2,7 +2,7 @@
  * Class that links to the Gorilla Manipulations API. It allows safe references
  * to the API while developing the tasks locally.
  */
-export class ManipulationAPI {
+export class Manipulations {
   // Target object containing the manipulations
   private target: any;
   // List of manipulation keys

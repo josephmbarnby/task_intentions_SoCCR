@@ -9,7 +9,7 @@ import TextTransition, {presets} from 'react-text-transition';
 import Avatar from 'boring-avatars';
 
 // Paramters
-import {AVATAR_VARIANT, COLORS} from '../../Parameters';
+import {AVATAR_VARIANT, COLORS} from '../../Constants';
 
 /**
  * Generate a PlayerAvatar component

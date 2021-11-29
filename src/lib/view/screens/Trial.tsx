@@ -9,11 +9,10 @@ import {Option} from '../components/Option';
 import {PlayerAvatar} from '../components/PlayerAvatar';
 
 // Custom types
-import {TrialProps} from '../../../types/game';
+import {TrialProps} from '../../types/game';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
-import {STAGES} from '../../Parameters';
 
 /**
  * Generate the choices grid with options

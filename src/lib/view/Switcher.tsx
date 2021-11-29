@@ -18,7 +18,7 @@ import {
   SelectionScreenProps,
   SwitcherProps,
   TrialScreenProps,
-} from '../../types/screens';
+} from '../types/screens';
 
 // Other imports
 import consola from 'consola';

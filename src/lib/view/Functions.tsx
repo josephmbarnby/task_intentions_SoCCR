@@ -6,8 +6,8 @@ import {render} from 'react-dom';
 import {Switcher} from './Switcher';
 
 // Custom types
-import {SelectionScreenProps, TrialScreenProps} from '../../types/screens';
-import {DisplayType} from '../../types/data';
+import {SelectionScreenProps, TrialScreenProps} from '../types/typing';
+import {DisplayType} from '../types/typing';
 
 // Other imports
 import consola from 'consola';
