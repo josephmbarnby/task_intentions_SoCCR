@@ -98,7 +98,7 @@ export class DataCapture {
    * Store information on a keypress event
    * @param {any} _event event object
    */
-  _keypressEvent(_event: any) {
+  _keypressEvent(_event: KeyboardEvent): void {
     this._keypressData.push(
         `${performance.now()}:${_event.code}`
     );
@@ -108,8 +108,9 @@ export class DataCapture {
    * Store information on a mouse movement event
    * @param {any} _event event object
    */
-  _mouseEvent(_event: any) {
+  _mouseEvent(_event: MouseEvent): void {
     const _time = performance.now();
+
     // Restrict the frequency of updates
     if (_time - this._lastMouseTime > this._mouseDelta) {
       this._mouseData.push(
@@ -122,7 +123,7 @@ export class DataCapture {
   /**
    * Clean up any listeners
    */
-  _tidy() {
+  _tidy(): void {
     // Remove keypress listener
     if (this._recordKeypresses) {
       document.removeEventListener('keypress', this._keypressEvent.bind(this));
@@ -153,5 +154,3 @@ export class DataCapture {
     return this._dataObject;
   }
 }
-
-export default { DataCapture };

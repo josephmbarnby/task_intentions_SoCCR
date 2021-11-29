@@ -1,26 +1,22 @@
-// eslint-disable-next-line no-undef, @typescript-eslint/no-var-requires
 const path = require('path');
-// eslint-disable-next-line no-undef, @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // eslint-disable-next-line no-undef
 module.exports = {
   mode: 'development',
   entry: {
-    data: './src/core/data.ts',
-    screens: './src/core/graphics/screens.tsx',
-    plugin: './src/core/plugin.ts',
-    main: './src/main.ts',
+    switcher: './src/lib/view/Switcher.tsx',
+    plugin: './src/Plugin.ts',
+    main: './src/lib/Main.ts',
   },
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Intentions Game',
-      template: 'template.html',
     }),
   ],
   devServer: {
-    contentBase: './dist',
+    contentBase: './built',
     hot: true,
   },
   module: {
@@ -42,14 +38,22 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.csv$/,
+        loader: 'csv-loader',
+        options: {
+          dynamicTyping: true,
+          header: true,
+          skipEmptyLines: true,
+        },
+      },
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    // eslint-disable-next-line no-undef
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'built'),
     clean: true,
   },
 };
