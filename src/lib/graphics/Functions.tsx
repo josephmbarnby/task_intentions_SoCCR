@@ -7,6 +7,7 @@ import {Switcher} from './Switcher';
 
 // Other imports
 import consola from 'consola';
+import {SelectionScreenProps, TrialScreenProps} from '../types/screens';
 
 /**
  * Switch between different screens
@@ -19,7 +20,7 @@ import consola from 'consola';
 export function display(
     type: string,
     target: HTMLElement,
-    props: any,
+    props: TrialScreenProps | SelectionScreenProps,
     timeout=0,
     callback=() => {
       consola.info('No callback defined for timeout');

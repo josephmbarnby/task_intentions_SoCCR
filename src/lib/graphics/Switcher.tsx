@@ -13,6 +13,9 @@ import {SelectAvatar} from './screens/SelectAvatar';
 import {Matching} from './screens/Matching';
 import {Matched} from './screens/Matched';
 
+// Custom types
+import {SelectionScreenProps, TrialScreenProps} from '../types/screens';
+
 // Parameters
 import {STAGES} from '../Parameters';
 
@@ -28,7 +31,7 @@ import consola from 'consola';
 export function Switcher(props:
   {
     screenType: string;
-    screenProps: any;
+    screenProps: TrialScreenProps | SelectionScreenProps;
   }): ReactElement {
   let screen: ReactElement;
 
@@ -39,11 +42,11 @@ export function Switcher(props:
     case STAGES.TRIAL_PHASE_TWO:
       screen =
         <Trial
-          avatar={props.screenProps.avatar}
-          points={props.screenProps.points}
-          data={props.screenProps.data}
+          avatar={(props.screenProps as TrialScreenProps).avatar}
+          points={(props.screenProps as TrialScreenProps).points}
+          data={(props.screenProps as TrialScreenProps).data}
           stage={props.screenType}
-          endTrial={props.screenProps.endTrial}
+          endTrial={(props.screenProps as TrialScreenProps).endTrial}
         />;
       break;
 
@@ -51,7 +54,9 @@ export function Switcher(props:
     case STAGES.SELECTION:
       screen =
         <SelectAvatar
-          selectionHandler={props.screenProps.selectionHandler}
+          selectionHandler={
+            (props.screenProps as SelectionScreenProps).selectionHandler
+          }
         />;
       break;
 

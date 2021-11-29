@@ -2801,6 +2801,14 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.9.tgz#6410af31b26bd0520933d02cbc64fce9ce3fbf0b"
   integrity sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw==
 
+csv-loader@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/csv-loader/-/csv-loader-3.0.3.tgz#eba02221a6f3ceb1447140d3bae26f4032b4af52"
+  integrity sha512-JMr83kH2sOFKbRO95fAQV1fLEc1Chx1osJpU7Gd5ZQhmXrsQN479P08sDuyZoO5LMiJ8IsR72Xtl/nSA7rh4Lw==
+  dependencies:
+    loader-utils "^2.0.0"
+    papaparse "^5.2.0"
+
 d@1, d@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.1.tgz#8698095372d58dbee346ffd0c7093f99f8f9eb5a"
@@ -6249,6 +6257,11 @@ p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
+
+papaparse@^5.2.0, papaparse@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.1.tgz#770b7a9124d821d4b2132132b7bd7dce7194b5b1"
+  integrity sha512-Dbt2yjLJrCwH2sRqKFFJaN5XgIASO9YOFeFP8rIBRG2Ain8mqk5r1M6DkfvqEVozVcz3r3HaUGw253hA1nLIcA==
 
 param-case@^3.0.3:
   version "3.0.4"

@@ -3,40 +3,24 @@ import React, {ReactElement, useRef, useState} from 'react';
 
 // UI components
 import {Box, Grid, Heading} from 'grommet';
-import Avatar from 'boring-avatars';
-
-// Text Transition component
-import TextTransition, {presets} from 'react-text-transition';
 
 // Custom components
 import {Option} from '../components/Option';
 import {PlayerAvatar} from '../components/PlayerAvatar';
 
+// Custom types
+import {TrialProps} from '../../types/game';
+
 // Configuration
 import {config} from '../../../config';
-import {AVATAR_VARIANT, COLORS, STAGES} from '../../Parameters';
+import {STAGES} from '../../Parameters';
 
 /**
  * Generate the choices grid with options
  * @param {any} props collection of props
  * @return {ReactElement}
  */
-export function Trial(props: {
-  avatar: number,
-  points: number,
-  stage: string,
-  data: {
-    optionOne: {
-      participant: number,
-      partner: number,
-    },
-    optionTwo: {
-      participant: number,
-      partner: number,
-    }
-  },
-  endTrial: (selection: string) => void,
-}): ReactElement {
+export function Trial(props: TrialProps): ReactElement {
   // Configure state
   const [participantPoints, setParticipantPoints] = useState(props.points);
   const [partnerPoints, setPartnerPoints] = useState(props.points);
@@ -66,31 +50,65 @@ export function Trial(props: {
     const optionOneNode = refs.optionOne.current as HTMLElement;
     const optionTwoNode = refs.optionTwo.current as HTMLElement;
 
-    // Update the styling
-    optionOneNode.style.opacity = '0';
-    optionTwoNode.style.opacity = '0';
-    optionOneNode.style.pointerEvents = 'none';
-    optionTwoNode.style.pointerEvents = 'none';
+    // Check the stage of the trial
+    switch (props.stage) {
+      case STAGES.TRIAL_PHASE_ONE: {
+        // First stage of trials: participant selecting the option
+        // they want for points
 
-    // Set a timeout for continuing
-    window.setTimeout(() => {
-      // Reset the styling
-      optionOneNode.style.opacity = '1';
-      optionTwoNode.style.opacity = '1';
-      optionOneNode.style.pointerEvents = 'auto';
-      optionTwoNode.style.pointerEvents = 'auto';
+        // Update the styling
+        optionOneNode.style.opacity = '0';
+        optionTwoNode.style.opacity = '0';
+        optionOneNode.style.pointerEvents = 'none';
+        optionTwoNode.style.pointerEvents = 'none';
 
-      props.endTrial(option);
-    }, 1000);
+        // Set a timeout for continuing
+        window.setTimeout(() => {
+          // Reset the styling
+          optionOneNode.style.opacity = '1';
+          optionTwoNode.style.opacity = '1';
+          optionOneNode.style.pointerEvents = 'auto';
+          optionTwoNode.style.pointerEvents = 'auto';
+
+          props.endTrial(option);
+        }, 1000);
+        break;
+      }
+      case STAGES.TRIAL_PHASE_TWO: {
+        // Second stage of trials: participant selecting the option
+        // they think their opponent will select
+
+        // Update the styling
+        optionOneNode.style.opacity = '0';
+        optionTwoNode.style.opacity = '0';
+        optionOneNode.style.pointerEvents = 'none';
+        optionTwoNode.style.pointerEvents = 'none';
+
+        // Set a timeout for continuing
+        window.setTimeout(() => {
+          // Reset the styling
+          optionOneNode.style.opacity = '1';
+          optionTwoNode.style.opacity = '1';
+          optionOneNode.style.pointerEvents = 'auto';
+          optionTwoNode.style.pointerEvents = 'auto';
+
+          props.endTrial(option);
+        }, 2000);
+        break;
+      }
+    }
   }
 
   return (
     <div>
-      <Heading>
+      <Heading
+        textAlign='center'
+        fill
+      >
         {
           props.stage === STAGES.TRIAL_PHASE_ONE ?
-            'Choose an Option' :
-            'What will your opponent choose?'
+            'How will you split the points?' :
+            'How will your parter split the points?'
         }
       </Heading>
       <Grid

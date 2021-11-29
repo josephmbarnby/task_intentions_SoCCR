@@ -6,14 +6,25 @@ import {STAGES} from './lib/Parameters';
 
 // Configure jsPsych window variable to make TypeScript happy
 import 'jspsych/jspsych';
+import 'jspsych/plugins/jspsych-instructions';
+
+// jQuery for Gorilla
 import $ from 'jquery';
 
 // Import the plugin before adding it to the timeline
 import './lib/Plugin';
 
+// Logging library
+import consola from 'consola';
+
 // Import and configure seedrandom
 import seedrandom from 'seedrandom';
 window.Math.random = seedrandom(config.seed);
+
+// Import data spreadsheets
+import Competitive from './lib/data/competitive.csv';
+import Individualist from './lib/data/individualist.csv';
+import Prosocial from './lib/data/prosocial.csv';
 
 // Timeline setup
 const timeline = [];
@@ -101,7 +112,7 @@ window.onload = () => {
     timeline.push({
       type: 'intentions-game',
       row: i,
-      stage: STAGES.TRIAL_PHASE_ONE,
+      stage: STAGES.TRIAL_PHASE_TWO,
     });
   }
 
@@ -114,7 +125,6 @@ window.onload = () => {
 
     // Require any jsPsych plugins, so that they are
     // loaded here
-    require('jspsych/plugins/jspsych-instructions');
     _gorilla.ready(function() {
       _jsPsych.init({
         display_element: $('#gorilla')[0],
@@ -136,7 +146,6 @@ window.onload = () => {
 
     // Require any jsPsych plugins, so that they are
     // loaded here
-    require('jspsych/plugins/jspsych-instructions');
     _jsPsych.init({
       timeline: timeline,
       on_finish: function() {
