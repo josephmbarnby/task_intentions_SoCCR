@@ -62,7 +62,9 @@ export type Trial = {
   optionTwoPartner: number;
   typeOne: string;
   typeTwo: string;
+  avatar: 0;
   answer: string;
+  isLast: boolean;
 }
 
 // The three display types (similar to 'stages')

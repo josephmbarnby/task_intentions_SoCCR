@@ -121,6 +121,13 @@ window.onload = () => {
     // Check the trial type
     switch (row.display) {
       case 'mid': {
+        // Get the last trial
+        const lastTrial = timeline[timeline.length - 1];
+        if (lastTrial.type === 'intentions-game') {
+          lastTrial.isLast = true;
+        }
+
+        // Add the first break instructions
         const firstBreakInstructions = [
           () => {
             return ReactDOMServer.renderToStaticMarkup(
@@ -145,6 +152,13 @@ window.onload = () => {
         break;
       }
       case 'mid2': {
+        // Get the last trial
+        const lastTrial = timeline[timeline.length - 1];
+        if (lastTrial.type === 'intentions-game') {
+          lastTrial.isLast = true;
+        }
+
+        // Add the second break instructions
         const secondBreakInstructions = [
           () => {
             return ReactDOMServer.renderToStaticMarkup(
@@ -178,7 +192,9 @@ window.onload = () => {
           typeOne: row.Type1,
           typeTwo: row.Type2,
           display: row.display,
+          avatar: 0,
           answer: row.ANSWER,
+          isLast: false,
         });
         break;
       }

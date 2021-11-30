@@ -18,10 +18,10 @@ import {
   TrialProps,
 } from './lib/types/typing';
 
-jsPsych.plugins['intentions-game'] = (function() {
+jsPsych.plugins['intentions-game'] = (() => {
   const plugin = {
     info: {},
-    trial: (displayElement: HTMLElement, trial: any) => {
+    trial: (displayElement: HTMLElement, trial: Trial) => {
       consola.error(`Not implemented.`);
     },
   };
@@ -77,6 +77,12 @@ jsPsych.plugins['intentions-game'] = (function() {
         default: '',
         description: 'The correct answer to select',
       },
+      isLast: {
+        type: jsPsych.plugins.parameterType.BOOLEAN,
+        pretty_name: 'Last trial of block',
+        default: false,
+        description: 'Mark the last trial of a trial block',
+      },
     },
   };
 
@@ -95,9 +101,13 @@ jsPsych.plugins['intentions-game'] = (function() {
 
     consola.info(`Running trial stage '${trial.display}'`);
 
-    // Load the avatar that was selected
-    const _previousData = jsPsych.data.getLastTrialData().last().values()[0];
-    trialData.avatar = _previousData.avatar;
+    // Load the avatar that was selected at the start of the game
+    const previousData = jsPsych.data.get()
+        .filter({trial_type: 'intentions-game'})
+        .values()[0];
+    if (previousData && previousData.avatar) {
+      trialData.avatar = previousData.avatar;
+    }
 
     // Generate and configure props based on the stage
     let screenProps:
@@ -148,7 +158,7 @@ jsPsych.plugins['intentions-game'] = (function() {
         };
 
         timeoutDuration = 2000;
-        timeoutCallback = continueTrial;
+        timeoutCallback = finishTrial;
         break;
 
       // Selection screen
@@ -164,7 +174,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       default:
         // Log an error message and finish the trial
         consola.error(`Unknown trial stage '${trial.display}'`);
-        jsPsych.finishTrial({});
+        finishTrial();
         break;
     }
 
@@ -203,8 +213,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       }
 
       // End trial
-      ReactDOM.unmountComponentAtNode(displayElement);
-      jsPsych.finishTrial(trialData);
+      finishTrial();
     }
 
     /**
@@ -216,15 +225,20 @@ jsPsych.plugins['intentions-game'] = (function() {
       trialData.avatar = Configuration.avatars.indexOf(_selection);
 
       // End trial
-      ReactDOM.unmountComponentAtNode(displayElement);
-      jsPsych.finishTrial(trialData);
+      finishTrial();
     }
 
     /**
      * Function to continue without participant input
+     * @param {boolean} reset toggle whether to reset the screen or not
      */
-    function continueTrial(): void {
-      ReactDOM.unmountComponentAtNode(displayElement);
+    function finishTrial(): void {
+      // If the next trial isn't React-based, clean up React
+      if (trial.isLast === true) {
+        ReactDOM.unmountComponentAtNode(displayElement);
+      }
+
+      // Finish the jsPsych trial
       jsPsych.finishTrial(trialData);
     }
   };

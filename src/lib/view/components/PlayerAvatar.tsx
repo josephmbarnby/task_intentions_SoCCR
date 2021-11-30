@@ -83,8 +83,7 @@ export function PlayerAvatar(props: {
             <Heading level={1}>
               <TextTransition
                 text={props.points}
-                springConfig={presets.wobbly}
-                inline={true}
+                springConfig={presets.slow}
               />
             </Heading>
             <Money
