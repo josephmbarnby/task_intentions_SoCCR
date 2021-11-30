@@ -3,6 +3,7 @@ import React, {ReactElement} from 'react';
 
 // Grommet UI components
 import {Box, Grid, Heading, ThemeContext} from 'grommet';
+import {Money} from 'grommet-icons';
 
 // Other imports
 import TextTransition, {presets} from 'react-text-transition';
@@ -64,18 +65,32 @@ export function PlayerAvatar(props: {
               colors={COLORS}
             />
           </Box>
-          <Box align='center' gridArea='playerNameArea' alignSelf='center'>
+          <Box
+            align='center'
+            gridArea='playerNameArea'
+            alignSelf='center'
+          >
             <Heading>{props.name}</Heading>
           </Box>
-          <Box align='center' gridArea='playerPointsArea' alignSelf='center'>
-            <Heading level={2}>
-              Points:&nbsp;
+          <Box
+            align='center'
+            gridArea='playerPointsArea'
+            alignSelf='center'
+            direction='row'
+            justify='center'
+            gap='small'
+          >
+            <Heading level={1}>
               <TextTransition
                 text={props.points}
                 springConfig={presets.wobbly}
                 inline={true}
               />
             </Heading>
+            <Money
+              size='large'
+              color='pointsIconBackground'
+            />
           </Box>
         </Grid>
       </Box>

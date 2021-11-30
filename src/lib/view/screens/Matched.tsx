@@ -3,16 +3,16 @@ import React, {ReactElement} from 'react';
 
 // Grommet UI components
 import {Box, Heading} from 'grommet';
-
+import Avatar from 'boring-avatars';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
-import Avatar from 'boring-avatars';
+
+// Constants
 import {AVATAR_VARIANT, COLORS} from '../../Constants';
 
 /**
- * Generate layout of Matched Screena
- * @param {any} props collection of props
+ * Generate layout of Matched Screen
  * @return {any}
  */
 export function Matched(): ReactElement {

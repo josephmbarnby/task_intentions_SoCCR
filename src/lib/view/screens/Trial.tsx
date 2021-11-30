@@ -124,7 +124,7 @@ export function Trial(props: TrialProps): ReactElement {
                 Theme.global.colors.optionBackground;
 
             props.endTrial(option);
-          }, 1000);
+          }, 3000);
         }, 250);
         break;
       }

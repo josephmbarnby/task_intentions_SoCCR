@@ -3,8 +3,10 @@ export const Theme = {
     colors: {
       correct: '#00C781',
       incorrect: '#FF4040',
-      avatarBackground: '#99C1B9',
-      optionBackground: '#F1E3D3',
+      avatarBackground: '#B2DDF7',
+      optionBackground: '#4CB5AE',
+      button: '#81D6E3',
+      pointsIconBackground: '#FFDB33',
     },
   },
 };

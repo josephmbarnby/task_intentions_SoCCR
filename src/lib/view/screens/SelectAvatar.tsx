@@ -5,17 +5,16 @@ import React, {ReactElement} from 'react';
 import {
   Box, Button,
   Heading,
+  ThemeContext,
 } from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
 
-// API Imports
-import {Experiment} from '../../API';
-
 // Components
 import {IntentionsAvatar} from '../components/IntentionsAvatar';
+import {Theme} from '../Theme';
 
 /**
  * Generic structure for the Avatar Selection Screen
@@ -44,7 +43,9 @@ export function SelectAvatar(props: {
   }
 
   return (
-    <div>
+    <ThemeContext.Extend
+      value={Theme}
+    >
       <Heading
         fill
       >
@@ -65,6 +66,7 @@ export function SelectAvatar(props: {
       {/* Continue button */}
       <Button
         primary
+        color='button'
         label='Continue'
         disabled={selectedAvatar === 'none'}
         size='large'
@@ -74,6 +76,6 @@ export function SelectAvatar(props: {
           props.selectionHandler(selectedAvatar);
         }}
       />
-    </div>
+    </ThemeContext.Extend>
   );
 }
