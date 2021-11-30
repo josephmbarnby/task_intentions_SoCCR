@@ -43,12 +43,8 @@ export function SelectAvatar(props: {
   }
 
   return (
-    <ThemeContext.Extend
-      value={Theme}
-    >
-      <Heading
-        fill
-      >
+    <ThemeContext.Extend value={Theme}>
+      <Heading fill>
         Choose your Avatar!
       </Heading>
 

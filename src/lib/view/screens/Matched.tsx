@@ -13,11 +13,17 @@ import {AVATAR_VARIANT, COLORS} from '../../Constants';
 
 /**
  * Generate layout of Matched Screen
- * @return {any}
+ * @return {ReactElement}
  */
 export function Matched(): ReactElement {
   return (
-    <Box align='center' animation={['fadeIn']}>
+    <Box
+      justify='center'
+      align='center'
+      gap='small'
+      animation={['fadeIn']}
+      fill
+    >
       <Heading>Partner found!</Heading>
       <Avatar
         size={240}

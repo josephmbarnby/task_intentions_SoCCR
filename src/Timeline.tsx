@@ -1,3 +1,7 @@
+// React
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+
 // Configuration and data
 import {Configuration} from './Configuration';
 
@@ -37,10 +41,19 @@ window.onload = () => {
   }
 
   const instructionsPracticeGames = [
-    `<h1>Intentions Game</h1>` +
-    `<h2>Instructions</h2>` +
-    `<p>The instructions for the task will go here. This can be ` +
-      `multi-page, or just one page.</p>`,
+    () => {
+      return ReactDOMServer.renderToStaticMarkup(
+          <>
+            <h1>Intentions Game</h1>
+            <h2>Instructions</h2>
+            <p>
+              The instructions for the task will go here.
+              <hr />
+              This can be multi-page, or just one page.
+            </p>
+          </>
+      );
+    },
   ];
 
   // Insert the instructions into the timeline
@@ -55,26 +68,26 @@ window.onload = () => {
   // Insert a 'selection' screen into the timeline
   timeline.push({
     type: 'intentions-game',
-    row: -1,
     display: 'selection',
   });
 
   // Insert a 'match' sequence into the timeline
-  // timeline.push({
-  //   type: 'intentions-game',
-  //   row: -1,
-  //   stage: 'matching',
-  // });
+  timeline.push({
+    type: 'intentions-game',
+    display: 'matching',
+  });
 
-  // timeline.push({
-  //   type: 'intentions-game',
-  //   row: -1,
-  //   stage: 'matched',
-  // });
+  timeline.push({
+    type: 'intentions-game',
+    display: 'matched',
+  });
 
+  // Set and store the data colelction
   let dataCollection;
+  consola.info(
+      `Loading '${Configuration.manipulations.individualType}' configuration`
+  );
 
-  // Insert the 'choice' screens into the timeline
   switch (Configuration.manipulations.individualType as IndividualType) {
     case 'Competitive': {
       dataCollection = Competitive;
@@ -95,11 +108,7 @@ window.onload = () => {
       );
   }
 
-  consola.info(
-      `Loading '${Configuration.manipulations.individualType}' configuration`
-  );
-
-  // Collate and load rows into the timeline
+  // Insert the 'choice' screens into the timeline
   for (let i = 0; i < dataCollection.length; i++) {
     const row = dataCollection[i] as Row;
     timeline.push({

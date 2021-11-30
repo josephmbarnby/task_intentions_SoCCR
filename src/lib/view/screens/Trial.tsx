@@ -27,6 +27,10 @@ import {Configuration} from '../../../Configuration';
  */
 export function Trial(props: TrialProps): ReactElement {
   // Configure the state for participant and partner points
+  const defaultHeader = props.display === 'playerChoice' ?
+      'How will you split the points?' :
+      'How will your parter split the points?';
+
   const [
     participantPoints,
     setParticipantPoints,
@@ -35,6 +39,10 @@ export function Trial(props: TrialProps): ReactElement {
     partnerPoints,
     setPartnerPoints,
   ] = useState(props.partnerPoints);
+  const [
+    trialHeader,
+    setTrialHeader,
+  ] = useState(defaultHeader);
 
   // Create ref objects
   const refs = {
@@ -55,8 +63,12 @@ export function Trial(props: TrialProps): ReactElement {
   /**
    * Selection handler
    * @param {string} option the selected option
+   * @param {Function} headerStateFunction function
    */
-  function selectionHandler(option: 'Option 1' | 'Option 2') {
+  function selectionHandler(
+      option: 'Option 1' | 'Option 2',
+      headerStateFunction: (header: string) => void,
+  ) {
     // Get the references to the nodes
     const optionOneNode = refs.optionOne.current as HTMLElement;
     const optionTwoNode = refs.optionTwo.current as HTMLElement;
@@ -82,6 +94,7 @@ export function Trial(props: TrialProps): ReactElement {
           optionOneNode.style.pointerEvents = 'auto';
           optionTwoNode.style.pointerEvents = 'auto';
 
+          // End the trial
           props.endTrial(option);
         }, 1000);
         break;
@@ -89,7 +102,6 @@ export function Trial(props: TrialProps): ReactElement {
       case 'playerGuess': {
         // Second stage of trials: participant selecting the option
         // they think their opponent will select
-        consola.info(`Selection for option '${props.display}'`);
 
         // Get the selected node object
         const selectedNode =
@@ -97,6 +109,12 @@ export function Trial(props: TrialProps): ReactElement {
         const unselectedNode =
             selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
         const correctSelection = option === props.answer;
+
+        if (correctSelection === true) {
+          headerStateFunction('Correct!');
+        } else {
+          headerStateFunction('Incorrect.');
+        }
 
         // Timeout to change the color of the selected answer
         // and the opacity of the unselected answer
@@ -123,6 +141,10 @@ export function Trial(props: TrialProps): ReactElement {
             optionTwoNode.style.background =
                 Theme.global.colors.optionBackground;
 
+            // Reset the header state
+            setTrialHeader(defaultHeader);
+
+            // End the trial
             props.endTrial(option);
           }, 3000);
         }, 250);
@@ -132,23 +154,10 @@ export function Trial(props: TrialProps): ReactElement {
   }
 
   return (
-    <ThemeContext.Extend
-      value={
-        Theme
-      }
-    >
-      <Box
-        justify='center'
-      >
-        <Heading
-          textAlign='center'
-          fill
-        >
-          {
-            props.display === 'playerChoice' ?
-              'How will you split the points?' :
-              'How will your parter split the points?'
-          }
+    <ThemeContext.Extend value={Theme}>
+      <Box justify='center'>
+        <Heading textAlign='center' fill>
+          {trialHeader}
         </Heading>
         <Grid
           rows={['flex', 'flex']}
@@ -179,7 +188,7 @@ export function Trial(props: TrialProps): ReactElement {
                   props.options.one.participant,
                   props.options.one.partner,
               );
-              selectionHandler('Option 1');
+              selectionHandler('Option 1', setTrialHeader);
             }}
             className='grow'
             round
@@ -201,7 +210,7 @@ export function Trial(props: TrialProps): ReactElement {
                   props.options.two.participant,
                   props.options.two.partner
               );
-              selectionHandler('Option 2');
+              selectionHandler('Option 2', setTrialHeader);
             }}
             className='grow'
             round
@@ -220,7 +229,7 @@ export function Trial(props: TrialProps): ReactElement {
             gridArea='partnerArea'
             name='Partner'
             points={partnerPoints}
-            avatar='partner'
+            avatar={Configuration.partners[0]}
           />
         </Grid>
       </Box>

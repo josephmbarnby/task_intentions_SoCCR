@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    timeline: './src/Timeline.ts',
+    timeline: './src/Timeline.tsx',
   },
   devtool: 'inline-source-map',
   plugins: [
