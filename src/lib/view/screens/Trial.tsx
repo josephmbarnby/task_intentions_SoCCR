@@ -102,7 +102,9 @@ export function Trial(props: TrialProps): ReactElement {
         // and the opacity of the unselected answer
         window.setTimeout(() => {
           selectedNode.style.background =
-              correctSelection ? 'green' : 'red';
+              correctSelection ?
+              Theme.global.colors.correct :
+              Theme.global.colors.incorrect;
           unselectedNode.style.opacity = '0';
 
           // Disable selections
@@ -116,8 +118,10 @@ export function Trial(props: TrialProps): ReactElement {
             optionTwoNode.style.opacity = '1';
             optionOneNode.style.pointerEvents = 'auto';
             optionTwoNode.style.pointerEvents = 'auto';
-            optionOneNode.style.background = 'brand';
-            optionTwoNode.style.background = 'brand';
+            optionOneNode.style.background =
+                Theme.global.colors.optionBackground;
+            optionTwoNode.style.background =
+                Theme.global.colors.optionBackground;
 
             props.endTrial(option);
           }, 1000);
