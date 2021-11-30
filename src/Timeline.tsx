@@ -9,6 +9,7 @@ import {Configuration} from './Configuration';
 import Competitive from './data/competitive.csv';
 import Individualist from './data/individualist.csv';
 import Prosocial from './data/prosocial.csv';
+import Test from './data/test.csv';
 
 // Logging library
 import consola from 'consola';
@@ -101,6 +102,10 @@ window.onload = () => {
       dataCollection = Prosocial;
       break;
     }
+    case 'Test': {
+      dataCollection = Test;
+      break;
+    }
     default:
       throw new Error(
           `Unknown individual type ` +
@@ -110,18 +115,74 @@ window.onload = () => {
 
   // Insert the 'choice' screens into the timeline
   for (let i = 0; i < dataCollection.length; i++) {
+    // Get the row data
     const row = dataCollection[i] as Row;
-    timeline.push({
-      type: 'intentions-game',
-      optionOneParticipant: row.Option1_PPT,
-      optionOnePartner: row.Option1_Partner,
-      optionTwoParticipant: row.Option2_PPT,
-      optionTwoPartner: row.Option2_Partner,
-      typeOne: row.Type1,
-      typeTwo: row.Type2,
-      display: 'playerGuess',
-      answer: row.ANSWER,
-    });
+
+    // Check the trial type
+    switch (row.display) {
+      case 'mid': {
+        const firstBreakInstructions = [
+          () => {
+            return ReactDOMServer.renderToStaticMarkup(
+                <>
+                  <h1>Intentions Game</h1>
+                  <h2>Mid-way 1</h2>
+                  <p>
+                    Mid-way 1
+                  </p>
+                </>
+            );
+          },
+        ];
+
+        timeline.push({
+          type: 'instructions',
+          pages: firstBreakInstructions,
+          allow_keys: false,
+          show_page_number: true,
+          show_clickable_nav: true,
+        });
+        break;
+      }
+      case 'mid2': {
+        const secondBreakInstructions = [
+          () => {
+            return ReactDOMServer.renderToStaticMarkup(
+                <>
+                  <h1>Intentions Game</h1>
+                  <h2>Mid-way 2</h2>
+                  <p>
+                    Mid-way 2
+                  </p>
+                </>
+            );
+          },
+        ];
+
+        timeline.push({
+          type: 'instructions',
+          pages: secondBreakInstructions,
+          allow_keys: false,
+          show_page_number: true,
+          show_clickable_nav: true,
+        });
+        break;
+      }
+      default: {
+        timeline.push({
+          type: 'intentions-game',
+          optionOneParticipant: row.Option1_PPT,
+          optionOnePartner: row.Option1_Partner,
+          optionTwoParticipant: row.Option2_PPT,
+          optionTwoPartner: row.Option2_Partner,
+          typeOne: row.Type1,
+          typeTwo: row.Type2,
+          display: row.display,
+          answer: row.ANSWER,
+        });
+        break;
+      }
+    }
   }
 
   experiment.start(timeline);

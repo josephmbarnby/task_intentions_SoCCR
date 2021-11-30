@@ -71,4 +71,4 @@ export type DisplayType =
     'playerGuess' | 'matching' | 'matched' | 'selection';
 
 // The three individual types
-export type IndividualType = 'Prosocial' | 'Individual' | 'Competitive';
+export type IndividualType = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';

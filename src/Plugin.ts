@@ -1,3 +1,6 @@
+// React
+import ReactDOM from 'react-dom';
+
 // Logging library
 import consola from 'consola';
 
@@ -200,6 +203,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       }
 
       // End trial
+      ReactDOM.unmountComponentAtNode(displayElement);
       jsPsych.finishTrial(trialData);
     }
 
@@ -212,6 +216,7 @@ jsPsych.plugins['intentions-game'] = (function() {
       trialData.avatar = Configuration.avatars.indexOf(_selection);
 
       // End trial
+      ReactDOM.unmountComponentAtNode(displayElement);
       jsPsych.finishTrial(trialData);
     }
 
@@ -219,6 +224,7 @@ jsPsych.plugins['intentions-game'] = (function() {
      * Function to continue without participant input
      */
     function continueTrial(): void {
+      ReactDOM.unmountComponentAtNode(displayElement);
       jsPsych.finishTrial(trialData);
     }
   };

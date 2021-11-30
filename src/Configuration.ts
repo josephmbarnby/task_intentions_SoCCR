@@ -10,7 +10,7 @@ export const Configuration = {
     phaseOneTrials: 36,
     phaseTwoTrials: 72,
     phaseThreeTrials: 36,
-    individualType: 'Competitive',
+    individualType: 'Test',
   },
 
   stimuli: {
