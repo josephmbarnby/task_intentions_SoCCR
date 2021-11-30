@@ -3,6 +3,7 @@ import React, {ReactElement} from 'react';
 
 // Grommet UI components
 import {Box, Grid, Heading} from 'grommet';
+import {Money} from 'grommet-icons';
 
 /**
  * Generate an Option grid
@@ -53,8 +54,15 @@ export function Option(props: {
         gridArea='participantPoints'
         justify='center'
         alignSelf='center'
+        align='center'
+        direction='row'
+        gap='small'
       >
         <Heading>+{props.pointsParticipant}</Heading>
+        <Money
+          size='large'
+          color='pointsIconBackground'
+        />
       </Box>
 
       {/* Partner points */}
@@ -62,8 +70,15 @@ export function Option(props: {
         gridArea='partnerPoints'
         justify='center'
         alignSelf='center'
+        align='center'
+        direction='row'
+        gap='small'
       >
         <Heading>+{props.pointsParter}</Heading>
+        <Money
+          size='large'
+          color='pointsIconBackground'
+        />
       </Box>
     </Grid>
   );

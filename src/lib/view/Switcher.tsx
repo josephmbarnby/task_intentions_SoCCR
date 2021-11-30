@@ -15,10 +15,10 @@ import {Matched} from './screens/Matched';
 
 // Custom types
 import {
-  SelectionScreenProps,
+  SelectAvatarProps,
   SwitcherProps,
-  TrialScreenProps,
-} from '../types/screens';
+  TrialProps,
+} from '../types/typing';
 
 // Other imports
 import consola from 'consola';
@@ -39,11 +39,17 @@ export function Switcher(props: SwitcherProps): ReactElement {
     case 'playerGuess':
       screen =
         <Trial
-          avatar={(props.screenProps as TrialScreenProps).avatar}
-          points={(props.screenProps as TrialScreenProps).points}
-          data={(props.screenProps as TrialScreenProps).data}
           display={props.display}
-          endTrial={(props.screenProps as TrialScreenProps).endTrial}
+          avatar={(props.screenProps as TrialProps).avatar}
+          participantPoints={
+            (props.screenProps as TrialProps).participantPoints
+          }
+          partnerPoints={
+            (props.screenProps as TrialProps).partnerPoints
+          }
+          options={(props.screenProps as TrialProps).options}
+          answer={(props.screenProps as TrialProps).answer}
+          endTrial={(props.screenProps as TrialProps).endTrial}
         />;
       break;
 
@@ -52,7 +58,7 @@ export function Switcher(props: SwitcherProps): ReactElement {
       screen =
         <SelectAvatar
           selectionHandler={
-            (props.screenProps as SelectionScreenProps).selectionHandler
+            (props.screenProps as SelectAvatarProps).selectionHandler
           }
         />;
       break;

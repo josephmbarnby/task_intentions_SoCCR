@@ -6,8 +6,14 @@ import {render} from 'react-dom';
 import {Switcher} from './Switcher';
 
 // Custom types
-import {SelectionScreenProps, TrialScreenProps} from '../types/typing';
-import {DisplayType} from '../types/typing';
+import {
+  DisplayType,
+  MatchedProps,
+  MatchingProps,
+  SelectAvatarProps,
+  SwitcherProps,
+  TrialProps,
+} from '../types/typing';
 
 // Other imports
 import consola from 'consola';
@@ -23,14 +29,15 @@ import consola from 'consola';
 export function display(
     type: DisplayType,
     target: HTMLElement,
-    props: TrialScreenProps |
-        SelectionScreenProps |
-        Record<string, unknown>,
+    props:
+        TrialProps | SwitcherProps |
+        SelectAvatarProps | MatchedProps | MatchingProps,
     timeout=0,
     callback=() => {
       consola.info('No callback defined for timeout');
     },
 ): void {
+  // Render the Switcher
   render(
       <Switcher
         display={type}

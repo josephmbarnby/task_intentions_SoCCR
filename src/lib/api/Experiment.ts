@@ -216,6 +216,24 @@ export class Experiment {
   }
 
   /**
+   * Get and return the relative screen size, categorised
+   * into small, medium, or large screen sizes.
+   * @return {'small' | 'medium' | 'large'}
+   */
+  public getScreenSize(): 'small' | 'medium' | 'large' {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    if (width <= 1280 || height <= 720) {
+      return 'small';
+    } else if (width <= 1920 || height <= 1080) {
+      return 'medium';
+    } else {
+      return 'large';
+    }
+  }
+
+  /**
    * Start the experiment
    * @param {any[]} _timeline collection of the jsPsych
    * timeline nodes to execute.
