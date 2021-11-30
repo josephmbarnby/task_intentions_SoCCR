@@ -11,6 +11,9 @@ import {LinkNext} from 'grommet-icons';
 // Configuration
 import {Configuration} from '../../../Configuration';
 
+// API Imports
+import {Experiment} from '../../API';
+
 // Components
 import {IntentionsAvatar} from '../components/IntentionsAvatar';
 
@@ -42,7 +45,9 @@ export function SelectAvatar(props: {
 
   return (
     <div>
-      <Heading>
+      <Heading
+        fill
+      >
         Choose your Avatar!
       </Heading>
 
@@ -51,6 +56,7 @@ export function SelectAvatar(props: {
         flex='grow'
         direction='row-responsive'
         align='center'
+        justify='center'
         height='medium'
       >
         {avatarComponents}

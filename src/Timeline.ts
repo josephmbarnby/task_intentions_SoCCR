@@ -1,8 +1,10 @@
 // Configuration and data
-import {Configuration} from '../Configuration';
+import {Configuration} from './Configuration';
 
-// Import the plugin before adding it to the timeline
-import '../Plugin';
+// Import data spreadsheets
+import Competitive from './data/competitive.csv';
+import Individualist from './data/individualist.csv';
+import Prosocial from './data/prosocial.csv';
 
 // Logging library
 import consola from 'consola';
@@ -12,13 +14,13 @@ import seedrandom from 'seedrandom';
 window.Math.random = seedrandom(Configuration.seed);
 
 // Import custom types
-import {Row, IndividualType} from './types/typing';
+import {Row, IndividualType} from './lib/types/typing';
 
-// Import data spreadsheets
-import Competitive from '../data/competitive.csv';
-import Individualist from '../data/individualist.csv';
-import Prosocial from '../data/prosocial.csv';
-import {Experiment} from './API';
+// Import API libraries
+import {Experiment} from './lib/API';
+
+// Import the plugin before adding it to the timeline
+import './Plugin';
 
 window.onload = () => {
   // Timeline setup
@@ -108,7 +110,8 @@ window.onload = () => {
       optionTwoPartner: row.Option2_Partner,
       typeOne: row.Type1,
       typeTwo: row.Type2,
-      display: row.display,
+      display: 'playerGuess',
+      answer: row.ANSWER,
     });
   }
 

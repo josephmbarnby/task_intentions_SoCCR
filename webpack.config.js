@@ -5,9 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    switcher: './src/lib/view/Switcher.tsx',
-    plugin: './src/Plugin.ts',
-    main: './src/lib/Main.ts',
+    timeline: './src/Timeline.ts',
   },
   devtool: 'inline-source-map',
   plugins: [

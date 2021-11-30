@@ -1,16 +1,19 @@
-import 'jspsych/jspsych';
+// Logging library
 import consola from 'consola';
-
-// Make TypeScript happy by declaring jsPsych
-declare const jsPsych: any;
 
 // Core modules
 import {Configuration} from './Configuration';
 import {display} from './lib/view/Functions';
 
 // Custom types
-import {DisplayType} from './lib/types/typing';
-import {SelectionScreenProps, TrialScreenProps} from './lib/types/typing';
+import {
+  DisplayType,
+  MatchedProps,
+  MatchingProps,
+  SelectAvatarProps,
+  Trial,
+  TrialProps,
+} from './lib/types/typing';
 
 jsPsych.plugins['intentions-game'] = (function() {
   const plugin = {
@@ -65,10 +68,16 @@ jsPsych.plugins['intentions-game'] = (function() {
         default: undefined,
         description: 'The type of trial screen to display',
       },
+      answer: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Correct answer',
+        default: '',
+        description: 'The correct answer to select',
+      },
     },
   };
 
-  plugin.trial = function(displayElement: HTMLElement, trial: any) {
+  plugin.trial = function(displayElement: HTMLElement, trial: Trial) {
     // Record the starting time
     const _startTime = performance.now();
 
@@ -88,10 +97,8 @@ jsPsych.plugins['intentions-game'] = (function() {
     trialData.avatar = _previousData.avatar;
 
     // Generate and configure props based on the stage
-    let props:
-      TrialScreenProps |
-      SelectionScreenProps |
-      Record<string, unknown>;
+    let screenProps:
+        MatchedProps | MatchingProps | TrialProps | SelectAvatarProps;
 
     // Timeout information
     let timeoutDuration = 0;
@@ -101,23 +108,30 @@ jsPsych.plugins['intentions-game'] = (function() {
       // Phase one and two trials
       case 'playerChoice':
       case 'playerGuess': {
+        // Sum the points from the previous trials
         const participantPoints =
           jsPsych.data.get().select('playerPoints').sum();
-        props = {
-          data: {
-            optionOne: {
+        const partnerPoints =
+          jsPsych.data.get().select('partnerPoints').sum();
+
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          avatar: trialData.avatar,
+          participantPoints: participantPoints,
+          partnerPoints: partnerPoints,
+          options: {
+            one: {
               participant: trial.optionOneParticipant,
               partner: trial.optionOnePartner,
             },
-            optionTwo: {
+            two: {
               participant: trial.optionTwoParticipant,
               partner: trial.optionTwoPartner,
             },
           },
-          avatar: trialData.avatar,
-          points: participantPoints,
+          answer: trial.answer,
           endTrial: endTrial,
-          display: trial.display,
         };
         break;
       }
@@ -125,14 +139,20 @@ jsPsych.plugins['intentions-game'] = (function() {
       // Matching and matched stages
       case 'matched':
       case 'matching':
-        props = {};
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+        };
+
         timeoutDuration = 2000;
         timeoutCallback = continueTrial;
         break;
 
       // Selection screen
       case 'selection':
-        props = {
+        // Setup the props
+        screenProps = {
+          display: trial.display,
           selectionHandler: avatarSelectionHandler,
         };
         break;
@@ -149,28 +169,28 @@ jsPsych.plugins['intentions-game'] = (function() {
     display(
         trial.display,
         displayElement,
-        props,
+        screenProps,
         timeoutDuration,
         timeoutCallback
     );
 
     /**
      * Handle Button-press events in a particular trial
-     * @param {string} _option selected option
+     * @param {'Option 1' | 'Option 2'} _option selected option
      */
-    function endTrial(_option: string) {
+    function endTrial(_option: 'Option 1' | 'Option 2') {
       const _endTime = performance.now();
       const _duration = _endTime - _startTime;
       trialData.rt = _duration;
 
-      if (_option === 'optionOne') {
+      if (_option === 'Option 1') {
         // Participant chose option 1
         trialData.selectedOption = 1;
 
         // Update the score with values of option 1
         trialData.playerPoints = trial.optionOneParticipant;
         trialData.partnerPoints = trial.optionOnePartner;
-      } else if (_option === 'optionTwo') {
+      } else if (_option === 'Option 2') {
         // Participant chose option 2
         trialData.selectedOption = 2;
 
