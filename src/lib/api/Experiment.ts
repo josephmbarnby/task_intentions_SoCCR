@@ -4,7 +4,7 @@ import {clear, scale} from '../Functions';
 import {Manipulations, StimuliCollection} from '../API';
 import {PLATFORMS} from '../Constants';
 
-// Import and Configurationure seedrandom for random number generation
+// Import and configure seedrandom for random number generation
 import seedrandom from 'seedrandom';
 window.Math.random = seedrandom(Configuration.seed);
 
@@ -13,7 +13,6 @@ import 'jspsych/jspsych';
 import 'jspsych/plugins/jspsych-instructions';
 import 'jspsych/plugins/jspsych-fullscreen';
 import 'jspsych/plugins/jspsych-preload';
-// import 'jspsych-attention-check/src/jspsych-attention-check';
 declare const jsPsych: any;
 
 // Import jQuery for Gorilla use only
@@ -33,13 +32,19 @@ export class Experiment {
     jsPsych: any;
   };
   private stimuliCollection: StimuliCollection;
+  private globalState: any;
+  private initialState: any;
 
   /**
    * Default constructor
+   * @param {any} globalState initial global state object
    */
-  constructor() {
+  constructor(globalState = {}) {
     // Assign the experiment to the window
     window['Experiment'] = this;
+
+    this.globalState = globalState;
+    this.initialState = globalState;
 
     // Detect and update the target in the Configurationuration
     this.setPlatform(this.detectPlatforms());
@@ -73,6 +78,55 @@ export class Experiment {
    */
   public getPlatform(): string {
     return this.platform;
+  }
+
+  /**
+   * Return the global state instance of the
+   * experiment
+   * @return {any}
+   */
+  public getGlobalState(): any {
+    return this.globalState;
+  }
+
+  /**
+   * Get the value of a particular state component
+   * @param {string} key state component
+   * @return {any}
+   */
+  public getGlobalStateValue(key: string): any {
+    if (key in this.globalState) {
+      return this.globalState[key];
+    } else {
+      consola.error(`State component '${key}' not found`);
+      return null;
+    }
+  }
+
+  /**
+   * Set the value of a particular state component
+   * @param {string} key state component
+   * @param {any} value state component value
+   */
+  public setGlobalStateValue(key: string, value: any): void {
+    if (value) {
+      if (key in this.globalState) {
+        this.globalState[key] = value;
+      } else {
+        consola.warn(`State component '${key}' not initialised`);
+        this.globalState[key] = value;
+      }
+    } else {
+      consola.warn(`State component value must be defined`);
+    }
+  }
+
+  /**
+   * Reset the global state to the initial state
+   */
+  public resetState(): void {
+    consola.warn(`State reset`);
+    this.globalState = this.initialState;
   }
 
   /**

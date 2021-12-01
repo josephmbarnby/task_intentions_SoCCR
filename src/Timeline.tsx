@@ -30,7 +30,11 @@ import './Plugin';
 window.onload = () => {
   // Timeline setup
   const timeline = [];
-  const experiment = new Experiment();
+  const experiment = new Experiment({
+    // Experiment global initial state
+    participantAvatar: 0,
+    partnerAvatar: 0,
+  });
 
   // Set the experiment to run in fullscreen mode
   if (Configuration.fullscreen === true) {

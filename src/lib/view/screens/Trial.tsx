@@ -11,6 +11,9 @@ import {Theme} from '../Theme';
 import {Option} from '../components/Option';
 import {PlayerAvatar} from '../components/PlayerAvatar';
 
+// API modules
+import {Experiment} from '../../API';
+
 // Custom types
 import {TrialProps} from '../../types/typing';
 
@@ -153,6 +156,11 @@ export function Trial(props: TrialProps): ReactElement {
     }
   }
 
+  // Get the participant's and the partner's avatars
+  const experiment = (window['Experiment'] as Experiment);
+  const participantAvatar = experiment.getGlobalStateValue('participantAvatar');
+  const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
+
   return (
     <ThemeContext.Extend value={Theme}>
       <Box justify='center'>
@@ -177,7 +185,7 @@ export function Trial(props: TrialProps): ReactElement {
             gridArea='playerArea'
             name='You'
             points={participantPoints}
-            avatar={Configuration.avatars[props.avatar]}
+            avatar={Configuration.avatars[participantAvatar]}
           />
 
           <Box
@@ -229,7 +237,7 @@ export function Trial(props: TrialProps): ReactElement {
             gridArea='partnerArea'
             name='Partner'
             points={partnerPoints}
-            avatar={Configuration.partners[0]}
+            avatar={Configuration.partners[partnerAvatar]}
           />
         </Grid>
       </Box>

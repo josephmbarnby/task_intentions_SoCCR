@@ -12,6 +12,9 @@ import {LinkNext} from 'grommet-icons';
 // Configuration
 import {Configuration} from '../../../Configuration';
 
+// Typing
+import {SelectAvatarProps} from '../../types/typing';
+
 // Components
 import {IntentionsAvatar} from '../components/IntentionsAvatar';
 import {Theme} from '../Theme';
@@ -21,9 +24,7 @@ import {Theme} from '../Theme';
  * @param {any} props collection of props
  * @return {ReactElement}
  */
-export function SelectAvatar(props: {
-  selectionHandler: (value: string) => void;
-}): ReactElement {
+export function SelectAvatar(props: SelectAvatarProps): ReactElement {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
 

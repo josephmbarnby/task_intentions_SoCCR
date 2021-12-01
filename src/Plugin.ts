@@ -8,6 +8,9 @@ import consola from 'consola';
 import {Configuration} from './Configuration';
 import {display} from './lib/view/Functions';
 
+// API modules
+import {Experiment} from './lib/API';
+
 // Custom types
 import {
   DisplayType,
@@ -96,18 +99,9 @@ jsPsych.plugins['intentions-game'] = (() => {
       partnerPoints: 0,
       selectedOption: -1,
       rt: 0,
-      avatar: -1,
     };
 
     consola.info(`Running trial stage '${trial.display}'`);
-
-    // Load the participant avatar that was selected at the start of the game
-    const previousData = jsPsych.data.get()
-        .filter({trial_type: 'intentions-game'})
-        .values()[0];
-    if (previousData && previousData.avatar) {
-      trialData.avatar = previousData.avatar;
-    }
 
     // Generate and configure props based on the stage
     let screenProps:
@@ -130,7 +124,6 @@ jsPsych.plugins['intentions-game'] = (() => {
         // Setup the props
         screenProps = {
           display: trial.display,
-          avatar: trialData.avatar,
           participantPoints: participantPoints,
           partnerPoints: partnerPoints,
           options: {
@@ -222,7 +215,13 @@ jsPsych.plugins['intentions-game'] = (() => {
      */
     function avatarSelectionHandler(_selection: string): void {
       // Obtain the selected avatar
-      trialData.avatar = Configuration.avatars.indexOf(_selection);
+      const selectedAvatar = Configuration.avatars.indexOf(_selection);
+
+      // Update the global Experiment state
+      (window['Experiment'] as Experiment).setGlobalStateValue(
+          'participantAvatar',
+          selectedAvatar,
+      );
 
       // End trial
       finishTrial();

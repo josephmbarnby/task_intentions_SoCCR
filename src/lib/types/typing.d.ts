@@ -14,7 +14,6 @@ export type MatchingProps = {
 
 export type TrialProps = {
   display: DisplayType;
-  avatar: number;
   participantPoints: number;
   partnerPoints: number;
   options: {
