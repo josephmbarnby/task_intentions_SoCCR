@@ -101,7 +101,7 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     consola.info(`Running trial stage '${trial.display}'`);
 
-    // Load the avatar that was selected at the start of the game
+    // Load the participant avatar that was selected at the start of the game
     const previousData = jsPsych.data.get()
         .filter({trial_type: 'intentions-game'})
         .values()[0];

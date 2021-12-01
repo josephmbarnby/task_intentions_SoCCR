@@ -1,11 +1,15 @@
 // Configuration and other required data
 export const Configuration = {
+  // General information
   studyName: 'Intentions game',
   pluginName: 'intentions-game',
   locale: 'en-AU',
+
+  // Error screen configuration
   allowParticipantContact: false,
   contact: 'henry.burgess@wustl.edu',
 
+  // Manipulations that are configurable in Gorilla
   manipulations: {
     phaseOneTrials: 36,
     phaseTwoTrials: 72,
@@ -13,27 +17,25 @@ export const Configuration = {
     individualType: 'Test',
   },
 
-  stimuli: {
+  // Collection of any stimuli used in the trials
+  stimuli: {},
 
-  },
-
+  // Seed for RNG
   seed: 'intentions',
 
   // List of avatar names (not displayed, only used to generate avatars)
   avatars: [
-    'henry',
-    'joe',
-    'jeff',
-    'ryan',
-    'linda',
-    'lisa',
-  ],
-
-  partners: [
     'a',
     'b',
     'c',
     'd',
+    'e',
+    'f',
+  ],
+
+  partners: [
+    'g',
+    'h',
   ],
 
   fullscreen: false,

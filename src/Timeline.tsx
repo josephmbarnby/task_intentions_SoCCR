@@ -180,6 +180,17 @@ window.onload = () => {
           show_page_number: true,
           show_clickable_nav: true,
         });
+
+        // Insert another 'match' sequence into the timeline
+        timeline.push({
+          type: 'intentions-game',
+          display: 'matching',
+        });
+
+        timeline.push({
+          type: 'intentions-game',
+          display: 'matched',
+        });
         break;
       }
       default: {
