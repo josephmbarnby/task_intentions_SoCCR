@@ -15,7 +15,7 @@ import {AVATAR_VARIANT, COLORS} from '../../Constants';
  * @param {any} props component props
  * @return {ReactElement}
  */
-export function IntentionsAvatar(props: {
+export function OptionAvatar(props: {
   size: number,
   name: string,
   state: string,

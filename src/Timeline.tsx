@@ -34,6 +34,7 @@ window.onload = () => {
     // Experiment global initial state
     participantAvatar: 0,
     partnerAvatar: 0,
+    refreshPartner: false,
   });
 
   // Set the experiment to run in fullscreen mode

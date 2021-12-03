@@ -16,7 +16,7 @@ import {Configuration} from '../../../Configuration';
 import {SelectAvatarProps} from '../../types/typing';
 
 // Components
-import {IntentionsAvatar} from '../components/IntentionsAvatar';
+import {OptionAvatar} from '../components/OptionAvatar';
 import {Theme} from '../Theme';
 
 /**
@@ -33,7 +33,7 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
 
   for (const avatarName of avatars) {
     avatarComponents.push(
-        <IntentionsAvatar
+        <OptionAvatar
           key={avatarName}
           size={128}
           name={avatarName}

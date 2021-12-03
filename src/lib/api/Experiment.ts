@@ -109,15 +109,23 @@ export class Experiment {
    * @param {any} value state component value
    */
   public setGlobalStateValue(key: string, value: any): void {
-    if (value) {
+    // Need to check that the value is defined first,
+    // storing 'undefined' as a state is never a good idea
+    if (typeof value !== 'undefined') {
+      // Go ahead and check that the key currently exists
       if (key in this.globalState) {
+        // Update the value if so
         this.globalState[key] = value;
       } else {
+        // Otherwise, warn that it was not initialised.
+        // State components should not be added along the way,
+        // they should at least be initialised.
         consola.warn(`State component '${key}' not initialised`);
         this.globalState[key] = value;
       }
     } else {
-      consola.warn(`State component value must be defined`);
+      // Log an error
+      consola.error(`State component value must be defined`);
     }
   }
 

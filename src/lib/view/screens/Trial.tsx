@@ -8,7 +8,7 @@ import {Box, Grid, Heading, ThemeContext} from 'grommet';
 import {Theme} from '../Theme';
 
 // Custom components
-import {Option} from '../components/Option';
+import {OptionPoints} from '../components/OptionPoints';
 import {PlayerAvatar} from '../components/PlayerAvatar';
 
 // API modules
@@ -161,6 +161,11 @@ export function Trial(props: TrialProps): ReactElement {
   const participantAvatar = experiment.getGlobalStateValue('participantAvatar');
   const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
+  // Update state to refresh partner avatar at next match screen
+  if (experiment.getGlobalStateValue('refreshPartner') === false) {
+    experiment.setGlobalStateValue('refreshPartner', true);
+  }
+
   return (
     <ThemeContext.Extend value={Theme}>
       <Box justify='center'>
@@ -202,7 +207,7 @@ export function Trial(props: TrialProps): ReactElement {
             round
             background='optionBackground'
           >
-            <Option
+            <OptionPoints
               optionKey='optionOne'
               optionName='Option 1'
               pointsParticipant={props.options.one.participant}
@@ -224,7 +229,7 @@ export function Trial(props: TrialProps): ReactElement {
             round
             background='optionBackground'
           >
-            <Option
+            <OptionPoints
               optionKey='optionTwo'
               optionName='Option 2'
               pointsParticipant={props.options.two.participant}

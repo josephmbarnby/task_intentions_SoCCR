@@ -5,6 +5,9 @@ import React, {ReactElement} from 'react';
 import {Box, Heading} from 'grommet';
 import Avatar from 'boring-avatars';
 
+// Logging library
+import consola from 'consola';
+
 // API modules
 import {Experiment} from '../../API';
 
@@ -21,16 +24,18 @@ import {AVATAR_VARIANT, COLORS} from '../../Constants';
 export function Matched(): ReactElement {
   // Get the current partner avatar
   const experiment = (window['Experiment'] as Experiment);
-  const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
   // Increment the partner avatar value
-  if (partnerAvatar + 1 === Configuration.partners.length) {
-    // Reset if index will be out of range
+  if (experiment.getGlobalStateValue('refreshPartner') === false) {
+    // Set partner to first avatar
     experiment.setGlobalStateValue('partnerAvatar', 0);
   } else {
-    // Otherwise, increment
-    experiment.setGlobalStateValue('partnerAvatar', partnerAvatar + 1);
+    // Set partner to second avatar
+    experiment.setGlobalStateValue('partnerAvatar', 1);
   }
+
+  // Get the updated partner avatar
+  const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
   return (
     <Box

@@ -10,7 +10,7 @@ import {Money} from 'grommet-icons';
  * @param {any} props collection of props
  * @return {ReactElement}
  */
-export function Option(props: {
+export function OptionPoints(props: {
   optionKey: string,
   optionName: string,
   pointsParticipant: number,
