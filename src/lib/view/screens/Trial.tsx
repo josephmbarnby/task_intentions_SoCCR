@@ -76,6 +76,13 @@ export function Trial(props: TrialProps): ReactElement {
     const optionOneNode = refs.optionOne.current as HTMLElement;
     const optionTwoNode = refs.optionTwo.current as HTMLElement;
 
+    // Get the selected node object
+    const selectedNode =
+        option === 'Option 1' ? optionOneNode : optionTwoNode;
+    const unselectedNode =
+        selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
+    const correctSelection = option === props.answer;
+
     // Check the stage of the trial
     switch (props.display) {
       case 'playerChoice': {
@@ -83,54 +90,72 @@ export function Trial(props: TrialProps): ReactElement {
         // they want for points
         consola.info(`Selection for option '${props.display}'`);
 
-        // Update the styling
-        optionOneNode.style.opacity = '0';
-        optionTwoNode.style.opacity = '0';
-        optionOneNode.style.pointerEvents = 'none';
-        optionTwoNode.style.pointerEvents = 'none';
-
-        // Set a timeout for continuing
+        // Timeout to change the opacity of the options
         window.setTimeout(() => {
-          // Reset the styling
-          optionOneNode.style.opacity = '1';
-          optionTwoNode.style.opacity = '1';
-          optionOneNode.style.pointerEvents = 'auto';
-          optionTwoNode.style.pointerEvents = 'auto';
+          // Hide the unselected option
+          unselectedNode.style.opacity = '0';
 
-          // End the trial
-          props.endTrial(option);
-        }, 1000);
+          // Disable all pointer events
+          optionOneNode.style.pointerEvents = 'none';
+          optionTwoNode.style.pointerEvents = 'none';
+
+          window.setTimeout(() => {
+            // Hide the selected option
+            selectedNode.style.opacity = '0';
+          }, 1500);
+
+          // Set a timeout for continuing
+          window.setTimeout(() => {
+            // Reset the styling
+            optionOneNode.style.opacity = '1';
+            optionTwoNode.style.opacity = '1';
+            optionOneNode.style.pointerEvents = 'auto';
+            optionTwoNode.style.pointerEvents = 'auto';
+
+            // End the trial
+            props.endTrial(option);
+          }, 2000);
+        }, 250);
         break;
       }
       case 'playerGuess': {
         // Second stage of trials: participant selecting the option
         // they think their opponent will select
-
-        // Get the selected node object
-        const selectedNode =
-            option === 'Option 1' ? optionOneNode : optionTwoNode;
-        const unselectedNode =
-            selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
-        const correctSelection = option === props.answer;
-
         if (correctSelection === true) {
-          headerStateFunction('Correct!');
+          headerStateFunction('You chose correctly!');
         } else {
-          headerStateFunction('Incorrect.');
+          headerStateFunction('You chose incorrectly.');
         }
 
         // Timeout to change the color of the selected answer
         // and the opacity of the unselected answer
         window.setTimeout(() => {
+          // Set the background of the two options
+          // depending on the correct selection
           selectedNode.style.background =
               correctSelection ?
               Theme.global.colors.correct :
               Theme.global.colors.incorrect;
-          unselectedNode.style.opacity = '0';
+
+          unselectedNode.style.background =
+              correctSelection ?
+              Theme.global.colors.incorrect :
+              Theme.global.colors.correct;
 
           // Disable selections
           optionOneNode.style.pointerEvents = 'none';
           optionTwoNode.style.pointerEvents = 'none';
+
+          window.setTimeout(() => {
+            // Hide the options before trial end
+            optionOneNode.style.opacity = '0';
+            optionTwoNode.style.opacity = '0';
+
+            optionOneNode.style.background =
+                Theme.global.colors.optionBackground;
+            optionTwoNode.style.background =
+                Theme.global.colors.optionBackground;
+          }, 1500);
 
           // Set a timeout to reset view and end the trial
           window.setTimeout(() => {
@@ -139,17 +164,14 @@ export function Trial(props: TrialProps): ReactElement {
             optionTwoNode.style.opacity = '1';
             optionOneNode.style.pointerEvents = 'auto';
             optionTwoNode.style.pointerEvents = 'auto';
-            optionOneNode.style.background =
-                Theme.global.colors.optionBackground;
-            optionTwoNode.style.background =
-                Theme.global.colors.optionBackground;
+
 
             // Reset the header state
             setTrialHeader(defaultHeader);
 
             // End the trial
             props.endTrial(option);
-          }, 3000);
+          }, 2000);
         }, 250);
         break;
       }
