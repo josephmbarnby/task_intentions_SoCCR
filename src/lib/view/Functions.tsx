@@ -5,16 +5,6 @@ import {render} from 'react-dom';
 // Screen component
 import {Switcher} from './Switcher';
 
-// Custom types
-import {
-  DisplayType,
-  MatchedProps,
-  MatchingProps,
-  SelectAvatarProps,
-  SwitcherProps,
-  TrialProps,
-} from '../types/typing';
-
 // Other imports
 import consola from 'consola';
 

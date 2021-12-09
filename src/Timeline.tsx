@@ -18,9 +18,6 @@ import consola from 'consola';
 import seedrandom from 'seedrandom';
 window.Math.random = seedrandom(Configuration.seed);
 
-// Import custom types
-import {Row, IndividualType} from './lib/types/typing';
-
 // Import API libraries
 import {Experiment} from './lib/API';
 
@@ -61,6 +58,12 @@ window.onload = () => {
       );
     },
   ];
+
+  // TEST: Inserting playerChoice2 screen
+  timeline.push({
+    type: 'intentions-game',
+    display: 'playerChoice2',
+  });
 
   // Insert the instructions into the timeline
   timeline.push({

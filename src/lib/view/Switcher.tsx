@@ -12,13 +12,7 @@ import {Trial} from './screens/Trial';
 import {SelectAvatar} from './screens/SelectAvatar';
 import {Matching} from './screens/Matching';
 import {Matched} from './screens/Matched';
-
-// Custom types
-import {
-  SelectAvatarProps,
-  SwitcherProps,
-  TrialProps,
-} from '../types/typing';
+import {Question} from './screens/Question';
 
 // Other imports
 import consola from 'consola';
@@ -40,7 +34,6 @@ export function Switcher(props: SwitcherProps): ReactElement {
       screen =
         <Trial
           display={props.display}
-          avatar={(props.screenProps as TrialProps).avatar}
           participantPoints={
             (props.screenProps as TrialProps).participantPoints
           }
@@ -52,11 +45,16 @@ export function Switcher(props: SwitcherProps): ReactElement {
           endTrial={(props.screenProps as TrialProps).endTrial}
         />;
       break;
+    case 'playerChoice2':
+      screen =
+          <Question />;
+      break;
 
     // Selection screen
     case 'selection':
       screen =
         <SelectAvatar
+          display={props.display}
           selectionHandler={
             (props.screenProps as SelectAvatarProps).selectionHandler
           }

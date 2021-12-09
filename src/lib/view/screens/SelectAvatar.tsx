@@ -12,9 +12,6 @@ import {LinkNext} from 'grommet-icons';
 // Configuration
 import {Configuration} from '../../../Configuration';
 
-// Typing
-import {SelectAvatarProps} from '../../types/typing';
-
 // Components
 import {OptionAvatar} from '../components/OptionAvatar';
 import {Theme} from '../Theme';

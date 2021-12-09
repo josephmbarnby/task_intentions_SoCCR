@@ -1,18 +1,18 @@
-export type SwitcherProps = {
+declare type SwitcherProps = {
   display: DisplayType;
   screenProps: MatchedProps | MatchingProps | TrialProps | SelectAvatarProps;
 }
 
 // Props for each screen type
-export type MatchedProps = {
+declare type MatchedProps = {
   display: DisplayType;
 }
 
-export type MatchingProps = {
+declare type MatchingProps = {
   display: DisplayType;
 }
 
-export type TrialProps = {
+declare type TrialProps = {
   display: DisplayType;
   participantPoints: number;
   partnerPoints: number;
@@ -30,13 +30,13 @@ export type TrialProps = {
   endTrial: (selection: string) => void;
 };
 
-export type SelectAvatarProps = {
+declare type SelectAvatarProps = {
   display: DisplayType;
   selectionHandler: (_selection: string) => void;
 };
 
 // Trial data row types
-export type Row = {
+declare type Row = {
   randomise_blocks: string;
   randomise_trials: number;
   display: DisplayType;
@@ -53,7 +53,7 @@ export type Row = {
 };
 
 // Trial
-export type Trial = {
+declare type Trial = {
   display: DisplayType;
   optionOneParticipant: number;
   optionOnePartner: number;
@@ -67,9 +67,9 @@ export type Trial = {
 }
 
 // The three display types (similar to 'stages')
-export type DisplayType =
+declare type DisplayType =
     'playerChoice' | 'playerChoice2' | 'mid' | 'mid2' |
     'playerGuess' | 'matching' | 'matched' | 'selection';
 
 // The three individual types
-export type IndividualType = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';
+declare type IndividualType = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';

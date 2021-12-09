@@ -14,9 +14,6 @@ import {PlayerAvatar} from '../components/PlayerAvatar';
 // API modules
 import {Experiment} from '../../API';
 
-// Custom types
-import {TrialProps} from '../../types/typing';
-
 // Logging library
 import consola from 'consola';
 

@@ -11,16 +11,6 @@ import {display} from './lib/view/Functions';
 // API modules
 import {Experiment} from './lib/API';
 
-// Custom types
-import {
-  DisplayType,
-  MatchedProps,
-  MatchingProps,
-  SelectAvatarProps,
-  Trial,
-  TrialProps,
-} from './lib/types/typing';
-
 jsPsych.plugins['intentions-game'] = (() => {
   const plugin = {
     info: {},
@@ -160,6 +150,15 @@ jsPsych.plugins['intentions-game'] = (() => {
         screenProps = {
           display: trial.display,
           selectionHandler: avatarSelectionHandler,
+        };
+        break;
+
+      case 'playerChoice2':
+        screenProps = {
+          display: trial.display,
+          selectionHandler: () => {
+            consola.info(`Selection triggered on display 'playerChoice2'`);
+          },
         };
         break;
 
