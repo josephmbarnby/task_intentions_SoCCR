@@ -40,6 +40,7 @@ declare type RangeSliderProps = {
   max: number;
   leftLabel: string;
   rightLabel: string;
+  onChange?: () => any;
 };
 
 // Trial data row types

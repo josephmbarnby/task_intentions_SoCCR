@@ -2,7 +2,7 @@
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Heading, RangeInput, Text} from 'grommet';
+import {Box, Heading, RangeInput} from 'grommet';
 
 /**
  * Generate a RangeSlider component
@@ -21,7 +21,7 @@ export function RangeSlider(props: RangeSliderProps): ReactElement {
       width='xlarge'
     >
       <Box width='medium'>
-        <Heading level={2}>
+        <Heading level={3}>
           {props.leftLabel}
         </Heading>
       </Box>
@@ -30,11 +30,17 @@ export function RangeSlider(props: RangeSliderProps): ReactElement {
         min={props.min}
         max={props.max}
         onChange={(event) => {
+          // Call the given onChange function if provided
+          if (typeof props.onChange !== 'undefined') {
+            props.onChange();
+          }
+
+          // Update the value of the slider
           setValue(parseInt(event.target.value));
         }}
       />
       <Box width='medium'>
-        <Heading level={2}>
+        <Heading level={3}>
           {props.rightLabel}
         </Heading>
       </Box>
