@@ -24,6 +24,8 @@ import {Experiment} from './lib/API';
 // Import the plugin before adding it to the timeline
 import './Plugin';
 
+// TODO: Clarify the overall task flow and what trials are placed where
+
 window.onload = () => {
   // Timeline setup
   const timeline = [];
@@ -58,12 +60,6 @@ window.onload = () => {
       );
     },
   ];
-
-  // TEST: Inserting playerChoice2 screen
-  timeline.push({
-    type: 'intentions-game',
-    display: 'playerChoice2',
-  });
 
   // Insert the instructions into the timeline
   timeline.push({

@@ -35,12 +35,19 @@ declare type SelectAvatarProps = {
   selectionHandler: (_selection: string) => void;
 };
 
+declare type QuestionProps = {
+  display: DisplayType;
+  selectionHandler: (firstValue: number, secondValue: number) => void;
+}
+
 declare type RangeSliderProps = {
   min: number;
   max: number;
+  initial?: number;
   leftLabel: string;
   rightLabel: string;
   onChange?: () => any;
+  setValue?: (value: number) => void;
 };
 
 // Trial data row types

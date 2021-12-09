@@ -33,13 +33,19 @@ export function RangeSlider(props: RangeSliderProps): ReactElement {
           min={props.min}
           max={props.max}
           onChange={(event) => {
+            const updatedValue = parseInt(event.target.value);
             // Call the given onChange function if provided
             if (typeof props.onChange !== 'undefined') {
               props.onChange();
             }
 
+            // Call the given setValue function if provided
+            if (typeof props.setValue !== 'undefined') {
+              props.setValue(updatedValue);
+            }
+
             // Update the value of the slider
-            setValue(parseInt(event.target.value));
+            setValue(updatedValue);
           }}
         />
         <Box width='medium'>

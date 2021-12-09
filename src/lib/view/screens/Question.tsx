@@ -2,7 +2,7 @@
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Button, Heading, Text, ThemeContext} from 'grommet';
+import {Box, Button, defaultProps, Heading, Text, ThemeContext} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
@@ -14,17 +14,17 @@ import {Theme} from '../Theme';
 // Logging library
 import consola from 'consola';
 
-// TODO: Link to data collection, store the values of the sliders.
-// TODO: Add callback to a handler when the Continue button is clicked.
-
 /**
  * Generate layout of Question Screen (Inference trial)
+ * @param {QuestionProps} props component props
  * @return {ReactElement}
  */
-export function Question(): ReactElement {
+export function Question(props: QuestionProps): ReactElement {
   // Slider states, monitor if they have been interacted with
   const [firstMoved, setFirstMoved] = useState(false);
+  const [firstValue, setFirstValue] = useState(50);
   const [secondMoved, setSecondMoved] = useState(false);
+  const [secondValue, setSecondValue] = useState(50);
 
   return (
     <ThemeContext.Extend value={Theme}>
@@ -48,11 +48,13 @@ export function Question(): ReactElement {
         <RangeSlider
           min={0}
           max={100}
+          initial={firstValue}
           leftLabel='Not at all'
           rightLabel='Totally'
           onChange={() => {
             setFirstMoved(true);
           }}
+          setValue={setFirstValue}
         />
 
         {/* Second question */}
@@ -66,11 +68,13 @@ export function Question(): ReactElement {
         <RangeSlider
           min={0}
           max={100}
+          initial={secondValue}
           leftLabel='Not at all'
           rightLabel='Totally'
           onChange={() => {
             setSecondMoved(true);
           }}
+          setValue={setSecondValue}
         />
       </Box>
       <Button
@@ -86,7 +90,7 @@ export function Question(): ReactElement {
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          // props.selectionHandler(selectedAvatar);
+          props.selectionHandler(firstValue, secondValue);
         }}
       />
     </ThemeContext.Extend>

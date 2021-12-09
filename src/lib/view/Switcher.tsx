@@ -47,7 +47,12 @@ export function Switcher(props: SwitcherProps): ReactElement {
       break;
     case 'playerChoice2':
       screen =
-          <Question />;
+          <Question
+            display={props.display}
+            selectionHandler={
+              (props.screenProps as QuestionProps).selectionHandler
+            }
+          />;
       break;
 
     // Selection screen

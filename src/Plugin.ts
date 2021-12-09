@@ -88,6 +88,8 @@ jsPsych.plugins['intentions-game'] = (() => {
       playerPoints: 0,
       partnerPoints: 0,
       selectedOption: -1,
+      questionOne: -1,
+      questionTwo: -1,
       rt: 0,
     };
 
@@ -95,7 +97,8 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     // Generate and configure props based on the stage
     let screenProps:
-        MatchedProps | MatchingProps | TrialProps | SelectAvatarProps;
+        MatchedProps | MatchingProps |
+        TrialProps | SelectAvatarProps | QuestionProps;
 
     // Timeout information
     let timeoutDuration = 0;
@@ -156,9 +159,7 @@ jsPsych.plugins['intentions-game'] = (() => {
       case 'playerChoice2':
         screenProps = {
           display: trial.display,
-          selectionHandler: () => {
-            consola.info(`Selection triggered on display 'playerChoice2'`);
-          },
+          selectionHandler: questionSelectionHandler,
         };
         break;
 
@@ -221,6 +222,28 @@ jsPsych.plugins['intentions-game'] = (() => {
           'participantAvatar',
           selectedAvatar,
       );
+
+      // End trial
+      finishTrial();
+    }
+
+    /**
+     * Handler called after questions completed
+     * @param {number} responseOne value of the first slider
+     * @param {number} responseTwo value of the second slider
+     */
+    function questionSelectionHandler(
+        responseOne: number,
+        responseTwo: number
+    ): void {
+      // Record the total reaction time
+      const _endTime = performance.now();
+      const _duration = _endTime - _startTime;
+      trialData.rt = _duration;
+
+      // Store the responses
+      trialData.questionOne = responseOne;
+      trialData.questionTwo = responseTwo;
 
       // End trial
       finishTrial();
