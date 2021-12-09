@@ -14,15 +14,17 @@ import {Theme} from '../Theme';
 // Logging library
 import consola from 'consola';
 
+// TODO: Link to data collection, store the values of the sliders.
+// TODO: Add callback to a handler when the Continue button is clicked.
+
 /**
  * Generate layout of Question Screen (Inference trial)
  * @return {ReactElement}
  */
 export function Question(): ReactElement {
+  // Slider states, monitor if they have been interacted with
   const [firstMoved, setFirstMoved] = useState(false);
   const [secondMoved, setSecondMoved] = useState(false);
-  // Two state components: first slider moved, second slider moved
-  // Continue button disabled until state is resolved
 
   return (
     <ThemeContext.Extend value={Theme}>
@@ -58,7 +60,7 @@ export function Question(): ReactElement {
           <Text size={'xlarge'}>
             {'Please use the slider below to indicate the extent ' +
             'to which you believe your partner\'s decisions are ' +
-            'by their desire to earn points in this task overall.'}
+            'by their desire to reduce your points in this task overall.'}
           </Text>
         </Box>
         <RangeSlider
