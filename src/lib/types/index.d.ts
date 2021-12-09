@@ -35,6 +35,13 @@ declare type SelectAvatarProps = {
   selectionHandler: (_selection: string) => void;
 };
 
+declare type RangeSliderProps = {
+  min: number;
+  max: number;
+  leftLabel: string;
+  rightLabel: string;
+};
+
 // Trial data row types
 declare type Row = {
   randomise_blocks: string;
