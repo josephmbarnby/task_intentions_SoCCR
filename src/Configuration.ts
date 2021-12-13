@@ -23,6 +23,13 @@ export const Configuration = {
   // Seed for RNG
   seed: 'intentions',
 
+  // Initial experiment state
+  state: {
+    participantAvatar: 0,
+    partnerAvatar: 0,
+    refreshPartner: false,
+  },
+
   // List of avatar names (not displayed, only used to generate avatars)
   avatars: [
     'a',

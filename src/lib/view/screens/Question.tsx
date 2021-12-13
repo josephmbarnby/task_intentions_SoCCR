@@ -2,7 +2,7 @@
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Button, defaultProps, Heading, Text, ThemeContext} from 'grommet';
+import {Box, Button, Heading, Text, ThemeContext} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
@@ -14,6 +14,9 @@ import {Theme} from '../Theme';
 // Logging library
 import consola from 'consola';
 
+// Constants
+const SLIDER_DEFAULT = 50;
+
 /**
  * Generate layout of Question Screen (Inference trial)
  * @param {QuestionProps} props component props
@@ -21,10 +24,13 @@ import consola from 'consola';
  */
 export function Question(props: QuestionProps): ReactElement {
   // Slider states, monitor if they have been interacted with
+  // Top slider
   const [firstMoved, setFirstMoved] = useState(false);
-  const [firstValue, setFirstValue] = useState(50);
+  const [firstValue, setFirstValue] = useState(SLIDER_DEFAULT);
+
+  // Second slider
   const [secondMoved, setSecondMoved] = useState(false);
-  const [secondValue, setSecondValue] = useState(50);
+  const [secondValue, setSecondValue] = useState(SLIDER_DEFAULT);
 
   return (
     <ThemeContext.Extend value={Theme}>

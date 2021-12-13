@@ -1,20 +1,33 @@
 export const Theme = {
   global: {
     colors: {
+      brand: {
+        dark: '#CBF3F0',
+        light: '#2EC4B6',
+      },
       correct: '#00C781',
       incorrect: '#FF4040',
-      avatarBackground: '#B2DDF7',
-      optionBackground: '#4CB5AE',
-      button: '#B2DDF7',
+      avatarBackground: '#89C2D9',
+      optionBackground: '#2A6F97',
+      button: '#01497C',
       pointsIconBackground: '#FFDB33',
+      border: {
+        dark: '#444444',
+        light: '#CCCCCC',
+      },
+    },
+    focus: {
+      border: {
+        color: '#FFFFFF',
+      },
     },
   },
   rangeInput: {
     track: {
-      color: '#FFDB33',
+      color: '#118AB2',
     },
     thumb: {
-      color: '#B2DDF7',
+      color: '#06D6A0',
     },
   },
 };

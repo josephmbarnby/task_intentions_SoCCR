@@ -78,7 +78,7 @@ declare type Trial = {
   typeTwo: string;
   avatar: 0;
   answer: string;
-  isLast: boolean;
+  clearScreen: boolean;
 }
 
 // The three display types (similar to 'stages')

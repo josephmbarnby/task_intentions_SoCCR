@@ -14,14 +14,13 @@ import Test from './data/test.csv';
 // Logging library
 import consola from 'consola';
 
-// Import and configure seedrandom
-import seedrandom from 'seedrandom';
-window.Math.random = seedrandom(Configuration.seed);
+// Import crossplatform API
+import {Experiment} from 'crossplatform-jspsych-wrapper';
 
-// Import API libraries
-import {Experiment} from './lib/API';
+// Import jsPsych plugins
+import 'jspsych/plugins/jspsych-instructions';
 
-// Import the plugin before adding it to the timeline
+// Import the custom plugin before adding it to the timeline
 import './Plugin';
 
 // TODO: Clarify the overall task flow and what trials are placed where
@@ -29,12 +28,7 @@ import './Plugin';
 window.onload = () => {
   // Timeline setup
   const timeline = [];
-  const experiment = new Experiment({
-    // Experiment global initial state
-    participantAvatar: 0,
-    partnerAvatar: 0,
-    refreshPartner: false,
-  });
+  const experiment = new Experiment(Configuration);
 
   // Set the experiment to run in fullscreen mode
   if (Configuration.fullscreen === true) {
@@ -128,7 +122,7 @@ window.onload = () => {
         // Get the last trial
         const lastTrial = timeline[timeline.length - 1];
         if (lastTrial.type === 'intentions-game') {
-          lastTrial.isLast = true;
+          lastTrial.clearScreen = true;
         }
 
         // Add the first break instructions
@@ -159,7 +153,7 @@ window.onload = () => {
         // Get the last trial
         const lastTrial = timeline[timeline.length - 1];
         if (lastTrial.type === 'intentions-game') {
-          lastTrial.isLast = true;
+          lastTrial.clearScreen = true;
         }
 
         // Add the second break instructions
@@ -197,6 +191,23 @@ window.onload = () => {
         });
         break;
       }
+      case 'playerChoice2': {
+        // Identical to ordinary trials, except the screen
+        // is cleared after each trial
+        timeline.push({
+          type: 'intentions-game',
+          optionOneParticipant: row.Option1_PPT,
+          optionOnePartner: row.Option1_Partner,
+          optionTwoParticipant: row.Option2_PPT,
+          optionTwoPartner: row.Option2_Partner,
+          typeOne: row.Type1,
+          typeTwo: row.Type2,
+          display: row.display,
+          answer: row.ANSWER,
+          clearScreen: true,
+        });
+        break;
+      }
       default: {
         timeline.push({
           type: 'intentions-game',
@@ -207,14 +218,18 @@ window.onload = () => {
           typeOne: row.Type1,
           typeTwo: row.Type2,
           display: row.display,
-          avatar: 0,
           answer: row.ANSWER,
-          isLast: false,
+          clearScreen: false,
         });
         break;
       }
     }
   }
 
-  experiment.start(timeline);
+  // Configure and start the experiment
+  experiment.start({
+    timeline: timeline,
+    show_progress_bar: true,
+    show_preload_progress_bar: true,
+  });
 };

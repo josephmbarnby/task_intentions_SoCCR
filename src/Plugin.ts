@@ -9,7 +9,7 @@ import {Configuration} from './Configuration';
 import {display} from './lib/view/Functions';
 
 // API modules
-import {Experiment} from './lib/API';
+import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 jsPsych.plugins['intentions-game'] = (() => {
   const plugin = {
@@ -70,11 +70,11 @@ jsPsych.plugins['intentions-game'] = (() => {
         default: '',
         description: 'The correct answer to select',
       },
-      isLast: {
+      clearScreen: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
-        pretty_name: 'Last trial of block',
+        pretty_name: 'Clear after trial',
         default: false,
-        description: 'Mark the last trial of a trial block',
+        description: 'Clear the screen after this trial',
       },
     },
   };
@@ -255,7 +255,7 @@ jsPsych.plugins['intentions-game'] = (() => {
      */
     function finishTrial(): void {
       // If the next trial isn't React-based, clean up React
-      if (trial.isLast === true) {
+      if (trial.clearScreen === true) {
         ReactDOM.unmountComponentAtNode(displayElement);
       }
 

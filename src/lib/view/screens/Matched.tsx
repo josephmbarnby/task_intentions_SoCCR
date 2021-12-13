@@ -9,7 +9,7 @@ import Avatar from 'boring-avatars';
 import consola from 'consola';
 
 // API modules
-import {Experiment} from '../../API';
+import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
 import {Configuration} from '../../../Configuration';

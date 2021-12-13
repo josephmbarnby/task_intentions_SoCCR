@@ -12,7 +12,7 @@ import {OptionPoints} from '../components/OptionPoints';
 import {PlayerAvatar} from '../components/PlayerAvatar';
 
 // API modules
-import {Experiment} from '../../API';
+import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Logging library
 import consola from 'consola';
@@ -115,6 +115,7 @@ export function Trial(props: TrialProps): ReactElement {
         }, 250);
         break;
       }
+
       case 'playerGuess': {
         // Second stage of trials: participant selecting the option
         // they think their opponent will select
