@@ -4,10 +4,15 @@ const del = require('del');
 
 /**
  * Run the style checker
- * @param {function} cb callback function
+ * @param {Function} cb callback function
  */
 function style(cb) {
-  gulp.src(['src/*.ts', '!node_modules/**', '!dist/**'])
+  gulp.src([
+    'src/*.ts',
+    'src/*.tsx',
+    '!node_modules/**',
+    '!dist/**'
+  ])
       .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failAfterError());
@@ -16,10 +21,10 @@ function style(cb) {
 
 /**
  * Clean up build artefacts
- * @param {function} cb callback function
+ * @param {Function} cb callback function
  */
 function clean(cb) {
-  del(['dist', 'docs', '.cache', '.parcel-cache']);
+  del(['built', 'docs']);
   cb();
 }
 
