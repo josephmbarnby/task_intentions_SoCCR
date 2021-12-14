@@ -35,7 +35,9 @@ export function OptionPoints(props: {
         justify='center'
         alignContent='center'
       >
-        <Heading level={2} fill>Points for you</Heading>
+        <Heading level={2} fill size='auto'>
+          Points for you
+        </Heading>
       </Box>
 
       <Box
@@ -43,7 +45,9 @@ export function OptionPoints(props: {
         justify='center'
         alignContent='center'
       >
-        <Heading level={2} fill>Points for your partner</Heading>
+        <Heading level={2} fill size='auto'>
+          Points for your partner
+        </Heading>
       </Box>
 
       {/* Participant points */}
@@ -54,7 +58,7 @@ export function OptionPoints(props: {
         direction='row'
         gap='small'
       >
-        <Heading>+{props.pointsParticipant}</Heading>
+        <Heading size='auto'>+{props.pointsParticipant}</Heading>
         <Money
           size='large'
           color='pointsIconBackground'
@@ -69,7 +73,7 @@ export function OptionPoints(props: {
         direction='row'
         gap='small'
       >
-        <Heading>+{props.pointsParter}</Heading>
+        <Heading size='auto'>+{props.pointsParter}</Heading>
         <Money
           size='large'
           color='pointsIconBackground'

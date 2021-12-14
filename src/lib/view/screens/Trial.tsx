@@ -236,7 +236,7 @@ export function Trial(props: TrialProps): ReactElement {
   return (
     <ThemeContext.Extend value={Theme}>
       <Box justify='center' align='center'>
-        <Heading textAlign='center' fill>
+        <Heading textAlign='center' fill size='auto' margin='small'>
           {trialHeader}
         </Heading>
         <Grid
