@@ -1,7 +1,7 @@
 {
   "name": "intentions-game",
-  "version": "1.0.0",
-  "description": "Intentions game",
+  "version": "0.1.0",
+  "description": "Intentions Game",
   "private": true,
   "scripts": {
     "dev": "webpack serve",
