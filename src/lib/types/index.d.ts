@@ -40,6 +40,11 @@ declare type InferenceProps = {
   selectionHandler: (firstValue: number, secondValue: number) => void;
 }
 
+declare type AgencyProps = {
+  display: DisplayType;
+  selectionHandler: (firstValue: number) => void;
+}
+
 declare type RangeSliderProps = {
   min: number;
   max: number;
@@ -85,7 +90,7 @@ declare type Trial = {
 declare type DisplayType =
     'playerChoice' | 'playerChoice2' | 'mid' | 'mid2' |
     'playerGuess' | 'matching' | 'matched' | 'selection' |
-    'inference';
+    'inference' | 'agency';
 
 // The three individual types
 declare type IndividualType = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';

@@ -11,6 +11,9 @@ import {RangeSlider} from '../components/RangeSlider';
 // Theme
 import {Theme} from '../Theme';
 
+// Logging library
+import consola from 'consola';
+
 // Constants
 const SLIDER_DEFAULT = 50;
 
@@ -19,15 +22,11 @@ const SLIDER_DEFAULT = 50;
  * @param {InferenceProps} props component props
  * @return {ReactElement}
  */
-export function Inference(props: InferenceProps): ReactElement {
+export function Agency(props: AgencyProps): ReactElement {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [firstMoved, setFirstMoved] = useState(false);
   const [firstValue, setFirstValue] = useState(SLIDER_DEFAULT);
-
-  // Second slider
-  const [secondMoved, setSecondMoved] = useState(false);
-  const [secondValue, setSecondValue] = useState(SLIDER_DEFAULT);
 
   return (
     <ThemeContext.Extend value={Theme}>
@@ -37,63 +36,43 @@ export function Inference(props: InferenceProps): ReactElement {
         gap='small'
         animation={['fadeIn']}
       >
-        <Heading level={1} size='auto'>
-          Review
+        <Heading level={1}>
+          ?
         </Heading>
         {/* First question */}
         <Box width='xlarge'>
           <Text size={'xlarge'}>
             {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are ' +
-            'by their desire to earn points in this task overall.'}
+            'to which you believe you were playing against a computer ' +
+            'or another human.'}
           </Text>
         </Box>
         <RangeSlider
           min={0}
           max={100}
           initial={firstValue}
-          leftLabel='Not at all'
-          rightLabel='Totally'
+          leftLabel='Computer'
+          rightLabel='Human'
           onChange={() => {
             setFirstMoved(true);
           }}
           setValue={setFirstValue}
         />
-
-        {/* Second question */}
-        <Box width='xlarge' margin={{top: 'auto'}}>
-          <Text size={'xlarge'}>
-            {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are ' +
-            'by their desire to reduce your points in this task overall.'}
-          </Text>
-        </Box>
-        <RangeSlider
-          min={0}
-          max={100}
-          initial={secondValue}
-          leftLabel='Not at all'
-          rightLabel='Totally'
-          onChange={() => {
-            setSecondMoved(true);
-          }}
-          setValue={setSecondValue}
-        />
       </Box>
       <Button
         primary
-        margin={{top: 'auto'}}
+        margin={{top: 'large'}}
         color='button'
         label='Continue'
         disabled={
-          // Disabled until both sliders have been interacted with
-          firstMoved === false || secondMoved === false
+          // Disabled until slider has been interacted with
+          firstMoved === false
         }
         size='large'
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          props.selectionHandler(firstValue, secondValue);
+          props.selectionHandler(firstValue);
         }}
       />
     </ThemeContext.Extend>

@@ -14,9 +14,6 @@ import {PlayerAvatar} from '../components/PlayerAvatar';
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
 
-// Logging library
-import consola from 'consola';
-
 // Configuration
 import {Configuration} from '../../../Configuration';
 
@@ -134,10 +131,6 @@ export function Trial(props: TrialProps): ReactElement {
       // Simple choice of the player
       case 'playerChoice':
       case 'playerChoice2': {
-        // First stage of trials: participant selecting the option
-        // they want for points
-        consola.info(`Selection for option '${props.display}'`);
-
         // Timeout to change the opacity of the options
         window.setTimeout(() => {
           // Hide the unselected option
@@ -169,8 +162,6 @@ export function Trial(props: TrialProps): ReactElement {
 
       // Player guessing partner choices, show feedback
       case 'playerGuess': {
-        // Second stage of trials: participant selecting the option
-        // they think their opponent will select
         if (correctSelection === true) {
           headerStateFunction('You chose correctly!');
         } else {
@@ -235,7 +226,7 @@ export function Trial(props: TrialProps): ReactElement {
 
   return (
     <ThemeContext.Extend value={Theme}>
-      <Box justify='center' align='center'>
+      <Box justify='center' align='center' overflow='hidden'>
         <Heading textAlign='center' fill size='auto' margin='small'>
           {trialHeader}
         </Heading>

@@ -87,6 +87,7 @@ jsPsych.plugins['intentions-game'] = (() => {
       selectedOption: -1,
       questionOne: -1,
       questionTwo: -1,
+      agencyResponse: -1,
       rt: 0,
     };
 
@@ -95,7 +96,8 @@ jsPsych.plugins['intentions-game'] = (() => {
     // Generate and configure props based on the stage
     let screenProps:
         MatchedProps | MatchingProps |
-        TrialProps | SelectAvatarProps | InferenceProps;
+        TrialProps | SelectAvatarProps |
+        InferenceProps | AgencyProps;
 
     // Timeout information
     let timeoutDuration = 0;
@@ -160,6 +162,15 @@ jsPsych.plugins['intentions-game'] = (() => {
         screenProps = {
           display: trial.display,
           selectionHandler: inferenceSelectionHandler,
+        };
+        break;
+
+      // Agency screen
+      case 'agency':
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          selectionHandler: agencySelectionHandler,
         };
         break;
 
@@ -247,6 +258,25 @@ jsPsych.plugins['intentions-game'] = (() => {
       // Store the responses
       trialData.questionOne = responseOne;
       trialData.questionTwo = responseTwo;
+
+      // End trial
+      finishTrial();
+    }
+
+    /**
+     * Handler called after questions completed
+     * @param {number} agencyResponse value of the agency slider
+     */
+    function agencySelectionHandler(
+        agencyResponse: number,
+    ): void {
+      // Record the total reaction time
+      const _endTime = performance.now();
+      const _duration = _endTime - startTime;
+      trialData.rt = _duration;
+
+      // Store the responses
+      trialData.agencyResponse = agencyResponse;
 
       // End trial
       finishTrial();

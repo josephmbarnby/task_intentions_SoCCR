@@ -8,6 +8,7 @@ import {Grommet} from 'grommet';
 import '../../css/styles.css';
 
 // Custom Screens
+import {Agency} from './screens/Agency';
 import {Trial} from './screens/Trial';
 import {SelectAvatar} from './screens/SelectAvatar';
 import {Matching} from './screens/Matching';
@@ -52,6 +53,17 @@ export function Switcher(props: SwitcherProps): ReactElement {
             display={props.display}
             selectionHandler={
               (props.screenProps as InferenceProps).selectionHandler
+            }
+          />;
+      break;
+
+    // Agency test
+    case 'agency':
+      screen =
+          <Agency
+            display={props.display}
+            selectionHandler={
+              (props.screenProps as AgencyProps).selectionHandler
             }
           />;
       break;
