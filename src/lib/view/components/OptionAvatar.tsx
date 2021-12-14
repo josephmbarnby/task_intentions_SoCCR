@@ -1,5 +1,5 @@
 // React imports
-import React, {ReactElement, useRef} from 'react';
+import React, {ReactElement} from 'react';
 
 // Components
 import Avatar from 'boring-avatars';
@@ -15,17 +15,15 @@ import {AVATAR_VARIANT, COLORS} from '../../Constants';
  * @param {any} props component props
  * @return {ReactElement}
  */
-export function IntentionsAvatar(props: {
+export function OptionAvatar(props: {
   size: number,
   name: string,
   state: string,
   setState: (avatar: string) => void,
 }): ReactElement {
-  const ref = useRef(null);
   return (
     <Box
       margin='medium'
-      ref={ref}
       round={{size: '50%'}}
       className={
         props.name === props.state ? 'selectable selected' : 'selectable'

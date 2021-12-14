@@ -8,17 +8,13 @@ import {Grommet} from 'grommet';
 import '../../css/styles.css';
 
 // Custom Screens
+import {Agency} from './screens/Agency';
+import {Classification} from './screens/Classification';
 import {Trial} from './screens/Trial';
 import {SelectAvatar} from './screens/SelectAvatar';
 import {Matching} from './screens/Matching';
 import {Matched} from './screens/Matched';
-
-// Custom types
-import {
-  SelectAvatarProps,
-  SwitcherProps,
-  TrialProps,
-} from '../types/typing';
+import {Inference} from './screens/Inference';
 
 // Other imports
 import consola from 'consola';
@@ -37,26 +33,58 @@ export function Switcher(props: SwitcherProps): ReactElement {
     // Trial stages
     case 'playerChoice':
     case 'playerGuess':
+    case 'playerChoice2': {
+      const displayProps = props.screenProps as TrialProps;
       screen =
         <Trial
-          display={props.display}
-          avatar={(props.screenProps as TrialProps).avatar}
-          participantPoints={
-            (props.screenProps as TrialProps).participantPoints
-          }
-          partnerPoints={
-            (props.screenProps as TrialProps).partnerPoints
-          }
-          options={(props.screenProps as TrialProps).options}
-          answer={(props.screenProps as TrialProps).answer}
-          endTrial={(props.screenProps as TrialProps).endTrial}
+          display={displayProps.display}
+          participantPoints={displayProps.participantPoints}
+          partnerPoints={displayProps.partnerPoints}
+          options={displayProps.options}
+          answer={displayProps.answer}
+          selectionHandler={displayProps.selectionHandler}
         />;
+      break;
+    }
+
+    // Inference trials
+    case 'inference':
+      screen =
+          <Inference
+            display={props.display}
+            selectionHandler={
+              (props.screenProps as InferenceProps).selectionHandler
+            }
+          />;
+      break;
+
+    // Agency test
+    case 'agency':
+      screen =
+          <Agency
+            display={props.display}
+            selectionHandler={
+              (props.screenProps as AgencyProps).selectionHandler
+            }
+          />;
+      break;
+
+    // Classification question
+    case 'classification':
+      screen =
+          <Classification
+            display={props.display}
+            selectionHandler={
+              (props.screenProps as ClassificationProps).selectionHandler
+            }
+          />;
       break;
 
     // Selection screen
     case 'selection':
       screen =
         <SelectAvatar
+          display={props.display}
           selectionHandler={
             (props.screenProps as SelectAvatarProps).selectionHandler
           }

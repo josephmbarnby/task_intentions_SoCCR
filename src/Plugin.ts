@@ -8,15 +8,8 @@ import consola from 'consola';
 import {Configuration} from './Configuration';
 import {display} from './lib/view/Functions';
 
-// Custom types
-import {
-  DisplayType,
-  MatchedProps,
-  MatchingProps,
-  SelectAvatarProps,
-  Trial,
-  TrialProps,
-} from './lib/types/typing';
+// API modules
+import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 jsPsych.plugins['intentions-game'] = (() => {
   const plugin = {
@@ -77,50 +70,46 @@ jsPsych.plugins['intentions-game'] = (() => {
         default: '',
         description: 'The correct answer to select',
       },
-      isLast: {
+      clearScreen: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
-        pretty_name: 'Last trial of block',
+        pretty_name: 'Clear after trial',
         default: false,
-        description: 'Mark the last trial of a trial block',
+        description: 'Clear the screen after this trial',
       },
     },
   };
 
-  plugin.trial = function(displayElement: HTMLElement, trial: Trial) {
-    // Record the starting time
-    const _startTime = performance.now();
-
+  plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
     // Setup data storage
     const trialData = {
-      playerPoints: 0,
-      partnerPoints: 0,
-      selectedOption: -1,
-      rt: 0,
-      avatar: -1,
+      display: trial.display,
+      playerPoints: null,
+      partnerPoints: null,
+      selectedOption: null,
+      inferenceResponseOne: null,
+      inferenceResponseTwo: null,
+      agencyResponse: null,
+      classification: null,
+      trialDuration: null,
     };
 
-    consola.info(`Running trial stage '${trial.display}'`);
-
-    // Load the avatar that was selected at the start of the game
-    const previousData = jsPsych.data.get()
-        .filter({trial_type: 'intentions-game'})
-        .values()[0];
-    if (previousData && previousData.avatar) {
-      trialData.avatar = previousData.avatar;
-    }
+    consola.debug(`Running trial stage '${trial.display}'`);
 
     // Generate and configure props based on the stage
     let screenProps:
-        MatchedProps | MatchingProps | TrialProps | SelectAvatarProps;
+        MatchedProps | MatchingProps |
+        TrialProps | SelectAvatarProps |
+        InferenceProps | AgencyProps;
 
     // Timeout information
     let timeoutDuration = 0;
     let timeoutCallback: () => void;
 
     switch (trial.display as DisplayType) {
-      // Phase one and two trials
+      // Phase 1, 2, and 3 trials
       case 'playerChoice':
-      case 'playerGuess': {
+      case 'playerGuess':
+      case 'playerChoice2': {
         // Sum the points from the previous trials
         const participantPoints =
           jsPsych.data.get().select('playerPoints').sum();
@@ -130,7 +119,6 @@ jsPsych.plugins['intentions-game'] = (() => {
         // Setup the props
         screenProps = {
           display: trial.display,
-          avatar: trialData.avatar,
           participantPoints: participantPoints,
           partnerPoints: partnerPoints,
           options: {
@@ -144,7 +132,7 @@ jsPsych.plugins['intentions-game'] = (() => {
             },
           },
           answer: trial.answer,
-          endTrial: endTrial,
+          selectionHandler: optionHandler,
         };
         break;
       }
@@ -157,7 +145,15 @@ jsPsych.plugins['intentions-game'] = (() => {
           display: trial.display,
         };
 
-        timeoutDuration = 2000;
+        if (trial.display === 'matched') {
+          // Short timeout for 'matched' screen
+          timeoutDuration = 2000;
+        } else {
+          // Random timeout for 'matching' process
+          timeoutDuration =
+              2000 + (1 + Math.random() * 5) * 1000;
+        }
+
         timeoutCallback = finishTrial;
         break;
 
@@ -170,6 +166,33 @@ jsPsych.plugins['intentions-game'] = (() => {
         };
         break;
 
+      // Inference screen
+      case 'inference':
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          selectionHandler: inferenceSelectionHandler,
+        };
+        break;
+
+      // Agency screen
+      case 'agency':
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          selectionHandler: agencySelectionHandler,
+        };
+        break;
+
+      // Classification screen
+      case 'classification':
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          selectionHandler: classificationSelectionHandler,
+        };
+        break;
+
       // Default error state
       default:
         // Log an error message and finish the trial
@@ -177,6 +200,9 @@ jsPsych.plugins['intentions-game'] = (() => {
         finishTrial();
         break;
     }
+
+    // Record the starting time
+    const startTime = performance.now();
 
     // Display the screen with the generated props
     display(
@@ -189,21 +215,21 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     /**
      * Handle Button-press events in a particular trial
-     * @param {'Option 1' | 'Option 2'} _option selected option
+     * @param {'Option 1' | 'Option 2'} option selected option
      */
-    function endTrial(_option: 'Option 1' | 'Option 2') {
-      const _endTime = performance.now();
-      const _duration = _endTime - _startTime;
-      trialData.rt = _duration;
+    function optionHandler(option: 'Option 1' | 'Option 2') {
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
 
-      if (_option === 'Option 1') {
+      if (option === 'Option 1') {
         // Participant chose option 1
         trialData.selectedOption = 1;
 
         // Update the score with values of option 1
         trialData.playerPoints = trial.optionOneParticipant;
         trialData.partnerPoints = trial.optionOnePartner;
-      } else if (_option === 'Option 2') {
+      } else if (option === 'Option 2') {
         // Participant chose option 2
         trialData.selectedOption = 2;
 
@@ -222,19 +248,86 @@ jsPsych.plugins['intentions-game'] = (() => {
      */
     function avatarSelectionHandler(_selection: string): void {
       // Obtain the selected avatar
-      trialData.avatar = Configuration.avatars.indexOf(_selection);
+      const selectedAvatar = Configuration.avatars.indexOf(_selection);
+
+      // Update the global Experiment state
+      (window['Experiment'] as Experiment).setGlobalStateValue(
+          'participantAvatar',
+          selectedAvatar,
+      );
 
       // End trial
       finishTrial();
     }
 
     /**
-     * Function to continue without participant input
-     * @param {boolean} reset toggle whether to reset the screen or not
+     * Handler called after questions completed
+     * @param {number} responseOne value of the first slider
+     * @param {number} responseTwo value of the second slider
+     */
+    function inferenceSelectionHandler(
+        responseOne: number,
+        responseTwo: number
+    ): void {
+      // Record the total reaction time
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
+
+      // Store the responses
+      trialData.inferenceResponseOne = responseOne;
+      trialData.inferenceResponseTwo = responseTwo;
+
+      // End trial
+      finishTrial();
+    }
+
+    /**
+     * Handler called after agency question completed
+     * @param {number} agencyResponse value of the agency slider
+     */
+    function agencySelectionHandler(
+        agencyResponse: number,
+    ): void {
+      // Record the total reaction time
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
+
+      // Store the responses
+      trialData.agencyResponse = agencyResponse;
+
+      // End trial
+      finishTrial();
+    }
+
+    /**
+     * Handler called after classification question completed
+     * @param {string} classification the participant's classification
+     * of their partner
+     */
+    function classificationSelectionHandler(
+        classification: string,
+    ): void {
+      // Record the total reaction time
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
+
+      // Store the responses
+      trialData.classification = classification;
+
+      // End trial
+      finishTrial();
+    }
+
+    /**
+     * Function to finish the trial and unmount React components
+     * cleanly if required
      */
     function finishTrial(): void {
       // If the next trial isn't React-based, clean up React
-      if (trial.isLast === true) {
+      if (trial.clearScreen === true) {
         ReactDOM.unmountComponentAtNode(displayElement);
       }
 

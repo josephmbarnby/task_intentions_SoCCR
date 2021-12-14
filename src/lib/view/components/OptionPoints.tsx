@@ -10,7 +10,7 @@ import {Money} from 'grommet-icons';
  * @param {any} props collection of props
  * @return {ReactElement}
  */
-export function Option(props: {
+export function OptionPoints(props: {
   optionKey: string,
   optionName: string,
   pointsParticipant: number,
@@ -18,9 +18,8 @@ export function Option(props: {
 }): ReactElement {
   return (
     <Grid
-      rows={['flex', 'flex']}
-      columns={['flex', 'flex']}
-      gap='small'
+      rows={['1/2', '1/2']}
+      columns={['1/2', '1/2']}
       areas={[
         {name: 'participantHeader', start: [0, 0], end: [0, 0]},
         {name: 'partnerHeader', start: [1, 0], end: [1, 0]},
@@ -28,37 +27,38 @@ export function Option(props: {
         {name: 'partnerPoints', start: [1, 1], end: [1, 1]},
       ]}
       id={props.optionKey}
-      fill='vertical'
+      responsive
     >
       {/* Choice header */}
       <Box
         gridArea='participantHeader'
         justify='center'
         alignContent='center'
-        fill='horizontal'
       >
-        <Heading level={2} fill>Points for you</Heading>
+        <Heading level={2} fill size='auto'>
+          Points for you
+        </Heading>
       </Box>
 
       <Box
         gridArea='partnerHeader'
         justify='center'
         alignContent='center'
-        fill='horizontal'
       >
-        <Heading level={2} fill>Points for your partner</Heading>
+        <Heading level={2} fill size='auto'>
+          Points for your partner
+        </Heading>
       </Box>
 
       {/* Participant points */}
       <Box
         gridArea='participantPoints'
         justify='center'
-        alignSelf='center'
         align='center'
         direction='row'
         gap='small'
       >
-        <Heading>+{props.pointsParticipant}</Heading>
+        <Heading size='auto'>+{props.pointsParticipant}</Heading>
         <Money
           size='large'
           color='pointsIconBackground'
@@ -69,12 +69,11 @@ export function Option(props: {
       <Box
         gridArea='partnerPoints'
         justify='center'
-        alignSelf='center'
         align='center'
         direction='row'
         gap='small'
       >
-        <Heading>+{props.pointsParter}</Heading>
+        <Heading size='auto'>+{props.pointsParter}</Heading>
         <Money
           size='large'
           color='pointsIconBackground'

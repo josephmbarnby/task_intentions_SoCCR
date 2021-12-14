@@ -6,6 +6,7 @@ import {
   Box, Button,
   Heading,
   ThemeContext,
+  Text,
 } from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
@@ -13,7 +14,7 @@ import {LinkNext} from 'grommet-icons';
 import {Configuration} from '../../../Configuration';
 
 // Components
-import {IntentionsAvatar} from '../components/IntentionsAvatar';
+import {OptionAvatar} from '../components/OptionAvatar';
 import {Theme} from '../Theme';
 
 /**
@@ -21,9 +22,7 @@ import {Theme} from '../Theme';
  * @param {any} props collection of props
  * @return {ReactElement}
  */
-export function SelectAvatar(props: {
-  selectionHandler: (value: string) => void;
-}): ReactElement {
+export function SelectAvatar(props: SelectAvatarProps): ReactElement {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
 
@@ -32,7 +31,7 @@ export function SelectAvatar(props: {
 
   for (const avatarName of avatars) {
     avatarComponents.push(
-        <IntentionsAvatar
+        <OptionAvatar
           key={avatarName}
           size={128}
           name={avatarName}
@@ -44,9 +43,16 @@ export function SelectAvatar(props: {
 
   return (
     <ThemeContext.Extend value={Theme}>
-      <Heading fill>
+      <Heading
+        margin='medium'
+        fill
+      >
         Choose your Avatar!
       </Heading>
+
+      <Text size='xlarge'>
+        You will keep your avatar for the entire game.
+      </Text>
 
       {/* Avatar components */}
       <Box
@@ -54,7 +60,8 @@ export function SelectAvatar(props: {
         direction='row-responsive'
         align='center'
         justify='center'
-        height='medium'
+        height='flex'
+        margin='medium'
       >
         {avatarComponents}
       </Box>
@@ -66,6 +73,7 @@ export function SelectAvatar(props: {
         label='Continue'
         disabled={selectedAvatar === 'none'}
         size='large'
+        margin='medium'
         icon={<LinkNext />}
         reverse
         onClick={() => {

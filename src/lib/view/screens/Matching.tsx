@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Heading, Spinner, ThemeContext, WorldMap} from 'grommet';
+import {Box, Heading, Layer, Spinner, ThemeContext, WorldMap} from 'grommet';
 
 // Styling
 import {Theme} from '../Theme';
@@ -14,23 +14,29 @@ import {Theme} from '../Theme';
 export function Matching(): ReactElement {
   return (
     <ThemeContext.Extend value={Theme}>
-      <Box
-        justify='center'
-        align='center'
-        gap='small'
-        animation={['fadeIn']}
-        fill
-      >
-        <Heading>Finding you a partner...</Heading>
-        <Spinner
-          size='large'
-          color='avatarBackground'
-        />
-        <WorldMap
-          color='avatarBackground'
-          fill='vertical'
-        />
-      </Box>
+      <WorldMap
+        color='map'
+        fill='horizontal'
+      />
+      <Layer plain full>
+        <Box
+          justify='center'
+          align='center'
+          gap='small'
+          fill
+        >
+          <Heading
+            level='1'
+            fill
+          >
+            Finding you a new partner...
+          </Heading>
+          <Spinner
+            size='large'
+            color='avatarBackground'
+          />
+        </Box>
+      </Layer>
     </ThemeContext.Extend>
   );
 }

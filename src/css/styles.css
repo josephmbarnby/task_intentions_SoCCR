@@ -20,5 +20,5 @@
 }
 
 .selectable.selected {
-  transform: scale(1.4) translateY(-40%);
+  transform: scale(1.2) translateY(-20%);
 }

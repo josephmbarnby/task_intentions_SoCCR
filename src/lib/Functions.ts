@@ -1,29 +1,16 @@
-/**
- * Scaling function to automatically resize and scale content
- */
-export function scale(): void {
-  const wrapper = document.querySelector(
-      '.jspsych-content-wrapper'
-  ) as HTMLElement;
-  const content = document.querySelector('.jspsych-content') as HTMLElement;
-
-  if (content) {
-    // Apply the CSS transform using the scale() function
-    content.style.width = `${Math.max(
-        content.clientWidth,
-        wrapper.clientWidth
-    )}px`;
-  }
-}
+// React
+import {ReactElement, JSXElementConstructor} from 'react';
+import ReactDOMServer from 'react-dom/server';
 
 /**
- * Clear the HTML contents of an element without
- * editing innerHTML.
- * @param {HTMLElement} _target element to clear contents
+ * Utility function to turn React elements into HTML markup,
+ * useful when HTML is required
+ * @param {ReactElement} element React element to render
+ * @return {string}
  */
-export function clear(_target: HTMLElement): void {
-  // Clear existing HTML nodes
-  while (_target.firstChild) {
-    _target.removeChild(_target.lastChild);
-  }
+export function markup(
+    element: ReactElement<any, string | JSXElementConstructor<any>>
+): string {
+  const generated = ReactDOMServer.renderToStaticMarkup(element);
+  return generated;
 }

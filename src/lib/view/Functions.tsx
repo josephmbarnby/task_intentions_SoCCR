@@ -5,16 +5,6 @@ import {render} from 'react-dom';
 // Screen component
 import {Switcher} from './Switcher';
 
-// Custom types
-import {
-  DisplayType,
-  MatchedProps,
-  MatchingProps,
-  SelectAvatarProps,
-  SwitcherProps,
-  TrialProps,
-} from '../types/typing';
-
 // Other imports
 import consola from 'consola';
 
@@ -31,7 +21,8 @@ export function display(
     target: HTMLElement,
     props:
         TrialProps | SwitcherProps |
-        SelectAvatarProps | MatchedProps | MatchingProps,
+        SelectAvatarProps | MatchedProps | MatchingProps |
+        InferenceProps,
     timeout=0,
     callback=() => {
       consola.info('No callback defined for timeout');
