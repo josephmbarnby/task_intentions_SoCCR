@@ -36,9 +36,6 @@ export function Agency(props: AgencyProps): ReactElement {
         gap='small'
         animation={['fadeIn']}
       >
-        <Heading level={1}>
-          ?
-        </Heading>
         {/* First question */}
         <Box width='xlarge'>
           <Text size={'xlarge'}>

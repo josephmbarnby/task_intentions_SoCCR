@@ -9,6 +9,7 @@ import '../../css/styles.css';
 
 // Custom Screens
 import {Agency} from './screens/Agency';
+import {Classification} from './screens/Classification';
 import {Trial} from './screens/Trial';
 import {SelectAvatar} from './screens/SelectAvatar';
 import {Matching} from './screens/Matching';
@@ -64,6 +65,17 @@ export function Switcher(props: SwitcherProps): ReactElement {
             display={props.display}
             selectionHandler={
               (props.screenProps as AgencyProps).selectionHandler
+            }
+          />;
+      break;
+
+    // Classification question
+    case 'classification':
+      screen =
+          <Classification
+            display={props.display}
+            selectionHandler={
+              (props.screenProps as ClassificationProps).selectionHandler
             }
           />;
       break;

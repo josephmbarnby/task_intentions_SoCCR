@@ -23,15 +23,13 @@ export function Matching(): ReactElement {
           justify='center'
           align='center'
           gap='small'
-          // animation={['fadeIn']}
-          responsive
           fill
         >
           <Heading
             level='1'
             fill
           >
-            Finding you a partner...
+            Finding you a new partner...
           </Heading>
           <Spinner
             size='large'

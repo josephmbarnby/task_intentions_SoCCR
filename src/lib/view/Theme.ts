@@ -11,6 +11,11 @@ export const Theme = {
       optionBackground: '#2A6F97',
       button: '#01497C',
       pointsIconBackground: '#FFDB33',
+      partners: {
+        prosocial: '#E843D2',
+        individualistic: '#E8A643',
+        competitive: '#43C2E8',
+      },
       map: '#E7F2F7',
       border: {
         dark: '#444444',
@@ -29,6 +34,11 @@ export const Theme = {
     },
     thumb: {
       color: '#06D6A0',
+    },
+  },
+  tip: {
+    drop: {
+      margin: 'small',
     },
   },
 };

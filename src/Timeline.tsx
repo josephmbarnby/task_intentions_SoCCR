@@ -46,10 +46,17 @@ const instructionsPracticeGames = [
         <h1>Intentions Game</h1>
         <h2>Instructions</h2>
         <p>
-          The instructions for the task will go here.
-          <hr />
-          This can be multi-page, or just one page.
+          In this game, you will be playing with different partner.
         </p>
+        <p>
+          In each trial, you will see two options for splitting some
+           points between you and your current partner. You will be able to see
+           how many points you and your partner have.
+        </p>
+        <p>
+          You can choose an option by clicking on it.
+        </p>
+        <h3>Good luck!</h3>
       </>
   ),
 ];
@@ -164,10 +171,28 @@ for (let i = 0; i < dataCollection.length; i++) {
         markup(
             <>
               <h1>Intentions Game</h1>
-              <h2>Mid-way 1</h2>
+              <h2>Instructions</h2>
               <p>
-                Mid-way 1
+                You have played all your trials with your first partner!
               </p>
+              <p>
+                Now, you will be matched with a new partner. For the next
+                 set of trials, instead of you choosing how you will split
+                 the points, your partner will be choosing how to split
+                 the points!
+              </p>
+              <p>
+                You need to select which option you <i>think </i>
+                 your partner would have chosen.
+              </p>
+              <p>
+                You will see if you chose correctly or not.
+              </p>
+              <p>
+                After these trials, you will have an opportunity to evaluate
+                 how you thought your partner was behaving.
+              </p>
+              <h3>Good luck!</h3>
             </>
         ),
       ];
@@ -211,10 +236,19 @@ for (let i = 0; i < dataCollection.length; i++) {
         markup(
             <>
               <h1>Intentions Game</h1>
-              <h2>Mid-way 2</h2>
+              <h2>Instructions</h2>
               <p>
-                Mid-way 2
+                You have played all your trials with your second partner!
               </p>
+              <p>
+                Now, you will be matched with a new partner. For the next
+                 set of trials, you will get to choose how you split the points.
+              </p>
+              <p>
+                After these trials, you will have an opportunity to evaluate
+                 how you thought your partner was behaving.
+              </p>
+              <h3>Good luck!</h3>
             </>
         ),
       ];
@@ -263,17 +297,19 @@ for (let i = 0; i < dataCollection.length; i++) {
 timeline.push({
   type: 'intentions-game',
   display: 'agency',
-  clearScreen: true,
 });
 
 // Inference screen
 timeline.push({
   type: 'intentions-game',
   display: 'inference',
-  clearScreen: true,
 });
 
-// TODO: Place an end screen here?
+timeline.push({
+  type: 'intentions-game',
+  display: 'classification',
+  clearScreen: true,
+});
 
 // Configure and start the experiment
 experiment.start({

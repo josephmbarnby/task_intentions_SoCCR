@@ -227,13 +227,14 @@ export function Trial(props: TrialProps): ReactElement {
   return (
     <ThemeContext.Extend value={Theme}>
       <Box justify='center' align='center' overflow='hidden'>
-        <Heading textAlign='center' fill size='auto' margin='small'>
+        <Heading textAlign='center' fill size='auto' margin='xsmall'>
           {trialHeader}
         </Heading>
         <Grid
           rows={['flex', 'flex']}
           columns={['flex', '1/2', 'flex']}
           gap='small'
+          margin='xsmall'
           areas={[
             {name: 'playerArea', start: [0, 0], end: [0, 1]},
             {name: 'choiceOneArea', start: [1, 0], end: [1, 0]},

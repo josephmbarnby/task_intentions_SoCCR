@@ -37,9 +37,6 @@ export function Inference(props: InferenceProps): ReactElement {
         gap='small'
         animation={['fadeIn']}
       >
-        <Heading level={1} size='auto'>
-          Review
-        </Heading>
         {/* First question */}
         <Box width='xlarge'>
           <Text size={'xlarge'}>

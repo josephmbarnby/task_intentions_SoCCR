@@ -6,6 +6,7 @@ import {
   Box, Button,
   Heading,
   ThemeContext,
+  Text,
 } from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
@@ -48,6 +49,10 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
       >
         Choose your Avatar!
       </Heading>
+
+      <Text size='xlarge'>
+        You will keep your avatar for the entire game.
+      </Text>
 
       {/* Avatar components */}
       <Box

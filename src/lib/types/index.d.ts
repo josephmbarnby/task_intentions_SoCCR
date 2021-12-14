@@ -1,6 +1,15 @@
+// The collection of display types
+declare type DisplayType =
+    'playerChoice' | 'playerChoice2' | 'mid' | 'mid2' |
+    'playerGuess' | 'matching' | 'matched' | 'selection' |
+    'inference' | 'agency' | 'classification';
+
 declare type SwitcherProps = {
   display: DisplayType;
-  screenProps: MatchedProps | MatchingProps | TrialProps | SelectAvatarProps;
+  screenProps:
+    MatchedProps | MatchingProps | TrialProps |
+    SelectAvatarProps | InferenceProps | AgencyProps |
+    ClassificationProps;
 }
 
 // Props for each screen type
@@ -45,6 +54,11 @@ declare type AgencyProps = {
   selectionHandler: (firstValue: number) => void;
 }
 
+declare type ClassificationProps = {
+  display: DisplayType;
+  selectionHandler: (classification: string) => void;
+}
+
 declare type RangeSliderProps = {
   min: number;
   max: number;
@@ -85,12 +99,6 @@ declare type Trial = {
   answer: string;
   clearScreen: boolean;
 }
-
-// The three display types (similar to 'stages')
-declare type DisplayType =
-    'playerChoice' | 'playerChoice2' | 'mid' | 'mid2' |
-    'playerGuess' | 'matching' | 'matched' | 'selection' |
-    'inference' | 'agency';
 
 // The three individual types
 declare type IndividualType = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';

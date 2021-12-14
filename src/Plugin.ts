@@ -82,13 +82,15 @@ jsPsych.plugins['intentions-game'] = (() => {
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
     // Setup data storage
     const trialData = {
-      playerPoints: 0,
-      partnerPoints: 0,
-      selectedOption: -1,
-      questionOne: -1,
-      questionTwo: -1,
-      agencyResponse: -1,
-      rt: 0,
+      display: trial.display,
+      playerPoints: null,
+      partnerPoints: null,
+      selectedOption: null,
+      inferenceResponseOne: null,
+      inferenceResponseTwo: null,
+      agencyResponse: null,
+      classification: null,
+      trialDuration: null,
     };
 
     consola.debug(`Running trial stage '${trial.display}'`);
@@ -143,7 +145,15 @@ jsPsych.plugins['intentions-game'] = (() => {
           display: trial.display,
         };
 
-        timeoutDuration = 2000;
+        if (trial.display === 'matched') {
+          // Short timeout for 'matched' screen
+          timeoutDuration = 2000;
+        } else {
+          // Random timeout for 'matching' process
+          timeoutDuration =
+              2000 + (1 + Math.random() * 5) * 1000;
+        }
+
         timeoutCallback = finishTrial;
         break;
 
@@ -174,6 +184,15 @@ jsPsych.plugins['intentions-game'] = (() => {
         };
         break;
 
+      // Classification screen
+      case 'classification':
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          selectionHandler: classificationSelectionHandler,
+        };
+        break;
+
       // Default error state
       default:
         // Log an error message and finish the trial
@@ -201,7 +220,7 @@ jsPsych.plugins['intentions-game'] = (() => {
     function optionHandler(option: 'Option 1' | 'Option 2') {
       const endTime = performance.now();
       const duration = endTime - startTime;
-      trialData.rt = duration;
+      trialData.trialDuration = duration;
 
       if (option === 'Option 1') {
         // Participant chose option 1
@@ -251,32 +270,52 @@ jsPsych.plugins['intentions-game'] = (() => {
         responseTwo: number
     ): void {
       // Record the total reaction time
-      const _endTime = performance.now();
-      const _duration = _endTime - startTime;
-      trialData.rt = _duration;
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
 
       // Store the responses
-      trialData.questionOne = responseOne;
-      trialData.questionTwo = responseTwo;
+      trialData.inferenceResponseOne = responseOne;
+      trialData.inferenceResponseTwo = responseTwo;
 
       // End trial
       finishTrial();
     }
 
     /**
-     * Handler called after questions completed
+     * Handler called after agency question completed
      * @param {number} agencyResponse value of the agency slider
      */
     function agencySelectionHandler(
         agencyResponse: number,
     ): void {
       // Record the total reaction time
-      const _endTime = performance.now();
-      const _duration = _endTime - startTime;
-      trialData.rt = _duration;
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
 
       // Store the responses
       trialData.agencyResponse = agencyResponse;
+
+      // End trial
+      finishTrial();
+    }
+
+    /**
+     * Handler called after classification question completed
+     * @param {string} classification the participant's classification
+     * of their partner
+     */
+    function classificationSelectionHandler(
+        classification: string,
+    ): void {
+      // Record the total reaction time
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
+
+      // Store the responses
+      trialData.classification = classification;
 
       // End trial
       finishTrial();

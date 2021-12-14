@@ -1,5 +1,5 @@
 // React imports
-import React, {ReactElement, useRef} from 'react';
+import React, {ReactElement} from 'react';
 
 // Components
 import Avatar from 'boring-avatars';
@@ -21,11 +21,9 @@ export function OptionAvatar(props: {
   state: string,
   setState: (avatar: string) => void,
 }): ReactElement {
-  const ref = useRef(null);
   return (
     <Box
       margin='medium'
-      ref={ref}
       round={{size: '50%'}}
       className={
         props.name === props.state ? 'selectable selected' : 'selectable'
