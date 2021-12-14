@@ -27,7 +27,7 @@ import {Configuration} from '../../../Configuration';
  */
 export function Trial(props: TrialProps): ReactElement {
   // Header state
-  const defaultHeader = props.display === 'playerChoice' ?
+  const defaultHeader = props.display !== 'playerGuess' ?
       'How will you split the points?' :
       'How will your parter split the points?';
   const [
@@ -59,6 +59,54 @@ export function Trial(props: TrialProps): ReactElement {
   function addPoints(participant: number, partner: number): void {
     setParticipantPoints(participantPoints + participant);
     setPartnerPoints(partnerPoints + partner);
+  }
+
+  /**
+   * Update the number of points of the participant and the
+   * partner. The update process depends on the phase.
+   * @param {'Option 1' | 'Option 2'} option selected option
+   */
+  function updatePoints(option: 'Option 1' | 'Option 2'): void {
+    // Points to apply
+    let participantPoints = 0;
+    let partnerPoints = 0;
+    // Check what Phase is running
+    if (props.display !== 'playerGuess') {
+      // 'playerChoice' trials simply update the points as required
+      // Participant points
+      participantPoints =
+          option === 'Option 1' ?
+            props.options.one.participant :
+            props.options.two.participant;
+
+      // Partner points
+      partnerPoints =
+          option === 'Option 1' ?
+            props.options.one.partner :
+            props.options.two.partner;
+    } else {
+      // 'playerGuess' trials update points from the correct choice
+      // Participant points
+      participantPoints =
+          props.answer === 'Option 1' ?
+            props.options.one.participant :
+            props.options.two.participant;
+
+      // Partner points
+      partnerPoints =
+          props.answer === 'Option 1' ?
+            props.options.one.partner :
+            props.options.two.partner;
+    }
+
+    // Apply the points
+    addPoints(
+        participantPoints,
+        partnerPoints,
+    );
+
+    // Call the selection handler
+    selectionHandler(option, setTrialHeader);
   }
 
   /**
@@ -216,11 +264,7 @@ export function Trial(props: TrialProps): ReactElement {
             gridArea='choiceOneArea'
             ref={refs.optionOne}
             onClick={() => {
-              addPoints(
-                  props.options.one.participant,
-                  props.options.one.partner,
-              );
-              selectionHandler('Option 1', setTrialHeader);
+              updatePoints('Option 1');
             }}
             className='grow'
             round
@@ -238,11 +282,7 @@ export function Trial(props: TrialProps): ReactElement {
             gridArea='choiceTwoArea'
             ref={refs.optionTwo}
             onClick={() => {
-              addPoints(
-                  props.options.two.participant,
-                  props.options.two.partner
-              );
-              selectionHandler('Option 2', setTrialHeader);
+              updatePoints('Option 2');
             }}
             className='grow'
             round

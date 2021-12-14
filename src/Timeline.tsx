@@ -244,8 +244,14 @@ for (let i = 0; i < dataCollection.length; i++) {
   }
 }
 
-// TODO: Place the Inference screen here
-// TODO: Place an end screen here
+// Inference screen
+timeline.push({
+  type: 'intentions-game',
+  display: 'inference',
+  clearScreen: true,
+});
+
+// TODO: Place an end screen here?
 
 // Configure and start the experiment
 experiment.start({
