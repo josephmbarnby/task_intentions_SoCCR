@@ -253,8 +253,8 @@ jsPsych.plugins['intentions-game'] = (() => {
     }
 
     /**
-     * Function to continue without participant input
-     * @param {boolean} reset toggle whether to reset the screen or not
+     * Function to finish the trial and unmount React components
+     * cleanly if required
      */
     function finishTrial(): void {
       // If the next trial isn't React-based, clean up React

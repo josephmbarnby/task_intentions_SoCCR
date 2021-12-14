@@ -235,22 +235,20 @@ export function Trial(props: TrialProps): ReactElement {
 
   return (
     <ThemeContext.Extend value={Theme}>
-      <Box justify='center'>
+      <Box justify='center' align='center'>
         <Heading textAlign='center' fill>
           {trialHeader}
         </Heading>
         <Grid
           rows={['flex', 'flex']}
-          columns={['medium', 'large', 'medium']}
+          columns={['flex', '1/2', 'flex']}
           gap='small'
-          justifyContent='center'
           areas={[
             {name: 'playerArea', start: [0, 0], end: [0, 1]},
             {name: 'choiceOneArea', start: [1, 0], end: [1, 0]},
             {name: 'choiceTwoArea', start: [1, 1], end: [1, 1]},
             {name: 'partnerArea', start: [2, 0], end: [2, 1]},
           ]}
-          responsive
         >
           {/* Participant's Avatar */}
           <PlayerAvatar

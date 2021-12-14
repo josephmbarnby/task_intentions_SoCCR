@@ -43,15 +43,13 @@ export function PlayerAvatar(props: {
         margin={{left: 'small', right: 'small'}}
       >
         <Grid
-          rows={['small', 'flex', 'small']}
+          rows={['1/3', '1/3', '1/3']}
           columns={['flex']}
-          gap='xsmall'
           areas={[
             {name: 'playerNameArea', start: [0, 0], end: [0, 0]},
             {name: 'playerAvatarArea', start: [0, 1], end: [0, 1]},
             {name: 'playerPointsArea', start: [0, 2], end: [0, 2]},
           ]}
-          pad='small'
         >
           <Box
             align='center'

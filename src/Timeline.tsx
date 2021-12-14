@@ -55,30 +55,31 @@ const instructionsPracticeGames = [
 ];
 
 // Insert the instructions into the timeline
-timeline.push({
-  type: 'instructions',
-  pages: instructionsPracticeGames,
-  allow_keys: false,
-  show_page_number: true,
-  show_clickable_nav: true,
-});
+// timeline.push({
+//   type: 'instructions',
+//   pages: instructionsPracticeGames,
+//   allow_keys: false,
+//   show_page_number: true,
+//   show_clickable_nav: true,
+// });
 
-// Insert a 'selection' screen into the timeline
-timeline.push({
-  type: 'intentions-game',
-  display: 'selection',
-});
+// // Insert a 'selection' screen into the timeline
+// timeline.push({
+//   type: 'intentions-game',
+//   display: 'selection',
+// });
 
-// Insert a 'match' sequence into the timeline
-timeline.push({
-  type: 'intentions-game',
-  display: 'matching',
-});
+// // Insert a 'match' sequence into the timeline
+// timeline.push({
+//   type: 'intentions-game',
+//   display: 'matching',
+// });
 
-timeline.push({
-  type: 'intentions-game',
-  display: 'matched',
-});
+// timeline.push({
+//   type: 'intentions-game',
+//   display: 'matched',
+//   clearScreen: true,
+// });
 
 // Set and store the data colelction
 let dataCollection: string | any[];
@@ -184,6 +185,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'intentions-game',
         display: 'matched',
+        clearScreen: true,
       });
       break;
     }
@@ -222,6 +224,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'intentions-game',
         display: 'matched',
+        clearScreen: true,
       });
       break;
     }

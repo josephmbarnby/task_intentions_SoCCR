@@ -42,7 +42,10 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
 
   return (
     <ThemeContext.Extend value={Theme}>
-      <Heading fill>
+      <Heading
+        margin='medium'
+        fill
+      >
         Choose your Avatar!
       </Heading>
 
@@ -52,7 +55,8 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
         direction='row-responsive'
         align='center'
         justify='center'
-        height='medium'
+        height='flex'
+        margin='medium'
       >
         {avatarComponents}
       </Box>
@@ -64,6 +68,7 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
         label='Continue'
         disabled={selectedAvatar === 'none'}
         size='large'
+        margin='medium'
         icon={<LinkNext />}
         reverse
         onClick={() => {

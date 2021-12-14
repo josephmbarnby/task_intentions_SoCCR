@@ -18,9 +18,8 @@ export function OptionPoints(props: {
 }): ReactElement {
   return (
     <Grid
-      rows={['flex', 'flex']}
-      columns={['flex', 'flex']}
-      gap='small'
+      rows={['1/2', '1/2']}
+      columns={['1/2', '1/2']}
       areas={[
         {name: 'participantHeader', start: [0, 0], end: [0, 0]},
         {name: 'partnerHeader', start: [1, 0], end: [1, 0]},
@@ -28,14 +27,13 @@ export function OptionPoints(props: {
         {name: 'partnerPoints', start: [1, 1], end: [1, 1]},
       ]}
       id={props.optionKey}
-      fill='vertical'
+      responsive
     >
       {/* Choice header */}
       <Box
         gridArea='participantHeader'
         justify='center'
         alignContent='center'
-        fill='horizontal'
       >
         <Heading level={2} fill>Points for you</Heading>
       </Box>
@@ -44,7 +42,6 @@ export function OptionPoints(props: {
         gridArea='partnerHeader'
         justify='center'
         alignContent='center'
-        fill='horizontal'
       >
         <Heading level={2} fill>Points for your partner</Heading>
       </Box>
@@ -53,7 +50,6 @@ export function OptionPoints(props: {
       <Box
         gridArea='participantPoints'
         justify='center'
-        alignSelf='center'
         align='center'
         direction='row'
         gap='small'
@@ -69,7 +65,6 @@ export function OptionPoints(props: {
       <Box
         gridArea='partnerPoints'
         justify='center'
-        alignSelf='center'
         align='center'
         direction='row'
         gap='small'

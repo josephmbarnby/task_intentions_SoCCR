@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Heading} from 'grommet';
+import {Box, Heading, Layer, ThemeContext, WorldMap} from 'grommet';
 import Avatar from 'boring-avatars';
 
 // Logging library
@@ -16,6 +16,9 @@ import {Configuration} from '../../../Configuration';
 
 // Constants
 import {AVATAR_VARIANT, COLORS} from '../../Constants';
+
+// Styling
+import {Theme} from '../Theme';
 
 /**
  * Generate layout of Matched Screen
@@ -43,20 +46,28 @@ export function Matched(): ReactElement {
   const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
   return (
-    <Box
-      justify='center'
-      align='center'
-      gap='small'
-      animation={['fadeIn']}
-      fill
-    >
-      <Heading>Partner found!</Heading>
-      <Avatar
-        size={240}
-        name={Configuration.partners[partnerAvatar]}
-        variant={AVATAR_VARIANT}
-        colors={COLORS}
+    <ThemeContext.Extend value={Theme}>
+      <WorldMap
+        color='map'
+        fill='horizontal'
       />
-    </Box>
+      <Layer plain full>
+        <Box
+          justify='center'
+          align='center'
+          gap='small'
+          responsive
+          fill
+        >
+          <Heading>Partner found!</Heading>
+          <Avatar
+            size={240}
+            name={Configuration.partners[partnerAvatar]}
+            variant={AVATAR_VARIANT}
+            colors={COLORS}
+          />
+        </Box>
+      </Layer>
+    </ThemeContext.Extend>
   );
 }

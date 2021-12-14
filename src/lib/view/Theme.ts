@@ -11,6 +11,7 @@ export const Theme = {
       optionBackground: '#2A6F97',
       button: '#01497C',
       pointsIconBackground: '#FFDB33',
+      map: '#E7F2F7',
       border: {
         dark: '#444444',
         light: '#CCCCCC',
