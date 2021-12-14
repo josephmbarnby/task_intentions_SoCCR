@@ -139,11 +139,6 @@ export function Trial(props: TrialProps): ReactElement {
               Theme.global.colors.correct :
               Theme.global.colors.incorrect;
 
-          unselectedNode.style.background =
-              correctSelection ?
-              Theme.global.colors.incorrect :
-              Theme.global.colors.correct;
-
           // Disable selections
           optionOneNode.style.pointerEvents = 'none';
           optionTwoNode.style.pointerEvents = 'none';

@@ -24,14 +24,19 @@ import {AVATAR_VARIANT, COLORS} from '../../Constants';
 export function Matched(): ReactElement {
   // Get the current partner avatar
   const experiment = (window['Experiment'] as Experiment);
+  const currentPartner = experiment.getGlobalStateValue('partnerAvatar');
 
   // Increment the partner avatar value
-  if (experiment.getGlobalStateValue('refreshPartner') === false) {
-    // Set partner to first avatar
-    experiment.setGlobalStateValue('partnerAvatar', 0);
-  } else {
-    // Set partner to second avatar
-    experiment.setGlobalStateValue('partnerAvatar', 1);
+  if (experiment.getGlobalStateValue('refreshPartner') === true) {
+    // Ensure we keep the index in range
+    if (currentPartner + 1 === Configuration.partners.length) {
+      // Reset partner to first avatar, ideally we don't want to be here
+      consola.warn('Original partner used');
+      experiment.setGlobalStateValue('partnerAvatar', 0);
+    } else {
+      // We can safely go ahead and increment the index
+      experiment.setGlobalStateValue('partnerAvatar', currentPartner + 1);
+    }
   }
 
   // Get the updated partner avatar
