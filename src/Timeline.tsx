@@ -1,8 +1,7 @@
 // React
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 
-// Configuration and data
+// Configuration
 import {Configuration} from './Configuration';
 
 // Import data spreadsheets
@@ -10,6 +9,9 @@ import Competitive from './data/competitive.csv';
 import Individualist from './data/individualist.csv';
 import Prosocial from './data/prosocial.csv';
 import Test from './data/test.csv';
+
+// Utility functions
+import {markup} from './lib/Functions';
 
 // Logging library
 import consola from 'consola';
@@ -23,11 +25,11 @@ import 'jspsych/plugins/jspsych-instructions';
 // Import the custom plugin before adding it to the timeline
 import './Plugin';
 
-// TODO: Clarify the overall task flow and what trials are placed where
-
 window.onload = () => {
   // Timeline setup
   const timeline = [];
+
+  // Create a new Experiment instance
   const experiment = new Experiment(Configuration);
 
   // Set the experiment to run in fullscreen mode
@@ -40,19 +42,17 @@ window.onload = () => {
   }
 
   const instructionsPracticeGames = [
-    () => {
-      return ReactDOMServer.renderToStaticMarkup(
-          <>
-            <h1>Intentions Game</h1>
-            <h2>Instructions</h2>
-            <p>
-              The instructions for the task will go here.
-              <hr />
-              This can be multi-page, or just one page.
-            </p>
-          </>
-      );
-    },
+    markup(
+        <>
+          <h1>Intentions Game</h1>
+          <h2>Instructions</h2>
+          <p>
+            The instructions for the task will go here.
+            <hr />
+            This can be multi-page, or just one page.
+          </p>
+        </>
+    ),
   ];
 
   // Insert the instructions into the timeline
@@ -82,7 +82,7 @@ window.onload = () => {
   });
 
   // Set and store the data colelction
-  let dataCollection;
+  let dataCollection: string | any[];
   consola.info(
       `Loading '${Configuration.manipulations.individualType}' configuration`
   );
@@ -111,35 +111,63 @@ window.onload = () => {
       );
   }
 
-  // Insert the 'choice' screens into the timeline
+  /*
+    Game Phases:
+    Phase 1: Player chooses how they will split points with their partner
+    Phase 2: Player guesses how their parnter will choose to split the points
+    Phase 3: Player chooses how they will split points with their partner
+
+    Game Structure:
+    - Avatar selection
+    - Matching screen (Partner 1)
+    - Phase 1
+    - Agency test
+    - Matching screen (Partner 2)
+    - Phase 2
+    - Evaluate partner
+    - Agency test
+    - Matching screen (Partner 3)
+    - Phase 3
+    - Agency test
+  */
+
+  // Read each row from the data collection and insert the correct
+  // trial into the timeline
   for (let i = 0; i < dataCollection.length; i++) {
-    // Get the row data
+    // Get the row from the data
     const row = dataCollection[i] as Row;
+
+    // Get the previous timeline element
+    let previous = null;
+    if (timeline.length > 0) {
+      previous = timeline[timeline.length - 1];
+    }
 
     // Check the trial type
     switch (row.display) {
       case 'mid': {
-        // Get the last trial
-        const lastTrial = timeline[timeline.length - 1];
-        if (lastTrial.type === 'intentions-game') {
-          lastTrial.clearScreen = true;
+        // Break after Phase 1
+        // Clear the screen after the previous trial
+        if (previous.type === 'intentions-game') {
+          previous.clearScreen = true;
         }
 
-        // Add the first break instructions
+        // TODO: Add the 'agency' test
+
+        // Add the instructions for the first break
         const firstBreakInstructions = [
-          () => {
-            return ReactDOMServer.renderToStaticMarkup(
-                <>
-                  <h1>Intentions Game</h1>
-                  <h2>Mid-way 1</h2>
-                  <p>
-                    Mid-way 1
-                  </p>
-                </>
-            );
-          },
+          markup(
+              <>
+                <h1>Intentions Game</h1>
+                <h2>Mid-way 1</h2>
+                <p>
+                  Mid-way 1
+                </p>
+              </>
+          ),
         ];
 
+        // Push elements to the timeline
         timeline.push({
           type: 'instructions',
           pages: firstBreakInstructions,
@@ -147,28 +175,35 @@ window.onload = () => {
           show_page_number: true,
           show_clickable_nav: true,
         });
+
+        // Insert another 'match' sequence into the timeline
+        timeline.push({
+          type: 'intentions-game',
+          display: 'matching',
+        });
+
+        timeline.push({
+          type: 'intentions-game',
+          display: 'matched',
+        });
         break;
       }
       case 'mid2': {
-        // Get the last trial
-        const lastTrial = timeline[timeline.length - 1];
-        if (lastTrial.type === 'intentions-game') {
-          lastTrial.clearScreen = true;
+        if (previous.type === 'intentions-game') {
+          previous.clearScreen = true;
         }
 
         // Add the second break instructions
         const secondBreakInstructions = [
-          () => {
-            return ReactDOMServer.renderToStaticMarkup(
-                <>
-                  <h1>Intentions Game</h1>
-                  <h2>Mid-way 2</h2>
-                  <p>
-                    Mid-way 2
-                  </p>
-                </>
-            );
-          },
+          markup(
+              <>
+                <h1>Intentions Game</h1>
+                <h2>Mid-way 2</h2>
+                <p>
+                  Mid-way 2
+                </p>
+              </>
+          ),
         ];
 
         timeline.push({
@@ -191,24 +226,8 @@ window.onload = () => {
         });
         break;
       }
-      case 'playerChoice2': {
-        // Identical to ordinary trials, except the screen
-        // is cleared after each trial
-        timeline.push({
-          type: 'intentions-game',
-          optionOneParticipant: row.Option1_PPT,
-          optionOnePartner: row.Option1_Partner,
-          optionTwoParticipant: row.Option2_PPT,
-          optionTwoPartner: row.Option2_Partner,
-          typeOne: row.Type1,
-          typeTwo: row.Type2,
-          display: row.display,
-          answer: row.ANSWER,
-          clearScreen: true,
-        });
-        break;
-      }
       default: {
+        // Regular trials
         timeline.push({
           type: 'intentions-game',
           optionOneParticipant: row.Option1_PPT,

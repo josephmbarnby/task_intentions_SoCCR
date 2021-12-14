@@ -41,8 +41,9 @@ export const Configuration = {
   ],
 
   partners: [
-    'g',
-    'h',
+    'm',
+    'n',
+    'o',
   ],
 
   fullscreen: false,

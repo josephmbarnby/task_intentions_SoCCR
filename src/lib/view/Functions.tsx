@@ -21,7 +21,8 @@ export function display(
     target: HTMLElement,
     props:
         TrialProps | SwitcherProps |
-        SelectAvatarProps | MatchedProps | MatchingProps,
+        SelectAvatarProps | MatchedProps | MatchingProps |
+        InferenceProps,
     timeout=0,
     callback=() => {
       consola.info('No callback defined for timeout');

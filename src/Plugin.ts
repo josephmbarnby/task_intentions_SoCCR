@@ -79,10 +79,7 @@ jsPsych.plugins['intentions-game'] = (() => {
     },
   };
 
-  plugin.trial = function(displayElement: HTMLElement, trial: Trial) {
-    // Record the starting time
-    const _startTime = performance.now();
-
+  plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
     // Setup data storage
     const trialData = {
       playerPoints: 0,
@@ -93,21 +90,22 @@ jsPsych.plugins['intentions-game'] = (() => {
       rt: 0,
     };
 
-    consola.info(`Running trial stage '${trial.display}'`);
+    consola.debug(`Running trial stage '${trial.display}'`);
 
     // Generate and configure props based on the stage
     let screenProps:
         MatchedProps | MatchingProps |
-        TrialProps | SelectAvatarProps | QuestionProps;
+        TrialProps | SelectAvatarProps | InferenceProps;
 
     // Timeout information
     let timeoutDuration = 0;
     let timeoutCallback: () => void;
 
     switch (trial.display as DisplayType) {
-      // Phase one and two trials
+      // Phase 1, 2, and 3 trials
       case 'playerChoice':
-      case 'playerGuess': {
+      case 'playerGuess':
+      case 'playerChoice2': {
         // Sum the points from the previous trials
         const participantPoints =
           jsPsych.data.get().select('playerPoints').sum();
@@ -130,7 +128,7 @@ jsPsych.plugins['intentions-game'] = (() => {
             },
           },
           answer: trial.answer,
-          endTrial: endTrial,
+          selectionHandler: optionHandler,
         };
         break;
       }
@@ -156,10 +154,12 @@ jsPsych.plugins['intentions-game'] = (() => {
         };
         break;
 
-      case 'playerChoice2':
+      // Inference screen
+      case 'inference':
+        // Setup the props
         screenProps = {
           display: trial.display,
-          selectionHandler: questionSelectionHandler,
+          selectionHandler: inferenceSelectionHandler,
         };
         break;
 
@@ -170,6 +170,9 @@ jsPsych.plugins['intentions-game'] = (() => {
         finishTrial();
         break;
     }
+
+    // Record the starting time
+    const startTime = performance.now();
 
     // Display the screen with the generated props
     display(
@@ -182,21 +185,21 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     /**
      * Handle Button-press events in a particular trial
-     * @param {'Option 1' | 'Option 2'} _option selected option
+     * @param {'Option 1' | 'Option 2'} option selected option
      */
-    function endTrial(_option: 'Option 1' | 'Option 2') {
-      const _endTime = performance.now();
-      const _duration = _endTime - _startTime;
-      trialData.rt = _duration;
+    function optionHandler(option: 'Option 1' | 'Option 2') {
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.rt = duration;
 
-      if (_option === 'Option 1') {
+      if (option === 'Option 1') {
         // Participant chose option 1
         trialData.selectedOption = 1;
 
         // Update the score with values of option 1
         trialData.playerPoints = trial.optionOneParticipant;
         trialData.partnerPoints = trial.optionOnePartner;
-      } else if (_option === 'Option 2') {
+      } else if (option === 'Option 2') {
         // Participant chose option 2
         trialData.selectedOption = 2;
 
@@ -232,13 +235,13 @@ jsPsych.plugins['intentions-game'] = (() => {
      * @param {number} responseOne value of the first slider
      * @param {number} responseTwo value of the second slider
      */
-    function questionSelectionHandler(
+    function inferenceSelectionHandler(
         responseOne: number,
         responseTwo: number
     ): void {
       // Record the total reaction time
       const _endTime = performance.now();
-      const _duration = _endTime - _startTime;
+      const _duration = _endTime - startTime;
       trialData.rt = _duration;
 
       // Store the responses

@@ -12,7 +12,7 @@ import {Trial} from './screens/Trial';
 import {SelectAvatar} from './screens/SelectAvatar';
 import {Matching} from './screens/Matching';
 import {Matched} from './screens/Matched';
-import {Question} from './screens/Question';
+import {Inference} from './screens/Inference';
 
 // Other imports
 import consola from 'consola';
@@ -31,26 +31,27 @@ export function Switcher(props: SwitcherProps): ReactElement {
     // Trial stages
     case 'playerChoice':
     case 'playerGuess':
+    case 'playerChoice2': {
+      const displayProps = props.screenProps as TrialProps;
       screen =
         <Trial
-          display={props.display}
-          participantPoints={
-            (props.screenProps as TrialProps).participantPoints
-          }
-          partnerPoints={
-            (props.screenProps as TrialProps).partnerPoints
-          }
-          options={(props.screenProps as TrialProps).options}
-          answer={(props.screenProps as TrialProps).answer}
-          endTrial={(props.screenProps as TrialProps).endTrial}
+          display={displayProps.display}
+          participantPoints={displayProps.participantPoints}
+          partnerPoints={displayProps.partnerPoints}
+          options={displayProps.options}
+          answer={displayProps.answer}
+          selectionHandler={displayProps.selectionHandler}
         />;
       break;
-    case 'playerChoice2':
+    }
+
+    // Inference trials
+    case 'inference':
       screen =
-          <Question
+          <Inference
             display={props.display}
             selectionHandler={
-              (props.screenProps as QuestionProps).selectionHandler
+              (props.screenProps as InferenceProps).selectionHandler
             }
           />;
       break;

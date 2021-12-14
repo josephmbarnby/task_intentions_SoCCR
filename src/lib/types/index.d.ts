@@ -27,7 +27,7 @@ declare type TrialProps = {
     }
   };
   answer: string;
-  endTrial: (selection: string) => void;
+  selectionHandler: (selection: string) => void;
 };
 
 declare type SelectAvatarProps = {
@@ -35,7 +35,7 @@ declare type SelectAvatarProps = {
   selectionHandler: (_selection: string) => void;
 };
 
-declare type QuestionProps = {
+declare type InferenceProps = {
   display: DisplayType;
   selectionHandler: (firstValue: number, secondValue: number) => void;
 }
@@ -84,7 +84,8 @@ declare type Trial = {
 // The three display types (similar to 'stages')
 declare type DisplayType =
     'playerChoice' | 'playerChoice2' | 'mid' | 'mid2' |
-    'playerGuess' | 'matching' | 'matched' | 'selection';
+    'playerGuess' | 'matching' | 'matched' | 'selection' |
+    'inference';
 
 // The three individual types
 declare type IndividualType = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';

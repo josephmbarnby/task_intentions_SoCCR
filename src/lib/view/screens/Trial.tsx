@@ -26,11 +26,16 @@ import {Configuration} from '../../../Configuration';
  * @return {ReactElement}
  */
 export function Trial(props: TrialProps): ReactElement {
-  // Configure the state for participant and partner points
+  // Header state
   const defaultHeader = props.display === 'playerChoice' ?
       'How will you split the points?' :
       'How will your parter split the points?';
+  const [
+    trialHeader,
+    setTrialHeader,
+  ] = useState(defaultHeader);
 
+  // Points state
   const [
     participantPoints,
     setParticipantPoints,
@@ -39,12 +44,8 @@ export function Trial(props: TrialProps): ReactElement {
     partnerPoints,
     setPartnerPoints,
   ] = useState(props.partnerPoints);
-  const [
-    trialHeader,
-    setTrialHeader,
-  ] = useState(defaultHeader);
 
-  // Create ref objects
+  // Create references for each Option
   const refs = {
     optionOne: useRef(null),
     optionTwo: useRef(null),
@@ -82,7 +83,9 @@ export function Trial(props: TrialProps): ReactElement {
 
     // Check the stage of the trial
     switch (props.display) {
-      case 'playerChoice': {
+      // Simple choice of the player
+      case 'playerChoice':
+      case 'playerChoice2': {
         // First stage of trials: participant selecting the option
         // they want for points
         consola.info(`Selection for option '${props.display}'`);
@@ -110,12 +113,13 @@ export function Trial(props: TrialProps): ReactElement {
             optionTwoNode.style.pointerEvents = 'auto';
 
             // End the trial
-            props.endTrial(option);
+            props.selectionHandler(option);
           }, 2000);
         }, 250);
         break;
       }
 
+      // Player guessing partner choices, show feedback
       case 'playerGuess': {
         // Second stage of trials: participant selecting the option
         // they think their opponent will select
@@ -168,7 +172,7 @@ export function Trial(props: TrialProps): ReactElement {
             setTrialHeader(defaultHeader);
 
             // End the trial
-            props.endTrial(option);
+            props.selectionHandler(option);
           }, 2000);
         }, 250);
         break;

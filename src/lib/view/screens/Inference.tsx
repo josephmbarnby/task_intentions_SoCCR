@@ -18,11 +18,11 @@ import consola from 'consola';
 const SLIDER_DEFAULT = 50;
 
 /**
- * Generate layout of Question Screen (Inference trial)
- * @param {QuestionProps} props component props
+ * Generate layout of Inference Screen (Inference trial)
+ * @param {InferenceProps} props component props
  * @return {ReactElement}
  */
-export function Question(props: QuestionProps): ReactElement {
+export function Inference(props: InferenceProps): ReactElement {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [firstMoved, setFirstMoved] = useState(false);
