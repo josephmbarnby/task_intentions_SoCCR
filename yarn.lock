@@ -2824,9 +2824,13 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-"crossplatform-jspsych-wrapper@link:../crossplatform-jspsych-wrapper":
-  version "0.0.0"
-  uid ""
+"crossplatform-jspsych-wrapper@file:./packages/crossplatform-jspsych-wrapper-v0.0.1.tgz":
+  version "0.0.1"
+  resolved "file:./packages/crossplatform-jspsych-wrapper-v0.0.1.tgz#7ea7918f2911a0effa9ca32a4808ad328313ffd6"
+  dependencies:
+    consola "^2.15.3"
+    d3-random "^3.0.1"
+    jspsych "6.3"
 
 css-color-keywords@^1.0.0:
   version "1.0.0"
@@ -2908,6 +2912,11 @@ csv-loader@^3.0.3:
   dependencies:
     loader-utils "^2.0.0"
     papaparse "^5.2.0"
+
+d3-random@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-3.0.1.tgz#d4926378d333d9c0bfd1e6fa0194d30aebaa20f4"
+  integrity sha512-FXMe9GfxTxqd5D6jFsQ+DJ8BJS4E/fT5mqqdjovykEB2oFbTMDVdg1MGFxfQW+FBOGoB++k8swBrgwSHT1cUXQ==
 
 d@1, d@^1.0.1:
   version "1.0.1"
@@ -5527,7 +5536,7 @@ jsonc-parser@^3.0.0:
   resolved "https://registry.yarnpkg.com/jsonc-parser/-/jsonc-parser-3.0.0.tgz#abdd785701c7e7eaca8a9ec8cf070ca51a745a22"
   integrity sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==
 
-jspsych@^6.0.0:
+jspsych@6.3, jspsych@^6.0.0:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/jspsych/-/jspsych-6.3.1.tgz#9d4335f03ed30a541acd7e9f3f8514cd64d92616"
   integrity sha512-MtjovVPJw6tL/d5RAxwojixBy3HD0EnCcByF5+L01lbW5MELIwnon74XI6sD/WNBufvl86HEoIV/hFV04GB17Q==

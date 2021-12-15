@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "boring-avatars": "^1.5.8",
-    "crossplatform-jspsych-wrapper": "link:../crossplatform-jspsych-wrapper",
+    "crossplatform-jspsych-wrapper": "file:./packages/crossplatform-jspsych-wrapper-v0.0.1.tgz",
     "grommet": "^2.17.3",
     "grommet-icons": "^4.6.0",
     "jspsych": "^6.0.0",
