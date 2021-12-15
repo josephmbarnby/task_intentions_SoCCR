@@ -24,7 +24,9 @@ function style(cb) {
  * @param {Function} cb callback function
  */
 function clean(cb) {
-  del(['built', 'docs']);
+  del([
+    'built',
+  ]);
   cb();
 }
 

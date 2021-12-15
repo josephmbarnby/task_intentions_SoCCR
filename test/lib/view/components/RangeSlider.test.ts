@@ -1,0 +1,1 @@
+// RangeSlider component test

@@ -18,8 +18,8 @@ import consola from 'consola';
 const SLIDER_DEFAULT = 50;
 
 /**
- * Generate layout of Inference Screen (Inference trial)
- * @param {InferenceProps} props component props
+ * Generate layout of Agency Screen (Agency trial)
+ * @param {AgencyProps} props component props
  * @return {ReactElement}
  */
 export function Agency(props: AgencyProps): ReactElement {
