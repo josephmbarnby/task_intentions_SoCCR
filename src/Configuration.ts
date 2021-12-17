@@ -11,9 +11,6 @@ export const Configuration = {
 
   // Manipulations that are configurable in Gorilla
   manipulations: {
-    phaseOneTrials: 36,
-    phaseTwoTrials: 72,
-    phaseThreeTrials: 36,
     individualType: 'Test',
   },
 

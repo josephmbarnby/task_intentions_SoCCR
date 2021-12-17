@@ -274,8 +274,25 @@ for (let i = 0; i < dataCollection.length; i++) {
       });
       break;
     }
+    case 'playerGuess': {
+      // 'playerGuess' trials, similar to 'playerChoice'-type trials,
+      // but the returns are switched
+      timeline.push({
+        type: 'intentions-game',
+        optionOneParticipant: row.Option1_Partner,
+        optionOnePartner: row.Option1_PPT,
+        optionTwoParticipant: row.Option2_Partner,
+        optionTwoPartner: row.Option2_PPT,
+        typeOne: row.Type1,
+        typeTwo: row.Type2,
+        display: row.display,
+        answer: row.ANSWER,
+        clearScreen: false,
+      });
+      break;
+    }
     default: {
-      // Regular trials
+      // 'playerChoice' trials
       timeline.push({
         type: 'intentions-game',
         optionOneParticipant: row.Option1_PPT,
