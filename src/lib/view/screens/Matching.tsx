@@ -2,18 +2,15 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Heading, Layer, Spinner, ThemeContext, WorldMap} from 'grommet';
-
-// Styling
-import {Theme} from '../Theme';
+import {Box, Heading, Layer, Spinner, WorldMap} from 'grommet';
 
 /**
  * Generate layout of Matching Screen
  * @return {ReactElement}
  */
-export function Matching(): ReactElement {
+const Matching = (): ReactElement => {
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <WorldMap
         color='map'
         fill='horizontal'
@@ -37,6 +34,8 @@ export function Matching(): ReactElement {
           />
         </Box>
       </Layer>
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default Matching;

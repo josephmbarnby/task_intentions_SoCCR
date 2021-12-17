@@ -3,24 +3,17 @@ import React, {ReactElement} from 'react';
 
 // Components
 import Avatar from 'boring-avatars';
-import {
-  Box,
-} from 'grommet';
+import {Box} from 'grommet';
 
-// Parameters
+// Useful constants
 import {AVATAR_VARIANT, COLORS} from '../../Constants';
 
 /**
  * A selectable avatar with grow behaviour
- * @param {any} props component props
+ * @param {Components.PlayerDetails} props component props
  * @return {ReactElement}
  */
-export function OptionAvatar(props: {
-  size: number,
-  name: string,
-  state: string,
-  setState: (avatar: string) => void,
-}): ReactElement {
+const PlayerDetails = (props: Components.PlayerDetails): ReactElement => {
   return (
     <Box
       margin='medium'
@@ -41,4 +34,6 @@ export function OptionAvatar(props: {
       />
     </Box>
   );
-}
+};
+
+export default PlayerDetails;

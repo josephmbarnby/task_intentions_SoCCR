@@ -1,4 +1,4 @@
-// React imports
+// React
 import React, {ReactElement} from 'react';
 
 // Components
@@ -10,12 +10,7 @@ import {User} from 'grommet-icons';
  * @param {any} props component props
  * @return {ReactElement}
  */
-export function ClassificationAvatar(props: {
-  name: string,
-  state: string,
-  background: string,
-  setState: (name: string) => void,
-}): ReactElement {
+const IconAvatar = (props: Components.IconAvatar): ReactElement => {
   return (
     <Box
       margin='medium'
@@ -37,4 +32,6 @@ export function ClassificationAvatar(props: {
       </Avatar>
     </Box>
   );
-}
+};
+
+export default IconAvatar;

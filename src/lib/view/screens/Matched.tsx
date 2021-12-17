@@ -1,8 +1,8 @@
-// React import
+// React
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Heading, Layer, ThemeContext, WorldMap} from 'grommet';
+import {Box, Heading, Layer, WorldMap} from 'grommet';
 import Avatar from 'boring-avatars';
 
 // Logging library
@@ -17,14 +17,11 @@ import {Configuration} from '../../../Configuration';
 // Constants
 import {AVATAR_VARIANT, COLORS} from '../../Constants';
 
-// Styling
-import {Theme} from '../Theme';
-
 /**
  * Generate layout of Matched Screen
  * @return {ReactElement}
  */
-export function Matched(): ReactElement {
+const Matched = (): ReactElement => {
   // Get the current partner avatar
   const experiment = (window['Experiment'] as Experiment);
   const currentPartner = experiment.getGlobalStateValue('partnerAvatar');
@@ -46,7 +43,7 @@ export function Matched(): ReactElement {
   const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <WorldMap
         color='map'
         fill='horizontal'
@@ -68,6 +65,8 @@ export function Matched(): ReactElement {
           />
         </Box>
       </Layer>
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default Matched;

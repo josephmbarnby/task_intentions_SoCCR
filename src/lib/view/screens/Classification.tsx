@@ -1,22 +1,19 @@
-// React import
+// React
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Button, Text, ThemeContext} from 'grommet';
+import {Box, Button, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import {ClassificationAvatar} from '../components/ClassificationAvatar';
-
-// Theme
-import {Theme} from '../Theme';
+import IconAvatar from '../components/IconAvatar';
 
 /**
  * Generate layout of Classification Screen (Classification trial)
- * @param {ClassificationProps} props component props
+ * @param {Screens.Classification} props component props
  * @return {ReactElement}
  */
-export function Classification(props: ClassificationProps): ReactElement {
+const Classification = (props: Screens.Classification): ReactElement => {
   // Configure relevant states
   const [classification, setClassification] = React.useState(null);
 
@@ -29,10 +26,10 @@ export function Classification(props: ClassificationProps): ReactElement {
 
   for (const avatarName of avatars) {
     avatarComponents.push(
-        <ClassificationAvatar
+        <IconAvatar
           key={avatarName}
           name={avatarName}
-          background={Theme.global.colors.partners[avatarName.toLowerCase()]}
+          background={avatarName.toLowerCase()}
           state={classification}
           setState={setClassification}
         />
@@ -40,7 +37,7 @@ export function Classification(props: ClassificationProps): ReactElement {
   }
 
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <Box
         justify='center'
         align='center'
@@ -82,6 +79,8 @@ export function Classification(props: ClassificationProps): ReactElement {
           props.selectionHandler(classification);
         }}
       />
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default Classification;

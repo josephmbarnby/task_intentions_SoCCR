@@ -10,19 +10,19 @@ import consola from 'consola';
 
 /**
  * Switch between different screens
- * @param {string} type screen type
+ * @param {Display} type screen type
  * @param {HTMLElement} target target DOM element
  * @param {any} props collection of props
  * @param {number} timeout duration
  * @param {Function} callback function to run
  */
 export function display(
-    type: DisplayType,
+    type: Display,
     target: HTMLElement,
     props:
-        TrialProps | SwitcherProps |
-        SelectAvatarProps | MatchedProps | MatchingProps |
-        InferenceProps,
+        Screens.Agency | Screens.Classification |
+        Screens.Inference | Screens.Matched | Screens.Matching |
+        Screens.SelectAvatar | Screens.Trial,
     timeout=0,
     callback=() => {
       consola.info('No callback defined for timeout');
@@ -32,7 +32,7 @@ export function display(
   render(
       <Switcher
         display={type}
-        screenProps={props}
+        screen={props}
       />,
       target,
   );

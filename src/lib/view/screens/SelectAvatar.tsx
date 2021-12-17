@@ -1,28 +1,22 @@
-// React import
+// React
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {
-  Box, Button,
-  Heading,
-  ThemeContext,
-  Text,
-} from 'grommet';
+import {Box, Button, Heading, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
 
 // Components
-import {OptionAvatar} from '../components/OptionAvatar';
-import {Theme} from '../Theme';
+import PlayerDetails from '../components/PlayerDetails';
 
 /**
  * Generic structure for the Avatar Selection Screen
- * @param {any} props collection of props
+ * @param {Screens.SelectAvatar} props collection of props
  * @return {ReactElement}
  */
-export function SelectAvatar(props: SelectAvatarProps): ReactElement {
+const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
 
@@ -31,7 +25,7 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
 
   for (const avatarName of avatars) {
     avatarComponents.push(
-        <OptionAvatar
+        <PlayerDetails
           key={avatarName}
           size={128}
           name={avatarName}
@@ -42,7 +36,7 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
   }
 
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <Heading
         margin='medium'
         fill
@@ -80,6 +74,8 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
           props.selectionHandler(selectedAvatar);
         }}
       />
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default SelectAvatar;

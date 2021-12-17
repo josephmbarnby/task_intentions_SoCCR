@@ -46,7 +46,7 @@ const instructionsPracticeGames = [
         <h1>Intentions Game</h1>
         <h2>Instructions</h2>
         <p>
-          In this game, you will be playing with different partner.
+          In this game, you will be playing with different partners.
         </p>
         <p>
           In each trial, you will see two options for splitting some

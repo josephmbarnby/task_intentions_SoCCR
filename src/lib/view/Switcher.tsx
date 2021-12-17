@@ -2,19 +2,22 @@
 import React, {ReactElement} from 'react';
 
 // Grommet component
-import {Grommet} from 'grommet';
+import {Grommet, ThemeContext} from 'grommet';
 
 // Import styling
 import '../../css/styles.css';
 
+// Apply custom theme globally
+import {Theme} from './Theme';
+
 // Custom Screens
-import {Agency} from './screens/Agency';
-import {Classification} from './screens/Classification';
-import {Trial} from './screens/Trial';
-import {SelectAvatar} from './screens/SelectAvatar';
-import {Matching} from './screens/Matching';
-import {Matched} from './screens/Matched';
-import {Inference} from './screens/Inference';
+import Agency from './screens/Agency';
+import Classification from './screens/Classification';
+import Trial from './screens/Trial';
+import SelectAvatar from './screens/SelectAvatar';
+import Matching from './screens/Matching';
+import Matched from './screens/Matched';
+import Inference from './screens/Inference';
 
 // Other imports
 import consola from 'consola';
@@ -25,7 +28,7 @@ import consola from 'consola';
  * child component
  * @return {ReactElement}
  */
-export function Switcher(props: SwitcherProps): ReactElement {
+export function Switcher(props: Switcher): ReactElement {
   let screen: ReactElement;
 
   // Define the exact component that is rendered
@@ -34,7 +37,7 @@ export function Switcher(props: SwitcherProps): ReactElement {
     case 'playerChoice':
     case 'playerGuess':
     case 'playerChoice2': {
-      const displayProps = props.screenProps as TrialProps;
+      const displayProps = props.screen as Screens.Trial;
       screen =
         <Trial
           display={displayProps.display}
@@ -53,7 +56,7 @@ export function Switcher(props: SwitcherProps): ReactElement {
           <Inference
             display={props.display}
             selectionHandler={
-              (props.screenProps as InferenceProps).selectionHandler
+              (props.screen as Screens.Inference).selectionHandler
             }
           />;
       break;
@@ -64,7 +67,7 @@ export function Switcher(props: SwitcherProps): ReactElement {
           <Agency
             display={props.display}
             selectionHandler={
-              (props.screenProps as AgencyProps).selectionHandler
+              (props.screen as Screens.Agency).selectionHandler
             }
           />;
       break;
@@ -75,7 +78,7 @@ export function Switcher(props: SwitcherProps): ReactElement {
           <Classification
             display={props.display}
             selectionHandler={
-              (props.screenProps as ClassificationProps).selectionHandler
+              (props.screen as Screens.Classification).selectionHandler
             }
           />;
       break;
@@ -86,7 +89,7 @@ export function Switcher(props: SwitcherProps): ReactElement {
         <SelectAvatar
           display={props.display}
           selectionHandler={
-            (props.screenProps as SelectAvatarProps).selectionHandler
+            (props.screen as Screens.SelectAvatar).selectionHandler
           }
         />;
       break;
@@ -106,7 +109,9 @@ export function Switcher(props: SwitcherProps): ReactElement {
 
   return (
     <Grommet>
-      {screen}
+      <ThemeContext.Extend value={Theme}>
+        {screen}
+      </ThemeContext.Extend>
     </Grommet>
   );
 }

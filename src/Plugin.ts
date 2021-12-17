@@ -97,15 +97,16 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     // Generate and configure props based on the stage
     let screenProps:
-        MatchedProps | MatchingProps |
-        TrialProps | SelectAvatarProps |
-        InferenceProps | AgencyProps;
+        Screens.Agency | Screens.Classification |
+        Screens.Inference | Screens.Matched |
+        Screens.Matching | Screens.SelectAvatar |
+        Screens.Trial;
 
     // Timeout information
     let timeoutDuration = 0;
     let timeoutCallback: () => void;
 
-    switch (trial.display as DisplayType) {
+    switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
       case 'playerChoice':
       case 'playerGuess':

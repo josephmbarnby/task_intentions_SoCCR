@@ -1,4 +1,4 @@
-// React import
+// React
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
@@ -6,16 +6,11 @@ import {Box, Grid, Heading} from 'grommet';
 import {Money} from 'grommet-icons';
 
 /**
- * Generate an Option grid
- * @param {any} props collection of props
+ * Generate an Option for the participant to select
+ * @param {Components.Option} props collection of props
  * @return {ReactElement}
  */
-export function OptionPoints(props: {
-  optionKey: string,
-  optionName: string,
-  pointsParticipant: number,
-  pointsParter: number,
-}): ReactElement {
+const Option = (props: Components.Option): ReactElement => {
   return (
     <Grid
       rows={['1/2', '1/2']}
@@ -81,4 +76,6 @@ export function OptionPoints(props: {
       </Box>
     </Grid>
   );
-}
+};
+
+export default Option;

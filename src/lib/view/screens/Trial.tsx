@@ -2,14 +2,14 @@
 import React, {ReactElement, useRef, useState} from 'react';
 
 // UI components
-import {Box, Grid, Heading, ThemeContext} from 'grommet';
-
-// Styling
-import {Theme} from '../Theme';
+import {Box, Grid, Heading} from 'grommet';
 
 // Custom components
-import {OptionPoints} from '../components/OptionPoints';
-import {PlayerAvatar} from '../components/PlayerAvatar';
+import Option from '../components/Option';
+import PlayerAvatar from '../components/PlayerAvatar';
+
+// Access theme constants directly
+import {Theme} from '../Theme';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
@@ -19,10 +19,10 @@ import {Configuration} from '../../../Configuration';
 
 /**
  * Generate the choices grid with options
- * @param {any} props collection of props
+ * @param {Screens.Trial} props collection of props
  * @return {ReactElement}
  */
-export function Trial(props: TrialProps): ReactElement {
+const Trial = (props: Screens.Trial): ReactElement => {
   // Header state
   const defaultHeader = props.display !== 'playerGuess' ?
       'How will you split the points?' :
@@ -225,76 +225,76 @@ export function Trial(props: TrialProps): ReactElement {
   }
 
   return (
-    <ThemeContext.Extend value={Theme}>
-      <Box justify='center' align='center' overflow='hidden'>
-        <Heading textAlign='center' fill size='auto' margin='xsmall'>
-          {trialHeader}
-        </Heading>
-        <Grid
-          rows={['flex', 'flex']}
-          columns={['flex', '1/2', 'flex']}
-          gap='small'
-          margin='xsmall'
-          areas={[
-            {name: 'playerArea', start: [0, 0], end: [0, 1]},
-            {name: 'choiceOneArea', start: [1, 0], end: [1, 0]},
-            {name: 'choiceTwoArea', start: [1, 1], end: [1, 1]},
-            {name: 'partnerArea', start: [2, 0], end: [2, 1]},
-          ]}
+    <Box justify='center' align='center' overflow='hidden'>
+      <Heading textAlign='center' fill size='auto' margin='xsmall'>
+        {trialHeader}
+      </Heading>
+      <Grid
+        rows={['flex', 'flex']}
+        columns={['flex', '1/2', 'flex']}
+        gap='small'
+        margin='xsmall'
+        areas={[
+          {name: 'playerArea', start: [0, 0], end: [0, 1]},
+          {name: 'choiceOneArea', start: [1, 0], end: [1, 0]},
+          {name: 'choiceTwoArea', start: [1, 1], end: [1, 1]},
+          {name: 'partnerArea', start: [2, 0], end: [2, 1]},
+        ]}
+      >
+        {/* Participant's Avatar */}
+        <PlayerAvatar
+          gridArea='playerArea'
+          name='You'
+          points={participantPoints}
+          avatar={Configuration.avatars[participantAvatar]}
+        />
+
+        <Box
+          gridArea='choiceOneArea'
+          ref={refs.optionOne}
+          onClick={() => {
+            updatePoints('Option 1');
+          }}
+          className='grow'
+          round
+          background='optionBackground'
         >
-          {/* Participant's Avatar */}
-          <PlayerAvatar
-            gridArea='playerArea'
-            name='You'
-            points={participantPoints}
-            avatar={Configuration.avatars[participantAvatar]}
+          <Option
+            optionKey='optionOne'
+            optionName='Option 1'
+            pointsParticipant={props.options.one.participant}
+            pointsParter={props.options.one.partner}
           />
+        </Box>
 
-          <Box
-            gridArea='choiceOneArea'
-            ref={refs.optionOne}
-            onClick={() => {
-              updatePoints('Option 1');
-            }}
-            className='grow'
-            round
-            background='optionBackground'
-          >
-            <OptionPoints
-              optionKey='optionOne'
-              optionName='Option 1'
-              pointsParticipant={props.options.one.participant}
-              pointsParter={props.options.one.partner}
-            />
-          </Box>
-
-          <Box
-            gridArea='choiceTwoArea'
-            ref={refs.optionTwo}
-            onClick={() => {
-              updatePoints('Option 2');
-            }}
-            className='grow'
-            round
-            background='optionBackground'
-          >
-            <OptionPoints
-              optionKey='optionTwo'
-              optionName='Option 2'
-              pointsParticipant={props.options.two.participant}
-              pointsParter={props.options.two.partner}
-            />
-          </Box>
-
-          {/* Partner's Avatar */}
-          <PlayerAvatar
-            gridArea='partnerArea'
-            name='Partner'
-            points={partnerPoints}
-            avatar={Configuration.partners[partnerAvatar]}
+        <Box
+          gridArea='choiceTwoArea'
+          ref={refs.optionTwo}
+          onClick={() => {
+            updatePoints('Option 2');
+          }}
+          className='grow'
+          round
+          background='optionBackground'
+        >
+          <Option
+            optionKey='optionTwo'
+            optionName='Option 2'
+            pointsParticipant={props.options.two.participant}
+            pointsParter={props.options.two.partner}
           />
-        </Grid>
-      </Box>
-    </ThemeContext.Extend>
+        </Box>
+
+        {/* Partner's Avatar */}
+        <PlayerAvatar
+          gridArea='partnerArea'
+          name='Partner'
+          points={partnerPoints}
+          avatar={Configuration.partners[partnerAvatar]}
+        />
+      </Grid>
+    </Box>
   );
-}
+};
+
+export default Trial;

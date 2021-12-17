@@ -1,35 +1,29 @@
-// React import
+// React
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Button, Heading, Text, ThemeContext} from 'grommet';
+import {Box, Button, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import {RangeSlider} from '../components/RangeSlider';
-
-// Theme
-import {Theme} from '../Theme';
-
-// Logging library
-import consola from 'consola';
+import RangeSlider from '../components/RangeSlider';
 
 // Constants
 const SLIDER_DEFAULT = 50;
 
 /**
  * Generate layout of Agency Screen (Agency trial)
- * @param {AgencyProps} props component props
+ * @param {Screens.Agency} props component props
  * @return {ReactElement}
  */
-export function Agency(props: AgencyProps): ReactElement {
+const Agency = (props: Screens.Agency): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [firstMoved, setFirstMoved] = useState(false);
   const [firstValue, setFirstValue] = useState(SLIDER_DEFAULT);
 
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <Box
         justify='center'
         align='center'
@@ -72,6 +66,8 @@ export function Agency(props: AgencyProps): ReactElement {
           props.selectionHandler(firstValue);
         }}
       />
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default Agency;
