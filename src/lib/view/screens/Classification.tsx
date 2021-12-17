@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Button, Heading, Paragraph, Text, ThemeContext} from 'grommet';
+import {Box, Button, Text, ThemeContext} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
@@ -12,11 +12,11 @@ import {ClassificationAvatar} from '../components/ClassificationAvatar';
 import {Theme} from '../Theme';
 
 /**
- * Generate layout of Inference Screen (Inference trial)
- * @param {AgencyProps} props component props
+ * Generate layout of Classification Screen (Classification trial)
+ * @param {ClassificationProps} props component props
  * @return {ReactElement}
  */
-export function Classification(props: AgencyProps): ReactElement {
+export function Classification(props: ClassificationProps): ReactElement {
   // Configure relevant states
   const [classification, setClassification] = React.useState(null);
 
