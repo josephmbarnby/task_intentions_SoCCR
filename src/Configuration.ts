@@ -10,9 +10,7 @@ export const Configuration = {
   contact: 'henry.burgess@wustl.edu',
 
   // Manipulations that are configurable in Gorilla
-  manipulations: {
-    individualType: 'Test',
-  },
+  manipulations: {},
 
   // Collection of any stimuli used in the trials
   stimuli: {},
@@ -26,6 +24,9 @@ export const Configuration = {
     partnerAvatar: 0,
     refreshPartner: false,
   },
+
+  // Individual type
+  individualType: 'Test',
 
   // List of avatar names (not displayed, only used to generate avatars)
   avatars: [
