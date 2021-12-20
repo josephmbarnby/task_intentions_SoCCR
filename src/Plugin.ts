@@ -113,9 +113,19 @@ jsPsych.plugins['intentions-game'] = (() => {
       case 'playerChoice2': {
         // Sum the points from the previous trials
         const participantPoints =
-          jsPsych.data.get().select('playerPoints').sum();
+          jsPsych.data.get()
+              .filter({
+                display: trial.display,
+              })
+              .select('playerPoints')
+              .sum();
         const partnerPoints =
-          jsPsych.data.get().select('partnerPoints').sum();
+          jsPsych.data.get()
+              .filter({
+                display: trial.display,
+              })
+              .select('partnerPoints')
+              .sum();
 
         // Setup the props
         screenProps = {
