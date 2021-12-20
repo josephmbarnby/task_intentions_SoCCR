@@ -62,10 +62,6 @@ const Option = (props: Option): ReactElement => {
         gap='small'
       >
         <Heading size='auto'>+{props.pointsParticipant}</Heading>
-        <Money
-          size='large'
-          color='pointsIconBackground'
-        />
       </Box>
 
       {/* Partner points */}
@@ -77,10 +73,6 @@ const Option = (props: Option): ReactElement => {
         gap='small'
       >
         <Heading size='auto'>+{props.pointsParter}</Heading>
-        <Money
-          size='large'
-          color='pointsIconBackground'
-        />
       </Box>
     </Grid>
   );
