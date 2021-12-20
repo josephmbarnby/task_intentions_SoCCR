@@ -108,7 +108,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   /**
    * Selection handler
-   * @param {string} option the selected option
+   * @param {'Option 1' | 'Option 2'} option the selected option
    * @param {Function} headerStateFunction function
    */
   function selectionHandler(
@@ -118,6 +118,10 @@ const Trial = (props: Screens.Trial): ReactElement => {
     // Get the references to the nodes
     const optionOneNode = refs.optionOne.current as HTMLElement;
     const optionTwoNode = refs.optionTwo.current as HTMLElement;
+
+    // Disable all pointer events
+    optionOneNode.style.pointerEvents = 'none';
+    optionTwoNode.style.pointerEvents = 'none';
 
     // Get the selected node object
     const selectedNode =
@@ -135,10 +139,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
         window.setTimeout(() => {
           // Hide the unselected option
           unselectedNode.style.opacity = '0';
-
-          // Disable all pointer events
-          optionOneNode.style.pointerEvents = 'none';
-          optionTwoNode.style.pointerEvents = 'none';
 
           window.setTimeout(() => {
             // Hide the selected option
@@ -177,10 +177,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
               correctSelection ?
               Theme.global.colors.correct :
               Theme.global.colors.incorrect;
-
-          // Disable selections
-          optionOneNode.style.pointerEvents = 'none';
-          optionTwoNode.style.pointerEvents = 'none';
 
           window.setTimeout(() => {
             // Hide the options before trial end
