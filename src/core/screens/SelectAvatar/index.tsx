@@ -44,10 +44,6 @@ const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
         Choose your Avatar!
       </Heading>
 
-      <Text size='xlarge'>
-        You will keep your avatar for the entire game.
-      </Text>
-
       {/* Avatar components */}
       <Box
         flex='grow'

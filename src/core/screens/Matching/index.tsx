@@ -26,7 +26,7 @@ const Matching = (): ReactElement => {
             level='1'
             fill
           >
-            Finding you a new partner...
+            Finding you a partner...
           </Heading>
           <Spinner
             size='large'

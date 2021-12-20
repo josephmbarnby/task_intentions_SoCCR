@@ -101,8 +101,8 @@ const instructionsPracticeGames = [
           £10 bonus.
         </p>
         <p>
-          Click 'Next &gt;' to choose an avatar and see an example of
-          what each trial will look like.
+          Click 'Next &gt;' to choose an avatar before playing <b>2</b> example
+          trials.
         </p>
       </>
   ),
@@ -123,7 +123,7 @@ timeline.push({
   display: 'selection',
 });
 
-// 'playerChoice' example trial
+// Insert 2 'playerChoice' example trials
 timeline.push({
   type: 'intentions-game',
   optionOneParticipant: 4,
@@ -134,7 +134,38 @@ timeline.push({
   typeTwo: '',
   display: 'playerChoiceExample',
   answer: '',
+  clearScreen: false,
+});
+
+timeline.push({
+  type: 'intentions-game',
+  optionOneParticipant: 7,
+  optionOnePartner: 3,
+  optionTwoParticipant: 5,
+  optionTwoPartner: 5,
+  typeOne: '',
+  typeTwo: '',
+  display: 'playerChoiceExample',
+  answer: '',
   clearScreen: true,
+});
+
+// Insert instructions to let the participant know they will
+// be matched with a partner
+timeline.push({
+  type: 'instructions',
+  pages: [
+    markup(
+        <>
+          <h1>Instructions</h1>
+          <p>You will now be matched with a partner.</p>
+          <p>Press 'Next &gt;' to begin!</p>
+        </>
+    ),
+  ],
+  allow_keys: false,
+  show_page_number: true,
+  show_clickable_nav: true,
 });
 
 // Insert a 'match' sequence into the timeline

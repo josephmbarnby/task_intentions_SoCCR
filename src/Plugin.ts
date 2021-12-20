@@ -257,11 +257,11 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     /**
      * Handler called after avatar selected
-     * @param {string} _selection avatar selection key
+     * @param {string} selection avatar selection key
      */
-    function avatarSelectionHandler(_selection: string): void {
+    function avatarSelectionHandler(selection: string): void {
       // Obtain the selected avatar
-      const selectedAvatar = Configuration.avatars.indexOf(_selection);
+      const selectedAvatar = Configuration.avatars.indexOf(selection);
 
       // Update the global Experiment state
       (window['Experiment'] as Experiment).setGlobalStateValue(
