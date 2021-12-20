@@ -22,7 +22,7 @@ declare type PlayerAvatar = {
 
 /**
  * Generate a PlayerAvatar component
- * @param {Components.PlayerAvatar} props component props
+ * @param {PlayerAvatar} props component props
  * @return {ReactElement}
  */
 const PlayerAvatar = (props: PlayerAvatar): ReactElement => {

@@ -6,7 +6,7 @@ import consola from 'consola';
 
 // Core modules
 import {Configuration} from './Configuration';
-import {display} from './core/Functions';
+import {calculatePoints, display} from './core/Functions';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
@@ -100,33 +100,24 @@ jsPsych.plugins['intentions-game'] = (() => {
         Screens.Agency | Screens.Classification |
         Screens.Inference | Screens.Matched |
         Screens.Matching | Screens.SelectAvatar |
-        Screens.Trial;
+        Screens.Trial | Screens.Summary;
 
     // Timeout information
     let timeoutDuration = 0;
     let timeoutCallback: () => void;
+
+    // Sum the points from the previous trials
+    const participantPoints = calculatePoints(trial.display, 'playerPoints');
+    const partnerPoints = calculatePoints(trial.display, 'partnerPoints');
+
+    // Get the prior phase
+    const postPhase = jsPsych.data.get().last().values()[0].display;
 
     switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
       case 'playerChoice':
       case 'playerGuess':
       case 'playerChoice2': {
-        // Sum the points from the previous trials
-        const participantPoints =
-          jsPsych.data.get()
-              .filter({
-                display: trial.display,
-              })
-              .select('playerPoints')
-              .sum();
-        const partnerPoints =
-          jsPsych.data.get()
-              .filter({
-                display: trial.display,
-              })
-              .select('partnerPoints')
-              .sum();
-
         // Setup the props
         screenProps = {
           display: trial.display,
@@ -201,6 +192,16 @@ jsPsych.plugins['intentions-game'] = (() => {
         screenProps = {
           display: trial.display,
           selectionHandler: classificationSelectionHandler,
+        };
+        break;
+
+      // Classification screen
+      case 'summary':
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          postPhase: postPhase,
+          selectionHandler: finishTrial,
         };
         break;
 
@@ -280,11 +281,6 @@ jsPsych.plugins['intentions-game'] = (() => {
         responseOne: number,
         responseTwo: number
     ): void {
-      // Record the total reaction time
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-      trialData.trialDuration = duration;
-
       // Store the responses
       trialData.inferenceResponseOne = responseOne;
       trialData.inferenceResponseTwo = responseTwo;
@@ -300,11 +296,6 @@ jsPsych.plugins['intentions-game'] = (() => {
     function agencySelectionHandler(
         agencyResponse: number,
     ): void {
-      // Record the total reaction time
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-      trialData.trialDuration = duration;
-
       // Store the responses
       trialData.agencyResponse = agencyResponse;
 
@@ -320,11 +311,6 @@ jsPsych.plugins['intentions-game'] = (() => {
     function classificationSelectionHandler(
         classification: string,
     ): void {
-      // Record the total reaction time
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-      trialData.trialDuration = duration;
-
       // Store the responses
       trialData.classification = classification;
 
@@ -337,6 +323,11 @@ jsPsych.plugins['intentions-game'] = (() => {
      * cleanly if required
      */
     function finishTrial(): void {
+      // Record the total reaction time
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
+
       // If the next trial isn't React-based, clean up React
       if (trial.clearScreen === true) {
         ReactDOM.unmountComponentAtNode(displayElement);

@@ -21,6 +21,7 @@ import Inference from './screens/Inference';
 
 // Other imports
 import consola from 'consola';
+import Summary from './screens/Summary';
 
 /**
  * Generic container for all Grommet components
@@ -67,6 +68,11 @@ export const Switcher = (props: Switcher): ReactElement => {
       break;
     case 'matching':
       screen = <Matching />;
+      break;
+
+    // Summary screen after each phase
+    case 'summary':
+      screen = <Summary {...props.screen as Screens.Summary} />;
       break;
 
     // Likely a mistake

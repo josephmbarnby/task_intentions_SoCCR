@@ -59,3 +59,18 @@ export function display(
     }, timeout);
   }
 }
+
+/**
+ * Calculate the points gained from a phase
+ * @param {Display} display phase to calculate points from
+ * @param {string} column named column containing points
+ * @return {number}
+ */
+export function calculatePoints(display: Display, column: string): number {
+  return jsPsych.data.get()
+      .filter({
+        display: display,
+      })
+      .select(column)
+      .sum();
+}

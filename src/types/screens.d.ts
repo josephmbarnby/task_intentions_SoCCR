@@ -54,4 +54,10 @@ declare namespace Screens {
     display: Display;
     selectionHandler: (classification: string) => void;
   }
+
+  interface Summary {
+    display: Display;
+    postPhase: Display,
+    selectionHandler: () => void;
+  }
 }

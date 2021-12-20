@@ -159,6 +159,12 @@ for (let i = 0; i < dataCollection.length; i++) {
         previous.clearScreen = true;
       }
 
+      // Add a summary screen
+      timeline.push({
+        type: 'intentions-game',
+        display: 'summary',
+      });
+
       // Agency screen
       timeline.push({
         type: 'intentions-game',
@@ -223,6 +229,12 @@ for (let i = 0; i < dataCollection.length; i++) {
       if (previous.type === 'intentions-game') {
         previous.clearScreen = true;
       }
+
+      // Add a summary screen
+      timeline.push({
+        type: 'intentions-game',
+        display: 'summary',
+      });
 
       // Agency screen
       timeline.push({
@@ -309,6 +321,12 @@ for (let i = 0; i < dataCollection.length; i++) {
     }
   }
 }
+
+// Add a summary screen
+timeline.push({
+  type: 'intentions-game',
+  display: 'summary',
+});
 
 // Agency screen
 timeline.push({

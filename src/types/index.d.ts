@@ -2,7 +2,7 @@
 declare type Display =
     'playerChoice' | 'playerChoice2' | 'mid' | 'mid2' |
     'playerGuess' | 'matching' | 'matched' | 'selection' |
-    'inference' | 'agency' | 'classification';
+    'inference' | 'agency' | 'classification' | 'summary';
 
 // The three individual types
 declare type Individual = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';
