@@ -134,6 +134,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
     switch (props.display) {
       // Simple choice of the player
       case 'playerChoice':
+      case 'playerChoiceExample':
       case 'playerChoice2': {
         // Timeout to change the opacity of the options
         window.setTimeout(() => {
@@ -212,12 +213,28 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   // Get the participant's and the partner's avatars
   const experiment = (window['Experiment'] as Experiment);
-  const participantAvatar = experiment.getGlobalStateValue('participantAvatar');
-  const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
-  // Update state to refresh partner avatar at next match screen
-  if (experiment.getGlobalStateValue('refreshPartner') === false) {
-    experiment.setGlobalStateValue('refreshPartner', true);
+  // Participant avatar
+  const participantAvatar =
+      Configuration.avatars[
+          experiment.getGlobalStateValue('participantAvatar')
+      ];
+
+  // Partner avatar
+  let partnerAvatar: string;
+  if (props.display === 'playerChoiceExample') {
+    partnerAvatar = 'example';
+  } else {
+    // Get the global state of the partner avatar
+    partnerAvatar =
+        Configuration.partners[
+            experiment.getGlobalStateValue('partnerAvatar')
+        ];
+
+    // Update state to refresh partner avatar at next match screen
+    if (experiment.getGlobalStateValue('refreshPartner') === false) {
+      experiment.setGlobalStateValue('refreshPartner', true);
+    }
   }
 
   return (
@@ -242,7 +259,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
           gridArea='playerArea'
           name='You'
           points={participantPoints}
-          avatar={Configuration.avatars[participantAvatar]}
+          avatar={participantAvatar}
         />
 
         <Box
@@ -286,7 +303,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
           gridArea='partnerArea'
           name='Partner'
           points={partnerPoints}
-          avatar={Configuration.partners[partnerAvatar]}
+          avatar={partnerAvatar}
         />
       </Grid>
     </Box>

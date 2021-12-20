@@ -116,6 +116,7 @@ jsPsych.plugins['intentions-game'] = (() => {
     switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
       case 'playerChoice':
+      case 'playerChoiceExample':
       case 'playerGuess':
       case 'playerChoice2': {
         // Setup the props

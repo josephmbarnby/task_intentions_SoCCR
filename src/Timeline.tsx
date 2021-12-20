@@ -43,20 +43,67 @@ if (Configuration.fullscreen === true) {
 const instructionsPracticeGames = [
   markup(
       <>
-        <h1>Intentions Game</h1>
-        <h2>Instructions</h2>
+        <h1>Instructions</h1>
+        <h2>
+          <i>Please read the instructions carefully!</i>
+        </h2>
         <p>
-          In this game, you will be playing with different partners.
+          You will now take part in a series
+          of interactions with <b>ONE</b> partner.
         </p>
         <p>
-          In each trial, you will see two options for splitting some
-           points between you and your current partner. You will be able to see
-           how many points you and your partner have.
+          You will be matched with your partner in a moment.
         </p>
         <p>
-          You can choose an option by clicking on it.
+          You will play your partner for <b>18</b> trials.
         </p>
-        <h3>Good luck!</h3>
+        <p>
+          Their ID and your ID has been hidden to preserve anonymity.
+        </p>
+        <p>
+          In each trial you will <i>choose between two options</i> that
+          determine how many points you and your partner will
+          receive in that trial.
+        </p>
+        <p>
+          The total number of points you earn in this task will
+          be the sum of the points you earn in each trial.
+        </p>
+      </>
+  ),
+  markup(
+      <>
+        <h1>Instructions</h1>
+        <p>
+          In this part of the task you will be choosing
+          between the two options over 18 trials.
+        </p>
+        <p>
+          In the second part of the task, you will play with
+          a <b>new partner</b> for 36 trials where the new partner
+          will choose between the two options.
+        </p>
+        <p>
+          So, in one half of the task you choose the options and in
+          the other half of the task your partner chooses the options.
+        </p>
+        <p>
+          Remember that the partners you face in each half of the task
+          are different people.
+        </p>
+        <p>
+          Instructions for this second half will follow after the first part
+          of this game.
+        </p>
+        <p>
+          Your point total at the end of this task will contribute to your
+          overall point total to put you in with a chance of winning a
+          £10 bonus.
+        </p>
+        <p>
+          Click 'Next &gt;' to choose an avatar and see an example of
+          what each trial will look like.
+        </p>
       </>
   ),
 ];
@@ -74,6 +121,20 @@ timeline.push({
 timeline.push({
   type: 'intentions-game',
   display: 'selection',
+});
+
+// 'playerChoice' example trial
+timeline.push({
+  type: 'intentions-game',
+  optionOneParticipant: 4,
+  optionOnePartner: 4,
+  optionTwoParticipant: 5,
+  optionTwoPartner: 6,
+  typeOne: '',
+  typeTwo: '',
+  display: 'playerChoiceExample',
+  answer: '',
+  clearScreen: true,
 });
 
 // Insert a 'match' sequence into the timeline
