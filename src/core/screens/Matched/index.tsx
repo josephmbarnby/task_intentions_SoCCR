@@ -12,10 +12,10 @@ import consola from 'consola';
 import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
-import {Configuration} from '../../../../Configuration';
+import {Configuration} from '../../../Configuration';
 
 // Constants
-import {AVATAR_VARIANT, COLORS} from '../../../Constants';
+import {AVATAR_VARIANT, AVATAR_COLORS} from '../../Constants';
 
 /**
  * Generate layout of Matched Screen
@@ -61,7 +61,7 @@ const Matched = (): ReactElement => {
             size={240}
             name={Configuration.partners[partnerAvatar]}
             variant={AVATAR_VARIANT}
-            colors={COLORS}
+            colors={AVATAR_COLORS}
           />
         </Box>
       </Layer>

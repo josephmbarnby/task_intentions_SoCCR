@@ -10,7 +10,7 @@ import TextTransition, {presets} from 'react-text-transition';
 import Avatar from 'boring-avatars';
 
 // Parameters
-import {AVATAR_VARIANT, COLORS} from '../../../Constants';
+import {AVATAR_VARIANT, AVATAR_COLORS} from '../../Constants';
 
 // Types
 declare type PlayerAvatar = {
@@ -55,7 +55,7 @@ const PlayerAvatar = (props: PlayerAvatar): ReactElement => {
             size={128}
             name={props.avatar}
             variant={AVATAR_VARIANT}
-            colors={COLORS}
+            colors={AVATAR_COLORS}
           />
         </Box>
         <Box

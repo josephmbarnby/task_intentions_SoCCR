@@ -6,7 +6,7 @@ import Avatar from 'boring-avatars';
 import {Box} from 'grommet';
 
 // Useful constants
-import {AVATAR_VARIANT, COLORS} from '../../../Constants';
+import {AVATAR_VARIANT, AVATAR_COLORS} from '../../Constants';
 
 // Types
 declare type PlayerDetails = {
@@ -38,7 +38,7 @@ const PlayerDetails = (props: PlayerDetails): ReactElement => {
         size={props.size}
         name={props.name}
         variant={AVATAR_VARIANT}
-        colors={COLORS}
+        colors={AVATAR_COLORS}
       />
     </Box>
   );

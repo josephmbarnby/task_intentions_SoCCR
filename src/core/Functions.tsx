@@ -1,12 +1,27 @@
 // React import
-import React from 'react';
+import React, {ReactElement, JSXElementConstructor} from 'react';
 import {render} from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
 
 // Screen component
 import Switcher from './Switcher';
 
 // Other imports
 import consola from 'consola';
+
+/**
+ * Utility function to turn React elements into HTML markup,
+ * useful when HTML is required
+ * @param {ReactElement} element React element to render
+ * @return {string}
+ */
+export function markup(
+    element: ReactElement<any, string | JSXElementConstructor<any>>
+): string {
+  const generated = ReactDOMServer.renderToStaticMarkup(element);
+  return generated;
+}
+
 
 /**
  * Switch between different screens
