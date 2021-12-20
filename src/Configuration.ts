@@ -26,7 +26,7 @@ export const Configuration = {
   },
 
   // Individual type
-  individualType: 'Test',
+  individual: 'Test',
 
   // List of avatar names (not displayed, only used to generate avatars)
   avatars: [

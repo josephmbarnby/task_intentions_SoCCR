@@ -12,10 +12,10 @@ import consola from 'consola';
 import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../../Configuration';
 
 // Constants
-import {AVATAR_VARIANT, COLORS} from '../../Constants';
+import {AVATAR_VARIANT, COLORS} from '../../../Constants';
 
 /**
  * Generate layout of Matched Screen

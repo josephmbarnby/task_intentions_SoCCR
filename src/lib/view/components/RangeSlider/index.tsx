@@ -4,12 +4,23 @@ import React, {ReactElement, useState} from 'react';
 // Grommet UI components
 import {Box, Heading, RangeInput} from 'grommet';
 
+// Types
+declare type RangeSlider = {
+  min: number;
+  max: number;
+  initial?: number;
+  leftLabel: string;
+  rightLabel: string;
+  onChange?: () => any;
+  setValue?: (value: number) => void;
+};
+
 /**
  * Generate a RangeSlider component
  * @param {Components.RangeSlider} props component props
  * @return {ReactElement}
  */
-const RangeSlider = (props: Components.RangeSlider): ReactElement => {
+const RangeSlider = (props: RangeSlider): ReactElement => {
   const [value, setValue] = useState(props.max / 2);
   return (
     <Box

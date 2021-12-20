@@ -91,10 +91,10 @@ timeline.push({
 // Set and store the data colelction
 let dataCollection: string | any[];
 consola.info(
-    `Loading '${Configuration.individualType}' individual`
+    `Loading '${Configuration.individual}' individual`
 );
 
-switch (Configuration.individualType as IndividualType) {
+switch (Configuration.individual as Individual) {
   case 'Competitive': {
     dataCollection = Competitive;
     break;
@@ -114,7 +114,7 @@ switch (Configuration.individualType as IndividualType) {
   default:
     throw new Error(
         `Unknown individual type ` +
-        `'${Configuration.individualType}'`
+        `'${Configuration.individual}'`
     );
 }
 

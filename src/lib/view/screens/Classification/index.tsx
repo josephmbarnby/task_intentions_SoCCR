@@ -6,7 +6,7 @@ import {Box, Button, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import IconAvatar from '../components/IconAvatar';
+import IconAvatar from '../../components/IconAvatar';
 
 /**
  * Generate layout of Classification Screen (Classification trial)

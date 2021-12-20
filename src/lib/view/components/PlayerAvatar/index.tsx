@@ -10,14 +10,22 @@ import TextTransition, {presets} from 'react-text-transition';
 import Avatar from 'boring-avatars';
 
 // Parameters
-import {AVATAR_VARIANT, COLORS} from '../../Constants';
+import {AVATAR_VARIANT, COLORS} from '../../../Constants';
+
+// Types
+declare type PlayerAvatar = {
+  gridArea: string;
+  name: string;
+  points: number;
+  avatar: string;
+};
 
 /**
  * Generate a PlayerAvatar component
  * @param {Components.PlayerAvatar} props component props
  * @return {ReactElement}
  */
-const PlayerAvatar = (props: Components.PlayerAvatar): ReactElement => {
+const PlayerAvatar = (props: PlayerAvatar): ReactElement => {
   return (
     <Box
       gridArea={props.gridArea}

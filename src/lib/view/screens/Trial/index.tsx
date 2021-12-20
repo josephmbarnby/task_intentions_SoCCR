@@ -5,17 +5,17 @@ import React, {ReactElement, useRef, useState} from 'react';
 import {Box, Grid, Heading} from 'grommet';
 
 // Custom components
-import Option from '../components/Option';
-import PlayerAvatar from '../components/PlayerAvatar';
+import Option from '../../components/Option';
+import PlayerAvatar from '../../components/PlayerAvatar';
 
 // Access theme constants directly
-import {Theme} from '../Theme';
+import {Theme} from '../../Theme';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../../Configuration';
 
 /**
  * Generate the choices grid with options

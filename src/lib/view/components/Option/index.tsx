@@ -5,12 +5,20 @@ import React, {ReactElement} from 'react';
 import {Box, Grid, Heading} from 'grommet';
 import {Money} from 'grommet-icons';
 
+// Types
+declare type Option = {
+  optionKey: string;
+  optionName: string;
+  pointsParticipant: number;
+  pointsParter: number;
+};
+
 /**
  * Generate an Option for the participant to select
  * @param {Components.Option} props collection of props
  * @return {ReactElement}
  */
-const Option = (props: Components.Option): ReactElement => {
+const Option = (props: Option): ReactElement => {
   return (
     <Grid
       rows={['1/2', '1/2']}

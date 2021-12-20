@@ -6,14 +6,22 @@ import Avatar from 'boring-avatars';
 import {Box} from 'grommet';
 
 // Useful constants
-import {AVATAR_VARIANT, COLORS} from '../../Constants';
+import {AVATAR_VARIANT, COLORS} from '../../../Constants';
+
+// Types
+declare type PlayerDetails = {
+  size: number;
+  name: string;
+  state: string;
+  setState: (avatar: string) => void;
+};
 
 /**
  * A selectable avatar with grow behaviour
  * @param {Components.PlayerDetails} props component props
  * @return {ReactElement}
  */
-const PlayerDetails = (props: Components.PlayerDetails): ReactElement => {
+const PlayerDetails = (props: PlayerDetails): ReactElement => {
   return (
     <Box
       margin='medium'

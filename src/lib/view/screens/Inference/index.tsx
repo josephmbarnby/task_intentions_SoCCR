@@ -6,7 +6,7 @@ import {Box, Button, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import RangeSlider from '../components/RangeSlider';
+import RangeSlider from '../../components/RangeSlider';
 
 // Constants
 const SLIDER_DEFAULT = 50;

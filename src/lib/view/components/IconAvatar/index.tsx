@@ -5,12 +5,20 @@ import React, {ReactElement} from 'react';
 import {Avatar, Box} from 'grommet';
 import {User} from 'grommet-icons';
 
+// Types
+declare type IconAvatar = {
+  name: string;
+  state: string;
+  background: string;
+  setState: (name: string) => void;
+};
+
 /**
  * A selectable avatar with grow behaviour
  * @param {any} props component props
  * @return {ReactElement}
  */
-const IconAvatar = (props: Components.IconAvatar): ReactElement => {
+const IconAvatar = (props: IconAvatar): ReactElement => {
   return (
     <Box
       margin='medium'
