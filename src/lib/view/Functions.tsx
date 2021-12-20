@@ -3,7 +3,7 @@ import React from 'react';
 import {render} from 'react-dom';
 
 // Screen component
-import {Switcher} from './Switcher';
+import Switcher from './Switcher';
 
 // Other imports
 import consola from 'consola';

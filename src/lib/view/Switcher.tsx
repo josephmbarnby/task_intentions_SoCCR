@@ -24,11 +24,11 @@ import consola from 'consola';
 
 /**
  * Generic container for all Grommet components
- * @param {any} props collection of props for the primary
+ * @param {Switcher} props collection of props for the primary
  * child component
  * @return {ReactElement}
  */
-export function Switcher(props: Switcher): ReactElement {
+export const Switcher = (props: Switcher): ReactElement => {
   let screen: ReactElement;
 
   // Define the exact component that is rendered
@@ -37,61 +37,28 @@ export function Switcher(props: Switcher): ReactElement {
     case 'playerChoice':
     case 'playerGuess':
     case 'playerChoice2': {
-      const displayProps = props.screen as Screens.Trial;
-      screen =
-        <Trial
-          display={displayProps.display}
-          participantPoints={displayProps.participantPoints}
-          partnerPoints={displayProps.partnerPoints}
-          options={displayProps.options}
-          answer={displayProps.answer}
-          selectionHandler={displayProps.selectionHandler}
-        />;
+      screen = <Trial {...props.screen as Screens.Trial} />;
       break;
     }
 
     // Inference trials
     case 'inference':
-      screen =
-          <Inference
-            display={props.display}
-            selectionHandler={
-              (props.screen as Screens.Inference).selectionHandler
-            }
-          />;
+      screen = <Inference {...props.screen as Screens.Inference} />;
       break;
 
     // Agency test
     case 'agency':
-      screen =
-          <Agency
-            display={props.display}
-            selectionHandler={
-              (props.screen as Screens.Agency).selectionHandler
-            }
-          />;
+      screen = <Agency {...props.screen as Screens.Agency} />;
       break;
 
     // Classification question
     case 'classification':
-      screen =
-          <Classification
-            display={props.display}
-            selectionHandler={
-              (props.screen as Screens.Classification).selectionHandler
-            }
-          />;
+      screen = <Classification {...props.screen as Screens.Classification} />;
       break;
 
     // Selection screen
     case 'selection':
-      screen =
-        <SelectAvatar
-          display={props.display}
-          selectionHandler={
-            (props.screen as Screens.SelectAvatar).selectionHandler
-          }
-        />;
+      screen = <SelectAvatar {...props.screen as Screens.SelectAvatar} />;
       break;
 
     // Match screens
@@ -105,8 +72,10 @@ export function Switcher(props: Switcher): ReactElement {
     // Likely a mistake
     default:
       consola.error(`Unknown display type '${props.display}'`);
+      break;
   }
 
+  // Return a Grommet instance with the global theme extension
   return (
     <Grommet>
       <ThemeContext.Extend value={Theme}>
@@ -114,4 +83,6 @@ export function Switcher(props: Switcher): ReactElement {
       </ThemeContext.Extend>
     </Grommet>
   );
-}
+};
+
+export default Switcher;
