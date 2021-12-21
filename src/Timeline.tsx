@@ -335,6 +335,12 @@ for (let i = 0; i < dataCollection.length; i++) {
         clearScreen: true,
       });
 
+      // Inference screen
+      timeline.push({
+        type: 'intentions-game',
+        display: 'inference',
+      });
+
       // Add the second break instructions
       const secondBreakInstructions = [
         markup(
@@ -347,10 +353,6 @@ for (let i = 0; i < dataCollection.length; i++) {
               <p>
                 Now, you will be matched with a new partner. For the next
                  set of trials, you will get to choose how you split the points.
-              </p>
-              <p>
-                After these trials, you will have an opportunity to evaluate
-                 how you thought your partner was behaving.
               </p>
               <h3>Good luck!</h3>
             </>
@@ -424,12 +426,6 @@ timeline.push({
 timeline.push({
   type: 'intentions-game',
   display: 'agency',
-});
-
-// Inference screen
-timeline.push({
-  type: 'intentions-game',
-  display: 'inference',
 });
 
 timeline.push({

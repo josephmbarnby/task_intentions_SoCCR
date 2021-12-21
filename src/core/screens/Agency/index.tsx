@@ -32,18 +32,25 @@ const Agency = (props: Screens.Agency): ReactElement => {
       >
         {/* First question */}
         <Box width='xlarge'>
-          <Text size={'xlarge'}>
-            {'Please use the slider below to indicate the extent ' +
-            'to which you believe you were playing against a computer ' +
-            'or another human.'}
+          <Text size='xlarge'>
+            {'Unlike some other research labs, the Brain Development and ' +
+            'Disorders lab does not use deception. All participants ' +
+            'are real. Nevertheless, for our own purposes, it is helpful ' +
+            'to know to what extent you believed that the other player ' +
+            'really existed.'}
+          </Text>
+        </Box>
+        <Box width='xlarge'>
+          <Text size='xlarge'>
+            {'I believed I was playing with a real person.'}
           </Text>
         </Box>
         <RangeSlider
           min={0}
           max={100}
           initial={firstValue}
-          leftLabel='Computer'
-          rightLabel='Human'
+          leftLabel='Not at all'
+          rightLabel='Totally'
           onChange={() => {
             setFirstMoved(true);
           }}
