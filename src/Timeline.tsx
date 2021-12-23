@@ -119,13 +119,13 @@ timeline.push({
 
 // Insert a 'selection' screen into the timeline
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'selection',
 });
 
 // Insert 2 'playerChoice' example trials
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   optionOneParticipant: 4,
   optionOnePartner: 4,
   optionTwoParticipant: 5,
@@ -138,7 +138,7 @@ timeline.push({
 });
 
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   optionOneParticipant: 7,
   optionOnePartner: 3,
   optionTwoParticipant: 5,
@@ -170,12 +170,12 @@ timeline.push({
 
 // Insert a 'match' sequence into the timeline
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'matching',
 });
 
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'matched',
   clearScreen: true,
 });
@@ -247,19 +247,19 @@ for (let i = 0; i < dataCollection.length; i++) {
     case 'mid': {
       // Break after Phase 1
       // Clear the screen after the previous trial
-      if (previous.type === 'intentions-game') {
+      if (previous.type === Configuration.pluginName) {
         previous.clearScreen = true;
       }
 
       // Add a summary screen
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'summary',
       });
 
       // Agency screen
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'agency',
         clearScreen: true,
       });
@@ -271,26 +271,60 @@ for (let i = 0; i < dataCollection.length; i++) {
               <h1>Intentions Game</h1>
               <h2>Instructions</h2>
               <p>
-                You have played all your trials with your first partner!
+                You will now take part in a series of interactions with
+                <i>ONE NEW</i> partner.
               </p>
               <p>
-                Now, you will be matched with a new partner. For the next
-                 set of trials, instead of you choosing how you will split
-                 the points, your partner will be choosing how to split
-                 the points!
+                You will be matched with your new partner in a moment.
               </p>
               <p>
-                You need to select which option you <i>think </i>
-                 your partner would have chosen.
+                You will play with your partner for 36 trials.
               </p>
               <p>
-                You will see if you chose correctly or not.
+                Their ID and your ID has been hidden to preserve anonymity.
               </p>
               <p>
-                After these trials, you will have an opportunity to evaluate
-                 how you thought your partner was behaving.
+                In each trial there are still two options available to choose
+                from that will determine the amount of points you and your
+                partner receive. However, in this part of the
+                task,
+                <b>
+                  you need to guess which option your partner will choose
+                </b>
+                .
+                <h3>Good luck!</h3>
               </p>
-              <h3>Good luck!</h3>
+            </>
+        ),
+        markup(
+            <>
+              <h1>Intentions Game</h1>
+              <h2>Instructions</h2>
+              <p>
+                Each option will increase the total points you and your partner
+                have to different amounts.
+              </p>
+              <p>
+                You will get feedback on whether the option you predicted your
+                partner will choose was correct or incorrect by highlighting
+                your prediction in green or red.
+              </p>
+              <p>
+                You will get bonus points dependent on the number of correct
+                answers you get in this part of the task, that is, the amount of
+                times you correctly guess what your partner chose each trial.
+              </p>
+              <p>
+                Click 'Next &gt;' to see an example of what each trial will
+                look like.
+              </p>
+              <p>
+                <b>
+                  Your point total at the end of this task will contribute
+                  to your overall point total to put you in with a chance of
+                  winning a bonus.
+                </b>
+              </p>
             </>
         ),
       ];
@@ -306,38 +340,38 @@ for (let i = 0; i < dataCollection.length; i++) {
 
       // Insert another 'match' sequence into the timeline
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matching',
       });
 
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matched',
         clearScreen: true,
       });
       break;
     }
     case 'mid2': {
-      if (previous.type === 'intentions-game') {
+      if (previous.type === Configuration.pluginName) {
         previous.clearScreen = true;
       }
 
       // Add a summary screen
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'summary',
       });
 
       // Agency screen
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'agency',
         clearScreen: true,
       });
 
       // Inference screen
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'inference',
       });
 
@@ -369,12 +403,12 @@ for (let i = 0; i < dataCollection.length; i++) {
 
       // Insert another 'match' sequence into the timeline
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matching',
       });
 
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matched',
         clearScreen: true,
       });
@@ -384,7 +418,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       // 'playerGuess' trials, similar to 'playerChoice'-type trials,
       // but the returns are switched
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         optionOneParticipant: row.Option1_Partner,
         optionOnePartner: row.Option1_PPT,
         optionTwoParticipant: row.Option2_Partner,
@@ -400,7 +434,7 @@ for (let i = 0; i < dataCollection.length; i++) {
     default: {
       // 'playerChoice' trials
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         optionOneParticipant: row.Option1_PPT,
         optionOnePartner: row.Option1_Partner,
         optionTwoParticipant: row.Option2_PPT,
@@ -418,18 +452,18 @@ for (let i = 0; i < dataCollection.length; i++) {
 
 // Add a summary screen
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'summary',
 });
 
 // Agency screen
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'agency',
 });
 
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'classification',
   clearScreen: true,
 });

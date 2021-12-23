@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Button, Heading, Text} from 'grommet';
+import {Box, Button, Heading} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
