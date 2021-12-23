@@ -110,8 +110,11 @@ jsPsych.plugins['intentions-game'] = (() => {
     const participantPoints = calculatePoints(trial.display, 'playerPoints');
     const partnerPoints = calculatePoints(trial.display, 'partnerPoints');
 
-    // Get the prior phase
-    const postPhase = jsPsych.data.get().last().values()[0].display;
+    // Get the prior phase, checking first that there was a prior trial
+    let postPhase: Display;
+    if (jsPsych.data.get().last().values().length > 0) {
+      postPhase = jsPsych.data.get().last().values()[0].display;
+    }
 
     switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
