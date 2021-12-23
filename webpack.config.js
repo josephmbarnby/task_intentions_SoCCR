@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    timeline: './src/Timeline.tsx',
+    index: './src/Timeline.tsx',
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -13,7 +13,7 @@ module.exports = {
     }),
   ],
   devServer: {
-    contentBase: './built',
+    contentBase: './dist',
     hot: true,
   },
   module: {
@@ -50,7 +50,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    path: path.resolve(__dirname, 'built'),
+    path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
 };

@@ -271,8 +271,8 @@ for (let i = 0; i < dataCollection.length; i++) {
               <h1>Intentions Game</h1>
               <h2>Instructions</h2>
               <p>
-                You will now take part in a series of interactions with
-                <i>ONE NEW</i> partner.
+                You will now take part in a series of interactions with <i>ONE
+                NEW</i> partner.
               </p>
               <p>
                 You will be matched with your new partner in a moment.
@@ -286,12 +286,8 @@ for (let i = 0; i < dataCollection.length; i++) {
               <p>
                 In each trial there are still two options available to choose
                 from that will determine the amount of points you and your
-                partner receive. However, in this part of the
-                task,
-                <b>
-                  you need to guess which option your partner will choose
-                </b>
-                .
+                partner receive. However, in this part of the task, <b>
+                you need to guess which option your partner will choose</b>.
                 <h3>Good luck!</h3>
               </p>
             </>
