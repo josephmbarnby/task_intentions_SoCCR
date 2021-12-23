@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Button, Text} from 'grommet';
+import {Box, Button, Text, Select} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
@@ -17,24 +17,11 @@ const Classification = (props: Screens.Classification): ReactElement => {
   // Configure relevant states
   const [classification, setClassification] = React.useState(null);
 
-  const avatars = [
-    'Prosocial',
-    'Individualistic',
-    'Competitive',
+  const partners = [
+    'Trying to earn as much money as possible',
+    'Trying to stop me from earning points',
+    'Trying to share as much money between us as possible',
   ];
-  const avatarComponents = [];
-
-  for (const avatarName of avatars) {
-    avatarComponents.push(
-        <IconAvatar
-          key={avatarName}
-          name={avatarName}
-          background={avatarName.toLowerCase()}
-          state={classification}
-          setState={setClassification}
-        />
-    );
-  }
 
   return (
     <>
@@ -47,21 +34,21 @@ const Classification = (props: Screens.Classification): ReactElement => {
         {/* First question */}
         <Box width='xlarge'>
           <Text size={'xlarge'}>
-            {'Please select the avatar that you think best ' +
-            'represents the playstyle of your partner.'}
+            {'Overall, what do you think your partner was trying to ' +
+              'do with their decisions?'}
           </Text>
         </Box>
-        {/* Avatar components */}
-        <Box
-          flex='grow'
-          direction='row-responsive'
-          align='center'
-          justify='center'
-          height='flex'
-          margin='small'
-        >
-          {avatarComponents}
-        </Box>
+
+        {/* Partner select component */}
+        <Select
+          options={partners}
+          placeholder='Please select'
+          onChange={({partner}) => {
+            setClassification(partner);
+          }}
+          margin={{top: 'large'}}
+          size='medium'
+        />
       </Box>
       <Button
         primary
