@@ -1,7 +1,7 @@
 // The collection of display types
 declare type Display =
-    'playerChoice' | 'playerChoiceExample' | 'playerChoice2' | 'mid' | 'mid2' |
-    'playerGuess' | 'matching' | 'matched' | 'selection' |
+    'playerChoice' | 'playerChoiceTutorial' | 'playerChoice2' | 'mid' | 'mid2' |
+    'playerGuess' | 'playerGuessTutorial' | 'matching' | 'matched' | 'selection' |
     'inference' | 'agency' | 'classification' | 'summary';
 
 // The three individual types

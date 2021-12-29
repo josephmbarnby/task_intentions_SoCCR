@@ -18,9 +18,6 @@ import {Experiment} from 'crossplatform-jspsych-wrapper';
 // Configuration
 import {Configuration} from '../../../Configuration';
 
-// Logging library
-import consola from 'consola';
-
 /**
  * Generate the choices grid with options
  * @param {Screens.Trial} props collection of props
@@ -171,7 +168,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
     switch (props.display) {
       // Simple choice of the player
       case 'playerChoice':
-      case 'playerChoiceExample':
+      case 'playerChoiceTutorial':
       case 'playerChoice2': {
         // Timeout to change the opacity of the options
         window.setTimeout(() => {
@@ -199,7 +196,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
       }
 
       // Player guessing partner choices, show feedback
-      case 'playerGuess': {
+      case 'playerGuess':
+      case 'playerGuessTutorial': {
         if (correctSelection === true) {
           setTrialHeader('You chose correctly!');
         } else {
@@ -247,6 +245,51 @@ const Trial = (props: Screens.Trial): ReactElement => {
     }
   }
 
+  /**
+   * Generate and return the text to display in the overlay
+   * shown in tutorial-type trials
+   * @return {ReactElement}
+   */
+  function overlayText(): ReactElement {
+    let text: ReactElement;
+
+    switch (props.display) {
+      // Simple choice of the player
+      case 'playerChoice':
+      case 'playerChoiceTutorial':
+      case 'playerChoice2': {
+        text = <Text size='large'>
+          You chose <b>{selected}</b>. That means
+          you get {selected === 'Option 1' ?
+              props.options.one.participant :
+              props.options.two.participant
+          } points and your partner gets {selected === 'Option 1' ?
+              props.options.one.partner :
+              props.options.two.partner
+          } points.
+        </Text>;
+        break;
+      }
+      case 'playerGuess':
+      case 'playerGuessTutorial': {
+        text = <Text size='large'>
+          {selected === props.answer ? 'Correct! ' : 'Incorrect. '}
+          Your partner chose <b>{props.answer}</b>. That means
+          you get {props.answer === 'Option 1' ?
+              props.options.one.participant :
+              props.options.two.participant
+          } points and your partner gets {props.answer === 'Option 1' ?
+              props.options.one.partner :
+              props.options.two.partner
+          } points.
+        </Text>;
+        break;
+      }
+    }
+
+    return text;
+  }
+
   // Get the participant's and the partner's avatars
   const experiment = (window['Experiment'] as Experiment);
 
@@ -258,7 +301,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   // Partner avatar
   let partnerAvatar: string;
-  if (props.display === 'playerChoiceExample') {
+  if (props.display.endsWith('Tutorial')) {
     partnerAvatar = 'example';
   } else {
     // Get the global state of the partner avatar
@@ -348,16 +391,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
         <Layer>
           <Box pad='small' align='center'>
             <Heading size='auto'>This is an example trial.</Heading>
-            <Text size='large'>
-              You chose <b>{selected}</b>. That means
-              you get {selected === 'Option 1' ?
-                  props.options.one.participant :
-                  props.options.two.participant
-              } points and your partner gets {selected === 'Option 1' ?
-                  props.options.one.partner :
-                  props.options.two.partner
-              } points.
-            </Text>
+            {overlayText()}
             {/* Continue button */}
             <Button
               primary

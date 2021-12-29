@@ -36,8 +36,9 @@ export const Switcher = (props: Switcher): ReactElement => {
   switch (props.display) {
     // Trial stages
     case 'playerChoice':
-    case 'playerChoiceExample':
+    case 'playerChoiceTutorial':
     case 'playerGuess':
+    case 'playerGuessTutorial':
     case 'playerChoice2': {
       screen = <Trial {...props.screen as Screens.Trial} />;
       break;

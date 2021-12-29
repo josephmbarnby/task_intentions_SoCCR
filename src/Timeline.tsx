@@ -123,7 +123,7 @@ timeline.push({
   display: 'selection',
 });
 
-// Insert 2 'playerChoice' example trials
+// Tutorial trials for 'playerChoice'
 timeline.push({
   type: Configuration.pluginName,
   optionOneParticipant: 4,
@@ -132,7 +132,7 @@ timeline.push({
   optionTwoPartner: 6,
   typeOne: '',
   typeTwo: '',
-  display: 'playerChoiceExample',
+  display: 'playerChoiceTutorial',
   answer: '',
   isTutorial: true,
   clearScreen: false,
@@ -146,7 +146,7 @@ timeline.push({
   optionTwoPartner: 5,
   typeOne: '',
   typeTwo: '',
-  display: 'playerChoiceExample',
+  display: 'playerChoiceTutorial',
   answer: '',
   isTutorial: true,
   clearScreen: true,
@@ -327,10 +327,57 @@ for (let i = 0; i < dataCollection.length; i++) {
         ),
       ];
 
-      // Push elements to the timeline
+      // Push instructions to the timeline
       timeline.push({
         type: 'instructions',
         pages: firstBreakInstructions,
+        allow_keys: false,
+        show_page_number: true,
+        show_clickable_nav: true,
+      });
+
+      // Tutorial trials for 'playerGuess'
+      timeline.push({
+        type: Configuration.pluginName,
+        optionOneParticipant: 4,
+        optionOnePartner: 4,
+        optionTwoParticipant: 5,
+        optionTwoPartner: 6,
+        typeOne: '',
+        typeTwo: '',
+        display: 'playerGuessTutorial',
+        answer: 'Option 1',
+        isTutorial: true,
+        clearScreen: false,
+      });
+
+      timeline.push({
+        type: Configuration.pluginName,
+        optionOneParticipant: 4,
+        optionOnePartner: 4,
+        optionTwoParticipant: 5,
+        optionTwoPartner: 6,
+        typeOne: '',
+        typeTwo: '',
+        display: 'playerGuessTutorial',
+        answer: 'Option 2',
+        isTutorial: true,
+        clearScreen: true,
+      });
+
+      // Insert instructions to let the participant know they will
+      // be matched with a partner
+      timeline.push({
+        type: 'instructions',
+        pages: [
+          markup(
+              <>
+                <h1>Instructions</h1>
+                <p>You will now be matched with a partner.</p>
+                <p>Press 'Next &gt;' to begin!</p>
+              </>
+          ),
+        ],
         allow_keys: false,
         show_page_number: true,
         show_clickable_nav: true,
@@ -347,6 +394,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         display: 'matched',
         clearScreen: true,
       });
+
       break;
     }
     case 'mid2': {
@@ -410,6 +458,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         display: 'matched',
         clearScreen: true,
       });
+
       break;
     }
     case 'playerGuess': {
