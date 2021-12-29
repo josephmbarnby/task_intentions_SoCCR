@@ -2,7 +2,8 @@
 import React, {ReactElement, useRef, useState} from 'react';
 
 // UI components
-import {Box, Grid, Heading} from 'grommet';
+import {Box, Button, Grid, Heading, Layer, Text} from 'grommet';
+import {LinkNext} from 'grommet-icons';
 
 // Custom components
 import Option from '../../components/Option';
@@ -16,6 +17,9 @@ import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
+
+// Logging library
+import consola from 'consola';
 
 /**
  * Generate the choices grid with options
@@ -42,6 +46,12 @@ const Trial = (props: Screens.Trial): ReactElement => {
     setPartnerPoints,
   ] = useState(props.partnerPoints);
 
+  // Selection state
+  const [selected, setSelected] = useState('');
+
+  // Overlay state
+  const [showOverlay, setShowOverlay] = useState(false);
+
   // Create references for each Option
   const refs = {
     optionOne: useRef(null),
@@ -56,6 +66,15 @@ const Trial = (props: Screens.Trial): ReactElement => {
   function addPoints(participant: number, partner: number): void {
     setParticipantPoints(participantPoints + participant);
     setPartnerPoints(partnerPoints + partner);
+  }
+
+  /**
+   * Helper function to end the trial
+   * @param {string} option selected option
+   */
+  function endTrial(option: string): void {
+    // Bubble the selection handler
+    props.selectionHandler(option);
   }
 
   /**
@@ -103,7 +122,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
     );
 
     // Call the selection handler
-    selectionHandler(option, setTrialHeader);
+    selectionHandler(option);
   }
 
   /**
@@ -113,8 +132,22 @@ const Trial = (props: Screens.Trial): ReactElement => {
    */
   function selectionHandler(
       option: 'Option 1' | 'Option 2',
-      headerStateFunction: (header: string) => void,
   ) {
+    // Update the selection
+    setSelected(option);
+
+    // Show the tutorial overlay if enabled
+    setShowOverlay(props.isTutorial);
+  }
+
+  /**
+   * Transition function to end the trial
+   */
+  function transition() {
+    // Hide the overlay if shown
+    setShowOverlay(false);
+    consola.info('Applying transition...');
+
     // Get the references to the nodes
     const optionOneNode = refs.optionOne.current as HTMLElement;
     const optionTwoNode = refs.optionTwo.current as HTMLElement;
@@ -125,10 +158,10 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
     // Get the selected node object
     const selectedNode =
-        option === 'Option 1' ? optionOneNode : optionTwoNode;
+        selected === 'Option 1' ? optionOneNode : optionTwoNode;
     const unselectedNode =
         selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
-    const correctSelection = option === props.answer;
+    const correctSelection = selected === props.answer;
 
     // Check the stage of the trial
     switch (props.display) {
@@ -155,7 +188,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionTwoNode.style.pointerEvents = 'auto';
 
             // End the trial
-            props.selectionHandler(option);
+            endTrial(selected);
           }, 2000);
         }, 250);
         break;
@@ -164,9 +197,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
       // Player guessing partner choices, show feedback
       case 'playerGuess': {
         if (correctSelection === true) {
-          headerStateFunction('You chose correctly!');
+          setTrialHeader('You chose correctly!');
         } else {
-          headerStateFunction('You chose incorrectly.');
+          setTrialHeader('You chose incorrectly.');
         }
 
         // Timeout to change the color of the selected answer
@@ -198,12 +231,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionOneNode.style.pointerEvents = 'auto';
             optionTwoNode.style.pointerEvents = 'auto';
 
-
             // Reset the header state
             setTrialHeader(defaultHeader);
 
             // End the trial
-            props.selectionHandler(option);
+            endTrial(selected);
           }, 2000);
         }, 250);
         break;
@@ -306,6 +338,39 @@ const Trial = (props: Screens.Trial): ReactElement => {
           avatar={partnerAvatar}
         />
       </Grid>
+
+      {/* Tutorial overlay */}
+      {showOverlay &&
+        <Layer>
+          <Box pad='small' align='center'>
+            <Heading size='auto'>This is an example trial.</Heading>
+            <Text size='large'>
+              You chose <b>{selected}</b>. That means
+              you get {selected === 'Option 1' ?
+                  props.options.one.participant :
+                  props.options.two.participant
+              } points and your partner gets {selected === 'Option 1' ?
+                  props.options.one.partner :
+                  props.options.two.partner
+              } points.
+            </Text>
+            {/* Continue button */}
+            <Button
+              primary
+              color='button'
+              label='Continue'
+              size='large'
+              margin='medium'
+              icon={<LinkNext />}
+              reverse
+              onClick={() => {
+                // Invoke the inter-trial transition
+                transition();
+              }}
+            />
+          </Box>
+        </Layer>
+      }
     </Box>
   );
 };

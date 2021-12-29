@@ -70,6 +70,12 @@ jsPsych.plugins['intentions-game'] = (() => {
         default: '',
         description: 'The correct answer to select',
       },
+      isTutorial: {
+        type: jsPsych.plugins.parameterType.BOOLEAN,
+        pretty_name: 'Trial is a tutorial',
+        default: false,
+        description: 'Show feedback to participants',
+      },
       clearScreen: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
         pretty_name: 'Clear after trial',
@@ -125,6 +131,7 @@ jsPsych.plugins['intentions-game'] = (() => {
         // Setup the props
         screenProps = {
           display: trial.display,
+          isTutorial: trial.isTutorial,
           participantPoints: participantPoints,
           partnerPoints: partnerPoints,
           options: {
@@ -230,7 +237,7 @@ jsPsych.plugins['intentions-game'] = (() => {
     );
 
     /**
-     * Handle Button-press events in a particular trial
+     * Handle selection events in a particular trial
      * @param {'Option 1' | 'Option 2'} option selected option
      */
     function optionHandler(option: 'Option 1' | 'Option 2') {

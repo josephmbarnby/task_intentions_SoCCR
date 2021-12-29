@@ -98,7 +98,7 @@ const instructionsPracticeGames = [
         <p>
           Your point total at the end of this task will contribute to your
           overall point total to put you in with a chance of winning a
-          £10 bonus.
+          $x bonus.
         </p>
         <p>
           Click 'Next &gt;' to choose an avatar before playing <b>2</b> example
@@ -134,6 +134,7 @@ timeline.push({
   typeTwo: '',
   display: 'playerChoiceExample',
   answer: '',
+  isTutorial: true,
   clearScreen: false,
 });
 
@@ -147,6 +148,7 @@ timeline.push({
   typeTwo: '',
   display: 'playerChoiceExample',
   answer: '',
+  isTutorial: true,
   clearScreen: true,
 });
 
@@ -288,7 +290,6 @@ for (let i = 0; i < dataCollection.length; i++) {
                 from that will determine the amount of points you and your
                 partner receive. However, in this part of the task, <b>
                 you need to guess which option your partner will choose</b>.
-                <h3>Good luck!</h3>
               </p>
             </>
         ),
@@ -321,6 +322,7 @@ for (let i = 0; i < dataCollection.length; i++) {
                   winning a bonus.
                 </b>
               </p>
+              <h3>Good luck!</h3>
             </>
         ),
       ];

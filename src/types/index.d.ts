@@ -35,5 +35,6 @@ declare type Trial = {
   typeTwo: string;
   avatar: 0;
   answer: string;
+  isTutorial: boolean;
   clearScreen: boolean;
 };
