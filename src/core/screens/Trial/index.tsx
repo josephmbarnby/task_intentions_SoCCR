@@ -138,6 +138,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
     // Show the tutorial overlay if enabled
     setShowOverlay(props.isTutorial);
+
+    // Invoke the transition if non-tutorial trial
+    if (props.isTutorial === false) {
+      transition();
+    }
   }
 
   /**
@@ -146,7 +151,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
   function transition() {
     // Hide the overlay if shown
     setShowOverlay(false);
-    consola.info('Applying transition...');
 
     // Get the references to the nodes
     const optionOneNode = refs.optionOne.current as HTMLElement;
