@@ -43,8 +43,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
     setPartnerPoints,
   ] = useState(props.partnerPoints);
 
-  // Selection state
-  const [selected, setSelected] = useState('');
+  // Store the selection
+  let selected: string;
 
   // Overlay state
   const [showOverlay, setShowOverlay] = useState(false);
@@ -131,7 +131,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
       option: 'Option 1' | 'Option 2',
   ) {
     // Update the selection
-    setSelected(option);
+    selected = option;
 
     // Show the tutorial overlay if enabled
     setShowOverlay(props.isTutorial);
