@@ -258,31 +258,43 @@ const Trial = (props: Screens.Trial): ReactElement => {
       case 'playerChoice':
       case 'playerChoiceTutorial':
       case 'playerChoice2': {
-        text = <Text size='large'>
-          You chose <b>{selected}</b>. That means
-          you get {selected === 'Option 1' ?
-              props.options.one.participant :
-              props.options.two.participant
-          } points and your partner gets {selected === 'Option 1' ?
-              props.options.one.partner :
-              props.options.two.partner
-          } points.
-        </Text>;
+        text =
+          <Box pad='small' align='center'>
+            <Text size='large' margin='medium'>
+              You chose <b>{selected}</b>.
+            </Text>
+            <Text size='large' margin='medium'>
+              That means
+              you get {selected === 'Option 1' ?
+                  props.options.one.participant :
+                  props.options.two.participant
+              } points and your partner gets {selected === 'Option 1' ?
+                  props.options.one.partner :
+                  props.options.two.partner
+              } points.
+            </Text>
+          </Box>;
         break;
       }
       case 'playerGuess':
       case 'playerGuessTutorial': {
-        text = <Text size='large'>
-          {selected === props.answer ? 'Correct! ' : 'Incorrect. '}
-          Your partner chose <b>{props.answer}</b>. That means
-          you get {props.answer === 'Option 1' ?
-              props.options.one.participant :
-              props.options.two.participant
-          } points and your partner gets {props.answer === 'Option 1' ?
-              props.options.one.partner :
-              props.options.two.partner
-          } points.
-        </Text>;
+        text =
+          <Box pad='small' align='center'>
+            <Text size='large' margin='medium'>
+              {selected === props.answer ? 'Correct! ' : 'Incorrect. '}
+              Your partner chose <b>{props.answer}</b>.
+            </Text>
+            <Text size='large' margin='medium'>
+              That means
+              you get {props.answer === 'Option 1' ?
+                  props.options.one.participant :
+                  props.options.two.participant
+              } points and your partner gets {props.answer === 'Option 1' ?
+                  props.options.one.partner :
+                  props.options.two.partner
+              } points.
+            </Text>
+          </Box>;
         break;
       }
     }
@@ -390,13 +402,13 @@ const Trial = (props: Screens.Trial): ReactElement => {
       {showOverlay &&
         <Layer>
           <Box pad='small' align='center'>
-            <Heading size='auto'>This is an example trial.</Heading>
+            <Heading size='auto'>Practice Trial</Heading>
             {overlayText()}
             {/* Continue button */}
             <Button
               primary
               color='button'
-              label='Continue'
+              label='Next'
               size='large'
               margin='medium'
               icon={<LinkNext />}

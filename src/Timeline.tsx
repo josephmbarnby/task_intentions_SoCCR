@@ -47,6 +47,9 @@ const instructionsPracticeGames = [
         <h2>
           <i>Please read the instructions carefully!</i>
         </h2>
+        <h2>
+          Overview
+        </h2>
         <p>
           You will now take part in a series
           of interactions with <b>ONE</b> partner.
@@ -55,7 +58,7 @@ const instructionsPracticeGames = [
           You will be matched with your partner in a moment.
         </p>
         <p>
-          You will play your partner for <b>18</b> trials.
+          You will play your partner for <b>36</b> trials.
         </p>
         <p>
           Their ID and your ID has been hidden to preserve anonymity.
@@ -74,25 +77,38 @@ const instructionsPracticeGames = [
   markup(
       <>
         <h1>Instructions</h1>
+        <h2>
+          Overview
+        </h2>
         <p>
-          In this part of the task you will be choosing
-          between the two options over 18 trials.
+          In the first part of the task, <i>you</i> will be choosing
+          between the two options over 36 trials.
         </p>
         <p>
           In the second part of the task, you will play with
-          a <b>new partner</b> for 36 trials where the new partner
-          will choose between the two options.
+          a <b>new partner</b> for 54 trials where <i>new
+          partner</i> will choose between the two options.
         </p>
         <p>
-          So, in one half of the task you choose the options and in
-          the other half of the task your partner chooses the options.
+          In the third part of the task, you will play
+          with <b>another new partner</b> for 36 trials
+          where <i>you</i> will be choosing between the
+          two options.
         </p>
         <p>
-          Remember that the partners you face in each half of the task
+          So, in the first part of the task you choose the options, in
+          the other part of the task your partner chooses the options,
+          and in the third part of the task you choose the options.
+        </p>
+        <h2>
+          Before you continue
+        </h2>
+        <p>
+          Remember that the partners you face in each part of the task
           are different people.
         </p>
         <p>
-          Instructions for this second half will follow after the first part
+          Instructions for this second part will follow after the first part
           of this game.
         </p>
         <p>
@@ -101,7 +117,7 @@ const instructionsPracticeGames = [
           $x bonus.
         </p>
         <p>
-          Click 'Next &gt;' to choose an avatar before playing <b>2</b> example
+          Click 'Next &gt;' to choose an avatar before playing <b>2</b> tutorial
           trials.
         </p>
       </>
@@ -323,6 +339,7 @@ for (let i = 0; i < dataCollection.length; i++) {
                 </b>
               </p>
               <h3>Good luck!</h3>
+              <p>Press 'Next &gt;' to continue!</p>
             </>
         ),
       ];
@@ -374,7 +391,7 @@ for (let i = 0; i < dataCollection.length; i++) {
               <>
                 <h1>Instructions</h1>
                 <p>You will now be matched with a partner.</p>
-                <p>Press 'Next &gt;' to begin!</p>
+                <p>Press 'Next &gt;' to continue!</p>
               </>
           ),
         ],
@@ -402,10 +419,23 @@ for (let i = 0; i < dataCollection.length; i++) {
         previous.clearScreen = true;
       }
 
-      // Add a summary screen
+      // Summary screen
       timeline.push({
         type: Configuration.pluginName,
         display: 'summary',
+      });
+
+      // Inference screen
+      timeline.push({
+        type: Configuration.pluginName,
+        display: 'inference',
+      });
+
+      // Classification screen
+      timeline.push({
+        type: Configuration.pluginName,
+        display: 'classification',
+        clearScreen: true,
       });
 
       // Agency screen
@@ -413,12 +443,6 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: Configuration.pluginName,
         display: 'agency',
         clearScreen: true,
-      });
-
-      // Inference screen
-      timeline.push({
-        type: Configuration.pluginName,
-        display: 'inference',
       });
 
       // Add the second break instructions
@@ -431,10 +455,11 @@ for (let i = 0; i < dataCollection.length; i++) {
                 You have played all your trials with your second partner!
               </p>
               <p>
-                Now, you will be matched with a new partner. For the next
-                 set of trials, you will get to choose how you split the points.
+                Now, you will be matched with a new partner. For this final
+                part, just like the first part, you will get to choose how
+                you split the points.
               </p>
-              <h3>Good luck!</h3>
+              <p>Press 'Next &gt;' to continue!</p>
             </>
         ),
       ];
@@ -507,12 +532,6 @@ timeline.push({
 timeline.push({
   type: Configuration.pluginName,
   display: 'agency',
-});
-
-timeline.push({
-  type: Configuration.pluginName,
-  display: 'classification',
-  clearScreen: true,
 });
 
 // Configure and start the experiment
