@@ -29,9 +29,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
       'How will you split the points?' :
       'How will your parter split the points?';
 
-  // Update the header if this is a tutorial
-  if (props.isTutorial) {
-    defaultHeader = `(Example) ${defaultHeader}`;
+  // Update the header if this is a practice
+  if (props.isPractice) {
+    defaultHeader = `(Practice) ${defaultHeader}`;
   }
 
   const [
@@ -147,11 +147,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
     selectedOption = option;
     setOverlayContent(getOverlayContent());
 
-    // Show the tutorial overlay if enabled
-    setShowOverlay(props.isTutorial);
+    // Show the practice overlay if enabled
+    setShowOverlay(props.isPractice);
 
-    // Invoke the transition if non-tutorial trial
-    if (props.isTutorial === false) {
+    // Invoke the transition if non-practice trial
+    if (props.isPractice === false) {
       transition();
     }
   }
@@ -185,7 +185,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
     switch (props.display) {
       // Simple choice of the player
       case 'playerChoice':
-      case 'playerChoiceTutorial':
+      case 'playerChoicePractice':
       case 'playerChoice2': {
         // Timeout to change the opacity of the options
         window.setTimeout(() => {
@@ -214,7 +214,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
       // Player guessing partner choices, show feedback
       case 'playerGuess':
-      case 'playerGuessTutorial': {
+      case 'playerGuessPractice': {
         if (correctSelection === true) {
           setTrialHeader('You chose correctly!');
         } else {
@@ -264,7 +264,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   /**
    * Generate and return the content to display in the overlay
-   * shown in tutorial-type trials
+   * shown in practice-type trials
    * @return {ReactElement}
    */
   function getOverlayContent(): ReactElement {
@@ -273,7 +273,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
     switch (props.display) {
       // Simple choice of the player
       case 'playerChoice':
-      case 'playerChoiceTutorial':
+      case 'playerChoicePractice':
       case 'playerChoice2': {
         content =
           <Box pad='small' align='center'>
@@ -309,7 +309,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
         break;
       }
       case 'playerGuess':
-      case 'playerGuessTutorial': {
+      case 'playerGuessPractice': {
         content =
           <Box pad='small' align='center'>
             <Text size='large' margin='medium'>
@@ -360,7 +360,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   // Partner avatar
   let partnerAvatar: string;
-  if (props.display.endsWith('Tutorial')) {
+  if (props.display.toLowerCase().endsWith('practice')) {
     partnerAvatar = 'example';
   } else {
     // Get the global state of the partner avatar
@@ -445,7 +445,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
         />
       </Grid>
 
-      {/* Tutorial overlay */}
+      {/* Practice overlay */}
       {showOverlay &&
         <Layer>
           <Box pad='small' align='center'>

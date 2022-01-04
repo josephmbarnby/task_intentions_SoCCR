@@ -19,7 +19,7 @@ declare namespace Screens {
 
   interface Trial {
     display: Display;
-    isTutorial: boolean;
+    isPractice: boolean;
     participantPoints: number;
     partnerPoints: number;
     options: {

@@ -70,9 +70,9 @@ jsPsych.plugins['intentions-game'] = (() => {
         default: '',
         description: 'The correct answer to select',
       },
-      isTutorial: {
+      isPractice: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
-        pretty_name: 'Trial is a tutorial',
+        pretty_name: 'Trial is a practice trial',
         default: false,
         description: 'Show feedback to participants',
       },
@@ -125,14 +125,14 @@ jsPsych.plugins['intentions-game'] = (() => {
     switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
       case 'playerChoice':
-      case 'playerChoiceTutorial':
+      case 'playerChoicePractice':
       case 'playerGuess':
-      case 'playerGuessTutorial':
+      case 'playerGuessPractice':
       case 'playerChoice2': {
         // Setup the props
         screenProps = {
           display: trial.display,
-          isTutorial: trial.isTutorial,
+          isPractice: trial.isPractice,
           participantPoints: participantPoints,
           partnerPoints: partnerPoints,
           options: {

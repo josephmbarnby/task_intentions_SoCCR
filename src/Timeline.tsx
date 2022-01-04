@@ -118,7 +118,7 @@ const instructionsPracticeGames = [
           $x bonus.
         </p>
         <p>
-          Click 'Next &gt;' to choose an avatar before playing <b>2</b> tutorial
+          Click 'Next &gt;' to choose an avatar before playing <b>2</b> practice
           trials.
         </p>
       </>
@@ -140,7 +140,7 @@ timeline.push({
   display: 'selection',
 });
 
-// Tutorial trials for 'playerChoice'
+// Practice trials for 'playerChoice'
 timeline.push({
   type: Configuration.pluginName,
   optionOneParticipant: 4,
@@ -149,9 +149,9 @@ timeline.push({
   optionTwoPartner: 6,
   typeOne: '',
   typeTwo: '',
-  display: 'playerChoiceTutorial',
+  display: 'playerChoicePractice',
   answer: '',
-  isTutorial: true,
+  isPractice: true,
   clearScreen: false,
 });
 
@@ -163,9 +163,9 @@ timeline.push({
   optionTwoPartner: 5,
   typeOne: '',
   typeTwo: '',
-  display: 'playerChoiceTutorial',
+  display: 'playerChoicePractice',
   answer: '',
-  isTutorial: true,
+  isPractice: true,
   clearScreen: true,
 });
 
@@ -367,7 +367,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         show_clickable_nav: true,
       });
 
-      // Tutorial trials for 'playerGuess'
+      // Practice trials for 'playerGuess'
       timeline.push({
         type: Configuration.pluginName,
         optionOneParticipant: 4,
@@ -376,9 +376,9 @@ for (let i = 0; i < dataCollection.length; i++) {
         optionTwoPartner: 6,
         typeOne: '',
         typeTwo: '',
-        display: 'playerGuessTutorial',
+        display: 'playerGuessPractice',
         answer: 'Option 1',
-        isTutorial: true,
+        isPractice: true,
         clearScreen: false,
       });
 
@@ -390,9 +390,9 @@ for (let i = 0; i < dataCollection.length; i++) {
         optionTwoPartner: 6,
         typeOne: '',
         typeTwo: '',
-        display: 'playerGuessTutorial',
+        display: 'playerGuessPractice',
         answer: 'Option 2',
-        isTutorial: true,
+        isPractice: true,
         clearScreen: true,
       });
 
@@ -566,6 +566,7 @@ timeline.push({
 timeline.push({
   type: Configuration.pluginName,
   display: 'agency',
+  clearScreen: true,
 });
 
 // Configure and start the experiment

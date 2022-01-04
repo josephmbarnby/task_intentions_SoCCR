@@ -1,7 +1,7 @@
 // The collection of display types
 declare type Display =
-    'playerChoice' | 'playerChoiceTutorial' | 'playerChoice2' | 'mid' | 'mid2' |
-    'playerGuess' | 'playerGuessTutorial' | 'matching' | 'matched' | 'selection' |
+    'playerChoice' | 'playerChoicePractice' | 'playerChoice2' | 'mid' | 'mid2' |
+    'playerGuess' | 'playerGuessPractice' | 'matching' | 'matched' | 'selection' |
     'inference' | 'agency' | 'classification' | 'summary';
 
 // The three individual types
@@ -35,6 +35,6 @@ declare type Trial = {
   typeTwo: string;
   avatar: 0;
   answer: 'Option 1' | 'Option 2';
-  isTutorial: boolean;
+  isPractice: boolean;
   clearScreen: boolean;
 };

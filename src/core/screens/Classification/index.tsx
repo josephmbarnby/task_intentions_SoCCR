@@ -13,6 +13,7 @@ import {LinkNext} from 'grommet-icons';
 const Classification = (props: Screens.Classification): ReactElement => {
   // Configure relevant states
   const [classification, setClassification] = React.useState('');
+  const [continueDisabled, setContinueDisabled] = React.useState(true);
 
   const partners = [
     'Trying to earn as much money as possible',
@@ -41,6 +42,10 @@ const Classification = (props: Screens.Classification): ReactElement => {
           options={partners}
           placeholder='Please select'
           onChange={({option}) => {
+            // Enable the continue button
+            setContinueDisabled(false);
+
+            // Update the selected classification
             setClassification(option);
           }}
           margin={{top: 'large'}}
@@ -54,7 +59,7 @@ const Classification = (props: Screens.Classification): ReactElement => {
         label='Continue'
         disabled={
           // Disabled until a partner type has been chosen
-          classification === null
+          continueDisabled
         }
         size='large'
         icon={<LinkNext />}
