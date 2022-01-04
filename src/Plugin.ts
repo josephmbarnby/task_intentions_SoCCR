@@ -246,20 +246,27 @@ jsPsych.plugins['intentions-game'] = (() => {
       const duration = endTime - startTime;
       trialData.trialDuration = duration;
 
-      if (option === 'Option 1') {
-        // Participant chose option 1
-        trialData.selectedOption = 1;
+      // Store the participant selection
+      trialData.selectedOption = option === 'Option 1' ? 1 : 2;
 
-        // Update the score with values of option 1
-        trialData.playerPoints = trial.optionOneParticipant;
-        trialData.partnerPoints = trial.optionOnePartner;
-      } else if (option === 'Option 2') {
-        // Participant chose option 2
-        trialData.selectedOption = 2;
-
-        // Update the score with values of option 2
-        trialData.playerPoints = trial.optionTwoParticipant;
-        trialData.partnerPoints = trial.optionTwoPartner;
+      // Points in the 'playerGuess' trials are handled differently
+      if (trial.display.toLowerCase().includes('guess')) {
+        // Add points from option partner selected
+        trialData.playerPoints = trial.answer === 'Option 1' ?
+            trial.optionOneParticipant :
+            trial.optionTwoParticipant;
+        trialData.partnerPoints = trial.answer === 'Option 1' ?
+            trial.optionOnePartner :
+            trial.optionTwoPartner;
+      } else {
+        // All other trials, add points from option participant selected
+        if (option === 'Option 1') {
+          trialData.playerPoints = trial.optionOneParticipant;
+          trialData.partnerPoints = trial.optionOnePartner;
+        } else {
+          trialData.playerPoints = trial.optionTwoParticipant;
+          trialData.partnerPoints = trial.optionTwoPartner;
+        }
       }
 
       // End trial

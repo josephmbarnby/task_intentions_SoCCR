@@ -34,7 +34,7 @@ declare type Trial = {
   typeOne: string;
   typeTwo: string;
   avatar: 0;
-  answer: string;
+  answer: 'Option 1' | 'Option 2';
   isTutorial: boolean;
   clearScreen: boolean;
 };

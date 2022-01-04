@@ -25,9 +25,15 @@ import {Configuration} from '../../../Configuration';
  */
 const Trial = (props: Screens.Trial): ReactElement => {
   // Header state
-  const defaultHeader = props.display !== 'playerGuess' ?
+  let defaultHeader = props.display !== 'playerGuess' ?
       'How will you split the points?' :
       'How will your parter split the points?';
+
+  // Update the header if this is a tutorial
+  if (props.isTutorial) {
+    defaultHeader = `(Example) ${defaultHeader}`;
+  }
+
   const [
     trialHeader,
     setTrialHeader,
@@ -43,11 +49,18 @@ const Trial = (props: Screens.Trial): ReactElement => {
     setPartnerPoints,
   ] = useState(props.partnerPoints);
 
-  // Store the selection
-  let selected: string;
-
-  // Overlay state
+  // Overlay visibility state
   const [showOverlay, setShowOverlay] = useState(false);
+
+  // Content of the overlay
+  const [
+    overlayContent,
+    setOverlayContent,
+  ] = useState(
+      <Text>Oops! There should be content here.</Text>
+  );
+  let selectedOption = '';
+
 
   // Create references for each Option
   const refs = {
@@ -84,7 +97,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
     let participantPoints = 0;
     let partnerPoints = 0;
     // Check what Phase is running
-    if (props.display !== 'playerGuess') {
+    if (!props.display.toLowerCase().includes('guess')) {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
@@ -130,8 +143,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
   function selectionHandler(
       option: 'Option 1' | 'Option 2',
   ) {
-    // Update the selection
-    selected = option;
+    // Update the selected option and the overlay text
+    selectedOption = option;
+    setOverlayContent(getOverlayContent());
 
     // Show the tutorial overlay if enabled
     setShowOverlay(props.isTutorial);
@@ -146,6 +160,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
    * Transition function to end the trial
    */
   function transition() {
+    // Pull the selection into a function-scoped variable
+    const trialSelection = selectedOption;
+
     // Hide the overlay if shown
     setShowOverlay(false);
 
@@ -159,10 +176,10 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
     // Get the selected node object
     const selectedNode =
-        selected === 'Option 1' ? optionOneNode : optionTwoNode;
+        selectedOption === 'Option 1' ? optionOneNode : optionTwoNode;
     const unselectedNode =
         selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
-    const correctSelection = selected === props.answer;
+    const correctSelection = selectedOption === props.answer;
 
     // Check the stage of the trial
     switch (props.display) {
@@ -189,7 +206,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionTwoNode.style.pointerEvents = 'auto';
 
             // End the trial
-            endTrial(selected);
+            endTrial(trialSelection);
           }, 2000);
         }, 250);
         break;
@@ -237,7 +254,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
             setTrialHeader(defaultHeader);
 
             // End the trial
-            endTrial(selected);
+            endTrial(trialSelection);
           }, 2000);
         }, 250);
         break;
@@ -246,42 +263,57 @@ const Trial = (props: Screens.Trial): ReactElement => {
   }
 
   /**
-   * Generate and return the text to display in the overlay
+   * Generate and return the content to display in the overlay
    * shown in tutorial-type trials
    * @return {ReactElement}
    */
-  function overlayText(): ReactElement {
-    let text: ReactElement;
+  function getOverlayContent(): ReactElement {
+    let content: ReactElement;
 
     switch (props.display) {
       // Simple choice of the player
       case 'playerChoice':
       case 'playerChoiceTutorial':
       case 'playerChoice2': {
-        text =
+        content =
           <Box pad='small' align='center'>
             <Text size='large' margin='medium'>
-              You chose <b>{selected}</b>.
+              You chose <b>{selectedOption}</b>.
             </Text>
             <Text size='large' margin='medium'>
               That means
-              you get {selected === 'Option 1' ?
+              you get {selectedOption === 'Option 1' ?
                   props.options.one.participant :
                   props.options.two.participant
-              } points and your partner gets {selected === 'Option 1' ?
+              } points and your partner gets {selectedOption === 'Option 1' ?
                   props.options.one.partner :
                   props.options.two.partner
               } points.
             </Text>
+
+            {/* Continue button */}
+            <Button
+              primary
+              color='button'
+              label='Next'
+              size='large'
+              margin='medium'
+              icon={<LinkNext />}
+              reverse
+              onClick={() => {
+                // Invoke the inter-trial transition
+                transition();
+              }}
+            />
           </Box>;
         break;
       }
       case 'playerGuess':
       case 'playerGuessTutorial': {
-        text =
+        content =
           <Box pad='small' align='center'>
             <Text size='large' margin='medium'>
-              {selected === props.answer ? 'Correct! ' : 'Incorrect. '}
+              {selectedOption === props.answer ? 'Correct! ' : 'Incorrect. '}
               Your partner chose <b>{props.answer}</b>.
             </Text>
             <Text size='large' margin='medium'>
@@ -294,12 +326,27 @@ const Trial = (props: Screens.Trial): ReactElement => {
                   props.options.two.partner
               } points.
             </Text>
+
+            {/* Continue button */}
+            <Button
+              primary
+              color='button'
+              label='Next'
+              size='large'
+              margin='medium'
+              icon={<LinkNext />}
+              reverse
+              onClick={() => {
+                // Invoke the inter-trial transition
+                transition();
+              }}
+            />
           </Box>;
         break;
       }
     }
 
-    return text;
+    return content;
   }
 
   // Get the participant's and the partner's avatars
@@ -403,21 +450,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
         <Layer>
           <Box pad='small' align='center'>
             <Heading size='auto'>Practice Trial</Heading>
-            {overlayText()}
-            {/* Continue button */}
-            <Button
-              primary
-              color='button'
-              label='Next'
-              size='large'
-              margin='medium'
-              icon={<LinkNext />}
-              reverse
-              onClick={() => {
-                // Invoke the inter-trial transition
-                transition();
-              }}
-            />
+            {/* Display the overlay content */}
+            {overlayContent}
           </Box>
         </Layer>
       }

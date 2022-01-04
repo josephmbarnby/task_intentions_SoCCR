@@ -108,7 +108,7 @@ const instructionsPracticeGames = [
           are different people.
         </p>
         <p>
-          Instructions for this second part will follow after the first part
+          Instructions for the second part will follow after the first part
           of this game.
         </p>
         <p>
@@ -263,12 +263,6 @@ for (let i = 0; i < dataCollection.length; i++) {
   // Check the trial type
   switch (row.display) {
     case 'mid': {
-      // Break after Phase 1
-      // Clear the screen after the previous trial
-      if (previous.type === Configuration.pluginName) {
-        previous.clearScreen = true;
-      }
-
       // Add a summary screen
       timeline.push({
         type: Configuration.pluginName,
@@ -282,6 +276,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         clearScreen: true,
       });
 
+      // Break after Phase 1
       // Add the instructions for the first break
       const firstBreakInstructions = [
         markup(
