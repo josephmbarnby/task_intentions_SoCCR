@@ -172,7 +172,7 @@ timeline.push({
 // Attention check question
 timeline.push({
   type: 'attention-check',
-  question: 'In this task, ' +
+  question: 'In this part of the task, ' +
       'who will be choosing the points you and your partner get?',
   options: [
     'A lottery',
@@ -184,7 +184,7 @@ timeline.push({
   confirmation: true,
   feedback_correct: 'Correct! ' +
       'You will be choosing the points you and your partner get.',
-  feedback_incorrect: 'Incorrect. Please review the instructions.',
+  feedback_incorrect: 'Incorrect. You will be choosing the points.',
 });
 
 // Insert instructions to let the participant know they will
@@ -394,6 +394,26 @@ for (let i = 0; i < dataCollection.length; i++) {
         answer: 'Option 2',
         isTutorial: true,
         clearScreen: true,
+      });
+
+      // Attention check question
+      timeline.push({
+        type: 'attention-check',
+        question: 'In this part of task, ' +
+            'who will be choosing the points you and your partner get?',
+        options: [
+          'A lottery',
+          'Me',
+          'My partner',
+        ],
+        options_radio: true,
+        option_correct: 2,
+        confirmation: true,
+        feedback_correct: 'Correct! ' +
+            'Your partner will be choosing the points you and your ' +
+            'partner get.',
+        feedback_incorrect: 'Incorrect. Your partner will be choosing ' +
+            'the points.',
       });
 
       // Insert instructions to let the participant know they will
