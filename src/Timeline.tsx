@@ -21,6 +21,7 @@ import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Import jsPsych plugins
 import 'jspsych/plugins/jspsych-instructions';
+import 'jspsych-attention-check';
 
 // Import the custom plugin before adding it to the timeline
 import './Plugin';
@@ -166,6 +167,24 @@ timeline.push({
   answer: '',
   isTutorial: true,
   clearScreen: true,
+});
+
+// Attention check question
+timeline.push({
+  type: 'attention-check',
+  question: 'In this task, ' +
+      'who will be choosing the points you and your partner get?',
+  options: [
+    'A lottery',
+    'Me',
+    'My partner',
+  ],
+  options_radio: true,
+  option_correct: 1,
+  confirmation: true,
+  feedback_correct: 'Correct! ' +
+      'You will be choosing the points you and your partner get.',
+  feedback_incorrect: 'Incorrect. Please review the instructions.',
 });
 
 // Insert instructions to let the participant know they will
