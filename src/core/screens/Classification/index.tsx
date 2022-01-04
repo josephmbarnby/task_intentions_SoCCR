@@ -5,9 +5,6 @@ import React, {ReactElement} from 'react';
 import {Box, Button, Text, Select} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
-// Custom components
-import IconAvatar from '../../components/IconAvatar';
-
 /**
  * Generate layout of Classification Screen (Classification trial)
  * @param {Screens.Classification} props component props
@@ -15,7 +12,7 @@ import IconAvatar from '../../components/IconAvatar';
  */
 const Classification = (props: Screens.Classification): ReactElement => {
   // Configure relevant states
-  const [classification, setClassification] = React.useState(null);
+  const [classification, setClassification] = React.useState('');
 
   const partners = [
     'Trying to earn as much money as possible',
@@ -43,8 +40,8 @@ const Classification = (props: Screens.Classification): ReactElement => {
         <Select
           options={partners}
           placeholder='Please select'
-          onChange={({partner}) => {
-            setClassification(partner);
+          onChange={({option}) => {
+            setClassification(option);
           }}
           margin={{top: 'large'}}
           size='medium'
