@@ -86,18 +86,18 @@ jsPsych.plugins['intentions-game'] = (() => {
   };
 
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
-    // Setup data storage
-    const trialData = {
-      display: trial.display,
-      playerPoints: null,
-      partnerPoints: null,
-      selectedOption: null,
-      inferenceResponseOne: null,
-      inferenceResponseTwo: null,
-      agencyResponse: null,
-      classification: null,
-      trialDuration: null,
-      correctGuess: null,
+    // Setup the trial data to be stored
+    const trialData: Data = {
+      display: trial.display, // the display type
+      playerPoints: null, // number of points received by the participant
+      partnerPoints: null, // number of points received by the partner
+      selectedOption: null, // option selected by participant
+      correctGuess: null, // whether or not the participant guessed correctly
+      inferenceResponseOne: null, // float response to inference question one
+      inferenceResponseTwo: null, // float response to inference question two
+      agencyResponse: null, // float response to agency question
+      classification: null, // classification string selected by participant
+      trialDuration: null, // duration of the trial in ms
     };
 
     // Debug statement
@@ -246,9 +246,9 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     /**
      * Handle selection events in a particular trial
-     * @param {'Option 1' | 'Option 2'} option selected option
+     * @param {Options} option selected option
      */
-    function optionHandler(option: 'Option 1' | 'Option 2') {
+    function optionHandler(option: Options) {
       const endTime = performance.now();
       const duration = endTime - startTime;
       trialData.trialDuration = duration;

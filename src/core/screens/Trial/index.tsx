@@ -90,9 +90,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
   /**
    * Update the number of points of the participant and the
    * partner. The update process depends on the phase.
-   * @param {'Option 1' | 'Option 2'} option selected option
+   * @param {Options} option selected option
    */
-  function updatePoints(option: 'Option 1' | 'Option 2'): void {
+  function updatePoints(option: Options): void {
     // Points to apply
     let participantPoints = 0;
     let partnerPoints = 0;
@@ -137,12 +137,10 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   /**
    * Selection handler
-   * @param {'Option 1' | 'Option 2'} option the selected option
+   * @param {Options} option the selected option
    * @param {Function} headerStateFunction function
    */
-  function selectionHandler(
-      option: 'Option 1' | 'Option 2',
-  ) {
+  function selectionHandler(option: Options) {
     // Update the selected option and the overlay text
     selectedOption = option;
     setOverlayContent(getOverlayContent());
