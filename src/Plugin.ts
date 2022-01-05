@@ -100,7 +100,13 @@ jsPsych.plugins['intentions-game'] = (() => {
       correctGuess: null,
     };
 
+    // Debug statement
     consola.debug(`Running trial stage '${trial.display}'`);
+
+    // Disable keyboard input beforehand
+    document.onkeydown = () => {
+      return false;
+    };
 
     // Generate and configure props based on the stage
     let screenProps:
