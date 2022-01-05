@@ -97,6 +97,7 @@ jsPsych.plugins['intentions-game'] = (() => {
       agencyResponse: null,
       classification: null,
       trialDuration: null,
+      correctGuess: null,
     };
 
     consola.debug(`Running trial stage '${trial.display}'`);
@@ -245,6 +246,10 @@ jsPsych.plugins['intentions-game'] = (() => {
       const endTime = performance.now();
       const duration = endTime - startTime;
       trialData.trialDuration = duration;
+
+      // Check if they chose the correct option. We record this
+      // for all trials, but we only need 'playerGuess'-type trials
+      trialData.correctGuess = option === trial.answer ? 1 : 0;
 
       // Store the participant selection
       trialData.selectedOption = option === 'Option 1' ? 1 : 2;

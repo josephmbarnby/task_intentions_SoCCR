@@ -39,56 +39,53 @@ const Summary = (props: Screens.Summary): ReactElement => {
         fill='horizontal'
       />
       <Layer plain full>
-        <Grid
-          rows={['auto', 'flex', 'auto']}
-          columns={['auto', 'auto']}
-          gap='large'
-          margin='xlarge'
-          areas={[
-            {name: 'headingArea', start: [0, 0], end: [1, 0]},
-            {name: 'participantArea', start: [0, 1], end: [0, 1]},
-            {name: 'partnerArea', start: [1, 1], end: [1, 1]},
-            {name: 'continueArea', start: [0, 2], end: [1, 2]},
-          ]}
-          fill='vertical'
+        {/* Heading */}
+        <Heading
+          level='1'
+          fill
+          alignSelf='center'
+          margin={{
+            top: 'large',
+          }}
         >
-          {/* Heading */}
-          <Box
-            gridArea='headingArea'
-            justify='center'
-            align='center'
+          Summary
+        </Heading>
+        <Box
+          alignContent='center'
+          fill
+        >
+          {/* Participant and partner info */}
+          <Grid
+            rows={['flex']}
+            columns={['flex', 'flex']}
+            gap='small'
+            areas={[
+              {name: 'participantArea', start: [0, 0], end: [0, 0]},
+              {name: 'partnerArea', start: [1, 0], end: [1, 0]},
+            ]}
             fill
           >
-            <Heading
-              level='1'
-              fill
-            >
-              Summary
-            </Heading>
-          </Box>
+            {/* Participant */}
+            <PlayerAvatar
+              gridArea='participantArea'
+              name='You'
+              avatar={Configuration.avatars[participantAvatar]}
+              points={participantPoints}
+            />
 
-          {/* Participant */}
-          <PlayerAvatar
-            gridArea='participantArea'
-            name='You'
-            avatar={Configuration.avatars[participantAvatar]}
-            points={participantPoints}
-          />
-
-          {/* Partner */}
-          <PlayerAvatar
-            gridArea='partnerArea'
-            name='Partner'
-            avatar={Configuration.partners[partnerAvatar]}
-            points={partnerPoints}
-          />
-
+            {/* Partner */}
+            <PlayerAvatar
+              gridArea='partnerArea'
+              name='Partner'
+              avatar={Configuration.partners[partnerAvatar]}
+              points={partnerPoints}
+            />
+          </Grid>
           {/* Continue button */}
           <Box
-            gridArea='continueArea'
             justify='center'
             align='center'
-            fill
+            margin='small'
           >
             <Button
               primary
@@ -103,7 +100,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
               }}
             />
           </Box>
-        </Grid>
+        </Box>
       </Layer>
     </>
   );
