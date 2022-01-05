@@ -46,39 +46,6 @@ const instructionsPracticeGames = [
       <>
         <h1>Instructions</h1>
         <h2>
-          <i>Please read the instructions carefully!</i>
-        </h2>
-        <h2>
-          Overview
-        </h2>
-        <p>
-          You will now take part in a series
-          of interactions with <b>ONE</b> partner.
-        </p>
-        <p>
-          You will be matched with your partner in a moment.
-        </p>
-        <p>
-          You will play your partner for <b>36</b> trials.
-        </p>
-        <p>
-          Their ID and your ID has been hidden to preserve anonymity.
-        </p>
-        <p>
-          In each trial you will <i>choose between two options</i> that
-          determine how many points you and your partner will
-          receive in that trial.
-        </p>
-        <p>
-          The total number of points you earn in this task will
-          be the sum of the points you earn in each trial.
-        </p>
-      </>
-  ),
-  markup(
-      <>
-        <h1>Instructions</h1>
-        <h2>
           Overview
         </h2>
         <p>

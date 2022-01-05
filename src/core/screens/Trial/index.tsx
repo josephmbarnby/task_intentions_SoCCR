@@ -25,7 +25,7 @@ import {Configuration} from '../../../Configuration';
  */
 const Trial = (props: Screens.Trial): ReactElement => {
   // Header state
-  let defaultHeader = props.display !== 'playerGuess' ?
+  let defaultHeader = props.display.startsWith('playerGuess') ?
       'How will you split the points?' :
       'How will your parter split the points?';
 
