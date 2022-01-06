@@ -9,7 +9,7 @@ import {Box, Button, Grid, Heading, Layer, WorldMap} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import PlayerAvatar from '../../components/PlayerAvatar';
+import PlayerCard from '../../components/PlayerCard';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
@@ -66,7 +66,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
             fill
           >
             {/* Participant */}
-            <PlayerAvatar
+            <PlayerCard
               gridArea='participantArea'
               name='You'
               avatar={Configuration.avatars[participantAvatar]}
@@ -74,7 +74,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
             />
 
             {/* Partner */}
-            <PlayerAvatar
+            <PlayerCard
               gridArea='partnerArea'
               name='Partner'
               avatar={Configuration.partners[partnerAvatar]}

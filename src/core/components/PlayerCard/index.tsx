@@ -12,20 +12,12 @@ import Avatar from 'boring-avatars';
 // Parameters
 import {AVATAR_VARIANT, AVATAR_COLORS} from '../../Constants';
 
-// Types
-declare type PlayerAvatar = {
-  gridArea: string;
-  name: string;
-  points: number;
-  avatar: string;
-};
-
 /**
- * Generate a PlayerAvatar component
- * @param {PlayerAvatar} props component props
+ * Generate a PlayerCard component
+ * @param {PlayerCard} props component props
  * @return {ReactElement}
  */
-const PlayerAvatar = (props: PlayerAvatar): ReactElement => {
+const PlayerCard = (props: Components.PlayerCard): ReactElement => {
   return (
     <Box
       gridArea={props.gridArea}
@@ -42,14 +34,14 @@ const PlayerAvatar = (props: PlayerAvatar): ReactElement => {
         columns={['auto']}
         areas={[
           {name: 'playerNameArea', start: [0, 0], end: [0, 0]},
-          {name: 'playerAvatarArea', start: [0, 1], end: [0, 1]},
+          {name: 'PlayerCardArea', start: [0, 1], end: [0, 1]},
           {name: 'playerPointsArea', start: [0, 2], end: [0, 2]},
         ]}
       >
         <Box
           align='center'
           animation={['pulse']}
-          gridArea='playerAvatarArea'
+          gridArea='PlayerCardArea'
         >
           <Avatar
             size={128}
@@ -89,4 +81,4 @@ const PlayerAvatar = (props: PlayerAvatar): ReactElement => {
   );
 };
 
-export default PlayerAvatar;
+export default PlayerCard;

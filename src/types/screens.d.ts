@@ -7,7 +7,8 @@ declare type Switcher = {
       Screens.Classification;
 };
 
-// Screens and the props required
+// Declare a 'Screens' namespace to define props for each
+// screen used in the experiment.
 declare namespace Screens {
   interface Matched {
     display: Display;

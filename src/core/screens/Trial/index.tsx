@@ -8,7 +8,7 @@ import TextTransition, {presets} from 'react-text-transition';
 
 // Custom components
 import Option from '../../components/Option';
-import PlayerAvatar from '../../components/PlayerAvatar';
+import PlayerCard from '../../components/PlayerCard';
 
 // Access theme constants directly
 import {Theme} from '../../Theme';
@@ -421,7 +421,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
       </Heading>
 
       {/* Participant's Avatar */}
-      <PlayerAvatar
+      <PlayerCard
         gridArea='playerArea'
         name='You'
         points={participantPoints}
@@ -471,7 +471,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
       </Box>
 
       {/* Partner's Avatar */}
-      <PlayerAvatar
+      <PlayerCard
         gridArea='partnerArea'
         name='Partner'
         points={partnerPoints}
