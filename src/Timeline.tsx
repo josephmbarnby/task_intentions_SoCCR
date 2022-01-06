@@ -42,35 +42,67 @@ if (Configuration.fullscreen === true) {
 }
 
 const instructionsPracticeGames = [
+  // Overall instructions
   markup(
       <>
         <h1>Instructions</h1>
+        {/* Overview */}
         <h2>
           Overview
         </h2>
         <p>
-          In the first part of the task, <i>you</i> will be choosing
+          In this task, you will be choosing between two options to split
+          sets of points between you and a partner.
+        </p>
+        <p>
+          The task has three parts. You are matched with
+          a <b>different</b> partner before each part.
+        </p>
+        <br/>
+
+        {/* Structure */}
+        <h2>
+          Structure
+        </h2>
+        <p>
+          In part one of the task, <b>you</b> will be choosing
           between the two options over 36 trials.
         </p>
         <p>
-          In the second part of the task, you will play with
-          a <b>new partner</b> for 54 trials where <i>new
-          partner</i> will choose between the two options.
+          In part two of the task, you will play with
+          a <b>new partner</b> for 54 trials where the
+          new <b>partner</b> will choose between the two options.
         </p>
         <p>
-          In the third part of the task, you will play
+          In part three of the task, you will play
           with <b>another new partner</b> for 36 trials
-          where <i>you</i> will be choosing between the
+          where <b>you</b> will be choosing between the
           two options.
         </p>
+        <br/>
         <p>
           So, in the first part of the task you choose the options, in
           the other part of the task your partner chooses the options,
-          and in the third part of the task you choose the options.
+          and in part three of the task you choose the options.
         </p>
+        <p>
+          At the end of each part, you will be shown a summary
+          of how many points you and your partner accumulated
+          in that part.
+        </p>
+      </>
+  ),
+  // Part one instructions
+  markup(
+      <>
+        <h1>Instructions</h1>
         <h2>
-          Before you continue
+          Part one
         </h2>
+        <p>
+          In part one of the task, <b>you</b> will be choosing
+          between the two options over 36 trials.
+        </p>
         <p>
           Remember that the partners you face in each part of the task
           are different people.
@@ -79,14 +111,18 @@ const instructionsPracticeGames = [
           Instructions for the second part will follow after the first part
           of this game.
         </p>
+        <br/>
+
+        {/* Bonus points */}
         <p>
           Your point total at the end of this task will contribute to your
           overall point total to put you in with a chance of winning a
           $x bonus.
         </p>
         <p>
-          Click 'Next &gt;' to choose an avatar before playing <b>2</b> practice
-          trials.
+          Click 'Next &gt;' to choose an avatar.
+          You will play <b>2</b> practice
+          trials after choosing your avatar.
         </p>
       </>
   ),
@@ -162,8 +198,12 @@ timeline.push({
     markup(
         <>
           <h1>Instructions</h1>
-          <p>You will now be matched with a partner.</p>
-          <p>Press 'Next &gt;' to begin!</p>
+          <p>
+            You will now be matched with a new partner.
+          </p>
+          <p>
+            Press 'Next &gt;' to begin!
+          </p>
         </>
     ),
   ],
@@ -265,22 +305,19 @@ for (let i = 0; i < dataCollection.length; i++) {
       // Break after Phase 1
       // Add the instructions for the first break
       const firstBreakInstructions = [
+        // Part two instructions
         markup(
             <>
-              <h1>Intentions Game</h1>
-              <h2>Instructions</h2>
+              <h1>Instructions</h1>
+              <h2>
+                Part two
+              </h2>
+
+              {/* Instructions, page 1 */}
               <p>
-                You will now take part in a series of interactions with <i>ONE
-                NEW</i> partner.
-              </p>
-              <p>
-                You will be matched with your new partner in a moment.
-              </p>
-              <p>
-                You will play with your partner for 36 trials.
-              </p>
-              <p>
-                Their ID and your ID has been hidden to preserve anonymity.
+                In part two of the task, you will play with
+                a <b>new partner</b> for 54 trials where the
+                new <b>partner</b> will choose between the two options.
               </p>
               <p>
                 In each trial there are still two options available to choose
@@ -288,16 +325,20 @@ for (let i = 0; i < dataCollection.length; i++) {
                 partner receive. However, in this part of the task, <b>
                 you need to guess which option your partner will choose</b>.
               </p>
-            </>
-        ),
-        markup(
-            <>
-              <h1>Intentions Game</h1>
-              <h2>Instructions</h2>
               <p>
                 Each option will increase the total points you and your partner
                 have to different amounts.
               </p>
+            </>
+        ),
+        markup(
+            <>
+              <h1>Instructions</h1>
+              <h2>
+                Part two
+              </h2>
+
+              {/* Instructions, page 2 */}
               <p>
                 You will get feedback on whether the option you predicted your
                 partner will choose was correct or incorrect by highlighting
@@ -309,18 +350,26 @@ for (let i = 0; i < dataCollection.length; i++) {
                 times you correctly guess what your partner chose each trial.
               </p>
               <p>
-                Click 'Next &gt;' to see an example of what each trial will
-                look like.
+                Remember that the partners you face in each part of the task
+                are different people.
               </p>
               <p>
-                <b>
-                  Your point total at the end of this task will contribute
-                  to your overall point total to put you in with a chance of
-                  winning a bonus.
-                </b>
+                Instructions for part three will follow after part two
+                of this game.
               </p>
-              <h3>Good luck!</h3>
-              <p>Press 'Next &gt;' to continue!</p>
+              <br/>
+
+              {/* Bonus points */}
+              <p>
+                You will get bonus points dependent on the number of correct
+                answers you get in this part of the task, that is, the amount of
+                times you correctly guess what your partner chose each trial.
+              </p>
+              <p>
+                Click 'Next &gt;' to play <b>2</b> practice trials.
+                You will then be matched with a new partner before starting
+                part two.
+              </p>
             </>
         ),
       ];
@@ -391,8 +440,12 @@ for (let i = 0; i < dataCollection.length; i++) {
           markup(
               <>
                 <h1>Instructions</h1>
-                <p>You will now be matched with a partner.</p>
-                <p>Press 'Next &gt;' to continue!</p>
+                <p>
+                  You will now be matched with a new partner.
+                </p>
+                <p>
+                  Press 'Next &gt;' to begin!
+                </p>
               </>
           ),
         ],
@@ -448,19 +501,53 @@ for (let i = 0; i < dataCollection.length; i++) {
 
       // Add the second break instructions
       const secondBreakInstructions = [
+        // Part three instructions
         markup(
             <>
-              <h1>Intentions Game</h1>
-              <h2>Instructions</h2>
+              <h1>Instructions</h1>
+              <h2>
+                Part three
+              </h2>
               <p>
-                You have played all your trials with your second partner!
+                In part three of the task, <b>you</b> will be choosing
+                between the two options over 36 trials.
               </p>
               <p>
-                Now, you will be matched with a new partner. For this final
-                part, just like the first part, you will get to choose how
-                you split the points.
+                Remember that the partners you face in each part of the task
+                are different people.
               </p>
-              <p>Press 'Next &gt;' to continue!</p>
+              <p>
+                After you have completed part three, there are some short
+                questions to answer before you have finished.
+                You will be given instructions when you reach these
+                questions.
+              </p>
+              <br/>
+
+              {/* Bonus points */}
+              <p>
+                Your point total at the end of this task will contribute to your
+                overall point total to put you in with a chance of winning a
+                $x bonus.
+              </p>
+              <p>
+                Click 'Next &gt;' to be matched with a new partner
+                before starting part three.
+                There are no practice trials.
+              </p>
+            </>
+        ),
+        // Insert instructions to let the participant know they will
+        // be matched with a partner
+        markup(
+            <>
+              <h1>Instructions</h1>
+              <p>
+                You will now be matched with a new partner.
+              </p>
+              <p>
+                Press 'Next &gt;' to begin!
+              </p>
             </>
         ),
       ];
