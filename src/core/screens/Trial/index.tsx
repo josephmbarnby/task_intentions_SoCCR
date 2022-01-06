@@ -479,24 +479,24 @@ const Trial = (props: Screens.Trial): ReactElement => {
       />
 
       {/* Counter for correct guesses */}
-      {/* {props.display.startsWith('playerGuess') && */}
-      <Box
-        direction='row'
-        justify='center'
-        margin='xsmall'
-        gridArea='counterHeader'
-      >
-        <Heading level={2} size='auto' margin='xsmall'>
-          Correct guesses:&nbsp;
-        </Heading>
-        <Heading level={2} size='auto' margin='xsmall'>
-          <TextTransition
-            text={correctCount}
-            springConfig={presets.slow}
-          />
-        </Heading>
-      </Box>
-      {/* } */}
+      {props.display.startsWith('playerGuess') &&
+        <Box
+          direction='row'
+          justify='center'
+          margin='xsmall'
+          gridArea='counterHeader'
+        >
+          <Heading level={2} size='auto' margin='xsmall'>
+            Correct guesses:&nbsp;
+          </Heading>
+          <Heading level={2} size='auto' margin='xsmall'>
+            <TextTransition
+              text={correctCount}
+              springConfig={presets.slow}
+            />
+          </Heading>
+        </Box>
+      }
 
       {/* Practice overlay */}
       {showOverlay &&

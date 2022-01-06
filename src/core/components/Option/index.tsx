@@ -34,23 +34,23 @@ const Option = (props: Option): ReactElement => {
       id={props.optionKey}
     >
       {/* Choice headers */}
-      <Heading level={3} size='auto' gridArea='participantHeader'>
+      <Heading level={2} size='auto' gridArea='participantHeader'>
         Points for you
       </Heading>
 
-      <Heading level={3} size='auto' gridArea='partnerHeader'>
+      <Heading level={2} size='auto' gridArea='partnerHeader'>
         Points for your partner
       </Heading>
 
       {/* Participant points */}
-      <Text size='auto' gridArea='participantPoints'>
+      <Heading level={2} gridArea='participantPoints'>
         <b>+{props.pointsParticipant}</b>
-      </Text>
+      </Heading>
 
       {/* Partner points */}
-      <Text size='auto' gridArea='partnerPoints'>
+      <Heading level={2} gridArea='partnerPoints'>
         <b>+{props.pointsParter}</b>
-      </Text>
+      </Heading>
     </Grid>
   );
 };
