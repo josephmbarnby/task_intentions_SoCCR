@@ -6,7 +6,7 @@ import consola from 'consola';
 
 // Core modules
 import {Configuration} from './Configuration';
-import {calculatePoints, display} from './core/Functions';
+import {calculatePoints, display} from './Functions';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';

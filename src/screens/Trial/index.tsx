@@ -17,7 +17,7 @@ import {Theme} from '../../Theme';
 import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../Configuration';
 
 /**
  * Generate the choices grid with options

@@ -11,7 +11,7 @@ import Prosocial from './data/prosocial.csv';
 import Test from './data/test.csv';
 
 // Utility functions
-import {markup} from './core/Functions';
+import {markup} from './Functions';
 
 // Logging library
 import consola from 'consola';
