@@ -38,7 +38,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
         color='map'
         fill='horizontal'
       />
-      <Layer plain full>
+      <Layer plain>
         {/* Heading */}
         <Heading
           level='1'
@@ -50,56 +50,52 @@ const Summary = (props: Screens.Summary): ReactElement => {
         >
           Summary
         </Heading>
-        <Box
-          alignContent='center'
-          fill
+        {/* Participant and partner info */}
+        <Grid
+          rows={['auto']}
+          columns={['medium', 'medium']}
+          justifyContent='center'
+          gap='small'
+          areas={[
+            {name: 'participantArea', start: [0, 0], end: [0, 0]},
+            {name: 'partnerArea', start: [1, 0], end: [1, 0]},
+          ]}
         >
-          {/* Participant and partner info */}
-          <Grid
-            rows={['flex']}
-            columns={['flex', 'flex']}
-            gap='small'
-            areas={[
-              {name: 'participantArea', start: [0, 0], end: [0, 0]},
-              {name: 'partnerArea', start: [1, 0], end: [1, 0]},
-            ]}
-            fill
-          >
-            {/* Participant */}
-            <PlayerCard
-              gridArea='participantArea'
-              name='You'
-              avatar={Configuration.avatars[participantAvatar]}
-              points={participantPoints}
-            />
+          {/* Participant */}
+          <PlayerCard
+            gridArea='participantArea'
+            name='You'
+            avatar={Configuration.avatars[participantAvatar]}
+            points={participantPoints}
+          />
 
-            {/* Partner */}
-            <PlayerCard
-              gridArea='partnerArea'
-              name='Partner'
-              avatar={Configuration.partners[partnerAvatar]}
-              points={partnerPoints}
-            />
-          </Grid>
-          {/* Continue button */}
-          <Box
-            justify='center'
-            align='center'
-            margin='small'
-          >
-            <Button
-              primary
-              color='button'
-              label='Continue'
-              size='large'
-              margin='medium'
-              icon={<LinkNext />}
-              reverse
-              onClick={() => {
-                props.selectionHandler();
-              }}
-            />
-          </Box>
+          {/* Partner */}
+          <PlayerCard
+            gridArea='partnerArea'
+            name='Partner'
+            avatar={Configuration.partners[partnerAvatar]}
+            points={partnerPoints}
+          />
+        </Grid>
+
+        {/* Continue button */}
+        <Box
+          justify='center'
+          align='center'
+          margin='small'
+        >
+          <Button
+            primary
+            color='button'
+            label='Continue'
+            size='large'
+            margin='medium'
+            icon={<LinkNext />}
+            reverse
+            onClick={() => {
+              props.selectionHandler();
+            }}
+          />
         </Box>
       </Layer>
     </>
