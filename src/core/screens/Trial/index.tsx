@@ -4,6 +4,7 @@ import React, {ReactElement, useRef, useState} from 'react';
 // UI components
 import {Box, Button, Grid, Heading, Layer, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
+import TextTransition, {presets} from 'react-text-transition';
 
 // Custom components
 import Option from '../../components/Option';
@@ -48,6 +49,10 @@ const Trial = (props: Screens.Trial): ReactElement => {
     partnerPoints,
     setPartnerPoints,
   ] = useState(props.partnerPoints);
+  const [
+    correctCount,
+    setCorrectCount,
+  ] = useState(0);
 
   // Overlay visibility state
   const [showOverlay, setShowOverlay] = useState(false);
@@ -61,7 +66,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
   );
   let selectedOption = '';
 
-
   // Create references for each Option
   const refs = {
     optionOne: useRef(null),
@@ -74,6 +78,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
    * @param {number} partner updated points for the partner
    */
   function addPoints(participant: number, partner: number): void {
+    // Update the point totals
     setParticipantPoints(participantPoints + participant);
     setPartnerPoints(partnerPoints + partner);
   }
@@ -141,6 +146,19 @@ const Trial = (props: Screens.Trial): ReactElement => {
    * @param {Function} headerStateFunction function
    */
   function selectionHandler(option: Options) {
+    // Sum the number of correct answers for the phase
+    const correctCountInitial = jsPsych.data.get()
+        .filter({
+          display: props.display,
+        })
+        .select('correctGuess')
+        .sum();
+    if (option === props.answer) {
+      setCorrectCount(correctCountInitial + 1);
+    } else {
+      setCorrectCount(correctCountInitial);
+    }
+
     // Update the selected option and the overlay text
     selectedOption = option;
     setOverlayContent(getOverlayContent());
@@ -374,32 +392,48 @@ const Trial = (props: Screens.Trial): ReactElement => {
   }
 
   return (
-    <Box justify='center' align='center' overflow='hidden'>
-      <Heading textAlign='center' fill size='auto' margin='xsmall'>
+    <Grid
+      rows={['auto', 'medium', 'auto']}
+      columns={['flex', '1/2', 'flex']}
+      gap='xsmall'
+      margin='auto'
+      width={{
+        width: 'auto',
+        max: 'xlarge',
+      }}
+      areas={[
+        {name: 'trialHeader', start: [0, 0], end: [2, 0]},
+        {name: 'playerArea', start: [0, 1], end: [0, 1]},
+        {name: 'choiceArea', start: [1, 1], end: [1, 1]},
+        {name: 'partnerArea', start: [2, 1], end: [2, 1]},
+        {name: 'counterHeader', start: [0, 2], end: [2, 2]},
+      ]}
+    >
+      <Heading
+        textAlign='center'
+        fill
+        level={2}
+        size='auto'
+        margin='small'
+        gridArea='trialHeader'
+      >
         {trialHeader}
       </Heading>
-      <Grid
-        rows={['flex', 'flex']}
-        columns={['flex', '1/2', 'flex']}
-        gap='small'
-        margin='xsmall'
-        areas={[
-          {name: 'playerArea', start: [0, 0], end: [0, 1]},
-          {name: 'choiceOneArea', start: [1, 0], end: [1, 0]},
-          {name: 'choiceTwoArea', start: [1, 1], end: [1, 1]},
-          {name: 'partnerArea', start: [2, 0], end: [2, 1]},
-        ]}
-      >
-        {/* Participant's Avatar */}
-        <PlayerAvatar
-          gridArea='playerArea'
-          name='You'
-          points={participantPoints}
-          avatar={participantAvatar}
-        />
 
+      {/* Participant's Avatar */}
+      <PlayerAvatar
+        gridArea='playerArea'
+        name='You'
+        points={participantPoints}
+        avatar={participantAvatar}
+      />
+
+      {/* Choices */}
+      <Box
+        gridArea='choiceArea'
+        gap='small'
+      >
         <Box
-          gridArea='choiceOneArea'
           ref={refs.optionOne}
           onClick={() => {
             updatePoints('Option 1');
@@ -407,6 +441,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
           className='grow'
           round
           background='optionBackground'
+          fill
         >
           <Option
             optionKey='optionOne'
@@ -417,7 +452,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
         </Box>
 
         <Box
-          gridArea='choiceTwoArea'
           ref={refs.optionTwo}
           onClick={() => {
             updatePoints('Option 2');
@@ -425,6 +459,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
           className='grow'
           round
           background='optionBackground'
+          fill
         >
           <Option
             optionKey='optionTwo'
@@ -433,15 +468,35 @@ const Trial = (props: Screens.Trial): ReactElement => {
             pointsParter={props.options.two.partner}
           />
         </Box>
+      </Box>
 
-        {/* Partner's Avatar */}
-        <PlayerAvatar
-          gridArea='partnerArea'
-          name='Partner'
-          points={partnerPoints}
-          avatar={partnerAvatar}
-        />
-      </Grid>
+      {/* Partner's Avatar */}
+      <PlayerAvatar
+        gridArea='partnerArea'
+        name='Partner'
+        points={partnerPoints}
+        avatar={partnerAvatar}
+      />
+
+      {/* Counter for correct guesses */}
+      {/* {props.display.startsWith('playerGuess') && */}
+      <Box
+        direction='row'
+        justify='center'
+        margin='xsmall'
+        gridArea='counterHeader'
+      >
+        <Heading level={2} size='auto' margin='xsmall'>
+          Correct guesses:&nbsp;
+        </Heading>
+        <Heading level={2} size='auto' margin='xsmall'>
+          <TextTransition
+            text={correctCount}
+            springConfig={presets.slow}
+          />
+        </Heading>
+      </Box>
+      {/* } */}
 
       {/* Practice overlay */}
       {showOverlay &&
@@ -453,7 +508,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
           </Box>
         </Layer>
       }
-    </Box>
+    </Grid>
   );
 };
 

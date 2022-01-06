@@ -2,8 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Grid, Heading} from 'grommet';
-import {Money} from 'grommet-icons';
+import {Grid, Heading, Text} from 'grommet';
 
 // Types
 declare type Option = {
@@ -23,6 +22,9 @@ const Option = (props: Option): ReactElement => {
     <Grid
       rows={['1/2', '1/2']}
       columns={['1/2', '1/2']}
+      pad='xsmall'
+      align='center'
+      fill
       areas={[
         {name: 'participantHeader', start: [0, 0], end: [0, 0]},
         {name: 'partnerHeader', start: [1, 0], end: [1, 0]},
@@ -30,50 +32,25 @@ const Option = (props: Option): ReactElement => {
         {name: 'partnerPoints', start: [1, 1], end: [1, 1]},
       ]}
       id={props.optionKey}
-      responsive
     >
-      {/* Choice header */}
-      <Box
-        gridArea='participantHeader'
-        justify='center'
-        alignContent='center'
-      >
-        <Heading level={2} fill size='auto'>
-          Points for you
-        </Heading>
-      </Box>
+      {/* Choice headers */}
+      <Heading level={3} size='auto' gridArea='participantHeader'>
+        Points for you
+      </Heading>
 
-      <Box
-        gridArea='partnerHeader'
-        justify='center'
-        alignContent='center'
-      >
-        <Heading level={2} fill size='auto'>
-          Points for your partner
-        </Heading>
-      </Box>
+      <Heading level={3} size='auto' gridArea='partnerHeader'>
+        Points for your partner
+      </Heading>
 
       {/* Participant points */}
-      <Box
-        gridArea='participantPoints'
-        justify='center'
-        align='center'
-        direction='row'
-        gap='small'
-      >
-        <Heading size='auto'>+{props.pointsParticipant}</Heading>
-      </Box>
+      <Text size='auto' gridArea='participantPoints'>
+        <b>+{props.pointsParticipant}</b>
+      </Text>
 
       {/* Partner points */}
-      <Box
-        gridArea='partnerPoints'
-        justify='center'
-        align='center'
-        direction='row'
-        gap='small'
-      >
-        <Heading size='auto'>+{props.pointsParter}</Heading>
-      </Box>
+      <Text size='auto' gridArea='partnerPoints'>
+        <b>+{props.pointsParter}</b>
+      </Text>
     </Grid>
   );
 };

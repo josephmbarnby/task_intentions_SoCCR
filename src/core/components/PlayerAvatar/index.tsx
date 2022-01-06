@@ -38,8 +38,8 @@ const PlayerAvatar = (props: PlayerAvatar): ReactElement => {
       margin={{left: 'small', right: 'small'}}
     >
       <Grid
-        rows={['1/3', '1/3', '1/3']}
-        columns={['flex']}
+        rows={['xsmall', 'flex', 'xsmall']}
+        columns={['auto']}
         areas={[
           {name: 'playerNameArea', start: [0, 0], end: [0, 0]},
           {name: 'playerAvatarArea', start: [0, 1], end: [0, 1]},
