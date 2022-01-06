@@ -5,31 +5,31 @@ import React, {ReactElement} from 'react';
 import {Grommet, ThemeContext} from 'grommet';
 
 // Import styling
-import './css/styles.css';
+import '../../../../css/styles.css';
 
 // Apply custom theme globally
-import {Theme} from './Theme';
+import {Theme} from '../../../Theme';
 
 // Custom Screens
-import Agency from './screens/Agency';
-import Classification from './screens/Classification';
-import Trial from './screens/Trial';
-import SelectAvatar from './screens/SelectAvatar';
-import Matching from './screens/Matching';
-import Matched from './screens/Matched';
-import Inference from './screens/Inference';
+import Agency from '../../screens/Agency';
+import Classification from '../../screens/Classification';
+import Trial from '../../screens/Trial';
+import SelectAvatar from '../../screens/SelectAvatar';
+import Matching from '../../screens/Matching';
+import Matched from '../../screens/Matched';
+import Inference from '../../screens/Inference';
 
 // Other imports
 import consola from 'consola';
-import Summary from './screens/Summary';
+import Summary from '../../screens/Summary';
 
 /**
  * Generic container for all Grommet components
- * @param {Switcher} props collection of props for the primary
+ * @param {Components.Layout} props collection of props for the primary
  * child component
  * @return {ReactElement}
  */
-export const Switcher = (props: Switcher): ReactElement => {
+export const Layout = (props: Components.Layout): ReactElement => {
   let screen: ReactElement;
 
   // Define the exact component that is rendered
@@ -93,4 +93,4 @@ export const Switcher = (props: Switcher): ReactElement => {
   );
 };
 
-export default Switcher;
+export default Layout;

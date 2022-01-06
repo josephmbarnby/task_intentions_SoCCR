@@ -1,12 +1,3 @@
-// Switcher component
-declare type Switcher = {
-  display: Display;
-  screen:
-      Screens.Matched | Screens.Matching | Screens.Trial |
-      Screens.SelectAvatar | Screens.Inference | Screens.Agency |
-      Screens.Classification;
-};
-
 // Declare a 'Screens' namespace to define props for each
 // screen used in the experiment.
 declare namespace Screens {

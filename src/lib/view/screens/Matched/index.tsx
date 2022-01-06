@@ -12,10 +12,7 @@ import consola from 'consola';
 import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
-import {Configuration} from '../../Configuration';
-
-// Constants
-import {AVATAR_VARIANT, AVATAR_COLORS} from '../../Constants';
+import {Configuration} from '../../../Configuration';
 
 /**
  * Generate layout of Matched Screen
@@ -29,7 +26,7 @@ const Matched = (): ReactElement => {
   // Increment the partner avatar value
   if (experiment.getGlobalStateValue('refreshPartner') === true) {
     // Ensure we keep the index in range
-    if (currentPartner + 1 === Configuration.partners.length) {
+    if (currentPartner + 1 === Configuration.avatars.names.partner.length) {
       // Reset partner to first avatar, ideally we don't want to be here
       consola.warn('Original partner used');
       experiment.setGlobalStateValue('partnerAvatar', 0);
@@ -59,9 +56,9 @@ const Matched = (): ReactElement => {
           <Heading>Partner found!</Heading>
           <Avatar
             size={240}
-            name={Configuration.partners[partnerAvatar]}
-            variant={AVATAR_VARIANT}
-            colors={AVATAR_COLORS}
+            name={Configuration.avatars.names.partner[partnerAvatar]}
+            variant={Configuration.avatars.variant as 'beam'}
+            colors={Configuration.avatars.colours}
           />
         </Box>
       </Layer>

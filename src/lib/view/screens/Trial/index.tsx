@@ -11,13 +11,13 @@ import Option from '../../components/Option';
 import PlayerCard from '../../components/PlayerCard';
 
 // Access theme constants directly
-import {Theme} from '../../Theme';
+import {Theme} from '../../../Theme';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
-import {Configuration} from '../../Configuration';
+import {Configuration} from '../../../Configuration';
 
 /**
  * Generate the choices grid with options
@@ -370,7 +370,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   // Participant avatar
   const participantAvatar =
-      Configuration.avatars[
+      Configuration.avatars.names.participant[
           experiment.getGlobalStateValue('participantAvatar')
       ];
 
@@ -381,7 +381,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
   } else {
     // Get the global state of the partner avatar
     partnerAvatar =
-        Configuration.partners[
+        Configuration.avatars.names.partner[
             experiment.getGlobalStateValue('partnerAvatar')
         ];
 

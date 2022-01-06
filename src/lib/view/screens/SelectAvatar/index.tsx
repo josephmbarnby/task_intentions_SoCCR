@@ -6,7 +6,7 @@ import {Box, Button, Heading} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
-import {Configuration} from '../../Configuration';
+import {Configuration} from '../../../Configuration';
 
 // Components
 import SelectableAvatar from '../../components/SelectableAvatar';
@@ -20,7 +20,7 @@ const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
 
-  const avatars = Configuration.avatars;
+  const avatars = Configuration.avatars.names.participant;
   const avatarComponents = [];
 
   for (const avatarName of avatars) {

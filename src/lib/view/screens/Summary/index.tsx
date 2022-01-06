@@ -12,10 +12,10 @@ import {LinkNext} from 'grommet-icons';
 import PlayerCard from '../../components/PlayerCard';
 
 // Configuration
-import {Configuration} from '../../Configuration';
+import {Configuration} from '../../../Configuration';
 
 // Utility functions
-import {calculatePoints} from '../../Functions';
+import {calculatePoints} from '../../../Functions';
 
 /**
  * Generate layout of Matching Screen
@@ -65,7 +65,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
           <PlayerCard
             gridArea='participantArea'
             name='You'
-            avatar={Configuration.avatars[participantAvatar]}
+            avatar={Configuration.avatars.names.participant[participantAvatar]}
             points={participantPoints}
           />
 
@@ -73,7 +73,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
           <PlayerCard
             gridArea='partnerArea'
             name='Partner'
-            avatar={Configuration.partners[partnerAvatar]}
+            avatar={Configuration.avatars.names.partner[partnerAvatar]}
             points={partnerPoints}
           />
         </Grid>

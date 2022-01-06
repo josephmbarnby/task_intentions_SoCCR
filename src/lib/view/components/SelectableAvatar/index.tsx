@@ -5,8 +5,8 @@ import React, {ReactElement} from 'react';
 import Avatar from 'boring-avatars';
 import {Box} from 'grommet';
 
-// Useful constants
-import {AVATAR_VARIANT, AVATAR_COLORS} from '../../Constants';
+// Configuration
+import {Configuration} from '../../../Configuration';
 
 /**
  * A selectable avatar with grow behaviour
@@ -29,8 +29,8 @@ const SelectableAvatar = (props: Components.SelectableAvatar): ReactElement => {
       <Avatar
         size={props.size}
         name={props.name}
-        variant={AVATAR_VARIANT}
-        colors={AVATAR_COLORS}
+        variant={Configuration.avatars.variant}
+        colors={Configuration.avatars.colours}
       />
     </Box>
   );

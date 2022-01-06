@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import consola from 'consola';
 
 // Core modules
-import {Configuration} from './Configuration';
-import {calculatePoints, display} from './Functions';
+import {Configuration} from './lib/Configuration';
+import {calculatePoints, display} from './lib/Functions';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
@@ -290,7 +290,8 @@ jsPsych.plugins['intentions-game'] = (() => {
      */
     function avatarSelectionHandler(selection: string): void {
       // Obtain the selected avatar
-      const selectedAvatar = Configuration.avatars.indexOf(selection);
+      const selectedAvatar =
+          Configuration.avatars.names.participant.indexOf(selection);
 
       // Update the global Experiment state
       (window['Experiment'] as Experiment).setGlobalStateValue(

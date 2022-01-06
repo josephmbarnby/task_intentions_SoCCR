@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Configuration
-import {Configuration} from './Configuration';
+import {Configuration} from './lib/Configuration';
 
 // Import data spreadsheets
 import Competitive from './data/competitive.csv';
@@ -11,7 +11,7 @@ import Prosocial from './data/prosocial.csv';
 import Test from './data/test.csv';
 
 // Utility functions
-import {markup} from './Functions';
+import {markup} from './lib/Functions';
 
 // Logging library
 import consola from 'consola';

@@ -9,8 +9,8 @@ import {Money} from 'grommet-icons';
 import TextTransition, {presets} from 'react-text-transition';
 import Avatar from 'boring-avatars';
 
-// Parameters
-import {AVATAR_VARIANT, AVATAR_COLORS} from '../../Constants';
+// Configuration
+import {Configuration} from '../../../Configuration';
 
 /**
  * Generate a PlayerCard component
@@ -46,8 +46,8 @@ const PlayerCard = (props: Components.PlayerCard): ReactElement => {
           <Avatar
             size={128}
             name={props.avatar}
-            variant={AVATAR_VARIANT}
-            colors={AVATAR_COLORS}
+            variant={Configuration.avatars.variant}
+            colors={Configuration.avatars.colours}
           />
         </Box>
         <Box

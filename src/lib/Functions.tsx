@@ -3,8 +3,8 @@ import React, {ReactElement, JSXElementConstructor} from 'react';
 import {render} from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 
-// Screen component
-import Switcher from './Switcher';
+// Layout component
+import Layout from './view/components/Layout';
 
 // Other imports
 import consola from 'consola';
@@ -43,9 +43,9 @@ export function display(
       consola.info('No callback defined for timeout');
     },
 ): void {
-  // Render the Switcher
+  // Render the 'Layout' component
   render(
-      <Switcher
+      <Layout
         display={type}
         screen={props}
       />,
