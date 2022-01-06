@@ -9,7 +9,7 @@ import {LinkNext} from 'grommet-icons';
 import RangeSlider from '../../components/RangeSlider';
 
 // Constants
-const SLIDER_DEFAULT = 50;
+const SLIDER_DEFAULT = 50; // Sets the 'thumb' to the middle of the slider
 
 /**
  * Generate layout of Agency Screen (Agency trial)
@@ -19,8 +19,8 @@ const SLIDER_DEFAULT = 50;
 const Agency = (props: Screens.Agency): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
-  const [firstMoved, setFirstMoved] = useState(false);
-  const [firstValue, setFirstValue] = useState(SLIDER_DEFAULT);
+  const [sliderMoved, setSliderMoved] = useState(false);
+  const [sliderValue, setSliderValue] = useState(SLIDER_DEFAULT);
 
   return (
     <>
@@ -30,14 +30,13 @@ const Agency = (props: Screens.Agency): ReactElement => {
         gap='small'
         animation={['fadeIn']}
       >
-        {/* First question */}
+        {/* Agency question */}
         <Box width='xlarge'>
           <Text size='xlarge'>
-            {'Unlike some other research labs, the Brain Development and ' +
-            'Disorders lab does not use deception. All participants ' +
-            'are real. Nevertheless, for our own purposes, it is helpful ' +
-            'to know to what extent you believed that the other player ' +
-            'really existed.'}
+            {'The Brain Development and Disorders lab does not use ' +
+            'deception. All participants are real. Nevertheless, ' +
+            'for our own purposes, it is helpful to know to what ' +
+            'extent you believed that the other player really existed.'}
           </Text>
         </Box>
         <Box width='xlarge'>
@@ -48,13 +47,13 @@ const Agency = (props: Screens.Agency): ReactElement => {
         <RangeSlider
           min={0}
           max={100}
-          initial={firstValue}
+          initial={sliderValue}
           leftLabel='Not at all'
           rightLabel='Totally'
           onChange={() => {
-            setFirstMoved(true);
+            setSliderMoved(true);
           }}
-          setValue={setFirstValue}
+          setValue={setSliderValue}
         />
       </Box>
       <Button
@@ -64,13 +63,13 @@ const Agency = (props: Screens.Agency): ReactElement => {
         label='Continue'
         disabled={
           // Disabled until slider has been interacted with
-          firstMoved === false
+          sliderMoved === false
         }
         size='large'
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          props.selectionHandler(firstValue);
+          props.selectionHandler(sliderValue);
         }}
       />
     </>
