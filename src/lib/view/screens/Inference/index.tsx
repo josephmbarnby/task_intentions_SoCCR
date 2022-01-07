@@ -1,25 +1,22 @@
-// React import
+// React
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Button, Heading, Text, ThemeContext} from 'grommet';
+import {Box, Button, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import {RangeSlider} from '../components/RangeSlider';
-
-// Theme
-import {Theme} from '../Theme';
+import RangeSlider from '../../components/RangeSlider';
 
 // Constants
 const SLIDER_DEFAULT = 50;
 
 /**
  * Generate layout of Inference Screen (Inference trial)
- * @param {InferenceProps} props component props
+ * @param {Screens.Inference} props component props
  * @return {ReactElement}
  */
-export function Inference(props: InferenceProps): ReactElement {
+const Inference = (props: Screens.Inference): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [firstMoved, setFirstMoved] = useState(false);
@@ -30,7 +27,7 @@ export function Inference(props: InferenceProps): ReactElement {
   const [secondValue, setSecondValue] = useState(SLIDER_DEFAULT);
 
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <Box
         justify='center'
         align='center'
@@ -41,8 +38,8 @@ export function Inference(props: InferenceProps): ReactElement {
         <Box width='xlarge'>
           <Text size={'xlarge'}>
             {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are ' +
-            'by their desire to earn points in this task overall.'}
+            'to which you believe your partner\'s decisions are driven ' +
+            'by their desire to earn points in this task.'}
           </Text>
         </Box>
         <RangeSlider
@@ -61,8 +58,8 @@ export function Inference(props: InferenceProps): ReactElement {
         <Box width='xlarge' margin={{top: 'auto'}}>
           <Text size={'xlarge'}>
             {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are ' +
-            'by their desire to reduce your points in this task overall.'}
+            'to which you believe your partner\'s decisions are driven ' +
+            'by their desire to reduce your bonus in this task.'}
           </Text>
         </Box>
         <RangeSlider
@@ -93,6 +90,8 @@ export function Inference(props: InferenceProps): ReactElement {
           props.selectionHandler(firstValue, secondValue);
         }}
       />
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default Inference;

@@ -26,23 +26,34 @@ export const Configuration = {
   },
 
   // Individual type
-  individualType: 'Test',
+  individual: 'Test',
 
-  // List of avatar names (not displayed, only used to generate avatars)
-  avatars: [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-  ],
-
-  partners: [
-    'm',
-    'n',
-    'o',
-  ],
+  // Avatar configuration details, including colours and names
+  avatars: {
+    names: {
+      participant: [
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+      ],
+      partner: [
+        'm',
+        'n',
+        'o',
+      ],
+    },
+    colours: [
+      '#92A1C6',
+      '#146A7C',
+      '#F0AB3D',
+      '#C271B4',
+      '#C20D90',
+    ],
+    variant: 'beam',
+  },
 
   fullscreen: false,
 };

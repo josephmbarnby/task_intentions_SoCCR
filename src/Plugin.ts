@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import consola from 'consola';
 
 // Core modules
-import {Configuration} from './Configuration';
-import {display} from './lib/view/Functions';
+import {Configuration} from './lib/Configuration';
+import {calculatePoints, display} from './lib/Functions';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
@@ -15,6 +15,11 @@ jsPsych.plugins['intentions-game'] = (() => {
   const plugin = {
     info: {},
     trial: (displayElement: HTMLElement, trial: Trial) => {
+      // Debugging info if this is reached
+      consola.debug(`displayElement:`, displayElement);
+      consola.debug(`trial:`, trial);
+
+      // Should raise an error
       consola.error(`Not implemented.`);
     },
   };
@@ -70,6 +75,12 @@ jsPsych.plugins['intentions-game'] = (() => {
         default: '',
         description: 'The correct answer to select',
       },
+      isPractice: {
+        type: jsPsych.plugins.parameterType.BOOLEAN,
+        pretty_name: 'Trial is a practice trial',
+        default: false,
+        description: 'Show feedback to participants',
+      },
       clearScreen: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
         pretty_name: 'Clear after trial',
@@ -80,45 +91,60 @@ jsPsych.plugins['intentions-game'] = (() => {
   };
 
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
-    // Setup data storage
-    const trialData = {
-      display: trial.display,
-      playerPoints: null,
-      partnerPoints: null,
-      selectedOption: null,
-      inferenceResponseOne: null,
-      inferenceResponseTwo: null,
-      agencyResponse: null,
-      classification: null,
-      trialDuration: null,
+    // Setup the trial data to be stored
+    const trialData: Data = {
+      display: trial.display, // the display type
+      playerPoints: null, // number of points received by the participant
+      partnerPoints: null, // number of points received by the partner
+      selectedOption: null, // option selected by participant
+      correctGuess: null, // whether or not the participant guessed correctly
+      inferenceResponseOne: null, // float response to inference question one
+      inferenceResponseTwo: null, // float response to inference question two
+      agencyResponse: null, // float response to agency question
+      classification: null, // classification string selected by participant
+      trialDuration: null, // duration of the trial in ms
     };
 
+    // Debug statement
     consola.debug(`Running trial stage '${trial.display}'`);
+
+    // Disable keyboard input beforehand
+    document.onkeydown = () => {
+      return false;
+    };
 
     // Generate and configure props based on the stage
     let screenProps:
-        MatchedProps | MatchingProps |
-        TrialProps | SelectAvatarProps |
-        InferenceProps | AgencyProps;
+        Screens.Agency | Screens.Classification |
+        Screens.Inference | Screens.Matched |
+        Screens.Matching | Screens.SelectAvatar |
+        Screens.Trial | Screens.Summary;
 
     // Timeout information
     let timeoutDuration = 0;
     let timeoutCallback: () => void;
 
-    switch (trial.display as DisplayType) {
+    // Sum the points from the previous trials
+    const participantPoints = calculatePoints(trial.display, 'playerPoints');
+    const partnerPoints = calculatePoints(trial.display, 'partnerPoints');
+
+    // Get the prior phase, checking first that there was a prior trial
+    let postPhase: Display;
+    if (jsPsych.data.get().last().values().length > 0) {
+      postPhase = jsPsych.data.get().last().values()[0].display;
+    }
+
+    switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
       case 'playerChoice':
+      case 'playerChoicePractice':
       case 'playerGuess':
+      case 'playerGuessPractice':
       case 'playerChoice2': {
-        // Sum the points from the previous trials
-        const participantPoints =
-          jsPsych.data.get().select('playerPoints').sum();
-        const partnerPoints =
-          jsPsych.data.get().select('partnerPoints').sum();
-
         // Setup the props
         screenProps = {
           display: trial.display,
+          isPractice: trial.isPractice,
           participantPoints: participantPoints,
           partnerPoints: partnerPoints,
           options: {
@@ -193,6 +219,16 @@ jsPsych.plugins['intentions-game'] = (() => {
         };
         break;
 
+      // Classification screen
+      case 'summary':
+        // Setup the props
+        screenProps = {
+          display: trial.display,
+          postPhase: postPhase,
+          selectionHandler: finishTrial,
+        };
+        break;
+
       // Default error state
       default:
         // Log an error message and finish the trial
@@ -214,28 +250,39 @@ jsPsych.plugins['intentions-game'] = (() => {
     );
 
     /**
-     * Handle Button-press events in a particular trial
-     * @param {'Option 1' | 'Option 2'} option selected option
+     * Handle selection events in a particular trial
+     * @param {Options} option selected option
      */
-    function optionHandler(option: 'Option 1' | 'Option 2') {
+    function optionHandler(option: Options) {
       const endTime = performance.now();
       const duration = endTime - startTime;
       trialData.trialDuration = duration;
 
-      if (option === 'Option 1') {
-        // Participant chose option 1
-        trialData.selectedOption = 1;
+      // Check if they chose the correct option. We record this
+      // for all trials, but we only need 'playerGuess'-type trials
+      trialData.correctGuess = option === trial.answer ? 1 : 0;
 
-        // Update the score with values of option 1
-        trialData.playerPoints = trial.optionOneParticipant;
-        trialData.partnerPoints = trial.optionOnePartner;
-      } else if (option === 'Option 2') {
-        // Participant chose option 2
-        trialData.selectedOption = 2;
+      // Store the participant selection
+      trialData.selectedOption = option === 'Option 1' ? 1 : 2;
 
-        // Update the score with values of option 2
-        trialData.playerPoints = trial.optionTwoParticipant;
-        trialData.partnerPoints = trial.optionTwoPartner;
+      // Points in the 'playerGuess' trials are handled differently
+      if (trial.display.toLowerCase().includes('guess')) {
+        // Add points from option partner selected
+        trialData.playerPoints = trial.answer === 'Option 1' ?
+            trial.optionOneParticipant :
+            trial.optionTwoParticipant;
+        trialData.partnerPoints = trial.answer === 'Option 1' ?
+            trial.optionOnePartner :
+            trial.optionTwoPartner;
+      } else {
+        // All other trials, add points from option participant selected
+        if (option === 'Option 1') {
+          trialData.playerPoints = trial.optionOneParticipant;
+          trialData.partnerPoints = trial.optionOnePartner;
+        } else {
+          trialData.playerPoints = trial.optionTwoParticipant;
+          trialData.partnerPoints = trial.optionTwoPartner;
+        }
       }
 
       // End trial
@@ -244,11 +291,12 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     /**
      * Handler called after avatar selected
-     * @param {string} _selection avatar selection key
+     * @param {string} selection avatar selection key
      */
-    function avatarSelectionHandler(_selection: string): void {
+    function avatarSelectionHandler(selection: string): void {
       // Obtain the selected avatar
-      const selectedAvatar = Configuration.avatars.indexOf(_selection);
+      const selectedAvatar =
+          Configuration.avatars.names.participant.indexOf(selection);
 
       // Update the global Experiment state
       (window['Experiment'] as Experiment).setGlobalStateValue(
@@ -269,11 +317,6 @@ jsPsych.plugins['intentions-game'] = (() => {
         responseOne: number,
         responseTwo: number
     ): void {
-      // Record the total reaction time
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-      trialData.trialDuration = duration;
-
       // Store the responses
       trialData.inferenceResponseOne = responseOne;
       trialData.inferenceResponseTwo = responseTwo;
@@ -289,11 +332,6 @@ jsPsych.plugins['intentions-game'] = (() => {
     function agencySelectionHandler(
         agencyResponse: number,
     ): void {
-      // Record the total reaction time
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-      trialData.trialDuration = duration;
-
       // Store the responses
       trialData.agencyResponse = agencyResponse;
 
@@ -309,11 +347,6 @@ jsPsych.plugins['intentions-game'] = (() => {
     function classificationSelectionHandler(
         classification: string,
     ): void {
-      // Record the total reaction time
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-      trialData.trialDuration = duration;
-
       // Store the responses
       trialData.classification = classification;
 
@@ -326,6 +359,11 @@ jsPsych.plugins['intentions-game'] = (() => {
      * cleanly if required
      */
     function finishTrial(): void {
+      // Record the total reaction time
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      trialData.trialDuration = duration;
+
       // If the next trial isn't React-based, clean up React
       if (trial.clearScreen === true) {
         ReactDOM.unmountComponentAtNode(displayElement);

@@ -25,7 +25,7 @@ function style(cb) {
  */
 function clean(cb) {
   del([
-    'built',
+    'dist',
   ]);
   cb();
 }

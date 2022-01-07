@@ -1,1 +1,0 @@
-// PlayerAvatar component test

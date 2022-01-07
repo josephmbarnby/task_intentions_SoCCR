@@ -1,8 +1,8 @@
-// React import
+// React
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Heading, Layer, ThemeContext, WorldMap} from 'grommet';
+import {Box, Heading, Layer, WorldMap} from 'grommet';
 import Avatar from 'boring-avatars';
 
 // Logging library
@@ -14,17 +14,11 @@ import {Experiment} from 'crossplatform-jspsych-wrapper';
 // Configuration
 import {Configuration} from '../../../Configuration';
 
-// Constants
-import {AVATAR_VARIANT, COLORS} from '../../Constants';
-
-// Styling
-import {Theme} from '../Theme';
-
 /**
  * Generate layout of Matched Screen
  * @return {ReactElement}
  */
-export function Matched(): ReactElement {
+const Matched = (): ReactElement => {
   // Get the current partner avatar
   const experiment = (window['Experiment'] as Experiment);
   const currentPartner = experiment.getGlobalStateValue('partnerAvatar');
@@ -32,7 +26,7 @@ export function Matched(): ReactElement {
   // Increment the partner avatar value
   if (experiment.getGlobalStateValue('refreshPartner') === true) {
     // Ensure we keep the index in range
-    if (currentPartner + 1 === Configuration.partners.length) {
+    if (currentPartner + 1 === Configuration.avatars.names.partner.length) {
       // Reset partner to first avatar, ideally we don't want to be here
       consola.warn('Original partner used');
       experiment.setGlobalStateValue('partnerAvatar', 0);
@@ -46,7 +40,7 @@ export function Matched(): ReactElement {
   const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <WorldMap
         color='map'
         fill='horizontal'
@@ -62,12 +56,14 @@ export function Matched(): ReactElement {
           <Heading>Partner found!</Heading>
           <Avatar
             size={240}
-            name={Configuration.partners[partnerAvatar]}
-            variant={AVATAR_VARIANT}
-            colors={COLORS}
+            name={Configuration.avatars.names.partner[partnerAvatar]}
+            variant={Configuration.avatars.variant as 'beam'}
+            colors={Configuration.avatars.colours}
           />
         </Box>
       </Layer>
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default Matched;

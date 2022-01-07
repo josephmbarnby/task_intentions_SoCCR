@@ -1,40 +1,34 @@
-// React import
+// React
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {
-  Box, Button,
-  Heading,
-  ThemeContext,
-  Text,
-} from 'grommet';
+import {Box, Button, Heading} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
 
 // Components
-import {OptionAvatar} from '../components/OptionAvatar';
-import {Theme} from '../Theme';
+import SelectableAvatar from '../../components/SelectableAvatar';
 
 /**
  * Generic structure for the Avatar Selection Screen
- * @param {any} props collection of props
+ * @param {Screens.SelectAvatar} props collection of props
  * @return {ReactElement}
  */
-export function SelectAvatar(props: SelectAvatarProps): ReactElement {
+const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
 
-  const avatars = Configuration.avatars;
+  const avatars = Configuration.avatars.names.participant;
   const avatarComponents = [];
 
   for (const avatarName of avatars) {
     avatarComponents.push(
-        <OptionAvatar
+        <SelectableAvatar
           key={avatarName}
-          size={128}
           name={avatarName}
+          size={128}
           state={selectedAvatar}
           setState={setAvatar}
         />
@@ -42,17 +36,13 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
   }
 
   return (
-    <ThemeContext.Extend value={Theme}>
+    <>
       <Heading
         margin='medium'
         fill
       >
         Choose your Avatar!
       </Heading>
-
-      <Text size='xlarge'>
-        You will keep your avatar for the entire game.
-      </Text>
 
       {/* Avatar components */}
       <Box
@@ -80,6 +70,8 @@ export function SelectAvatar(props: SelectAvatarProps): ReactElement {
           props.selectionHandler(selectedAvatar);
         }}
       />
-    </ThemeContext.Extend>
+    </>
   );
-}
+};
+
+export default SelectAvatar;

@@ -5519,6 +5519,13 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
+jspsych-attention-check@^1.4.1:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/jspsych-attention-check/-/jspsych-attention-check-1.4.2.tgz#a61d6f51a3036d63c459c02c139a338e9e856d4f"
+  integrity sha512-3NDeN67yKwk+knVgaU2UctKFwdKHVWqxG5j6sy57YpfJUkqGqrKWBZOxbS4x1IrZaycHwR781sXmauxAlcs3zg==
+  dependencies:
+    jspsych "6.3"
+
 jspsych@6.3, jspsych@^6.0.0:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/jspsych/-/jspsych-6.3.1.tgz#9d4335f03ed30a541acd7e9f3f8514cd64d92616"

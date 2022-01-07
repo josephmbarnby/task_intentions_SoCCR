@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Configuration
-import {Configuration} from './Configuration';
+import {Configuration} from './lib/Configuration';
 
 // Import data spreadsheets
 import Competitive from './data/competitive.csv';
@@ -21,6 +21,7 @@ import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Import jsPsych plugins
 import 'jspsych/plugins/jspsych-instructions';
+import 'jspsych-attention-check';
 
 // Import the custom plugin before adding it to the timeline
 import './Plugin';
@@ -41,22 +42,88 @@ if (Configuration.fullscreen === true) {
 }
 
 const instructionsPracticeGames = [
+  // Overall instructions
   markup(
       <>
-        <h1>Intentions Game</h1>
-        <h2>Instructions</h2>
+        <h1>Instructions</h1>
+        {/* Overview */}
+        <h2>
+          Overview
+        </h2>
         <p>
-          In this game, you will be playing with different partner.
+          In this task, you will be choosing between two options to split
+          sets of points between you and a partner.
         </p>
         <p>
-          In each trial, you will see two options for splitting some
-           points between you and your current partner. You will be able to see
-           how many points you and your partner have.
+          The task has three parts. You are matched with
+          a <b>different</b> partner before each part.
+        </p>
+        <br/>
+
+        {/* Structure */}
+        <h2>
+          Structure
+        </h2>
+        <p>
+          In part one of the task, <b>you</b> will be choosing
+          between the two options over 36 trials.
         </p>
         <p>
-          You can choose an option by clicking on it.
+          In part two of the task, you will play with
+          a <b>new partner</b> for 54 trials where the
+          new <b>partner</b> will choose between the two options.
         </p>
-        <h3>Good luck!</h3>
+        <p>
+          In part three of the task, you will play
+          with <b>another new partner</b> for 36 trials
+          where <b>you</b> will be choosing between the
+          two options.
+        </p>
+        <br/>
+        <p>
+          So, in the first part of the task you choose the options, in
+          the other part of the task your partner chooses the options,
+          and in part three of the task you choose the options.
+        </p>
+        <p>
+          At the end of each part, you will be shown a summary
+          of how many points you and your partner accumulated
+          in that part.
+        </p>
+      </>
+  ),
+  // Part one instructions
+  markup(
+      <>
+        <h1>Instructions</h1>
+        <h2>
+          Part one
+        </h2>
+        <p>
+          In part one of the task, <b>you</b> will be choosing
+          between the two options over 36 trials.
+        </p>
+        <p>
+          Remember that the partners you face in each part of the task
+          are different people.
+        </p>
+        <p>
+          Instructions for the second part will follow after the first part
+          of this game.
+        </p>
+        <br/>
+
+        {/* Bonus points */}
+        <p>
+          Your point total at the end of this task will contribute to your
+          overall point total to put you in with a chance of winning a
+          $x bonus.
+        </p>
+        <p>
+          Click 'Next &gt;' to choose an avatar.
+          You will play <b>2</b> practice
+          trials after choosing your avatar.
+        </p>
       </>
   ),
 ];
@@ -72,29 +139,98 @@ timeline.push({
 
 // Insert a 'selection' screen into the timeline
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'selection',
+});
+
+// Practice trials for 'playerChoice'
+timeline.push({
+  type: Configuration.pluginName,
+  optionOneParticipant: 4,
+  optionOnePartner: 4,
+  optionTwoParticipant: 5,
+  optionTwoPartner: 6,
+  typeOne: '',
+  typeTwo: '',
+  display: 'playerChoicePractice',
+  answer: '',
+  isPractice: true,
+  clearScreen: false,
+});
+
+timeline.push({
+  type: Configuration.pluginName,
+  optionOneParticipant: 7,
+  optionOnePartner: 3,
+  optionTwoParticipant: 5,
+  optionTwoPartner: 5,
+  typeOne: '',
+  typeTwo: '',
+  display: 'playerChoicePractice',
+  answer: '',
+  isPractice: true,
+  clearScreen: true,
+});
+
+// Attention check question
+timeline.push({
+  type: 'attention-check',
+  question: 'In this part of the task, ' +
+      'who will be choosing the points you and your partner get?',
+  options: [
+    'A lottery',
+    'Me',
+    'My partner',
+  ],
+  options_radio: true,
+  option_correct: 1,
+  confirmation: true,
+  feedback_correct: 'Correct! ' +
+      'You will be choosing the points you and your partner get.',
+  feedback_incorrect: 'Incorrect. You will be choosing the points.',
+});
+
+// Insert instructions to let the participant know they will
+// be matched with a partner
+timeline.push({
+  type: 'instructions',
+  pages: [
+    markup(
+        <>
+          <h1>Instructions</h1>
+          <p>
+            You will now be matched with a new partner.
+          </p>
+          <p>
+            Press 'Next &gt;' to begin!
+          </p>
+        </>
+    ),
+  ],
+  allow_keys: false,
+  show_page_number: true,
+  show_clickable_nav: true,
 });
 
 // Insert a 'match' sequence into the timeline
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'matching',
 });
 
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'matched',
   clearScreen: true,
 });
 
 // Set and store the data colelction
-let dataCollection: string | any[];
+let dataCollection: string | Record<string, string>;
 consola.info(
-    `Loading '${Configuration.individualType}' individual`
+    `Loading '${Configuration.individual}' individual`
 );
 
-switch (Configuration.individualType as IndividualType) {
+switch (Configuration.individual as Individual) {
   case 'Competitive': {
     dataCollection = Competitive;
     break;
@@ -114,7 +250,7 @@ switch (Configuration.individualType as IndividualType) {
   default:
     throw new Error(
         `Unknown individual type ` +
-        `'${Configuration.individualType}'`
+        `'${Configuration.individual}'`
     );
 }
 
@@ -153,51 +289,92 @@ for (let i = 0; i < dataCollection.length; i++) {
   // Check the trial type
   switch (row.display) {
     case 'mid': {
-      // Break after Phase 1
-      // Clear the screen after the previous trial
-      if (previous.type === 'intentions-game') {
-        previous.clearScreen = true;
-      }
+      // Add a summary screen
+      timeline.push({
+        type: Configuration.pluginName,
+        display: 'summary',
+      });
 
       // Agency screen
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'agency',
         clearScreen: true,
       });
 
+      // Break after Phase 1
       // Add the instructions for the first break
       const firstBreakInstructions = [
+        // Part two instructions
         markup(
             <>
-              <h1>Intentions Game</h1>
-              <h2>Instructions</h2>
+              <h1>Instructions</h1>
+              <h2>
+                Part two
+              </h2>
+
+              {/* Instructions, page 1 */}
               <p>
-                You have played all your trials with your first partner!
+                In part two of the task, you will play with
+                a <b>new partner</b> for 54 trials where the
+                new <b>partner</b> will choose between the two options.
               </p>
               <p>
-                Now, you will be matched with a new partner. For the next
-                 set of trials, instead of you choosing how you will split
-                 the points, your partner will be choosing how to split
-                 the points!
+                In each trial there are still two options available to choose
+                from that will determine the amount of points you and your
+                partner receive. However, in this part of the task, <b>
+                you need to guess which option your partner will choose</b>.
               </p>
               <p>
-                You need to select which option you <i>think </i>
-                 your partner would have chosen.
+                Each option will increase the total points you and your partner
+                have to different amounts.
+              </p>
+            </>
+        ),
+        markup(
+            <>
+              <h1>Instructions</h1>
+              <h2>
+                Part two
+              </h2>
+
+              {/* Instructions, page 2 */}
+              <p>
+                You will get feedback on whether the option you predicted your
+                partner will choose was correct or incorrect by highlighting
+                your prediction in green or red.
               </p>
               <p>
-                You will see if you chose correctly or not.
+                You will get bonus points dependent on the number of correct
+                answers you get in this part of the task, that is, the amount of
+                times you correctly guess what your partner chose each trial.
               </p>
               <p>
-                After these trials, you will have an opportunity to evaluate
-                 how you thought your partner was behaving.
+                Remember that the partners you face in each part of the task
+                are different people.
               </p>
-              <h3>Good luck!</h3>
+              <p>
+                Instructions for part three will follow after part two
+                of this game.
+              </p>
+              <br/>
+
+              {/* Bonus points */}
+              <p>
+                You will get bonus points dependent on the number of correct
+                answers you get in this part of the task, that is, the amount of
+                times you correctly guess what your partner chose each trial.
+              </p>
+              <p>
+                Click 'Next &gt;' to play <b>2</b> practice trials.
+                You will then be matched with a new partner before starting
+                part two.
+              </p>
             </>
         ),
       ];
 
-      // Push elements to the timeline
+      // Push instructions to the timeline
       timeline.push({
         type: 'instructions',
         pages: firstBreakInstructions,
@@ -206,49 +383,171 @@ for (let i = 0; i < dataCollection.length; i++) {
         show_clickable_nav: true,
       });
 
+      // Practice trials for 'playerGuess'
+      timeline.push({
+        type: Configuration.pluginName,
+        optionOneParticipant: 4,
+        optionOnePartner: 4,
+        optionTwoParticipant: 5,
+        optionTwoPartner: 6,
+        typeOne: '',
+        typeTwo: '',
+        display: 'playerGuessPractice',
+        answer: 'Option 1',
+        isPractice: true,
+        clearScreen: false,
+      });
+
+      timeline.push({
+        type: Configuration.pluginName,
+        optionOneParticipant: 4,
+        optionOnePartner: 4,
+        optionTwoParticipant: 5,
+        optionTwoPartner: 6,
+        typeOne: '',
+        typeTwo: '',
+        display: 'playerGuessPractice',
+        answer: 'Option 2',
+        isPractice: true,
+        clearScreen: true,
+      });
+
+      // Attention check question
+      timeline.push({
+        type: 'attention-check',
+        question: 'In this part of task, ' +
+            'who will be choosing the points you and your partner get?',
+        options: [
+          'A lottery',
+          'Me',
+          'My partner',
+        ],
+        options_radio: true,
+        option_correct: 2,
+        confirmation: true,
+        feedback_correct: 'Correct! ' +
+            'Your partner will be choosing the points you and your ' +
+            'partner get.',
+        feedback_incorrect: 'Incorrect. Your partner will be choosing ' +
+            'the points.',
+      });
+
+      // Insert instructions to let the participant know they will
+      // be matched with a partner
+      timeline.push({
+        type: 'instructions',
+        pages: [
+          markup(
+              <>
+                <h1>Instructions</h1>
+                <p>
+                  You will now be matched with a new partner.
+                </p>
+                <p>
+                  Press 'Next &gt;' to begin!
+                </p>
+              </>
+          ),
+        ],
+        allow_keys: false,
+        show_page_number: true,
+        show_clickable_nav: true,
+      });
+
       // Insert another 'match' sequence into the timeline
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matching',
       });
 
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matched',
         clearScreen: true,
       });
+
       break;
     }
     case 'mid2': {
-      if (previous.type === 'intentions-game') {
+      if (previous.type === Configuration.pluginName) {
         previous.clearScreen = true;
       }
 
+      // Summary screen
+      timeline.push({
+        type: Configuration.pluginName,
+        display: 'summary',
+      });
+
+      // Inference screen
+      timeline.push({
+        type: Configuration.pluginName,
+        display: 'inference',
+      });
+
+      // Classification screen
+      timeline.push({
+        type: Configuration.pluginName,
+        display: 'classification',
+        clearScreen: true,
+      });
+
       // Agency screen
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'agency',
         clearScreen: true,
       });
 
       // Add the second break instructions
       const secondBreakInstructions = [
+        // Part three instructions
         markup(
             <>
-              <h1>Intentions Game</h1>
-              <h2>Instructions</h2>
+              <h1>Instructions</h1>
+              <h2>
+                Part three
+              </h2>
               <p>
-                You have played all your trials with your second partner!
+                In part three of the task, <b>you</b> will be choosing
+                between the two options over 36 trials.
               </p>
               <p>
-                Now, you will be matched with a new partner. For the next
-                 set of trials, you will get to choose how you split the points.
+                Remember that the partners you face in each part of the task
+                are different people.
               </p>
               <p>
-                After these trials, you will have an opportunity to evaluate
-                 how you thought your partner was behaving.
+                After you have completed part three, there are some short
+                questions to answer before you have finished.
+                You will be given instructions when you reach these
+                questions.
               </p>
-              <h3>Good luck!</h3>
+              <br/>
+
+              {/* Bonus points */}
+              <p>
+                Your point total at the end of this task will contribute to your
+                overall point total to put you in with a chance of winning a
+                $x bonus.
+              </p>
+              <p>
+                Click 'Next &gt;' to be matched with a new partner
+                before starting part three.
+                There are no practice trials.
+              </p>
+            </>
+        ),
+        // Insert instructions to let the participant know they will
+        // be matched with a partner
+        markup(
+            <>
+              <h1>Instructions</h1>
+              <p>
+                You will now be matched with a new partner.
+              </p>
+              <p>
+                Press 'Next &gt;' to begin!
+              </p>
             </>
         ),
       ];
@@ -263,22 +562,23 @@ for (let i = 0; i < dataCollection.length; i++) {
 
       // Insert another 'match' sequence into the timeline
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matching',
       });
 
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         display: 'matched',
         clearScreen: true,
       });
+
       break;
     }
     case 'playerGuess': {
       // 'playerGuess' trials, similar to 'playerChoice'-type trials,
       // but the returns are switched
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         optionOneParticipant: row.Option1_Partner,
         optionOnePartner: row.Option1_PPT,
         optionTwoParticipant: row.Option2_Partner,
@@ -294,7 +594,7 @@ for (let i = 0; i < dataCollection.length; i++) {
     default: {
       // 'playerChoice' trials
       timeline.push({
-        type: 'intentions-game',
+        type: Configuration.pluginName,
         optionOneParticipant: row.Option1_PPT,
         optionOnePartner: row.Option1_Partner,
         optionTwoParticipant: row.Option2_PPT,
@@ -310,21 +610,16 @@ for (let i = 0; i < dataCollection.length; i++) {
   }
 }
 
+// Add a summary screen
+timeline.push({
+  type: Configuration.pluginName,
+  display: 'summary',
+});
+
 // Agency screen
 timeline.push({
-  type: 'intentions-game',
+  type: Configuration.pluginName,
   display: 'agency',
-});
-
-// Inference screen
-timeline.push({
-  type: 'intentions-game',
-  display: 'inference',
-});
-
-timeline.push({
-  type: 'intentions-game',
-  display: 'classification',
   clearScreen: true,
 });
 
