@@ -15,6 +15,11 @@ jsPsych.plugins['intentions-game'] = (() => {
   const plugin = {
     info: {},
     trial: (displayElement: HTMLElement, trial: Trial) => {
+      // Debugging info if this is reached
+      consola.debug(`displayElement:`, displayElement);
+      consola.debug(`trial:`, trial);
+
+      // Should raise an error
       consola.error(`Not implemented.`);
     },
   };

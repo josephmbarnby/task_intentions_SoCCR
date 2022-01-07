@@ -225,7 +225,7 @@ timeline.push({
 });
 
 // Set and store the data colelction
-let dataCollection: string | any[];
+let dataCollection: string | Record<string, string>;
 consola.info(
     `Loading '${Configuration.individual}' individual`
 );
