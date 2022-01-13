@@ -189,6 +189,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
     // Disable all pointer events
     optionOneNode.style.pointerEvents = 'none';
     optionTwoNode.style.pointerEvents = 'none';
+    optionOneNode.style.touchAction = 'none';
+    optionTwoNode.style.touchAction = 'none';
 
     // Get the selected node object
     const selectedNode =
@@ -220,6 +222,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionTwoNode.style.opacity = '1';
             optionOneNode.style.pointerEvents = 'auto';
             optionTwoNode.style.pointerEvents = 'auto';
+            optionOneNode.style.touchAction = 'auto';
+            optionTwoNode.style.touchAction = 'auto';
 
             // End the trial
             endTrial(trialSelection);
@@ -265,6 +269,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionTwoNode.style.opacity = '1';
             optionOneNode.style.pointerEvents = 'auto';
             optionTwoNode.style.pointerEvents = 'auto';
+            optionOneNode.style.touchAction = 'auto';
+            optionTwoNode.style.touchAction = 'auto';
 
             // Reset the header state
             setTrialHeader(defaultHeader);
