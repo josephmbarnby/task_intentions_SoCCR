@@ -25,6 +25,7 @@ const RangeSlider = (props: Components.RangeSlider): ReactElement => {
         </Heading>
       </Box>
       <RangeInput
+        aria-label='Slider'
         value={value}
         min={props.min}
         max={props.max}
