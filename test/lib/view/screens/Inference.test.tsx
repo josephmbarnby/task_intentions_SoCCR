@@ -18,7 +18,7 @@ expect.extend(toHaveNoViolations);
 test('loads and displays Inference screen', async () => {
   render(
       <Inference
-        display='selection'
+        display='inference'
         selectionHandler={() => {
           console.info('Selection handler called');
         }}

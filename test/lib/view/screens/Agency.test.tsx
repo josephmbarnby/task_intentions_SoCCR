@@ -18,7 +18,7 @@ expect.extend(toHaveNoViolations);
 test('loads and displays Agency screen', async () => {
   render(
       <Agency
-        display='selection'
+        display='agency'
         selectionHandler={() => {
           console.info('Selection handler called');
         }}

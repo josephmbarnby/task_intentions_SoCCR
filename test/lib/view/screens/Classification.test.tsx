@@ -18,7 +18,7 @@ expect.extend(toHaveNoViolations);
 test('loads and displays Classification screen', async () => {
   render(
       <Classification
-        display='selection'
+        display='classification'
         selectionHandler={() => {
           console.info('Selection handler called');
         }}
