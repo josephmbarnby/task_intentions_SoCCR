@@ -1,0 +1,12 @@
+{
+  "urls": [
+    {
+      "url": "localhost:8080",
+      "actions": [
+        "click element #jspsych-instructions-next",
+        "click element #jspsych-instructions-next"
+      ],
+      "timeout": 10000
+    }
+  ]
+}
