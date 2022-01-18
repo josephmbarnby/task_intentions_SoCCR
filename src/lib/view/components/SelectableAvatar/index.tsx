@@ -16,6 +16,7 @@ import {Configuration} from '../../../Configuration';
 const SelectableAvatar = (props: Components.SelectableAvatar): ReactElement => {
   return (
     <Box
+      id={`avatar-${props.name}`}
       margin='medium'
       round={{size: '50%'}}
       className={

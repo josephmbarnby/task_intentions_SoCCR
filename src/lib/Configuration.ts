@@ -62,5 +62,6 @@ export const Configuration = {
   fullscreen: false,
 
   // Set the logging level
-  logging: LogLevel.Verbose,
+  logging: process.env.NODE_ENV === 'development' ?
+      LogLevel.Verbose : LogLevel.Warn,
 };

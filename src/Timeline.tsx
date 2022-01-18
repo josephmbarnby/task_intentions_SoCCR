@@ -257,7 +257,6 @@ experiment.load().then(() => {
         );
     }
   }
-  consola.info(`Data collection:`, dataCollection);
 
   /*
     Game Phases:
