@@ -16,43 +16,68 @@ const Classification = (props: Screens.Classification): ReactElement => {
   const [continueDisabled, setContinueDisabled] = React.useState(true);
 
   const partners = [
-    'Trying to earn as much money as possible',
-    'Trying to stop me from earning points',
-    'Trying to share as much money between us as possible',
+    <Text
+      aria-hidden={true}
+      // style={{
+      //   display: 'none',
+      // }}
+    >
+      Trying to earn as much money as possible
+    </Text>,
+    <Text
+      aria-hidden={true}
+      // style={{
+      //   display: 'none',
+      // }}
+    >
+      Trying to stop me from earning points
+    </Text>,
+    <Text
+      aria-hidden={true}
+      // style={{
+      //   display: 'none',
+      // }}
+    >
+      Trying to share as much money between us as possible
+    </Text>,
   ];
 
   return (
-    <>
-      <Box
-        justify='center'
-        align='center'
-        gap='small'
-        animation={['fadeIn']}
-      >
-        {/* First question */}
-        <Box width='xlarge'>
-          <Text size={'xlarge'}>
-            {'Overall, what do you think your partner was trying to ' +
-              'do with their decisions?'}
-          </Text>
-        </Box>
-
-        {/* Partner select component */}
-        <Select
-          options={partners}
-          placeholder='Please select'
-          onChange={({option}) => {
-            // Enable the continue button
-            setContinueDisabled(false);
-
-            // Update the selected classification
-            setClassification(option);
-          }}
-          margin={{top: 'large'}}
-          size='medium'
-        />
+    <Box
+      justify='center'
+      align='center'
+      gap='small'
+      animation={['fadeIn']}
+      flex
+      direction='column'
+    >
+      {/* First question */}
+      <Box width='xlarge'>
+        <Text size={'xlarge'}>
+          {'Overall, what do you think your partner was trying to ' +
+            'do with their decisions?'}
+        </Text>
       </Box>
+
+      {/* Partner select component */}
+      <Select
+        a11yTitle='Select'
+        options={partners}
+        placeholder='Please select'
+        onChange={({option}) => {
+          // Enable the continue button
+          setContinueDisabled(false);
+
+          // Update the selected classification
+          setClassification(option);
+        }}
+        margin={{top: 'large'}}
+        size='medium'
+      />
+
+      {/* Continue button */}
       <Button
+        a11yTitle='Continue'
         primary
         margin={{top: 'large'}}
         color='button'
@@ -68,7 +93,7 @@ const Classification = (props: Screens.Classification): ReactElement => {
           props.selectionHandler(classification);
         }}
       />
-    </>
+    </Box>
   );
 };
 

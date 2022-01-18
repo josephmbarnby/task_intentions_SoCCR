@@ -129,6 +129,11 @@ experiment.load().then(() => {
     ),
   ];
 
+  timeline.push({
+    type: Configuration.pluginName,
+    display: 'classification',
+  });
+
   // Insert the instructions into the timeline
   timeline.push({
     type: 'instructions',
