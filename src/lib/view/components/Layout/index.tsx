@@ -18,10 +18,10 @@ import SelectAvatar from '../../screens/SelectAvatar';
 import Matching from '../../screens/Matching';
 import Matched from '../../screens/Matched';
 import Inference from '../../screens/Inference';
+import Summary from '../../screens/Summary';
 
 // Other imports
 import consola from 'consola';
-import Summary from '../../screens/Summary';
 
 /**
  * Generic container for all Grommet components

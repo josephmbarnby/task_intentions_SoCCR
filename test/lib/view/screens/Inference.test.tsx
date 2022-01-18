@@ -2,9 +2,12 @@
 import React from 'react';
 
 // Test utilities
-import {render, waitFor, screen} from '@testing-library/react';
+import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {axe, toHaveNoViolations} from 'jest-axe';
+
+// Custom wrapper
+import {render} from './Wrapper';
 
 // Test components
 import Inference from '../../../../src/lib/view/screens/Inference';
