@@ -41,6 +41,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
+    "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.3.2",
     "jest": "^26.6.3",
     "react": "^17.0.2",
@@ -55,11 +56,11 @@
   },
   "dependencies": {
     "boring-avatars": "^1.5.8",
-    "crossplatform-jspsych-wrapper": "file:./packages/crossplatform-jspsych-wrapper-v0.0.1.tgz",
     "grommet": "^2.17.3",
     "grommet-icons": "^4.6.0",
     "jspsych": "^6.0.0",
     "jspsych-attention-check": "^1.4.1",
+    "pa11y": "^6.1.1",
     "react-text-transition": "^1.3.0"
   }
 }
