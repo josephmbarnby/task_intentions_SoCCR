@@ -7,14 +7,14 @@ import '@testing-library/jest-dom';
 import {axe, toHaveNoViolations} from 'jest-axe';
 
 // Test components
-import Agency from '../../../../src/lib/view/screens/Agency';
+import Inference from '../../../../src/lib/view/screens/Inference';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
 
-test('loads and displays Agency screen', async () => {
+test('loads and displays Inference screen', async () => {
   render(
-      <Agency
+      <Inference
         display='selection'
         selectionHandler={() => {
           console.info('Selection handler called');
@@ -22,15 +22,15 @@ test('loads and displays Agency screen', async () => {
       />
   );
 
-  await waitFor(() => screen.queryByText('Totally'));
+  await waitFor(() => screen.queryAllByText('Totally'));
 
-  expect(screen.queryByText('Totally')).not.toBeNull();
+  expect(screen.queryAllByText('Totally')).not.toBeNull();
 });
 
-test('check Agency accessibility', async () => {
+test('check Inference accessibility', async () => {
   const {container} = render(
-      <Agency
-        display='agency'
+      <Inference
+        display='inference'
         selectionHandler={() => {
           console.info('Selection handler called');
         }}

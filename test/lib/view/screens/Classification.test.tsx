@@ -30,7 +30,7 @@ test('loads and displays Classification screen', async () => {
 test('check Classification accessibility', async () => {
   const {container} = render(
       <Classification
-        display='selection'
+        display='classification'
         selectionHandler={() => {
           console.info('Selection handler called');
         }}
