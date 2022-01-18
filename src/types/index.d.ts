@@ -7,6 +7,9 @@ declare type Display =
 // The three individual types
 declare type Individual = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';
 
+// Avatar styles
+declare type AvatarStyles = 'beam' | 'marble' | 'pixel' | 'sunset' | 'ring' | 'bauhaus';
+
 // Selection options
 declare type Options = 'Option 1' | 'Option 2';
 

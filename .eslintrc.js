@@ -8,6 +8,7 @@ module.exports = {
   ignorePatterns: [
     '.eslintrc.js',
     'gulpfile.js',
+    'jest.config.js',
     'webpack.config.js',
     'node_modules/',
     '*.d.ts',

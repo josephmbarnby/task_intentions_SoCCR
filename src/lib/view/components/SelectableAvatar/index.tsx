@@ -30,7 +30,7 @@ const SelectableAvatar = (props: Components.SelectableAvatar): ReactElement => {
       <Avatar
         size={props.size}
         name={props.name}
-        variant={Configuration.avatars.variant}
+        variant={Configuration.avatars.variant as AvatarStyles}
         colors={Configuration.avatars.colours}
       />
     </Box>
