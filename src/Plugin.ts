@@ -109,9 +109,9 @@ jsPsych.plugins['intentions-game'] = (() => {
     consola.debug(`Running trial stage '${trial.display}'`);
 
     // Disable keyboard input beforehand
-    document.onkeydown = () => {
+    document.addEventListener('keydown', () => {
       return false;
-    };
+    });
 
     // Generate and configure props based on the stage
     let screenProps:
@@ -368,6 +368,11 @@ jsPsych.plugins['intentions-game'] = (() => {
       if (trial.clearScreen === true) {
         ReactDOM.unmountComponentAtNode(displayElement);
       }
+
+      // Re-enable keyboard actions
+      document.removeEventListener('keydown', () => {
+        return false;
+      });
 
       // Finish the jsPsych trial
       jsPsych.finishTrial(trialData);

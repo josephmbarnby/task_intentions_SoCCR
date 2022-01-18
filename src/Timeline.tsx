@@ -227,33 +227,37 @@ experiment.load().then(() => {
 
   // Set and store the data colelction
   let dataCollection: string | Record<string, string>;
-  consola.info(
-      `Loading '${Configuration.individual}' individual`
-  );
 
-  switch (Configuration.individual as Individual) {
-    case 'Competitive': {
-      dataCollection = Competitive;
-      break;
+  // Detect if we are running locally (use test data)
+  // or online (use the configured individual data)
+  if (process.env.NODE_ENV === 'development') {
+    dataCollection = Test;
+    consola.info(`Loading 'Test' individual`);
+  } else {
+    consola.info(
+        `Loading '${Configuration.individual}' individual`
+    );
+    switch (Configuration.individual as Individual) {
+      case 'Competitive': {
+        dataCollection = Competitive;
+        break;
+      }
+      case 'Individual': {
+        dataCollection = Individualist;
+        break;
+      }
+      case 'Prosocial': {
+        dataCollection = Prosocial;
+        break;
+      }
+      default:
+        throw new Error(
+            `Unknown individual type ` +
+            `'${Configuration.individual}'`
+        );
     }
-    case 'Individual': {
-      dataCollection = Individualist;
-      break;
-    }
-    case 'Prosocial': {
-      dataCollection = Prosocial;
-      break;
-    }
-    case 'Test': {
-      dataCollection = Test;
-      break;
-    }
-    default:
-      throw new Error(
-          `Unknown individual type ` +
-          `'${Configuration.individual}'`
-      );
   }
+  consola.info(`Data collection:`, dataCollection);
 
   /*
     Game Phases:

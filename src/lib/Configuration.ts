@@ -1,3 +1,6 @@
+// Logging level
+import {LogLevel} from 'consola';
+
 // Configuration and other required data
 export const Configuration = {
   // General information
@@ -26,7 +29,7 @@ export const Configuration = {
   },
 
   // Individual type
-  individual: 'Test',
+  individual: 'Competitive',
 
   // Avatar configuration details, including colours and names
   avatars: {
@@ -55,5 +58,9 @@ export const Configuration = {
     variant: 'beam',
   },
 
+  // Force fullscreen
   fullscreen: false,
+
+  // Set the logging level
+  logging: LogLevel.Verbose,
 };
