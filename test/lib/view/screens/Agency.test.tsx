@@ -25,9 +25,9 @@ test('loads and displays Agency screen', async () => {
       />
   );
 
-  await waitFor(() => screen.queryByText('Totally'));
+  await waitFor(() => screen.queryByText('Agree'));
 
-  expect(screen.queryByText('Totally')).not.toBeNull();
+  expect(screen.queryByText('Agree')).not.toBeNull();
 });
 
 test('check Agency accessibility', async () => {
