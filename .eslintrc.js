@@ -9,7 +9,7 @@ module.exports = {
     '.eslintrc.js',
     'gulpfile.js',
     'jest.config.js',
-    'webpack.config.js',
+    'webpack.*.js',
     'node_modules/',
     '*.d.ts',
   ],
