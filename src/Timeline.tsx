@@ -528,32 +528,21 @@ experiment.load().then(() => {
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>Instructions</Heading>
-                  <Heading level={2} margin='small' fill>
-                    Part three
-                  </Heading>
+                  <Heading level={2} margin='small' fill>Stage three</Heading>
                   <Paragraph margin='small' fill>
-                    In part three of the task, <b>you</b> will be choosing
-                    between the two options over 36 trials.
+                    In the final stage of this game, <b>you</b> will again be
+                    choosing how the points are split between yourself and your
+                    partner. As before, you may choose to distribute the points
+                    however you like.
                   </Paragraph>
                   <Paragraph margin='small' fill>
-                    Remember that the partners you face in each part of the task
-                    are different people.
+                    Remember, your partner will be different to the ones you
+                    have previously played. You will not know how many points
+                    they have accumulated over the course of the game so far.
                   </Paragraph>
                   <Paragraph margin='small' fill>
-                    After you have completed part three, there are some short
-                    questions to answer before you have finished.
-                    You will be given instructions when you reach these
-                    questions.
-                  </Paragraph>
-                  <Paragraph margin='small' fill>
-                    Your point total at the end of this task will contribute to
-                    your overall point total to put you in with a chance of
-                    winning a $x bonus.
-                  </Paragraph>
-                  <Paragraph margin='small' fill>
-                    Click 'Next &gt;' to be matched with a new partner
-                    before starting part three.
-                    There are no practice trials.
+                    Click 'Next &gt;' to be matched with your partner and start
+                    stage three. There will be no practice trials beforehand.
                   </Paragraph>
                 </Box>
               </Grommet>
@@ -565,7 +554,7 @@ experiment.load().then(() => {
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>Instructions</Heading>
                   <Paragraph margin='small' fill>
-                    You will now be matched with a new partner.
+                    You will now be matched with a partner.
                   </Paragraph>
                   <Paragraph margin='small' fill>
                     Press 'Next &gt;' to begin!
