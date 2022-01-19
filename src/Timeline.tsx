@@ -45,87 +45,76 @@ experiment.load().then(() => {
   const instructionsPracticeGames = [
     // Overall instructions
     markup(
-        <>
+        <div className='instructions-container'>
           <h1>Instructions</h1>
           {/* Overview */}
           <h2>
             Overview
           </h2>
           <p>
-            In this task, you will be choosing between two options to split
-            sets of points between you and a partner.
+            During this task you and a partner will be choosing how
+            to divide a sum of points between each other.
+            Your ID will not be revealed to your partner,
+            and you won't be able to see the ID of your partner.
           </p>
           <p>
-            The task has three parts. You are matched with
-            a <b>different</b> partner before each part.
+            This game consists of three stages.
+            You are matched with a <b>different</b> partner before each stage.
           </p>
-          <br/>
-
-          {/* Structure */}
-          <h2>
-            Structure
-          </h2>
-          <p>
-            In part one of the task, <b>you</b> will be choosing
-            between the two options over 36 trials.
-          </p>
-          <p>
-            In part two of the task, you will play with
-            a <b>new partner</b> for 54 trials where the
-            new <b>partner</b> will choose between the two options.
-          </p>
-          <p>
-            In part three of the task, you will play
-            with <b>another new partner</b> for 36 trials
-            where <b>you</b> will be choosing between the
-            two options.
-          </p>
-          <br/>
-          <p>
-            So, in the first part of the task you choose the options, in
-            the other part of the task your partner chooses the options,
-            and in part three of the task you choose the options.
-          </p>
-          <p>
-            At the end of each part, you will be shown a summary
-            of how many points you and your partner accumulated
-            in that part.
-          </p>
-        </>
+          <br />
+        </div>
     ),
     // Part one instructions
     markup(
-        <>
+        <div className='instructions-container'>
           <h1>Instructions</h1>
+          {/* Overview */}
           <h2>
-            Part one
+            Overview
           </h2>
           <p>
-            In part one of the task, <b>you</b> will be choosing
-            between the two options over 36 trials.
+            In stage one of this game, you will be choosing how the points
+            are split between you and your partner.
           </p>
           <p>
-            Remember that the partners you face in each part of the task
-            are different people.
+            In stage two, you will play with a <b>new partner</b> for 54
+            rounds. In this stage your partner will choose how to split the
+            points. You need to guess how your partner plans to divide the
+            points each round. You will earn bonus points for each correct
+            prediction.
           </p>
           <p>
-            Instructions for the second part will follow after the first part
-            of this game.
-          </p>
-          <br/>
-
-          {/* Bonus points */}
-          <p>
-            Your point total at the end of this task will contribute to your
-            overall point total to put you in with a chance of winning a
-            $x bonus.
+            In stage three, you will play with <b>yet another new
+            partner</b> where <b>you</b> will again be choosing how to split
+            the points.
           </p>
           <p>
-            Click 'Next &gt;' to choose an avatar.
-            You will play <b>2</b> practice
-            trials after choosing your avatar.
+            At the end of each stage you will be shown a summary of how many
+            points you and your partner accumulated during that phase.
           </p>
-        </>
+        </div>
+    ),
+    markup(
+        <div className='instructions-container'>
+          <h1>Instructions</h1>
+          <h2>
+            Stage one
+          </h2>
+          <p>
+            In the following <b>you</b> are tasked with distributing points
+            between yourself and your partner. You may choose to distribute
+            the points however you like. This stage will consist of 36 rounds.
+          </p>
+          <p>
+            Remember, the number of points each player holds at the end of the
+            game will determine if they get a bonus payment.
+          </p>
+          <p>
+            Click 'Next &gt;' to select an avatar to represent you while
+            you play this game. You will then play <b>5</b> practice rounds
+            before you are matched with your partner.
+          </p>
+        </div>
     ),
   ];
 
@@ -144,7 +133,7 @@ experiment.load().then(() => {
     display: 'selection',
   });
 
-  // Practice trials for 'playerChoice'
+  // 5x practice trials for 'playerChoice'
   timeline.push({
     type: Configuration.pluginName,
     optionOneParticipant: 4,
@@ -173,15 +162,57 @@ experiment.load().then(() => {
     clearScreen: true,
   });
 
+  timeline.push({
+    type: Configuration.pluginName,
+    optionOneParticipant: 1,
+    optionOnePartner: 4,
+    optionTwoParticipant: 7,
+    optionTwoPartner: 6,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: true,
+  });
+
+  timeline.push({
+    type: Configuration.pluginName,
+    optionOneParticipant: 6,
+    optionOnePartner: 3,
+    optionTwoParticipant: 4,
+    optionTwoPartner: 5,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: true,
+  });
+
+  timeline.push({
+    type: Configuration.pluginName,
+    optionOneParticipant: 4,
+    optionOnePartner: 4,
+    optionTwoParticipant: 5,
+    optionTwoPartner: 7,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: true,
+  });
+
   // Attention check question
   timeline.push({
     type: 'attention-check',
-    question: 'In this part of the task, ' +
-        'who will be choosing the points you and your partner get?',
+    question: 'In this stage of the game, who will be choosing the ' +
+        'number of points that you and your partner get?',
     options: [
-      'A lottery',
-      'Me',
       'My partner',
+      'Me',
+      'By lottery',
     ],
     options_radio: true,
     option_correct: 1,
