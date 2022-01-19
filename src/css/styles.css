@@ -23,13 +23,6 @@
   transform: scale(1.2) translateY(-20%);
 }
 
-/* Instructions styling */
-.instructions-container {
-  max-width: 50%;
-  margin: auto;
-  font-size: larger;
-}
-
 /* Gorilla style overrides */
 h1, h2 {
   font-weight: bold;

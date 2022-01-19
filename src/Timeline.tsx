@@ -1,6 +1,9 @@
 // React
 import React from 'react';
 
+// Grommet UI components
+import {Box, Grommet, Heading, Paragraph} from 'grommet';
+
 // Configuration
 import {Configuration} from './lib/Configuration';
 
@@ -45,76 +48,73 @@ experiment.load().then(() => {
   const instructionsPracticeGames = [
     // Overall instructions
     markup(
-        <div className='instructions-container'>
-          <h1>Instructions</h1>
-          {/* Overview */}
-          <h2>
-            Overview
-          </h2>
-          <p>
-            During this task you and a partner will be choosing how
-            to divide a sum of points between each other.
-            Your ID will not be revealed to your partner,
-            and you won't be able to see the ID of your partner.
-          </p>
-          <p>
-            This game consists of three stages.
-            You are matched with a <b>different</b> partner before each stage.
-          </p>
-          <br />
-        </div>
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Overview</Heading>
+            <Paragraph margin='small' fill>
+              During this task you and a partner will be choosing how
+              to divide a sum of points between each other.
+              Your ID will not be revealed to your partner,
+              and you won't be able to see the ID of your partner.
+            </Paragraph>
+            <Paragraph margin='small' fill>
+              This game consists of three stages.
+              You are matched with a <b>different</b> partner before each stage.
+            </Paragraph>
+          </Box>
+        </Grommet>
     ),
     // Part one instructions
     markup(
-        <div className='instructions-container'>
-          <h1>Instructions</h1>
-          {/* Overview */}
-          <h2>
-            Overview
-          </h2>
-          <p>
-            In stage one of this game, you will be choosing how the points
-            are split between you and your partner.
-          </p>
-          <p>
-            In stage two, you will play with a <b>new partner</b> for 54
-            rounds. In this stage your partner will choose how to split the
-            points. You need to guess how your partner plans to divide the
-            points each round. You will earn bonus points for each correct
-            prediction.
-          </p>
-          <p>
-            In stage three, you will play with <b>yet another new
-            partner</b> where <b>you</b> will again be choosing how to split
-            the points.
-          </p>
-          <p>
-            At the end of each stage you will be shown a summary of how many
-            points you and your partner accumulated during that phase.
-          </p>
-        </div>
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Overview</Heading>
+            <Paragraph margin='small' fill>
+              In stage one of this game, you will be choosing how the points
+              are split between you and your partner.
+            </Paragraph>
+            <Paragraph margin='small' fill>
+              In stage two, you will play with a <b>new partner</b> for 54
+              rounds. In this stage your partner will choose how to split the
+              points. You need to guess how your partner plans to divide the
+              points each round. You will earn bonus points for each correct
+              prediction.
+            </Paragraph>
+            <Paragraph margin='small' fill>
+              In stage three, you will play with <b>yet another new
+              partner</b> where <b>you</b> will again be choosing how to split
+              the points.
+            </Paragraph>
+            <Paragraph margin='small' fill>
+              At the end of each stage you will be shown a summary of how many
+              points you and your partner accumulated during that phase.
+            </Paragraph>
+          </Box>
+        </Grommet>
     ),
     markup(
-        <div className='instructions-container'>
-          <h1>Instructions</h1>
-          <h2>
-            Stage one
-          </h2>
-          <p>
-            In the following <b>you</b> are tasked with distributing points
-            between yourself and your partner. You may choose to distribute
-            the points however you like. This stage will consist of 36 rounds.
-          </p>
-          <p>
-            Remember, the number of points each player holds at the end of the
-            game will determine if they get a bonus payment.
-          </p>
-          <p>
-            Click 'Next &gt;' to select an avatar to represent you while
-            you play this game. You will then play <b>5</b> practice rounds
-            before you are matched with your partner.
-          </p>
-        </div>
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Stage one</Heading>
+            <Paragraph margin='small' fill>
+              In the following <b>you</b> are tasked with distributing points
+              between yourself and your partner. You may choose to distribute
+              the points however you like. This stage will consist of 36 rounds.
+            </Paragraph>
+            <Paragraph margin='small' fill>
+              Remember, the number of points each player holds at the end of the
+              game will determine if they get a bonus payment.
+            </Paragraph>
+            <Paragraph margin='small' fill>
+              Click 'Next &gt;' to select an avatar to represent you while
+              you play this game. You will then play <b>5</b> practice rounds
+              before you are matched with your partner.
+            </Paragraph>
+          </Box>
+        </Grommet>
     ),
   ];
 
@@ -228,15 +228,17 @@ experiment.load().then(() => {
     type: 'instructions',
     pages: [
       markup(
-          <>
-            <h1>Instructions</h1>
-            <p>
-              You will now be matched with a new partner.
-            </p>
-            <p>
-              Press 'Next &gt;' to begin!
-            </p>
-          </>
+          <Grommet>
+            <Box style={{maxWidth: '50%', margin: 'auto'}}>
+              <Heading level={1} margin='small' fill>Instructions</Heading>
+              <Paragraph margin='small' fill>
+                You will now be matched with a partner.
+              </Paragraph>
+              <Paragraph margin='small' fill>
+                Press 'Next &gt;' to begin!
+              </Paragraph>
+            </Box>
+          </Grommet>
       ),
     ],
     allow_keys: false,
@@ -347,72 +349,66 @@ experiment.load().then(() => {
         const firstBreakInstructions = [
           // Part two instructions
           markup(
-              <>
-                <h1>Instructions</h1>
-                <h2>
-                  Part two
-                </h2>
-
-                {/* Instructions, page 1 */}
-                <p>
-                  In part two of the task, you will play with
-                  a <b>new partner</b> for 54 trials where the
-                  new <b>partner</b> will choose between the two options.
-                </p>
-                <p>
-                  In each trial there are still two options available to choose
-                  from that will determine the amount of points you and your
-                  partner receive. However, in this part of the task, <b>
-                  you need to guess which option your partner will choose</b>.
-                </p>
-                <p>
-                  Each option will increase the total points you and your
-                  partner have to different amounts.
-                </p>
-              </>
+              <Grommet>
+                <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                  <Heading level={1} margin='small' fill>Instructions</Heading>
+                  <Heading level={2} margin='small' fill>Part two</Heading>
+                  <Paragraph margin='small' fill>
+                    In part two of the task, you will play with
+                    a <b>new partner</b> for 54 trials where the
+                    new <b>partner</b> will choose between the two options.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    In each trial there are still two options available to
+                    choose from that will determine the amount of points
+                    you and your partner receive. However, in this part of
+                    the task, <b>you need to guess which option your
+                    partner will choose</b>.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Each option will increase the total points you and your
+                    partner have to different amounts.
+                  </Paragraph>
+                </Box>
+              </Grommet>
           ),
           markup(
-              <>
-                <h1>Instructions</h1>
-                <h2>
-                  Part two
-                </h2>
-
-                {/* Instructions, page 2 */}
-                <p>
-                  You will get feedback on whether the option you predicted your
-                  partner will choose was correct or incorrect by highlighting
-                  your prediction in green or red.
-                </p>
-                <p>
-                  You will get bonus points dependent on the number of correct
-                  answers you get in this part of the task, that is, the
-                  amount of times you correctly guess what your partner chose
-                  each trial.
-                </p>
-                <p>
-                  Remember that the partners you face in each part of the task
-                  are different people.
-                </p>
-                <p>
-                  Instructions for part three will follow after part two
-                  of this game.
-                </p>
-                <br/>
-
-                {/* Bonus points */}
-                <p>
-                  You will get bonus points dependent on the number of correct
-                  answers you get in this part of the task, that is, the
-                  amount of times you correctly guess what your partner chose
-                  each trial.
-                </p>
-                <p>
-                  Click 'Next &gt;' to play <b>2</b> practice trials.
-                  You will then be matched with a new partner before starting
-                  part two.
-                </p>
-              </>
+              <Grommet>
+                <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                  <Heading level={1} margin='small' fill>Instructions</Heading>
+                  <Heading level={2} margin='small' fill>Part two</Heading>
+                  <Paragraph margin='small' fill>
+                    You will get feedback on whether the option you predicted
+                    your partner will choose was correct or incorrect by
+                    highlighting your prediction in green or red.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    You will get bonus points dependent on the number of correct
+                    answers you get in this part of the task, that is, the
+                    amount of times you correctly guess what your partner chose
+                    each trial.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Remember that the partners you face in each part of the task
+                    are different people.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Instructions for part three will follow after part two
+                    of this game.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    You will get bonus points dependent on the number of correct
+                    answers you get in this part of the task, that is, the
+                    amount of times you correctly guess what your partner chose
+                    each trial.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Click 'Next &gt;' to play <b>2</b> practice trials.
+                    You will then be matched with a new partner before starting
+                    part two.
+                  </Paragraph>
+                </Box>
+              </Grommet>
           ),
         ];
 
@@ -480,15 +476,19 @@ experiment.load().then(() => {
           type: 'instructions',
           pages: [
             markup(
-                <>
-                  <h1>Instructions</h1>
-                  <p>
-                    You will now be matched with a new partner.
-                  </p>
-                  <p>
-                    Press 'Next &gt;' to begin!
-                  </p>
-                </>
+                <Grommet>
+                  <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                    <Heading level={1} margin='small' fill>
+                      Instructions
+                    </Heading>
+                    <Paragraph margin='small' fill>
+                      You will now be matched with a new partner.
+                    </Paragraph>
+                    <Paragraph margin='small' fill>
+                      Press 'Next &gt;' to begin!
+                    </Paragraph>
+                  </Box>
+                </Grommet>
             ),
           ],
           allow_keys: false,
@@ -545,52 +545,53 @@ experiment.load().then(() => {
         const secondBreakInstructions = [
           // Part three instructions
           markup(
-              <>
-                <h1>Instructions</h1>
-                <h2>
-                  Part three
-                </h2>
-                <p>
-                  In part three of the task, <b>you</b> will be choosing
-                  between the two options over 36 trials.
-                </p>
-                <p>
-                  Remember that the partners you face in each part of the task
-                  are different people.
-                </p>
-                <p>
-                  After you have completed part three, there are some short
-                  questions to answer before you have finished.
-                  You will be given instructions when you reach these
-                  questions.
-                </p>
-                <br/>
-
-                {/* Bonus points */}
-                <p>
-                  Your point total at the end of this task will contribute to
-                  your overall point total to put you in with a chance of
-                  winning a $x bonus.
-                </p>
-                <p>
-                  Click 'Next &gt;' to be matched with a new partner
-                  before starting part three.
-                  There are no practice trials.
-                </p>
-              </>
+              <Grommet>
+                <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                  <Heading level={1} margin='small' fill>Instructions</Heading>
+                  <Heading level={2} margin='small' fill>
+                    Part three
+                  </Heading>
+                  <Paragraph margin='small' fill>
+                    In part three of the task, <b>you</b> will be choosing
+                    between the two options over 36 trials.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Remember that the partners you face in each part of the task
+                    are different people.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    After you have completed part three, there are some short
+                    questions to answer before you have finished.
+                    You will be given instructions when you reach these
+                    questions.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Your point total at the end of this task will contribute to
+                    your overall point total to put you in with a chance of
+                    winning a $x bonus.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Click 'Next &gt;' to be matched with a new partner
+                    before starting part three.
+                    There are no practice trials.
+                  </Paragraph>
+                </Box>
+              </Grommet>
           ),
           // Insert instructions to let the participant know they will
           // be matched with a partner
           markup(
-              <>
-                <h1>Instructions</h1>
-                <p>
-                  You will now be matched with a new partner.
-                </p>
-                <p>
-                  Press 'Next &gt;' to begin!
-                </p>
-              </>
+              <Grommet>
+                <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                  <Heading level={1} margin='small' fill>Instructions</Heading>
+                  <Paragraph margin='small' fill>
+                    You will now be matched with a new partner.
+                  </Paragraph>
+                  <Paragraph margin='small' fill>
+                    Press 'Next &gt;' to begin!
+                  </Paragraph>
+                </Box>
+              </Grommet>
           ),
         ];
 

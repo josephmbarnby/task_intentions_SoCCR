@@ -35,10 +35,28 @@ const Agency = (props: Screens.Agency): ReactElement => {
       <Box width='xlarge'>
         <Text size='xlarge'>
           {'The Brain Development and Disorders lab does not use ' +
-          'deception. All participants are real. Nevertheless, ' +
+          'deception. All partner decisions are real. Nevertheless, ' +
           'for our own purposes, it is helpful to know to what ' +
           'extent you believed that the other player really existed.'}
         </Text>
+        <div className='instructions-container'>
+          <h1>Instructions</h1>
+          {/* Overview */}
+          <h2>
+            Overview
+          </h2>
+          <p>
+            During this task you and a partner will be choosing how
+            to divide a sum of points between each other.
+            Your ID will not be revealed to your partner,
+            and you won't be able to see the ID of your partner.
+          </p>
+          <p>
+            This game consists of three stages.
+            You are matched with a <b>different</b> partner before each stage.
+          </p>
+          <br />
+        </div>
       </Box>
       <Box width='xlarge'>
         <Text size='xlarge'>
@@ -49,8 +67,8 @@ const Agency = (props: Screens.Agency): ReactElement => {
         min={0}
         max={100}
         initial={sliderValue}
-        leftLabel='Not at all'
-        rightLabel='Totally'
+        leftLabel='Disagree'
+        rightLabel='Agree'
         onChange={() => {
           setSliderMoved(true);
         }}
