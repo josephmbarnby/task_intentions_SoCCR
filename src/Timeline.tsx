@@ -59,6 +59,13 @@ experiment.load().then(() => {
               and you won't be able to see the ID of your partner.
             </Paragraph>
             <Paragraph margin='small' fill>
+              You will be paid a bonus at the end of the game which
+              depends upon the number of points you each managed to
+              accumulate while playing. If you earn over 100 points,
+              you will automatically be placed into a lottery for your
+              chance to win an extra $20.
+            </Paragraph>
+            <Paragraph margin='small' fill>
               This game consists of three stages.
               You are matched with a <b>different</b> partner before each stage.
             </Paragraph>
@@ -352,60 +359,33 @@ experiment.load().then(() => {
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>Instructions</Heading>
-                  <Heading level={2} margin='small' fill>Part two</Heading>
+                  <Heading level={2} margin='small' fill>Stage two</Heading>
                   <Paragraph margin='small' fill>
-                    In part two of the task, you will play with
-                    a <b>new partner</b> for 54 trials where the
-                    new <b>partner</b> will choose between the two options.
+                    In the following <b>you will play with a new partner</b>.
+                    This time your partner will be the one choosing how the
+                    points are split between you both.
                   </Paragraph>
                   <Paragraph margin='small' fill>
-                    In each trial there are still two options available to
-                    choose from that will determine the amount of points
-                    you and your partner receive. However, in this part of
-                    the task, <b>you need to guess which option your
-                    partner will choose</b>.
+                    Remember, your partner will be different to the one you
+                    played with earlier. Your partner will not know how many
+                    points you have accumulated over the course of the game
+                    so far.
                   </Paragraph>
                   <Paragraph margin='small' fill>
-                    Each option will increase the total points you and your
-                    partner have to different amounts.
-                  </Paragraph>
-                </Box>
-              </Grommet>
-          ),
-          markup(
-              <Grommet>
-                <Box style={{maxWidth: '50%', margin: 'auto'}}>
-                  <Heading level={1} margin='small' fill>Instructions</Heading>
-                  <Heading level={2} margin='small' fill>Part two</Heading>
-                  <Paragraph margin='small' fill>
-                    You will get feedback on whether the option you predicted
-                    your partner will choose was correct or incorrect by
-                    highlighting your prediction in green or red.
+                    <b>Your task will be to try to guess how your partner
+                    plans to divide the points between the two of you
+                    each round.</b>
                   </Paragraph>
                   <Paragraph margin='small' fill>
-                    You will get bonus points dependent on the number of correct
-                    answers you get in this part of the task, that is, the
-                    amount of times you correctly guess what your partner chose
-                    each trial.
+                    You will be awarded additional points at the end of
+                    the round depending on the number of times you
+                    manage to <b>correctly guess your partner's choices</b>.
+                    This will contribute to your chance to win a bonus
+                    at the end of the task.
                   </Paragraph>
                   <Paragraph margin='small' fill>
-                    Remember that the partners you face in each part of the task
-                    are different people.
-                  </Paragraph>
-                  <Paragraph margin='small' fill>
-                    Instructions for part three will follow after part two
-                    of this game.
-                  </Paragraph>
-                  <Paragraph margin='small' fill>
-                    You will get bonus points dependent on the number of correct
-                    answers you get in this part of the task, that is, the
-                    amount of times you correctly guess what your partner chose
-                    each trial.
-                  </Paragraph>
-                  <Paragraph margin='small' fill>
-                    Click 'Next &gt;' to play <b>2</b> practice trials.
-                    You will then be matched with a new partner before starting
-                    part two.
+                    Click 'Next &gt;' to play <b>5</b> practice rounds of
+                    this stage. You will then be matched with your partner.
                   </Paragraph>
                 </Box>
               </Grommet>
@@ -456,8 +436,8 @@ experiment.load().then(() => {
           question: 'In this part of task, ' +
               'who will be choosing the points you and your partner get?',
           options: [
-            'A lottery',
             'Me',
+            'By lottery',
             'My partner',
           ],
           options_radio: true,
@@ -482,7 +462,7 @@ experiment.load().then(() => {
                       Instructions
                     </Heading>
                     <Paragraph margin='small' fill>
-                      You will now be matched with a new partner.
+                      You will now be matched with a partner.
                     </Paragraph>
                     <Paragraph margin='small' fill>
                       Press 'Next &gt;' to begin!

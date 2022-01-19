@@ -38,8 +38,8 @@ const Inference = (props: Screens.Inference): ReactElement => {
         <Box width='xlarge'>
           <Text size={'xlarge'}>
             {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are driven ' +
-            'by their desire to earn points in this task.'}
+            'to which you believe your partner\'s decisions are ' +
+            'driven by their desire to earn points in this task.'}
           </Text>
         </Box>
         <RangeSlider
@@ -58,8 +58,8 @@ const Inference = (props: Screens.Inference): ReactElement => {
         <Box width='xlarge' margin={{top: 'auto'}}>
           <Text size={'xlarge'}>
             {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are driven ' +
-            'by their desire to reduce your bonus in this task.'}
+            'to which you believe your partner\'s decisions are ' +
+            'driven by their desire to reduce your bonus in this task.'}
           </Text>
         </Box>
         <RangeSlider

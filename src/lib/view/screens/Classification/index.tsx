@@ -17,13 +17,13 @@ const Classification = (props: Screens.Classification): ReactElement => {
 
   const partners = [
     <Text aria-hidden={true}>
-      Trying to earn as much money as possible
+      To earn as much money for themselves as possible
     </Text>,
     <Text aria-hidden={true}>
-      Trying to stop me from earning points
+      To stop me from earning money
     </Text>,
     <Text aria-hidden={true}>
-      Trying to share as much money between us as possible
+      To share the money between us evenly
     </Text>,
   ];
 
@@ -39,8 +39,7 @@ const Classification = (props: Screens.Classification): ReactElement => {
       {/* First question */}
       <Box width='xlarge'>
         <Text size={'xlarge'}>
-          {'Overall, what do you think your partner was trying to ' +
-            'do with their decisions?'}
+          {'Overall, what do you think your partner was trying to do?'}
         </Text>
       </Box>
 
