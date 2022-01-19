@@ -79,15 +79,15 @@ experiment.load().then(() => {
             <Heading level={1} margin='small' fill>Instructions</Heading>
             <Heading level={2} margin='small' fill>Overview</Heading>
             <Paragraph margin='small' size='large' fill>
-              In stage one of this game, you will be choosing how the points
-              are split between you and your partner.
+              In stage one of this game, <b>you</b> will be choosing how the
+              points are split between you and your partner.
             </Paragraph>
             <Paragraph margin='small' size='large' fill>
               In stage two, you will play with a <b>new partner</b> for 54
-              rounds. In this stage your partner will choose how to split the
-              points. You need to guess how your partner plans to divide the
-              points each round. You will earn bonus points for each correct
-              prediction.
+              rounds. In this stage your <b>partner</b> will choose how to
+              split the points. You need to guess how your partner plans
+              to divide the points each round. You will earn bonus points
+              for each correct prediction.
             </Paragraph>
             <Paragraph margin='small' size='large' fill>
               In stage three, you will play with <b>yet another new

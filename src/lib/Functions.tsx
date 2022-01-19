@@ -22,7 +22,6 @@ export function markup(
   return generated;
 }
 
-
 /**
  * Switch between different screens
  * @param {Display} type screen type
