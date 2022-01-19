@@ -3,10 +3,10 @@ const eslint = require('gulp-eslint');
 const del = require('del');
 
 /**
- * Run the style checker
+ * Run the linter
  * @param {Function} cb callback function
  */
-function style(cb) {
+function lint(cb) {
   gulp.src([
     'src/*.ts',
     'src/*.tsx',
@@ -31,5 +31,5 @@ function clean(cb) {
 }
 
 exports.clean = clean;
-exports.style = style;
-exports.default = style;
+exports.lint = lint;
+exports.default = lint;

@@ -232,17 +232,18 @@ experiment.load().then(() => {
   // or online (use the configured individual data)
   if (process.env.NODE_ENV === 'development') {
     dataCollection = Test;
-    consola.info(`Loading 'Test' individual`);
+    consola.info(`Loading 'Test' partner`);
   } else {
     consola.info(
-        `Loading '${Configuration.individual}' individual`
+        `Loading '${Configuration.manipulations.partner}' partner`
     );
-    switch (Configuration.individual as Individual) {
+    switch (Configuration.manipulations.partner as Partner) {
       case 'Competitive': {
+        // Competitive partner
         dataCollection = Competitive;
         break;
       }
-      case 'Individual': {
+      case 'Individualist': {
         dataCollection = Individualist;
         break;
       }
@@ -250,10 +251,14 @@ experiment.load().then(() => {
         dataCollection = Prosocial;
         break;
       }
+      case 'Test': {
+        dataCollection = Test;
+        break;
+      }
       default:
         throw new Error(
-            `Unknown individual type ` +
-            `'${Configuration.individual}'`
+            `Unknown partner type ` +
+            `'${Configuration.manipulations.partner}'`
         );
     }
   }

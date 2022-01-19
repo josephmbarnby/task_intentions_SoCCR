@@ -4,13 +4,12 @@
   "description": "Intentions Game",
   "private": true,
   "scripts": {
-    "dev": "webpack serve",
+    "dev": "webpack serve --config-name development",
     "watch": "webpack --watch",
-    "build": "webpack",
+    "build": "webpack --config-name production",
     "style": "gulp style",
-    "clean": "gulp clean",
-    "test": "jest",
-    "test:accessibility": "webpack serve & sleep 5; pa11y-ci --threshold 5;"
+    "lint": "gulp lint",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -65,6 +64,7 @@
   },
   "dependencies": {
     "boring-avatars": "^1.5.8",
+    "crossplatform-jspsych-wrapper": "file:packages/crossplatform-jspsych-wrapper-v1.1.0.tgz",
     "grommet": "^2.17.3",
     "grommet-icons": "^4.6.0",
     "jspsych": "^6.0.0",

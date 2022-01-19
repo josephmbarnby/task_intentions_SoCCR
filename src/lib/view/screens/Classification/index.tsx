@@ -16,28 +16,13 @@ const Classification = (props: Screens.Classification): ReactElement => {
   const [continueDisabled, setContinueDisabled] = React.useState(true);
 
   const partners = [
-    <Text
-      aria-hidden={true}
-      // style={{
-      //   display: 'none',
-      // }}
-    >
+    <Text aria-hidden={true}>
       Trying to earn as much money as possible
     </Text>,
-    <Text
-      aria-hidden={true}
-      // style={{
-      //   display: 'none',
-      // }}
-    >
+    <Text aria-hidden={true}>
       Trying to stop me from earning points
     </Text>,
-    <Text
-      aria-hidden={true}
-      // style={{
-      //   display: 'none',
-      // }}
-    >
+    <Text aria-hidden={true}>
       Trying to share as much money between us as possible
     </Text>,
   ];
