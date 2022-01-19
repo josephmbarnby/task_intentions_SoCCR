@@ -37,7 +37,7 @@ const Inference = (props: Screens.Inference): ReactElement => {
       {/* First question */}
       <Paragraph margin='small' size='large' fill>
         Please use the slider below to indicate the extent
-        to which you believe your partner\'s decisions are
+        to which you believe your partner's decisions are
         driven by their desire to earn points in this task.
       </Paragraph>
       <RangeSlider
@@ -55,7 +55,7 @@ const Inference = (props: Screens.Inference): ReactElement => {
       {/* Second question */}
       <Paragraph margin='small' size='large' fill>
         Please use the slider below to indicate the extent
-        to which you believe your partner\'s decisions are
+        to which you believe your partner's decisions are
         driven by their desire to reduce your bonus in this task.
       </Paragraph>
       <RangeSlider

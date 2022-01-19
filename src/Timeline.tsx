@@ -236,7 +236,7 @@ experiment.load().then(() => {
     pages: [
       markup(
           <Grommet>
-            <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Box>
               <Heading level={1} margin='small' fill>Instructions</Heading>
               <Paragraph margin='small' size='large' fill>
                 You will now be matched with a partner.
@@ -457,7 +457,7 @@ experiment.load().then(() => {
           pages: [
             markup(
                 <Grommet>
-                  <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                  <Box>
                     <Heading level={1} margin='small' fill>
                       Instructions
                     </Heading>
@@ -551,7 +551,7 @@ experiment.load().then(() => {
           // be matched with a partner
           markup(
               <Grommet>
-                <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                <Box>
                   <Heading level={1} margin='small' fill>Instructions</Heading>
                   <Paragraph margin='small' size='large' fill>
                     You will now be matched with a partner.
