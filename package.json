@@ -9,6 +9,7 @@
     "build": "webpack --config webpack.prod.js",
     "style": "gulp style",
     "lint": "gulp lint",
+    "clean": "rm -rf dist/",
     "test": "jest"
   },
   "repository": {
