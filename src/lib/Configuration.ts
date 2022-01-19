@@ -62,5 +62,5 @@ export const Configuration = {
 
   // Set the logging level
   logging: process.env.NODE_ENV === 'development' ?
-      LogLevel.Verbose : LogLevel.Warn,
+      LogLevel.Verbose : LogLevel.Error,
 };

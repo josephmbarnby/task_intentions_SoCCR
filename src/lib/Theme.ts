@@ -41,4 +41,14 @@ export const Theme = {
       margin: 'small',
     },
   },
+  select: {
+    icons: {
+      color: 'button',
+    },
+    options: {
+      text: {
+        size: 'large',
+      },
+    },
+  },
 };

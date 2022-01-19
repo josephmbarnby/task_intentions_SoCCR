@@ -16,15 +16,9 @@ const Classification = (props: Screens.Classification): ReactElement => {
   const [continueDisabled, setContinueDisabled] = React.useState(true);
 
   const partners = [
-    <Text aria-hidden={true}>
-      To earn as much money for themselves as possible
-    </Text>,
-    <Text aria-hidden={true}>
-      To stop me from earning money
-    </Text>,
-    <Text aria-hidden={true}>
-      To share the money between us evenly
-    </Text>,
+    'To earn as much money for themselves as possible',
+    'To stop me from earning money',
+    'To share the money between us evenly',
   ];
 
   return (
@@ -44,20 +38,22 @@ const Classification = (props: Screens.Classification): ReactElement => {
       </Box>
 
       {/* Partner select component */}
-      <Select
-        a11yTitle='Select'
-        options={partners}
-        placeholder='Please select'
-        onChange={({option}) => {
-          // Enable the continue button
-          setContinueDisabled(false);
+      <Box width='large'>
+        <Select
+          a11yTitle='Select'
+          options={partners}
+          placeholder='Please select'
+          onChange={({option}) => {
+            // Enable the continue button
+            setContinueDisabled(false);
 
-          // Update the selected classification
-          setClassification(option);
-        }}
-        margin={{top: 'large'}}
-        size='medium'
-      />
+            // Update the selected classification
+            setClassification(option);
+          }}
+          margin={{top: 'large'}}
+          size='large'
+        />
+      </Box>
 
       {/* Continue button */}
       <Button
