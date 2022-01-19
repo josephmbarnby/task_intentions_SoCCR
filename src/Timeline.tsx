@@ -52,20 +52,20 @@ experiment.load().then(() => {
           <Box style={{maxWidth: '50%', margin: 'auto'}}>
             <Heading level={1} margin='small' fill>Instructions</Heading>
             <Heading level={2} margin='small' fill>Overview</Heading>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               During this task you and a partner will be choosing how
               to divide a sum of points between each other.
               Your ID will not be revealed to your partner,
               and you won't be able to see the ID of your partner.
             </Paragraph>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               You will be paid a bonus at the end of the game which
               depends upon the number of points you each managed to
               accumulate while playing. If you earn over 100 points,
               you will automatically be placed into a lottery for your
               chance to win an extra $20.
             </Paragraph>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               This game consists of three stages.
               You are matched with a <b>different</b> partner before each stage.
             </Paragraph>
@@ -78,23 +78,23 @@ experiment.load().then(() => {
           <Box style={{maxWidth: '50%', margin: 'auto'}}>
             <Heading level={1} margin='small' fill>Instructions</Heading>
             <Heading level={2} margin='small' fill>Overview</Heading>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               In stage one of this game, you will be choosing how the points
               are split between you and your partner.
             </Paragraph>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               In stage two, you will play with a <b>new partner</b> for 54
               rounds. In this stage your partner will choose how to split the
               points. You need to guess how your partner plans to divide the
               points each round. You will earn bonus points for each correct
               prediction.
             </Paragraph>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               In stage three, you will play with <b>yet another new
               partner</b> where <b>you</b> will again be choosing how to split
               the points.
             </Paragraph>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               At the end of each stage you will be shown a summary of how many
               points you and your partner accumulated during that phase.
             </Paragraph>
@@ -106,16 +106,16 @@ experiment.load().then(() => {
           <Box style={{maxWidth: '50%', margin: 'auto'}}>
             <Heading level={1} margin='small' fill>Instructions</Heading>
             <Heading level={2} margin='small' fill>Stage one</Heading>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               In the following <b>you</b> are tasked with distributing points
               between yourself and your partner. You may choose to distribute
               the points however you like. This stage will consist of 36 rounds.
             </Paragraph>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               Remember, the number of points each player holds at the end of the
               game will determine if they get a bonus payment.
             </Paragraph>
-            <Paragraph margin='small' fill>
+            <Paragraph margin='small' size='large' fill>
               Click 'Next &gt;' to select an avatar to represent you while
               you play this game. You will then play <b>5</b> practice rounds
               before you are matched with your partner.
@@ -238,10 +238,10 @@ experiment.load().then(() => {
           <Grommet>
             <Box style={{maxWidth: '50%', margin: 'auto'}}>
               <Heading level={1} margin='small' fill>Instructions</Heading>
-              <Paragraph margin='small' fill>
+              <Paragraph margin='small' size='large' fill>
                 You will now be matched with a partner.
               </Paragraph>
-              <Paragraph margin='small' fill>
+              <Paragraph margin='small' size='large' fill>
                 Press 'Next &gt;' to begin!
               </Paragraph>
             </Box>
@@ -360,30 +360,30 @@ experiment.load().then(() => {
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>Instructions</Heading>
                   <Heading level={2} margin='small' fill>Stage two</Heading>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     In the following <b>you will play with a new partner</b>.
                     This time your partner will be the one choosing how the
                     points are split between you both.
                   </Paragraph>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     Remember, your partner will be different to the one you
                     played with earlier. Your partner will not know how many
                     points you have accumulated over the course of the game
                     so far.
                   </Paragraph>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     <b>Your task will be to try to guess how your partner
                     plans to divide the points between the two of you
                     each round.</b>
                   </Paragraph>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     You will be awarded additional points at the end of
                     the round depending on the number of times you
                     manage to <b>correctly guess your partner's choices</b>.
                     This will contribute to your chance to win a bonus
                     at the end of the task.
                   </Paragraph>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     Click 'Next &gt;' to play <b>5</b> practice rounds of
                     this stage. You will then be matched with your partner.
                   </Paragraph>
@@ -461,10 +461,10 @@ experiment.load().then(() => {
                     <Heading level={1} margin='small' fill>
                       Instructions
                     </Heading>
-                    <Paragraph margin='small' fill>
+                    <Paragraph margin='small' size='large' fill>
                       You will now be matched with a partner.
                     </Paragraph>
-                    <Paragraph margin='small' fill>
+                    <Paragraph margin='small' size='large' fill>
                       Press 'Next &gt;' to begin!
                     </Paragraph>
                   </Box>
@@ -529,18 +529,18 @@ experiment.load().then(() => {
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>Instructions</Heading>
                   <Heading level={2} margin='small' fill>Stage three</Heading>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     In the final stage of this game, <b>you</b> will again be
                     choosing how the points are split between yourself and your
                     partner. As before, you may choose to distribute the points
                     however you like.
                   </Paragraph>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     Remember, your partner will be different to the ones you
                     have previously played. You will not know how many points
                     they have accumulated over the course of the game so far.
                   </Paragraph>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     Click 'Next &gt;' to be matched with your partner and start
                     stage three. There will be no practice trials beforehand.
                   </Paragraph>
@@ -553,10 +553,10 @@ experiment.load().then(() => {
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>Instructions</Heading>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     You will now be matched with a partner.
                   </Paragraph>
-                  <Paragraph margin='small' fill>
+                  <Paragraph margin='small' size='large' fill>
                     Press 'Next &gt;' to begin!
                   </Paragraph>
                 </Box>

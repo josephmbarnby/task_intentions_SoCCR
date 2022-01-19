@@ -2,7 +2,7 @@
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Button, Text} from 'grommet';
+import {Box, Button, Paragraph} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
@@ -26,43 +26,21 @@ const Agency = (props: Screens.Agency): ReactElement => {
     <Box
       justify='center'
       align='center'
+      style={{maxWidth: '50%', margin: 'auto'}}
       gap='small'
       animation={['fadeIn']}
       flex
       direction='column'
     >
-      {/* Agency question */}
-      <Box width='xlarge'>
-        <Text size='xlarge'>
-          {'The Brain Development and Disorders lab does not use ' +
-          'deception. All partner decisions are real. Nevertheless, ' +
-          'for our own purposes, it is helpful to know to what ' +
-          'extent you believed that the other player really existed.'}
-        </Text>
-        <div className='instructions-container'>
-          <h1>Instructions</h1>
-          {/* Overview */}
-          <h2>
-            Overview
-          </h2>
-          <p>
-            During this task you and a partner will be choosing how
-            to divide a sum of points between each other.
-            Your ID will not be revealed to your partner,
-            and you won't be able to see the ID of your partner.
-          </p>
-          <p>
-            This game consists of three stages.
-            You are matched with a <b>different</b> partner before each stage.
-          </p>
-          <br />
-        </div>
-      </Box>
-      <Box width='xlarge'>
-        <Text size='xlarge'>
-          {'I believed I was playing with a real person.'}
-        </Text>
-      </Box>
+      <Paragraph margin='small' size='large' fill>
+        The Brain Development and Disorders lab does not use
+        deception. All partner decisions are real. Nevertheless,
+        for our own purposes, it is helpful to know to what
+        extent you believed that the other player really existed.
+      </Paragraph>
+      <Paragraph margin='small' size='large' fill>
+        I believed I was playing with a real person.
+      </Paragraph>
       <RangeSlider
         min={0}
         max={100}

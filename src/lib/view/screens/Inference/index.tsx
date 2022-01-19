@@ -2,7 +2,7 @@
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Button, Text} from 'grommet';
+import {Box, Button, Paragraph} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
@@ -27,53 +27,50 @@ const Inference = (props: Screens.Inference): ReactElement => {
   const [secondValue, setSecondValue] = useState(SLIDER_DEFAULT);
 
   return (
-    <>
-      <Box
-        justify='center'
-        align='center'
-        gap='small'
-        animation={['fadeIn']}
-      >
-        {/* First question */}
-        <Box width='xlarge'>
-          <Text size={'xlarge'}>
-            {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are ' +
-            'driven by their desire to earn points in this task.'}
-          </Text>
-        </Box>
-        <RangeSlider
-          min={0}
-          max={100}
-          initial={firstValue}
-          leftLabel='Not at all'
-          rightLabel='Totally'
-          onChange={() => {
-            setFirstMoved(true);
-          }}
-          setValue={setFirstValue}
-        />
+    <Box
+      justify='center'
+      align='center'
+      gap='small'
+      style={{maxWidth: '50%', margin: 'auto'}}
+      animation={['fadeIn']}
+    >
+      {/* First question */}
+      <Paragraph margin='small' size='large' fill>
+        Please use the slider below to indicate the extent
+        to which you believe your partner\'s decisions are
+        driven by their desire to earn points in this task.
+      </Paragraph>
+      <RangeSlider
+        min={0}
+        max={100}
+        initial={firstValue}
+        leftLabel='Not at all'
+        rightLabel='Totally'
+        onChange={() => {
+          setFirstMoved(true);
+        }}
+        setValue={setFirstValue}
+      />
 
-        {/* Second question */}
-        <Box width='xlarge' margin={{top: 'auto'}}>
-          <Text size={'xlarge'}>
-            {'Please use the slider below to indicate the extent ' +
-            'to which you believe your partner\'s decisions are ' +
-            'driven by their desire to reduce your bonus in this task.'}
-          </Text>
-        </Box>
-        <RangeSlider
-          min={0}
-          max={100}
-          initial={secondValue}
-          leftLabel='Not at all'
-          rightLabel='Totally'
-          onChange={() => {
-            setSecondMoved(true);
-          }}
-          setValue={setSecondValue}
-        />
-      </Box>
+      {/* Second question */}
+      <Paragraph margin='small' size='large' fill>
+        Please use the slider below to indicate the extent
+        to which you believe your partner\'s decisions are
+        driven by their desire to reduce your bonus in this task.
+      </Paragraph>
+      <RangeSlider
+        min={0}
+        max={100}
+        initial={secondValue}
+        leftLabel='Not at all'
+        rightLabel='Totally'
+        onChange={() => {
+          setSecondMoved(true);
+        }}
+        setValue={setSecondValue}
+      />
+
+      {/* Continue button */}
       <Button
         primary
         margin={{top: 'auto'}}
@@ -90,7 +87,7 @@ const Inference = (props: Screens.Inference): ReactElement => {
           props.selectionHandler(firstValue, secondValue);
         }}
       />
-    </>
+    </Box>
   );
 };
 

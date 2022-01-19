@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Grommet UI components
-import {Box, Button, Text, Select} from 'grommet';
+import {Box, Button, Select, Paragraph} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 /**
@@ -31,11 +31,9 @@ const Classification = (props: Screens.Classification): ReactElement => {
       direction='column'
     >
       {/* First question */}
-      <Box width='xlarge'>
-        <Text size={'xlarge'}>
-          {'Overall, what do you think your partner was trying to do?'}
-        </Text>
-      </Box>
+      <Paragraph margin='small' size='large' fill>
+        Overall, what do you think your partner was trying to do?
+      </Paragraph>
 
       {/* Partner select component */}
       <Box width='large'>

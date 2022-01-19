@@ -19,11 +19,7 @@ const RangeSlider = (props: Components.RangeSlider): ReactElement => {
       gap='large'
       width='xlarge'
     >
-      <Box width='medium'>
-        <Heading level={3}>
-          {props.leftLabel}
-        </Heading>
-      </Box>
+      <Heading level={3}>{props.leftLabel}</Heading>
       <RangeInput
         aria-label='Slider'
         value={value}
@@ -45,11 +41,7 @@ const RangeSlider = (props: Components.RangeSlider): ReactElement => {
           setValue(updatedValue);
         }}
       />
-      <Box width='medium'>
-        <Heading level={3}>
-          {props.rightLabel}
-        </Heading>
-      </Box>
+      <Heading level={3}>{props.rightLabel}</Heading>
     </Box>
   );
 };
