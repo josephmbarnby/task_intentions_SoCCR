@@ -58,6 +58,7 @@ const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
 
       {/* Continue button */}
       <Button
+        id='select-avatar-button'
         primary
         color='button'
         label='Continue'

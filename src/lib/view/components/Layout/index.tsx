@@ -18,10 +18,11 @@ import SelectAvatar from '../../screens/SelectAvatar';
 import Matching from '../../screens/Matching';
 import Matched from '../../screens/Matched';
 import Inference from '../../screens/Inference';
+import Summary from '../../screens/Summary';
+import End from '../../screens/End';
 
 // Other imports
 import consola from 'consola';
-import Summary from '../../screens/Summary';
 
 /**
  * Generic container for all Grommet components
@@ -75,6 +76,11 @@ export const Layout = (props: Components.Layout): ReactElement => {
     // Summary screen after each phase
     case 'summary':
       screen = <Summary {...props.screen as Screens.Summary} />;
+      break;
+
+    // End screen at the conclusion of the game
+    case 'end':
+      screen = <End />;
       break;
 
     // Likely a mistake

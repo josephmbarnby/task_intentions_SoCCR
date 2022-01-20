@@ -6,7 +6,7 @@ import consola from 'consola';
 
 // Core modules
 import {Configuration} from './lib/Configuration';
-import {calculatePoints, display} from './lib/Functions';
+import {calculatePoints, showDisplay} from './lib/Functions';
 
 // API modules
 import {Experiment} from 'crossplatform-jspsych-wrapper';
@@ -109,20 +109,13 @@ jsPsych.plugins['intentions-game'] = (() => {
     consola.debug(`Running trial stage '${trial.display}'`);
 
     // Disable keyboard input beforehand
-    document.onkeydown = () => {
+    document.addEventListener('keydown', () => {
       return false;
-    };
-
-    // Generate and configure props based on the stage
-    let screenProps:
-        Screens.Agency | Screens.Classification |
-        Screens.Inference | Screens.Matched |
-        Screens.Matching | Screens.SelectAvatar |
-        Screens.Trial | Screens.Summary;
+    });
 
     // Timeout information
-    let timeoutDuration = 0;
-    let timeoutCallback: () => void;
+    let duration = 0;
+    let callback: () => void;
 
     // Sum the points from the previous trials
     const participantPoints = calculatePoints(trial.display, 'playerPoints');
@@ -134,6 +127,12 @@ jsPsych.plugins['intentions-game'] = (() => {
       postPhase = jsPsych.data.get().last().values()[0].display;
     }
 
+    // Generate and configure props based on the stage
+    let props:
+        Screens.Agency | Screens.Classification |
+        Screens.Inference | Screens.Matched |
+        Screens.Matching | Screens.SelectAvatar |
+        Screens.Trial | Screens.Summary;
     switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
       case 'playerChoice':
@@ -142,7 +141,7 @@ jsPsych.plugins['intentions-game'] = (() => {
       case 'playerGuessPractice':
       case 'playerChoice2': {
         // Setup the props
-        screenProps = {
+        props = {
           display: trial.display,
           isPractice: trial.isPractice,
           participantPoints: participantPoints,
@@ -163,30 +162,30 @@ jsPsych.plugins['intentions-game'] = (() => {
         break;
       }
 
-      // Matching and matched stages
+      // Matching and matched screens
       case 'matched':
       case 'matching':
         // Setup the props
-        screenProps = {
+        props = {
           display: trial.display,
         };
 
         if (trial.display === 'matched') {
           // Short timeout for 'matched' screen
-          timeoutDuration = 2000;
+          duration = 2000;
         } else {
           // Random timeout for 'matching' process
-          timeoutDuration =
-              2000 + (1 + Math.random() * 5) * 1000;
+          duration = 2000 + (1 + Math.random() * 5) * 1000;
         }
 
-        timeoutCallback = finishTrial;
+        // Set the timeout callback function
+        callback = finishTrial;
         break;
 
       // Selection screen
       case 'selection':
         // Setup the props
-        screenProps = {
+        props = {
           display: trial.display,
           selectionHandler: avatarSelectionHandler,
         };
@@ -195,7 +194,7 @@ jsPsych.plugins['intentions-game'] = (() => {
       // Inference screen
       case 'inference':
         // Setup the props
-        screenProps = {
+        props = {
           display: trial.display,
           selectionHandler: inferenceSelectionHandler,
         };
@@ -204,7 +203,7 @@ jsPsych.plugins['intentions-game'] = (() => {
       // Agency screen
       case 'agency':
         // Setup the props
-        screenProps = {
+        props = {
           display: trial.display,
           selectionHandler: agencySelectionHandler,
         };
@@ -213,20 +212,34 @@ jsPsych.plugins['intentions-game'] = (() => {
       // Classification screen
       case 'classification':
         // Setup the props
-        screenProps = {
+        props = {
           display: trial.display,
           selectionHandler: classificationSelectionHandler,
         };
         break;
 
-      // Classification screen
+      // Summary screen
       case 'summary':
         // Setup the props
-        screenProps = {
+        props = {
           display: trial.display,
           postPhase: postPhase,
           selectionHandler: finishTrial,
         };
+        break;
+
+      // End screen
+      case 'end':
+        // Setup the props
+        props = {
+          display: trial.display,
+        };
+
+        // Set the timeout duration
+        duration = 5000;
+
+        // Set the timeout callback function
+        callback = finishTrial;
         break;
 
       // Default error state
@@ -241,26 +254,27 @@ jsPsych.plugins['intentions-game'] = (() => {
     const startTime = performance.now();
 
     // Display the screen with the generated props
-    display(
+    showDisplay(
         trial.display,
+        props,
         displayElement,
-        screenProps,
-        timeoutDuration,
-        timeoutCallback
+        duration,
+        callback
     );
 
     /**
      * Handle selection events in a particular trial
      * @param {Options} option selected option
+     * @param {Options} answer selected option
      */
-    function optionHandler(option: Options) {
+    function optionHandler(option: Options, answer: Options) {
       const endTime = performance.now();
       const duration = endTime - startTime;
       trialData.trialDuration = duration;
 
       // Check if they chose the correct option. We record this
       // for all trials, but we only need 'playerGuess'-type trials
-      trialData.correctGuess = option === trial.answer ? 1 : 0;
+      trialData.correctGuess = option === answer ? 1 : 0;
 
       // Store the participant selection
       trialData.selectedOption = option === 'Option 1' ? 1 : 2;
@@ -268,10 +282,10 @@ jsPsych.plugins['intentions-game'] = (() => {
       // Points in the 'playerGuess' trials are handled differently
       if (trial.display.toLowerCase().includes('guess')) {
         // Add points from option partner selected
-        trialData.playerPoints = trial.answer === 'Option 1' ?
+        trialData.playerPoints = answer === 'Option 1' ?
             trial.optionOneParticipant :
             trial.optionTwoParticipant;
-        trialData.partnerPoints = trial.answer === 'Option 1' ?
+        trialData.partnerPoints = answer === 'Option 1' ?
             trial.optionOnePartner :
             trial.optionTwoPartner;
       } else {
@@ -285,7 +299,7 @@ jsPsych.plugins['intentions-game'] = (() => {
         }
       }
 
-      // End trial
+      // Finish trial
       finishTrial();
     }
 
@@ -304,53 +318,46 @@ jsPsych.plugins['intentions-game'] = (() => {
           selectedAvatar,
       );
 
-      // End trial
+      // Finish trial
       finishTrial();
     }
 
     /**
      * Handler called after questions completed
-     * @param {number} responseOne value of the first slider
-     * @param {number} responseTwo value of the second slider
+     * @param {number} one value of the first slider
+     * @param {number} two value of the second slider
      */
-    function inferenceSelectionHandler(
-        responseOne: number,
-        responseTwo: number
-    ): void {
+    function inferenceSelectionHandler(one: number, two: number): void {
       // Store the responses
-      trialData.inferenceResponseOne = responseOne;
-      trialData.inferenceResponseTwo = responseTwo;
+      trialData.inferenceResponseOne = one;
+      trialData.inferenceResponseTwo = two;
 
-      // End trial
+      // Finish trial
       finishTrial();
     }
 
     /**
      * Handler called after agency question completed
-     * @param {number} agencyResponse value of the agency slider
+     * @param {number} value value of the agency slider
      */
-    function agencySelectionHandler(
-        agencyResponse: number,
-    ): void {
+    function agencySelectionHandler(value: number): void {
       // Store the responses
-      trialData.agencyResponse = agencyResponse;
+      trialData.agencyResponse = value;
 
-      // End trial
+      // Finish trial
       finishTrial();
     }
 
     /**
      * Handler called after classification question completed
-     * @param {string} classification the participant's classification
+     * @param {string} type the participant's classification
      * of their partner
      */
-    function classificationSelectionHandler(
-        classification: string,
-    ): void {
+    function classificationSelectionHandler(type: string): void {
       // Store the responses
-      trialData.classification = classification;
+      trialData.classification = type;
 
-      // End trial
+      // Finish trial
       finishTrial();
     }
 
@@ -368,6 +375,11 @@ jsPsych.plugins['intentions-game'] = (() => {
       if (trial.clearScreen === true) {
         ReactDOM.unmountComponentAtNode(displayElement);
       }
+
+      // Re-enable keyboard actions
+      document.removeEventListener('keydown', () => {
+        return false;
+      });
 
       // Finish the jsPsych trial
       jsPsych.finishTrial(trialData);

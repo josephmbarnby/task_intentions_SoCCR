@@ -1,6 +1,10 @@
 // Declare a 'Screens' namespace to define props for each
 // screen used in the experiment.
 declare namespace Screens {
+  interface End {
+    display: Display;
+  }
+
   interface Matched {
     display: Display;
   }
@@ -25,12 +29,12 @@ declare namespace Screens {
       }
     };
     answer: string;
-    selectionHandler: (selection: string) => void;
+    selectionHandler: (selection: string, answer: string) => void;
   }
 
   interface SelectAvatar {
     display: Display;
-    selectionHandler: (_selection: string) => void;
+    selectionHandler: (selection: string) => void;
   }
 
   interface Inference {

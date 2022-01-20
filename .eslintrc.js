@@ -8,7 +8,8 @@ module.exports = {
   ignorePatterns: [
     '.eslintrc.js',
     'gulpfile.js',
-    'webpack.config.js',
+    'jest.config.js',
+    'webpack.*.js',
     'node_modules/',
     '*.d.ts',
   ],
@@ -18,6 +19,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
   ],
   rules: {
+    '@typescript-eslint/no-namespace': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
   },

@@ -2,7 +2,7 @@
 import React, {ReactElement, useState} from 'react';
 
 // Grommet UI components
-import {Box, Button, Text} from 'grommet';
+import {Box, Button, Paragraph} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
@@ -23,39 +23,35 @@ const Agency = (props: Screens.Agency): ReactElement => {
   const [sliderValue, setSliderValue] = useState(SLIDER_DEFAULT);
 
   return (
-    <>
-      <Box
-        justify='center'
-        align='center'
-        gap='small'
-        animation={['fadeIn']}
-      >
-        {/* Agency question */}
-        <Box width='xlarge'>
-          <Text size='xlarge'>
-            {'The Brain Development and Disorders lab does not use ' +
-            'deception. All participants are real. Nevertheless, ' +
-            'for our own purposes, it is helpful to know to what ' +
-            'extent you believed that the other player really existed.'}
-          </Text>
-        </Box>
-        <Box width='xlarge'>
-          <Text size='xlarge'>
-            {'I believed I was playing with a real person.'}
-          </Text>
-        </Box>
-        <RangeSlider
-          min={0}
-          max={100}
-          initial={sliderValue}
-          leftLabel='Not at all'
-          rightLabel='Totally'
-          onChange={() => {
-            setSliderMoved(true);
-          }}
-          setValue={setSliderValue}
-        />
-      </Box>
+    <Box
+      justify='center'
+      align='center'
+      style={{maxWidth: '50%', margin: 'auto'}}
+      gap='small'
+      animation={['fadeIn']}
+      flex
+      direction='column'
+    >
+      <Paragraph margin='small' size='large' fill>
+        The Brain Development and Disorders lab does not use
+        deception. All partner decisions are real. Nevertheless,
+        for our own purposes, it is helpful to know to what
+        extent you believed that the other player really existed.
+      </Paragraph>
+      <Paragraph margin='small' size='large' fill>
+        I believed I was playing with a real person.
+      </Paragraph>
+      <RangeSlider
+        min={0}
+        max={100}
+        initial={sliderValue}
+        leftLabel='Disagree'
+        rightLabel='Agree'
+        onChange={() => {
+          setSliderMoved(true);
+        }}
+        setValue={setSliderValue}
+      />
       <Button
         primary
         margin={{top: 'large'}}
@@ -72,7 +68,7 @@ const Agency = (props: Screens.Agency): ReactElement => {
           props.selectionHandler(sliderValue);
         }}
       />
-    </>
+    </Box>
   );
 };
 

@@ -46,7 +46,7 @@ const PlayerCard = (props: Components.PlayerCard): ReactElement => {
           <Avatar
             size={128}
             name={props.avatar}
-            variant={Configuration.avatars.variant}
+            variant={Configuration.avatars.variant as AvatarStyles}
             colors={Configuration.avatars.colours}
           />
         </Box>

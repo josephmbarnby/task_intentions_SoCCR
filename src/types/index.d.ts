@@ -2,10 +2,13 @@
 declare type Display =
     'playerChoice' | 'playerChoicePractice' | 'playerChoice2' | 'mid' | 'mid2' |
     'playerGuess' | 'playerGuessPractice' | 'matching' | 'matched' | 'selection' |
-    'inference' | 'agency' | 'classification' | 'summary';
+    'inference' | 'agency' | 'classification' | 'summary' | 'end';
 
-// The three individual types
-declare type Individual = 'Test' | 'Prosocial' | 'Individual' | 'Competitive';
+// The three partner types
+declare type Partner = 'Test' | 'Prosocial' | 'Individualist' | 'Competitive';
+
+// Avatar styles
+declare type AvatarStyles = 'beam' | 'marble' | 'pixel' | 'sunset' | 'ring' | 'bauhaus';
 
 // Selection options
 declare type Options = 'Option 1' | 'Option 2';
@@ -21,8 +24,8 @@ declare type Row = {
   Option2_PPT: number;
   Option2_Partner: number;
   ShowProgressBar: number;
-  Type1: Individual;
-  Type2: Individual;
+  Type1: Partner;
+  Type2: Partner;
   Difference1: number;
   Difference2: number;
 };

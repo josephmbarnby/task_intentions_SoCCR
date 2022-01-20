@@ -1,5 +1,5 @@
 // React import
-import React, {ReactElement, JSXElementConstructor} from 'react';
+import React, {ReactElement} from 'react';
 import {render} from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 
@@ -15,32 +15,28 @@ import consola from 'consola';
  * @param {ReactElement} element React element to render
  * @return {string}
  */
-export function markup(
-    element: ReactElement<any, string | JSXElementConstructor<any>>
-): string {
-  const generated = ReactDOMServer.renderToStaticMarkup(element);
-  return generated;
+export function markup(element: ReactElement): string {
+  return ReactDOMServer.renderToStaticMarkup(element);
 }
-
 
 /**
  * Switch between different screens
  * @param {Display} type screen type
- * @param {HTMLElement} target target DOM element
  * @param {any} props collection of props
+ * @param {HTMLElement} target target DOM element
  * @param {number} timeout duration
  * @param {Function} callback function to run
  */
-export function display(
+export function showDisplay(
     type: Display,
-    target: HTMLElement,
     props:
         Screens.Agency | Screens.Classification |
         Screens.Inference | Screens.Matched | Screens.Matching |
-        Screens.SelectAvatar | Screens.Trial,
+        Screens.SelectAvatar | Screens.Trial | Screens.End,
+    target: HTMLElement,
     timeout=0,
     callback=() => {
-      consola.info('No callback defined for timeout');
+      consola.info(`No callback defined for timeout`);
     },
 ): void {
   // Render the 'Layout' component

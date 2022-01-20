@@ -1,1 +1,2 @@
-// Switcher component test
+// Layout component test
+test.todo('Layout component test');

@@ -1,6 +1,9 @@
 // React
 import React from 'react';
 
+// Grommet UI components
+import {Box, Grommet, Heading, Paragraph} from 'grommet';
+
 // Configuration
 import {Configuration} from './lib/Configuration';
 
@@ -45,87 +48,80 @@ experiment.load().then(() => {
   const instructionsPracticeGames = [
     // Overall instructions
     markup(
-        <>
-          <h1>Instructions</h1>
-          {/* Overview */}
-          <h2>
-            Overview
-          </h2>
-          <p>
-            In this task, you will be choosing between two options to split
-            sets of points between you and a partner.
-          </p>
-          <p>
-            The task has three parts. You are matched with
-            a <b>different</b> partner before each part.
-          </p>
-          <br/>
-
-          {/* Structure */}
-          <h2>
-            Structure
-          </h2>
-          <p>
-            In part one of the task, <b>you</b> will be choosing
-            between the two options over 36 trials.
-          </p>
-          <p>
-            In part two of the task, you will play with
-            a <b>new partner</b> for 54 trials where the
-            new <b>partner</b> will choose between the two options.
-          </p>
-          <p>
-            In part three of the task, you will play
-            with <b>another new partner</b> for 36 trials
-            where <b>you</b> will be choosing between the
-            two options.
-          </p>
-          <br/>
-          <p>
-            So, in the first part of the task you choose the options, in
-            the other part of the task your partner chooses the options,
-            and in part three of the task you choose the options.
-          </p>
-          <p>
-            At the end of each part, you will be shown a summary
-            of how many points you and your partner accumulated
-            in that part.
-          </p>
-        </>
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Overview</Heading>
+            <Paragraph margin='small' size='large' fill>
+              During this task you and a partner will be choosing how
+              to divide a sum of points between each other.
+              Your ID will not be revealed to your partner,
+              and you won't be able to see the ID of your partner.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              You will be paid a bonus at the end of the game which
+              depends upon the number of points you each managed to
+              accumulate while playing. If you earn over 100 points,
+              you will automatically be placed into a lottery for your
+              chance to win an extra $20.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              This game consists of three stages.
+              You are matched with a <b>different</b> partner before each stage.
+            </Paragraph>
+          </Box>
+        </Grommet>
     ),
     // Part one instructions
     markup(
-        <>
-          <h1>Instructions</h1>
-          <h2>
-            Part one
-          </h2>
-          <p>
-            In part one of the task, <b>you</b> will be choosing
-            between the two options over 36 trials.
-          </p>
-          <p>
-            Remember that the partners you face in each part of the task
-            are different people.
-          </p>
-          <p>
-            Instructions for the second part will follow after the first part
-            of this game.
-          </p>
-          <br/>
-
-          {/* Bonus points */}
-          <p>
-            Your point total at the end of this task will contribute to your
-            overall point total to put you in with a chance of winning a
-            $x bonus.
-          </p>
-          <p>
-            Click 'Next &gt;' to choose an avatar.
-            You will play <b>2</b> practice
-            trials after choosing your avatar.
-          </p>
-        </>
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Overview</Heading>
+            <Paragraph margin='small' size='large' fill>
+              In stage one of this game, <b>you</b> will be choosing how the
+              points are split between you and your partner.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              In stage two, you will play with a <b>new partner</b> for 54
+              rounds. In this stage your <b>partner</b> will choose how to
+              split the points. You need to guess how your partner plans
+              to divide the points each round. You will earn bonus points
+              for each correct prediction.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              In stage three, you will play with <b>yet another new
+              partner</b> where <b>you</b> will again be choosing how to split
+              the points.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              At the end of each stage you will be shown a summary of how many
+              points you and your partner accumulated during that phase.
+            </Paragraph>
+          </Box>
+        </Grommet>
+    ),
+    markup(
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Stage one</Heading>
+            <Paragraph margin='small' size='large' fill>
+              In the following <b>you</b> are tasked with distributing points
+              between yourself and your partner. You may choose to distribute
+              the points however you like. This stage will consist of 36 rounds.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              Remember, the number of points each player holds at the end of the
+              game will determine if they get a bonus payment.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              Click 'Next &gt;' to select an avatar to represent you while
+              you play this game. You will then play <b>5</b> practice rounds
+              before you are matched with your partner.
+            </Paragraph>
+          </Box>
+        </Grommet>
     ),
   ];
 
@@ -144,7 +140,7 @@ experiment.load().then(() => {
     display: 'selection',
   });
 
-  // Practice trials for 'playerChoice'
+  // 5x practice trials for 'playerChoice'
   timeline.push({
     type: Configuration.pluginName,
     optionOneParticipant: 4,
@@ -173,15 +169,57 @@ experiment.load().then(() => {
     clearScreen: true,
   });
 
+  timeline.push({
+    type: Configuration.pluginName,
+    optionOneParticipant: 1,
+    optionOnePartner: 4,
+    optionTwoParticipant: 7,
+    optionTwoPartner: 6,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: true,
+  });
+
+  timeline.push({
+    type: Configuration.pluginName,
+    optionOneParticipant: 6,
+    optionOnePartner: 3,
+    optionTwoParticipant: 4,
+    optionTwoPartner: 5,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: true,
+  });
+
+  timeline.push({
+    type: Configuration.pluginName,
+    optionOneParticipant: 4,
+    optionOnePartner: 4,
+    optionTwoParticipant: 5,
+    optionTwoPartner: 7,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: true,
+  });
+
   // Attention check question
   timeline.push({
     type: 'attention-check',
-    question: 'In this part of the task, ' +
-        'who will be choosing the points you and your partner get?',
+    question: 'In this stage of the game, who will be choosing the ' +
+        'number of points that you and your partner get?',
     options: [
-      'A lottery',
-      'Me',
       'My partner',
+      'Me',
+      'By lottery',
     ],
     options_radio: true,
     option_correct: 1,
@@ -197,15 +235,17 @@ experiment.load().then(() => {
     type: 'instructions',
     pages: [
       markup(
-          <>
-            <h1>Instructions</h1>
-            <p>
-              You will now be matched with a new partner.
-            </p>
-            <p>
-              Press 'Next &gt;' to begin!
-            </p>
-          </>
+          <Grommet>
+            <Box>
+              <Heading level={1} margin='small' fill>Instructions</Heading>
+              <Paragraph margin='small' size='large' fill>
+                You will now be matched with a partner.
+              </Paragraph>
+              <Paragraph margin='small' size='large' fill>
+                Press 'Next &gt;' to begin!
+              </Paragraph>
+            </Box>
+          </Grommet>
       ),
     ],
     allow_keys: false,
@@ -227,32 +267,40 @@ experiment.load().then(() => {
 
   // Set and store the data colelction
   let dataCollection: string | Record<string, string>;
-  consola.info(
-      `Loading '${Configuration.individual}' individual`
-  );
 
-  switch (Configuration.individual as Individual) {
-    case 'Competitive': {
-      dataCollection = Competitive;
-      break;
+  // Detect if we are running locally (use test data)
+  // or online (use the configured individual data)
+  if (process.env.NODE_ENV === 'development') {
+    dataCollection = Test;
+    consola.info(`Loading 'Test' partner`);
+  } else {
+    consola.info(
+        `Loading '${Configuration.manipulations.partner}' partner`
+    );
+    switch (Configuration.manipulations.partner as Partner) {
+      case 'Competitive': {
+        // Competitive partner
+        dataCollection = Competitive;
+        break;
+      }
+      case 'Individualist': {
+        dataCollection = Individualist;
+        break;
+      }
+      case 'Prosocial': {
+        dataCollection = Prosocial;
+        break;
+      }
+      case 'Test': {
+        dataCollection = Test;
+        break;
+      }
+      default:
+        throw new Error(
+            `Unknown partner type ` +
+            `'${Configuration.manipulations.partner}'`
+        );
     }
-    case 'Individual': {
-      dataCollection = Individualist;
-      break;
-    }
-    case 'Prosocial': {
-      dataCollection = Prosocial;
-      break;
-    }
-    case 'Test': {
-      dataCollection = Test;
-      break;
-    }
-    default:
-      throw new Error(
-          `Unknown individual type ` +
-          `'${Configuration.individual}'`
-      );
   }
 
   /*
@@ -308,72 +356,39 @@ experiment.load().then(() => {
         const firstBreakInstructions = [
           // Part two instructions
           markup(
-              <>
-                <h1>Instructions</h1>
-                <h2>
-                  Part two
-                </h2>
-
-                {/* Instructions, page 1 */}
-                <p>
-                  In part two of the task, you will play with
-                  a <b>new partner</b> for 54 trials where the
-                  new <b>partner</b> will choose between the two options.
-                </p>
-                <p>
-                  In each trial there are still two options available to choose
-                  from that will determine the amount of points you and your
-                  partner receive. However, in this part of the task, <b>
-                  you need to guess which option your partner will choose</b>.
-                </p>
-                <p>
-                  Each option will increase the total points you and your
-                  partner have to different amounts.
-                </p>
-              </>
-          ),
-          markup(
-              <>
-                <h1>Instructions</h1>
-                <h2>
-                  Part two
-                </h2>
-
-                {/* Instructions, page 2 */}
-                <p>
-                  You will get feedback on whether the option you predicted your
-                  partner will choose was correct or incorrect by highlighting
-                  your prediction in green or red.
-                </p>
-                <p>
-                  You will get bonus points dependent on the number of correct
-                  answers you get in this part of the task, that is, the
-                  amount of times you correctly guess what your partner chose
-                  each trial.
-                </p>
-                <p>
-                  Remember that the partners you face in each part of the task
-                  are different people.
-                </p>
-                <p>
-                  Instructions for part three will follow after part two
-                  of this game.
-                </p>
-                <br/>
-
-                {/* Bonus points */}
-                <p>
-                  You will get bonus points dependent on the number of correct
-                  answers you get in this part of the task, that is, the
-                  amount of times you correctly guess what your partner chose
-                  each trial.
-                </p>
-                <p>
-                  Click 'Next &gt;' to play <b>2</b> practice trials.
-                  You will then be matched with a new partner before starting
-                  part two.
-                </p>
-              </>
+              <Grommet>
+                <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                  <Heading level={1} margin='small' fill>Instructions</Heading>
+                  <Heading level={2} margin='small' fill>Stage two</Heading>
+                  <Paragraph margin='small' size='large' fill>
+                    In the following <b>you will play with a new partner</b>.
+                    This time your partner will be the one choosing how the
+                    points are split between you both.
+                  </Paragraph>
+                  <Paragraph margin='small' size='large' fill>
+                    Remember, your partner will be different to the one you
+                    played with earlier. Your partner will not know how many
+                    points you have accumulated over the course of the game
+                    so far.
+                  </Paragraph>
+                  <Paragraph margin='small' size='large' fill>
+                    <b>Your task will be to try to guess how your partner
+                    plans to divide the points between the two of you
+                    each round.</b>
+                  </Paragraph>
+                  <Paragraph margin='small' size='large' fill>
+                    You will be awarded additional points at the end of
+                    the round depending on the number of times you
+                    manage to <b>correctly guess your partner's choices</b>.
+                    This will contribute to your chance to win a bonus
+                    at the end of the task.
+                  </Paragraph>
+                  <Paragraph margin='small' size='large' fill>
+                    Click 'Next &gt;' to play <b>5</b> practice rounds of
+                    this stage. You will then be matched with your partner.
+                  </Paragraph>
+                </Box>
+              </Grommet>
           ),
         ];
 
@@ -386,13 +401,55 @@ experiment.load().then(() => {
           show_clickable_nav: true,
         });
 
-        // Practice trials for 'playerGuess'
+        // 5x practice trials for 'playerGuess'
         timeline.push({
           type: Configuration.pluginName,
           optionOneParticipant: 4,
           optionOnePartner: 4,
           optionTwoParticipant: 5,
           optionTwoPartner: 6,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.pluginName,
+          optionOneParticipant: 7,
+          optionOnePartner: 8,
+          optionTwoParticipant: 4,
+          optionTwoPartner: 4,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.pluginName,
+          optionOneParticipant: 6,
+          optionOnePartner: 5,
+          optionTwoParticipant: 4,
+          optionTwoPartner: 6,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.pluginName,
+          optionOneParticipant: 8,
+          optionOnePartner: 6,
+          optionTwoParticipant: 5,
+          optionTwoPartner: 7,
           typeOne: '',
           typeTwo: '',
           display: 'playerGuessPractice',
@@ -421,8 +478,8 @@ experiment.load().then(() => {
           question: 'In this part of task, ' +
               'who will be choosing the points you and your partner get?',
           options: [
-            'A lottery',
             'Me',
+            'By lottery',
             'My partner',
           ],
           options_radio: true,
@@ -441,15 +498,19 @@ experiment.load().then(() => {
           type: 'instructions',
           pages: [
             markup(
-                <>
-                  <h1>Instructions</h1>
-                  <p>
-                    You will now be matched with a new partner.
-                  </p>
-                  <p>
-                    Press 'Next &gt;' to begin!
-                  </p>
-                </>
+                <Grommet>
+                  <Box>
+                    <Heading level={1} margin='small' fill>
+                      Instructions
+                    </Heading>
+                    <Paragraph margin='small' size='large' fill>
+                      You will now be matched with a partner.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      Press 'Next &gt;' to begin!
+                    </Paragraph>
+                  </Box>
+                </Grommet>
             ),
           ],
           allow_keys: false,
@@ -506,52 +567,42 @@ experiment.load().then(() => {
         const secondBreakInstructions = [
           // Part three instructions
           markup(
-              <>
-                <h1>Instructions</h1>
-                <h2>
-                  Part three
-                </h2>
-                <p>
-                  In part three of the task, <b>you</b> will be choosing
-                  between the two options over 36 trials.
-                </p>
-                <p>
-                  Remember that the partners you face in each part of the task
-                  are different people.
-                </p>
-                <p>
-                  After you have completed part three, there are some short
-                  questions to answer before you have finished.
-                  You will be given instructions when you reach these
-                  questions.
-                </p>
-                <br/>
-
-                {/* Bonus points */}
-                <p>
-                  Your point total at the end of this task will contribute to
-                  your overall point total to put you in with a chance of
-                  winning a $x bonus.
-                </p>
-                <p>
-                  Click 'Next &gt;' to be matched with a new partner
-                  before starting part three.
-                  There are no practice trials.
-                </p>
-              </>
+              <Grommet>
+                <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                  <Heading level={1} margin='small' fill>Instructions</Heading>
+                  <Heading level={2} margin='small' fill>Stage three</Heading>
+                  <Paragraph margin='small' size='large' fill>
+                    In the final stage of this game, <b>you</b> will again be
+                    choosing how the points are split between yourself and your
+                    partner. As before, you may choose to distribute the points
+                    however you like.
+                  </Paragraph>
+                  <Paragraph margin='small' size='large' fill>
+                    Remember, your partner will be different to the ones you
+                    have previously played. You will not know how many points
+                    they have accumulated over the course of the game so far.
+                  </Paragraph>
+                  <Paragraph margin='small' size='large' fill>
+                    Click 'Next &gt;' to be matched with your partner and start
+                    stage three. There will be no practice trials beforehand.
+                  </Paragraph>
+                </Box>
+              </Grommet>
           ),
           // Insert instructions to let the participant know they will
           // be matched with a partner
           markup(
-              <>
-                <h1>Instructions</h1>
-                <p>
-                  You will now be matched with a new partner.
-                </p>
-                <p>
-                  Press 'Next &gt;' to begin!
-                </p>
-              </>
+              <Grommet>
+                <Box>
+                  <Heading level={1} margin='small' fill>Instructions</Heading>
+                  <Paragraph margin='small' size='large' fill>
+                    You will now be matched with a partner.
+                  </Paragraph>
+                  <Paragraph margin='small' size='large' fill>
+                    Press 'Next &gt;' to begin!
+                  </Paragraph>
+                </Box>
+              </Grommet>
           ),
         ];
 
@@ -623,6 +674,13 @@ experiment.load().then(() => {
   timeline.push({
     type: Configuration.pluginName,
     display: 'agency',
+    clearScreen: false,
+  });
+
+  // End screen
+  timeline.push({
+    type: Configuration.pluginName,
+    display: 'end',
     clearScreen: true,
   });
 
