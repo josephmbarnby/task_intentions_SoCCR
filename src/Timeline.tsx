@@ -401,7 +401,7 @@ experiment.load().then(() => {
           show_clickable_nav: true,
         });
 
-        // Practice trials for 'playerGuess'
+        // 5x practice trials for 'playerGuess'
         timeline.push({
           type: Configuration.pluginName,
           optionOneParticipant: 4,
@@ -674,6 +674,13 @@ experiment.load().then(() => {
   timeline.push({
     type: Configuration.pluginName,
     display: 'agency',
+    clearScreen: false,
+  });
+
+  // End screen
+  timeline.push({
+    type: Configuration.pluginName,
+    display: 'end',
     clearScreen: true,
   });
 

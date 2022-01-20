@@ -162,7 +162,7 @@ jsPsych.plugins['intentions-game'] = (() => {
         break;
       }
 
-      // Matching and matched stages
+      // Matching and matched screens
       case 'matched':
       case 'matching':
         // Setup the props
@@ -218,7 +218,7 @@ jsPsych.plugins['intentions-game'] = (() => {
         };
         break;
 
-      // Classification screen
+      // Summary screen
       case 'summary':
         // Setup the props
         props = {
@@ -226,6 +226,20 @@ jsPsych.plugins['intentions-game'] = (() => {
           postPhase: postPhase,
           selectionHandler: finishTrial,
         };
+        break;
+
+      // End screen
+      case 'end':
+        // Setup the props
+        props = {
+          display: trial.display,
+        };
+
+        // Set the timeout duration
+        duration = 5000;
+
+        // Set the timeout callback function
+        callback = finishTrial;
         break;
 
       // Default error state

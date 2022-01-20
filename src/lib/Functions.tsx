@@ -32,7 +32,7 @@ export function showDisplay(
     props:
         Screens.Agency | Screens.Classification |
         Screens.Inference | Screens.Matched | Screens.Matching |
-        Screens.SelectAvatar | Screens.Trial,
+        Screens.SelectAvatar | Screens.Trial | Screens.End,
     target: HTMLElement,
     timeout=0,
     callback=() => {

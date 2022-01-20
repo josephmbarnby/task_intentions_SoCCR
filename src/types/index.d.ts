@@ -2,7 +2,7 @@
 declare type Display =
     'playerChoice' | 'playerChoicePractice' | 'playerChoice2' | 'mid' | 'mid2' |
     'playerGuess' | 'playerGuessPractice' | 'matching' | 'matched' | 'selection' |
-    'inference' | 'agency' | 'classification' | 'summary';
+    'inference' | 'agency' | 'classification' | 'summary' | 'end';
 
 // The three partner types
 declare type Partner = 'Test' | 'Prosocial' | 'Individualist' | 'Competitive';
