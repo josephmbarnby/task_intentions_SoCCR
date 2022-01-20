@@ -251,15 +251,16 @@ jsPsych.plugins['intentions-game'] = (() => {
     /**
      * Handle selection events in a particular trial
      * @param {Options} option selected option
+     * @param {Options} answer selected option
      */
-    function optionHandler(option: Options) {
+    function optionHandler(option: Options, answer: Options) {
       const endTime = performance.now();
       const duration = endTime - startTime;
       trialData.trialDuration = duration;
 
       // Check if they chose the correct option. We record this
       // for all trials, but we only need 'playerGuess'-type trials
-      trialData.correctGuess = option === trial.answer ? 1 : 0;
+      trialData.correctGuess = option === answer ? 1 : 0;
 
       // Store the participant selection
       trialData.selectedOption = option === 'Option 1' ? 1 : 2;
@@ -267,10 +268,10 @@ jsPsych.plugins['intentions-game'] = (() => {
       // Points in the 'playerGuess' trials are handled differently
       if (trial.display.toLowerCase().includes('guess')) {
         // Add points from option partner selected
-        trialData.playerPoints = trial.answer === 'Option 1' ?
+        trialData.playerPoints = answer === 'Option 1' ?
             trial.optionOneParticipant :
             trial.optionTwoParticipant;
-        trialData.partnerPoints = trial.answer === 'Option 1' ?
+        trialData.partnerPoints = answer === 'Option 1' ?
             trial.optionOnePartner :
             trial.optionTwoPartner;
       } else {

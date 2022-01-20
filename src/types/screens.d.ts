@@ -25,7 +25,7 @@ declare namespace Screens {
       }
     };
     answer: string;
-    selectionHandler: (selection: string) => void;
+    selectionHandler: (selection: string, answer: string) => void;
   }
 
   interface SelectAvatar {

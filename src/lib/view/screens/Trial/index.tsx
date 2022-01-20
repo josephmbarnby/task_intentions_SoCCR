@@ -72,6 +72,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
     optionTwo: useRef(null),
   };
 
+  // Store the correct answer, this changes in some practice trials
+  let answer = props.answer;
+
   /**
    * Update the points state for the participant and the partner
    * @param {number} participant updated points for the participant
@@ -88,8 +91,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
    * @param {string} option selected option
    */
   function endTrial(option: string): void {
-    // Bubble the selection handler
-    props.selectionHandler(option);
+    // Bubble the selection handler with selection and answer
+    props.selectionHandler(option, answer);
   }
 
   /**
@@ -101,8 +104,31 @@ const Trial = (props: Screens.Trial): ReactElement => {
     // Points to apply
     let participantPoints = 0;
     let partnerPoints = 0;
+
     // Check what Phase is running
-    if (!props.display.toLowerCase().includes('guess')) {
+    if (props.display.toLowerCase().includes('guess')) {
+      // 'playerGuess' trials update points from the correct choice
+      if (props.display === 'playerGuessPractice') {
+        // Change the 'correct' answer depending on probability
+        if (experiment.random() > 0.6) {
+          // Change the 'correct' answer to the opposite of
+          // what was selected
+          answer = option === 'Option 1' ? 'Option 2' : 'Option 1';
+        }
+      }
+
+      // Participant points
+      participantPoints =
+          answer === 'Option 1' ?
+            props.options.one.participant :
+            props.options.two.participant;
+
+      // Partner points
+      partnerPoints =
+          answer === 'Option 1' ?
+            props.options.one.partner :
+            props.options.two.partner;
+    } else {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
@@ -113,19 +139,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
       // Partner points
       partnerPoints =
           option === 'Option 1' ?
-            props.options.one.partner :
-            props.options.two.partner;
-    } else {
-      // 'playerGuess' trials update points from the correct choice
-      // Participant points
-      participantPoints =
-          props.answer === 'Option 1' ?
-            props.options.one.participant :
-            props.options.two.participant;
-
-      // Partner points
-      partnerPoints =
-          props.answer === 'Option 1' ?
             props.options.one.partner :
             props.options.two.partner;
     }
@@ -143,7 +156,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
   /**
    * Selection handler
    * @param {Options} option the selected option
-   * @param {Function} headerStateFunction function
    */
   function selectionHandler(option: Options) {
     // Sum the number of correct answers for the phase
@@ -153,7 +165,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
         })
         .select('correctGuess')
         .sum();
-    if (option === props.answer) {
+    if (option === answer) {
       setCorrectCount(correctCountInitial + 1);
     } else {
       setCorrectCount(correctCountInitial);
@@ -197,7 +209,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
         selectedOption === 'Option 1' ? optionOneNode : optionTwoNode;
     const unselectedNode =
         selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
-    const correctSelection = selectedOption === props.answer;
+    const correctSelection = selectedOption === answer;
 
     // Check the stage of the trial
     switch (props.display) {
@@ -335,15 +347,15 @@ const Trial = (props: Screens.Trial): ReactElement => {
         content =
           <Box pad='small' align='center'>
             <Text size='large' margin='medium'>
-              {selectedOption === props.answer ? 'Correct! ' : 'Incorrect. '}
-              Your partner chose <b>{props.answer}</b>.
+              {selectedOption === answer ? 'Correct! ' : 'Incorrect. '}
+              Your partner chose <b>{answer}</b>.
             </Text>
             <Text size='large' margin='medium'>
               That means
-              you get {props.answer === 'Option 1' ?
+              you get {answer === 'Option 1' ?
                   props.options.one.participant :
                   props.options.two.participant
-              } points and your partner gets {props.answer === 'Option 1' ?
+              } points and your partner gets {answer === 'Option 1' ?
                   props.options.one.partner :
                   props.options.two.partner
               } points.
