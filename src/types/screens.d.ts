@@ -30,7 +30,7 @@ declare namespace Screens {
 
   interface SelectAvatar {
     display: Display;
-    selectionHandler: (_selection: string) => void;
+    selectionHandler: (selection: string) => void;
   }
 
   interface Inference {
