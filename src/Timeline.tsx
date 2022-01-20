@@ -418,6 +418,48 @@ experiment.load().then(() => {
 
         timeline.push({
           type: Configuration.pluginName,
+          optionOneParticipant: 7,
+          optionOnePartner: 8,
+          optionTwoParticipant: 4,
+          optionTwoPartner: 4,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.pluginName,
+          optionOneParticipant: 6,
+          optionOnePartner: 5,
+          optionTwoParticipant: 4,
+          optionTwoPartner: 6,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.pluginName,
+          optionOneParticipant: 8,
+          optionOnePartner: 6,
+          optionTwoParticipant: 5,
+          optionTwoPartner: 7,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.pluginName,
           optionOneParticipant: 4,
           optionOnePartner: 4,
           optionTwoParticipant: 5,
