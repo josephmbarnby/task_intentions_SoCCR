@@ -3,7 +3,7 @@ import React, {ReactElement} from 'react';
 
 // Grommet UI components
 import {Box, Heading, Layer, WorldMap} from 'grommet';
-import Avatar from 'boring-avatars';
+import Avatar from '../../../../../packages/boring-avatars';
 
 // Logging library
 import consola from 'consola';
