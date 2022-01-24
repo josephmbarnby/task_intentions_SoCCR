@@ -15,6 +15,7 @@ import Test from './data/test.csv';
 
 // Utility functions
 import {markup} from './lib/Functions';
+import {shuffle} from 'd3-array';
 
 // Logging library
 import consola from 'consola';
@@ -138,6 +139,33 @@ experiment.load().then(() => {
   timeline.push({
     type: Configuration.pluginName,
     display: 'selection',
+    clearScreen: true,
+  });
+
+  timeline.push({
+    type: 'instructions',
+    pages: [
+      markup(
+          <Grommet>
+            <Box>
+              <Heading level={1} margin='small' fill>Instructions</Heading>
+              <Paragraph margin='small' size='large' fill>
+                Let's get used to how the game looks with some practice trials.
+              </Paragraph>
+              <Paragraph margin='small' size='large' fill>
+                In these practice trials, the points will not count toward your
+                total and your partner is not real.
+              </Paragraph>
+              <Paragraph margin='small' size='large' fill>
+                Press 'Next &gt;' to continue.
+              </Paragraph>
+            </Box>
+          </Grommet>
+      ),
+    ],
+    allow_keys: false,
+    show_page_number: true,
+    show_clickable_nav: true,
   });
 
   // 5x practice trials for 'playerChoice'
@@ -166,7 +194,7 @@ experiment.load().then(() => {
     display: 'playerChoicePractice',
     answer: '',
     isPractice: true,
-    clearScreen: true,
+    clearScreen: false,
   });
 
   timeline.push({
@@ -180,7 +208,7 @@ experiment.load().then(() => {
     display: 'playerChoicePractice',
     answer: '',
     isPractice: true,
-    clearScreen: true,
+    clearScreen: false,
   });
 
   timeline.push({
@@ -194,7 +222,7 @@ experiment.load().then(() => {
     display: 'playerChoicePractice',
     answer: '',
     isPractice: true,
-    clearScreen: true,
+    clearScreen: false,
   });
 
   timeline.push({
@@ -209,6 +237,29 @@ experiment.load().then(() => {
     answer: '',
     isPractice: true,
     clearScreen: true,
+  });
+
+  timeline.push({
+    type: 'instructions',
+    pages: [
+      markup(
+          <Grommet>
+            <Box>
+              <Heading level={1} margin='small' fill>Instructions</Heading>
+              <Paragraph margin='small' size='large' fill>
+                The practice trials are now over. Let's start the first
+                stage of the game.
+              </Paragraph>
+              <Paragraph margin='small' size='large' fill>
+                Press 'Next &gt;' to begin!
+              </Paragraph>
+            </Box>
+          </Grommet>
+      ),
+    ],
+    allow_keys: false,
+    show_page_number: true,
+    show_clickable_nav: true,
   });
 
   // Attention check question
@@ -242,7 +293,7 @@ experiment.load().then(() => {
                 You will now be matched with a partner.
               </Paragraph>
               <Paragraph margin='small' size='large' fill>
-                Press 'Next &gt;' to begin!
+                Press 'Next &gt;' to continue.
               </Paragraph>
             </Box>
           </Grommet>
@@ -322,6 +373,11 @@ experiment.load().then(() => {
     - Phase 3
     - Agency test
   */
+  const randomisedTrials = {
+    phaseOne: [],
+    phaseTwo: [],
+    phaseThree: [],
+  };
 
   // Read each row from the data collection and insert the correct
   // trial into the timeline
@@ -329,15 +385,12 @@ experiment.load().then(() => {
     // Get the row from the data
     const row = dataCollection[i] as Row;
 
-    // Get the previous timeline element
-    let previous = null;
-    if (timeline.length > 0) {
-      previous = timeline[timeline.length - 1];
-    }
-
     // Check the trial type
     switch (row.display) {
       case 'mid': {
+        // Shuffle and add stage one trials
+        timeline.push(...shuffle(randomisedTrials.phaseOne));
+
         // Add a summary screen
         timeline.push({
           type: Configuration.pluginName,
@@ -353,48 +406,65 @@ experiment.load().then(() => {
 
         // Break after Phase 1
         // Add the instructions for the first break
-        const firstBreakInstructions = [
-          // Part two instructions
-          markup(
-              <Grommet>
-                <Box style={{maxWidth: '50%', margin: 'auto'}}>
-                  <Heading level={1} margin='small' fill>Instructions</Heading>
-                  <Heading level={2} margin='small' fill>Stage two</Heading>
-                  <Paragraph margin='small' size='large' fill>
-                    In the following <b>you will play with a new partner</b>.
-                    This time your partner will be the one choosing how the
-                    points are split between you both.
-                  </Paragraph>
-                  <Paragraph margin='small' size='large' fill>
-                    Remember, your partner will be different to the one you
-                    played with earlier. Your partner will not know how many
-                    points you have accumulated over the course of the game
-                    so far.
-                  </Paragraph>
-                  <Paragraph margin='small' size='large' fill>
-                    <b>Your task will be to try to guess how your partner
-                    plans to divide the points between the two of you
-                    each round.</b>
-                  </Paragraph>
-                  <Paragraph margin='small' size='large' fill>
-                    <b>The number of times you correctly guess your partner's
-                    choices will be multiplied by 10 and added to your total
-                    points</b>. This will contribute to your chance to win a
-                    bonus at the end of the task.
-                  </Paragraph>
-                  <Paragraph margin='small' size='large' fill>
-                    Click 'Next &gt;' to play <b>5</b> practice rounds of
-                    this stage. You will then be matched with your partner.
-                  </Paragraph>
-                </Box>
-              </Grommet>
-          ),
-        ];
 
         // Push instructions to the timeline
         timeline.push({
           type: 'instructions',
-          pages: firstBreakInstructions,
+          pages: [
+            markup(
+                <Grommet>
+                  <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                    <Heading level={1} margin='small' fill>
+                      Instructions
+                    </Heading>
+                    <Heading level={2} margin='small' fill>Stage two</Heading>
+                    <Paragraph margin='small' size='large' fill>
+                      In the following <b>you will play with a new partner</b>.
+                      This time your partner will be the one choosing how the
+                      points are split between you both.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      Remember, your partner will be different to the one you
+                      played with earlier. Your partner will not know how many
+                      points you have accumulated over the course of the game
+                      so far.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      <b>Your task will be to try to guess how your partner
+                      plans to divide the points between the two of you
+                      each round.</b>
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      <b>The number of times you correctly guess your partner's
+                      choices will be multiplied by 10 and added to your total
+                      points</b>. This will contribute to your chance to win a
+                      bonus at the end of the task.
+                    </Paragraph>
+                  </Box>
+                </Grommet>
+            ),
+            markup(
+                <Grommet>
+                  <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                    <Heading level={1} margin='small' fill>
+                      Instructions
+                    </Heading>
+                    <Paragraph margin='small' size='large' fill>
+                      Let's get used to how stage two looks with some practice
+                      trials.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      In these practice trials, the points will not count
+                      toward your total and the decisions made by your partner
+                      are not real.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      Click 'Next &gt;' to begin!
+                    </Paragraph>
+                  </Box>
+                </Grommet>
+            ),
+          ],
           allow_keys: false,
           show_page_number: true,
           show_clickable_nav: true,
@@ -471,6 +541,31 @@ experiment.load().then(() => {
           clearScreen: true,
         });
 
+        timeline.push({
+          type: 'instructions',
+          pages: [
+            markup(
+                <Grommet>
+                  <Box>
+                    <Heading level={1} margin='small' fill>
+                      Instructions
+                    </Heading>
+                    <Paragraph margin='small' size='large' fill>
+                      The practice trials are now over.
+                      Let's start the second stage of the game.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      Press 'Next &gt;' to begin!
+                    </Paragraph>
+                  </Box>
+                </Grommet>
+            ),
+          ],
+          allow_keys: false,
+          show_page_number: true,
+          show_clickable_nav: true,
+        });
+
         // Attention check question
         timeline.push({
           type: 'attention-check',
@@ -506,7 +601,7 @@ experiment.load().then(() => {
                       You will now be matched with a partner.
                     </Paragraph>
                     <Paragraph margin='small' size='large' fill>
-                      Press 'Next &gt;' to begin!
+                      Press 'Next &gt;' to continue.
                     </Paragraph>
                   </Box>
                 </Grommet>
@@ -532,9 +627,8 @@ experiment.load().then(() => {
         break;
       }
       case 'mid2': {
-        if (previous.type === Configuration.pluginName) {
-          previous.clearScreen = true;
-        }
+        // Shuffle and add stage two trials
+        timeline.push(...shuffle(randomisedTrials.phaseTwo));
 
         // Summary screen
         timeline.push({
@@ -563,51 +657,54 @@ experiment.load().then(() => {
         });
 
         // Add the second break instructions
-        const secondBreakInstructions = [
-          // Part three instructions
-          markup(
-              <Grommet>
-                <Box style={{maxWidth: '50%', margin: 'auto'}}>
-                  <Heading level={1} margin='small' fill>Instructions</Heading>
-                  <Heading level={2} margin='small' fill>Stage three</Heading>
-                  <Paragraph margin='small' size='large' fill>
-                    In the final stage of this game, <b>you</b> will again be
-                    choosing how the points are split between yourself and your
-                    partner. As before, you may choose to distribute the points
-                    however you like.
-                  </Paragraph>
-                  <Paragraph margin='small' size='large' fill>
-                    Remember, your partner will be different to the ones you
-                    have previously played. You will not know how many points
-                    they have accumulated over the course of the game so far.
-                  </Paragraph>
-                  <Paragraph margin='small' size='large' fill>
-                    Click 'Next &gt;' to be matched with your partner and start
-                    stage three. There will be no practice trials beforehand.
-                  </Paragraph>
-                </Box>
-              </Grommet>
-          ),
-          // Insert instructions to let the participant know they will
-          // be matched with a partner
-          markup(
-              <Grommet>
-                <Box>
-                  <Heading level={1} margin='small' fill>Instructions</Heading>
-                  <Paragraph margin='small' size='large' fill>
-                    You will now be matched with a partner.
-                  </Paragraph>
-                  <Paragraph margin='small' size='large' fill>
-                    Press 'Next &gt;' to begin!
-                  </Paragraph>
-                </Box>
-              </Grommet>
-          ),
-        ];
-
         timeline.push({
           type: 'instructions',
-          pages: secondBreakInstructions,
+          pages: [
+            // Part three instructions
+            markup(
+                <Grommet>
+                  <Box style={{maxWidth: '50%', margin: 'auto'}}>
+                    <Heading level={1} margin='small' fill>
+                      Instructions
+                    </Heading>
+                    <Heading level={2} margin='small' fill>Stage three</Heading>
+                    <Paragraph margin='small' size='large' fill>
+                      In the final stage of this game, <b>you</b> will again be
+                      choosing how the points are split between yourself and
+                      your partner. As before, you may choose to distribute the
+                      points however you like.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      Remember, your partner will be different to the ones you
+                      have previously played. You will not know how many points
+                      they have accumulated over the course of the game so far.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      Click 'Next &gt;' to be matched with your partner and
+                      start stage three. There will be no practice trials
+                      beforehand.
+                    </Paragraph>
+                  </Box>
+                </Grommet>
+            ),
+            // Insert instructions to let the participant know they will
+            // be matched with a partner
+            markup(
+                <Grommet>
+                  <Box>
+                    <Heading level={1} margin='small' fill>
+                      Instructions
+                    </Heading>
+                    <Paragraph margin='small' size='large' fill>
+                      You will now be matched with a partner.
+                    </Paragraph>
+                    <Paragraph margin='small' size='large' fill>
+                      Press 'Next &gt;' to continue.
+                    </Paragraph>
+                  </Box>
+                </Grommet>
+            ),
+          ],
           allow_keys: false,
           show_page_number: true,
           show_clickable_nav: true,
@@ -630,7 +727,7 @@ experiment.load().then(() => {
       case 'playerGuess': {
         // 'playerGuess' trials, similar to 'playerChoice'-type trials,
         // but the returns are switched
-        timeline.push({
+        randomisedTrials.phaseTwo.push({
           type: Configuration.pluginName,
           optionOneParticipant: row.Option1_Partner,
           optionOnePartner: row.Option1_PPT,
@@ -644,8 +741,40 @@ experiment.load().then(() => {
         });
         break;
       }
-      default: {
+      case 'playerChoice': {
         // 'playerChoice' trials
+        randomisedTrials.phaseOne.push({
+          type: Configuration.pluginName,
+          optionOneParticipant: row.Option1_PPT,
+          optionOnePartner: row.Option1_Partner,
+          optionTwoParticipant: row.Option2_PPT,
+          optionTwoPartner: row.Option2_Partner,
+          typeOne: row.Type1,
+          typeTwo: row.Type2,
+          display: row.display,
+          answer: row.ANSWER,
+          clearScreen: false,
+        });
+        break;
+      }
+      case 'playerChoice2': {
+        // 'playerChoice2' trials
+        randomisedTrials.phaseThree.push({
+          type: Configuration.pluginName,
+          optionOneParticipant: row.Option1_PPT,
+          optionOnePartner: row.Option1_Partner,
+          optionTwoParticipant: row.Option2_PPT,
+          optionTwoPartner: row.Option2_Partner,
+          typeOne: row.Type1,
+          typeTwo: row.Type2,
+          display: row.display,
+          answer: row.ANSWER,
+          clearScreen: false,
+        });
+        break;
+      }
+      default: {
+        // Remaining trials
         timeline.push({
           type: Configuration.pluginName,
           optionOneParticipant: row.Option1_PPT,
@@ -662,6 +791,9 @@ experiment.load().then(() => {
       }
     }
   }
+
+  // Shuffle and add stage three trials
+  timeline.push(...shuffle(randomisedTrials.phaseThree));
 
   // Add a summary screen
   timeline.push({
