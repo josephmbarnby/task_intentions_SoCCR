@@ -32,6 +32,7 @@ declare type Row = {
 
 // Trial type to enforce parameters
 declare type Trial = {
+  trial: number,
   display: Display;
   optionOneParticipant: number;
   optionOnePartner: number;
@@ -47,12 +48,18 @@ declare type Trial = {
 
 // Data type used to enforce trial data storage format
 declare type Data = {
+  trial: number,
   display: Display,
+  playerPoints_option1: number;
+  partnerPoints_option1: number;
+  playerPoints_option2: number;
+  partnerPoints_option2: number;
+  selectedOption_player: 1 | 2, // uses 1 and 2 rather than strings
+  realAnswer: Options;
   playerPoints: number,
   partnerPoints: number,
-  selectedOption: 1 | 2, // uses 1 and 2 rather than strings
-  inferenceResponseOne: number, 
-  inferenceResponseTwo: number,
+  inferenceResponse_Selfish: number, 
+  inferenceResponse_Harm: number,
   agencyResponse: number,
   classification: string,
   trialDuration: number,

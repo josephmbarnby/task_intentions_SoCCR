@@ -388,8 +388,14 @@ experiment.load().then(() => {
     // Check the trial type
     switch (row.display) {
       case 'mid': {
-        // Shuffle and add stage one trials
-        timeline.push(...shuffle(randomisedTrials.phaseOne));
+        // Shuffle, number, and add stage one trials
+        const stageOneTrials = shuffle(randomisedTrials.phaseOne);
+        let stageOneCounter = 1;
+        for (const trial of stageOneTrials) {
+          trial['trial'] = stageOneCounter;
+          stageOneCounter++;
+        }
+        timeline.push(...stageOneTrials);
 
         // Add a summary screen
         timeline.push({
@@ -627,8 +633,14 @@ experiment.load().then(() => {
         break;
       }
       case 'mid2': {
-        // Shuffle and add stage two trials
-        timeline.push(...shuffle(randomisedTrials.phaseTwo));
+        // Shuffle, number, and add stage two trials
+        const stageTwoTrials = shuffle(randomisedTrials.phaseTwo);
+        let stageTwoCounter = 1;
+        for (const trial of stageTwoTrials) {
+          trial['trial'] = stageTwoCounter;
+          stageTwoCounter++;
+        }
+        timeline.push(...stageTwoTrials);
 
         // Summary screen
         timeline.push({
@@ -792,8 +804,14 @@ experiment.load().then(() => {
     }
   }
 
-  // Shuffle and add stage three trials
-  timeline.push(...shuffle(randomisedTrials.phaseThree));
+  // Shuffle, number, and add stage three trials
+  const stageThreeTrials = shuffle(randomisedTrials.phaseThree);
+  let stageThreeCounter = 1;
+  for (const trial of stageThreeTrials) {
+    trial['trial'] = stageThreeCounter;
+    stageThreeCounter++;
+  }
+  timeline.push(...stageThreeTrials);
 
   // Add a summary screen
   timeline.push({
