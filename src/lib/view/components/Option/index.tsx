@@ -42,7 +42,7 @@ const Option = (props: Components.Option): ReactElement => {
 
       {/* Partner points */}
       <Heading level={2} gridArea='partnerPoints'>
-        <b>+{props.pointsParter}</b>
+        <b>+{props.pointsPartner}</b>
       </Heading>
     </Grid>
   );

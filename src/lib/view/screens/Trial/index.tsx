@@ -28,7 +28,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
   // Header state
   let defaultHeader = !props.display.startsWith('playerGuess') ?
       'How will you split the points?' :
-      'How will your parter split the points?';
+      'How will your partner split the points?';
 
   // Update the header if this is a practice
   if (props.isPractice) {
@@ -465,7 +465,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionKey='optionOne'
             optionName='Option 1'
             pointsParticipant={props.options.one.participant}
-            pointsParter={props.options.one.partner}
+            pointsPartner={props.options.one.partner}
           />
         </Box>
 
@@ -483,7 +483,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionKey='optionTwo'
             optionName='Option 2'
             pointsParticipant={props.options.two.participant}
-            pointsParter={props.options.two.partner}
+            pointsPartner={props.options.two.partner}
           />
         </Box>
       </Box>

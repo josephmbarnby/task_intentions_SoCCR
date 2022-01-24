@@ -13,7 +13,7 @@ declare namespace Components {
     optionKey: string;
     optionName: string;
     pointsParticipant: number;
-    pointsParter: number;
+    pointsPartner: number;
   }
 
   interface PlayerCard {

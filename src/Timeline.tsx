@@ -59,15 +59,15 @@ experiment.load().then(() => {
               and you won't be able to see the ID of your partner.
             </Paragraph>
             <Paragraph margin='small' size='large' fill>
-              You will be paid a bonus at the end of the game which
-              depends upon the number of points you each managed to
-              accumulate while playing. If you earn over 100 points,
-              you will automatically be placed into a lottery for your
-              chance to win an extra $20.
-            </Paragraph>
-            <Paragraph margin='small' size='large' fill>
               This game consists of three stages.
               You are matched with a <b>different</b> partner before each stage.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              You will be paid a bonus at the end of the game which depends
+              upon the number of points you each managed to accumulate while
+              playing. If you earn over 1000 points in total across all three
+              stages, you will automatically be placed into a lottery for your
+              chance to win an extra $20.
             </Paragraph>
           </Box>
         </Grommet>
@@ -377,11 +377,10 @@ experiment.load().then(() => {
                     each round.</b>
                   </Paragraph>
                   <Paragraph margin='small' size='large' fill>
-                    You will be awarded additional points at the end of
-                    the round depending on the number of times you
-                    manage to <b>correctly guess your partner's choices</b>.
-                    This will contribute to your chance to win a bonus
-                    at the end of the task.
+                    <b>The number of times you correctly guess your partner's
+                    choices will be multiplied by 10 and added to your total
+                    points</b>. This will contribute to your chance to win a
+                    bonus at the end of the task.
                   </Paragraph>
                   <Paragraph margin='small' size='large' fill>
                     Click 'Next &gt;' to play <b>5</b> practice rounds of
