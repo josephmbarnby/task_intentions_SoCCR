@@ -37,6 +37,13 @@ const timeline = [];
 const experiment = new Experiment(Configuration);
 
 experiment.load().then(() => {
+  // Update the partner avatar strings (for unique partners)
+  for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
+    const partner = Configuration.avatars.names.partner[i];
+    Configuration.avatars.names.partner[i] =
+        `${partner} ${Configuration.manipulations.partner.toLowerCase()}`;
+  }
+
   // Set the experiment to run in fullscreen mode
   if (Configuration.fullscreen === true) {
     timeline.push({
