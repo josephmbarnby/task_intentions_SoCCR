@@ -1,20 +1,21 @@
 // Declare a 'Screens' namespace to define props for each
 // screen used in the experiment.
 declare namespace Screens {
-  interface End {
+  type Generic = {
     display: Display;
   }
 
-  interface Matched {
-    display: Display;
-  }
+  // End screen
+  type End = Generic;
 
-  interface Matching {
-    display: Display;
-  }
+  // Matched screen
+  type Matched = Generic;
 
-  interface Trial {
-    display: Display;
+  // Matching screen
+  type Matching = Generic;
+
+  // Trial screen
+  type Trial = Generic & {
     isPractice: boolean;
     participantPoints: number;
     partnerPoints: number;
@@ -28,32 +29,32 @@ declare namespace Screens {
         partner: number,
       }
     };
-    answer: string;
-    selectionHandler: (selection: string, answer: string) => void;
+    answer: Options;
+    selectionHandler: (selection: Options, answer: Options) => void;
   }
 
-  interface SelectAvatar {
-    display: Display;
+  // SelectAvatar screen
+  type SelectAvatar = Generic & {
     selectionHandler: (selection: string) => void;
   }
 
-  interface Inference {
-    display: Display;
+  // Inference screen
+  type Inference = Generic & {
     selectionHandler: (firstValue: number, secondValue: number) => void;
   }
 
-  interface Agency {
-    display: Display;
+  // Agency screen
+  type Agency = Generic & {
     selectionHandler: (firstValue: number) => void;
   }
 
-  interface Classification {
-    display: Display;
+  // Classification screen
+  type Classification = Generic & {
     selectionHandler: (classification: string) => void;
   }
 
-  interface Summary {
-    display: Display;
+  // Summary screen
+  type Summary = Generic & {
     postPhase: Display,
     selectionHandler: () => void;
   }

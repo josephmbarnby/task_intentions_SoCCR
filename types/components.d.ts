@@ -1,7 +1,8 @@
 // Declare a 'Components' namespace to define props for each
 // of the components used in the experiment.
 declare namespace Components {
-  interface Layout {
+  // Layout component
+  type Layout =  {
     display: Display;
     screen:
         Screens.Matched | Screens.Matching | Screens.Trial |
@@ -9,21 +10,24 @@ declare namespace Components {
         Screens.Classification;
   }
 
-  interface Option {
+  // Option component
+  type Option = {
     optionKey: string;
     optionName: string;
     pointsParticipant: number;
     pointsPartner: number;
   }
 
-  interface PlayerCard {
+  // PlayerCard component
+  type PlayerCard = {
     gridArea: string;
     name: string;
     points: number;
     avatar: string;
   }
 
-  interface RangeSlider {
+  // RangeSlider component
+  type RangeSlider = {
     min: number;
     max: number;
     initial?: number;
@@ -33,7 +37,8 @@ declare namespace Components {
     setValue?: (value: number) => void;
   }
 
-  interface SelectableAvatar {
+  // SelectableAvatar component
+  type SelectableAvatar = {
     size: number;
     name: string;
     state: string;

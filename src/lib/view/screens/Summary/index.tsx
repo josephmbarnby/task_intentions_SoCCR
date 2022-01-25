@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // API modules
-import {Experiment} from 'crossplatform-jspsych-wrapper';
+import {Experiment} from 'jspsych-wrapper';
 
 // Grommet UI components
 import {Box, Button, Grid, Heading, Layer, WorldMap} from 'grommet';

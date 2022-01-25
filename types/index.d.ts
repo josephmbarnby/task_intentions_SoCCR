@@ -1,8 +1,10 @@
-// The collection of display types
-declare type Display =
-    'playerChoice' | 'playerChoicePractice' | 'playerChoice2' | 'mid' | 'mid2' |
-    'playerGuess' | 'playerGuessPractice' | 'matching' | 'matched' | 'selection' |
-    'inference' | 'agency' | 'classification' | 'summary' | 'end';
+// Module declaration
+declare module 'intentions-game' {};
+
+// Different screen types that are displayed
+declare type Display = 'playerChoice' | 'playerChoicePractice' | 'playerChoice2' | 'mid' | 'mid2' |
+  'playerGuess' | 'playerGuessPractice' | 'matching' | 'matched' | 'selection' |
+  'inference' | 'agency' | 'classification' | 'summary' | 'end';
 
 // The three partner types
 declare type Partner = 'Test' | 'Prosocial' | 'Individualist' | 'Competitive';
@@ -12,23 +14,6 @@ declare type AvatarStyles = 'beam' | 'marble' | 'pixel' | 'sunset' | 'ring' | 'b
 
 // Selection options
 declare type Options = 'Option 1' | 'Option 2';
-
-// CSV data row types
-declare type Row = {
-  randomise_blocks: string;
-  randomise_trials: number;
-  display: Display;
-  ANSWER: Options;
-  Option1_PPT: number;
-  Option1_Partner: number;
-  Option2_PPT: number;
-  Option2_Partner: number;
-  ShowProgressBar: number;
-  Type1: Partner;
-  Type2: Partner;
-  Difference1: number;
-  Difference2: number;
-};
 
 // Trial type to enforce parameters
 declare type Trial = {

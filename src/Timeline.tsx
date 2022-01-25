@@ -21,7 +21,7 @@ import {shuffle} from 'd3-array';
 import consola from 'consola';
 
 // Import crossplatform API
-import {Experiment} from 'crossplatform-jspsych-wrapper';
+import {Experiment} from 'jspsych-wrapper';
 
 // Import jsPsych plugins
 import 'jspsych/plugins/jspsych-instructions';
@@ -31,7 +31,7 @@ import 'jspsych-attention-check';
 import './Plugin';
 
 // Timeline setup
-const timeline = [];
+const timeline: Timeline = [];
 
 // Create a new Experiment instance
 const experiment = new Experiment(Configuration);
@@ -144,7 +144,7 @@ experiment.load().then(() => {
 
   // Insert a 'selection' screen into the timeline
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     display: 'selection',
     clearScreen: true,
   });
@@ -177,7 +177,7 @@ experiment.load().then(() => {
 
   // 5x practice trials for 'playerChoice'
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     optionOneParticipant: 10,
     optionOnePartner: 8,
     optionTwoParticipant: 8,
@@ -191,7 +191,7 @@ experiment.load().then(() => {
   });
 
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     optionOneParticipant: 7,
     optionOnePartner: 2,
     optionTwoParticipant: 8,
@@ -205,7 +205,7 @@ experiment.load().then(() => {
   });
 
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     optionOneParticipant: 7,
     optionOnePartner: 7,
     optionTwoParticipant: 10,
@@ -219,7 +219,7 @@ experiment.load().then(() => {
   });
 
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     optionOneParticipant: 12,
     optionOnePartner: 9,
     optionTwoParticipant: 9,
@@ -233,7 +233,7 @@ experiment.load().then(() => {
   });
 
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     optionOneParticipant: 4,
     optionOnePartner: 4,
     optionTwoParticipant: 8,
@@ -313,18 +313,18 @@ experiment.load().then(() => {
 
   // Insert a 'match' sequence into the timeline
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     display: 'matching',
   });
 
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     display: 'matched',
     clearScreen: true,
   });
 
   // Set and store the data colelction
-  let dataCollection: string | Record<string, string>;
+  let dataCollection: Row[];
 
   // Detect if we are running locally (use test data)
   // or online (use the configured individual data)
@@ -381,38 +381,38 @@ experiment.load().then(() => {
     - Agency test
   */
   const randomisedTrials = {
-    phaseOne: [],
-    phaseTwo: [],
-    phaseThree: [],
+    phaseOne: [] as any[],
+    phaseTwo: [] as any[],
+    phaseThree: [] as any[],
   };
 
   // Read each row from the data collection and insert the correct
   // trial into the timeline
   for (let i = 0; i < dataCollection.length; i++) {
     // Get the row from the data
-    const row = dataCollection[i] as Row;
+    const row = dataCollection[i];
 
     // Check the trial type
     switch (row.display) {
       case 'mid': {
         // Shuffle, number, and add stage one trials
-        const stageOneTrials = shuffle(randomisedTrials.phaseOne);
+        const stageOneTrials = shuffle(randomisedTrials.phaseOne) as any[];
         let stageOneCounter = 1;
         for (const trial of stageOneTrials) {
-          trial['trial'] = stageOneCounter;
+          trial.trial = stageOneCounter;
           stageOneCounter++;
         }
         timeline.push(...stageOneTrials);
 
         // Add a summary screen
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'summary',
         });
 
         // Agency screen
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'agency',
           clearScreen: true,
         });
@@ -485,7 +485,7 @@ experiment.load().then(() => {
 
         // 5x practice trials for 'playerGuess'
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: 9,
           optionOnePartner: 5,
           optionTwoParticipant: 9,
@@ -499,7 +499,7 @@ experiment.load().then(() => {
         });
 
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: 6,
           optionOnePartner: 6,
           optionTwoParticipant: 10,
@@ -513,7 +513,7 @@ experiment.load().then(() => {
         });
 
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: 10,
           optionOnePartner: 5,
           optionTwoParticipant: 8,
@@ -527,7 +527,7 @@ experiment.load().then(() => {
         });
 
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: 7,
           optionOnePartner: 2,
           optionTwoParticipant: 7,
@@ -541,7 +541,7 @@ experiment.load().then(() => {
         });
 
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: 8,
           optionOnePartner: 6,
           optionTwoParticipant: 6,
@@ -627,12 +627,12 @@ experiment.load().then(() => {
 
         // Insert another 'match' sequence into the timeline
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'matching',
         });
 
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'matched',
           clearScreen: true,
         });
@@ -641,7 +641,7 @@ experiment.load().then(() => {
       }
       case 'mid2': {
         // Shuffle, number, and add stage two trials
-        const stageTwoTrials = shuffle(randomisedTrials.phaseTwo);
+        const stageTwoTrials = shuffle(randomisedTrials.phaseTwo) as any[];
         let stageTwoCounter = 1;
         for (const trial of stageTwoTrials) {
           trial['trial'] = stageTwoCounter;
@@ -651,26 +651,26 @@ experiment.load().then(() => {
 
         // Summary screen
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'summary',
         });
 
         // Inference screen
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'inference',
         });
 
         // Classification screen
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'classification',
           clearScreen: true,
         });
 
         // Agency screen
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'agency',
           clearScreen: true,
         });
@@ -731,12 +731,12 @@ experiment.load().then(() => {
 
         // Insert another 'match' sequence into the timeline
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'matching',
         });
 
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           display: 'matched',
           clearScreen: true,
         });
@@ -747,7 +747,7 @@ experiment.load().then(() => {
         // 'playerGuess' trials, similar to 'playerChoice'-type trials,
         // but the returns are switched
         randomisedTrials.phaseTwo.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: row.Option1_Partner,
           optionOnePartner: row.Option1_PPT,
           optionTwoParticipant: row.Option2_Partner,
@@ -763,7 +763,7 @@ experiment.load().then(() => {
       case 'playerChoice': {
         // 'playerChoice' trials
         randomisedTrials.phaseOne.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: row.Option1_PPT,
           optionOnePartner: row.Option1_Partner,
           optionTwoParticipant: row.Option2_PPT,
@@ -779,7 +779,7 @@ experiment.load().then(() => {
       case 'playerChoice2': {
         // 'playerChoice2' trials
         randomisedTrials.phaseThree.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: row.Option1_PPT,
           optionOnePartner: row.Option1_Partner,
           optionTwoParticipant: row.Option2_PPT,
@@ -795,7 +795,7 @@ experiment.load().then(() => {
       default: {
         // Remaining trials
         timeline.push({
-          type: Configuration.pluginName,
+          type: Configuration.studyName,
           optionOneParticipant: row.Option1_PPT,
           optionOnePartner: row.Option1_Partner,
           optionTwoParticipant: row.Option2_PPT,
@@ -822,20 +822,20 @@ experiment.load().then(() => {
 
   // Add a summary screen
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     display: 'summary',
   });
 
   // Agency screen
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     display: 'agency',
     clearScreen: false,
   });
 
   // End screen
   timeline.push({
-    type: Configuration.pluginName,
+    type: Configuration.studyName,
     display: 'end',
     clearScreen: true,
   });

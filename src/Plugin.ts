@@ -8,7 +8,7 @@ import consola from 'consola';
 import {Configuration} from './lib/Configuration';
 import {calculatePoints, showDisplay} from './lib/Functions';
 
-jsPsych.plugins[Configuration.pluginName] = (() => {
+jsPsych.plugins[Configuration.studyName] = (() => {
   const plugin = {
     info: {},
     trial: (displayElement: HTMLElement, trial: Trial) => {
@@ -88,7 +88,7 @@ jsPsych.plugins[Configuration.pluginName] = (() => {
   };
 
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
-    const Experiment = window['Experiment'];
+    const Experiment = window.Experiment;
 
     // Setup the trial data to be stored
     const trialData: Data = {
@@ -135,17 +135,23 @@ jsPsych.plugins[Configuration.pluginName] = (() => {
     );
 
     // Get the prior phase, checking first that there was a prior trial
-    let postPhase: Display;
+    let postPhase: Display = 'playerChoice';
     if (jsPsych.data.get().last().values().length > 0) {
       postPhase = jsPsych.data.get().last().values()[0].display;
     }
 
     // Generate and configure props based on the stage
     let props:
-        Screens.Agency | Screens.Classification |
-        Screens.Inference | Screens.Matched |
-        Screens.Matching | Screens.SelectAvatar |
-        Screens.Trial | Screens.Summary;
+        Screens.Agency |
+        Screens.Classification |
+        Screens.Inference |
+        Screens.Matched |
+        Screens.Matching |
+        Screens.SelectAvatar |
+        Screens.Trial |
+        Screens.Summary = {
+          display: 'playerChoice',
+        };
     switch (trial.display as Display) {
       // Phase 1, 2, and 3 trials
       case 'playerChoice':
