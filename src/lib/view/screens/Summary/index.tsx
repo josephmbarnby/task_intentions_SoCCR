@@ -29,15 +29,18 @@ const Summary = (props: Screens.Summary): ReactElement => {
   const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
   // Get the participant's and the partner's points
-  const participantPoints = calculatePoints(props.postPhase, 'playerPoints');
-  const partnerPoints = calculatePoints(props.postPhase, 'partnerPoints');
+  const participantPoints = calculatePoints(
+      props.postPhase,
+      'playerPoints_selected',
+  );
+  const partnerPoints = calculatePoints(
+      props.postPhase,
+      'partnerPoints_selected',
+  );
 
   return (
     <>
-      <WorldMap
-        color='map'
-        fill='horizontal'
-      />
+      <WorldMap color='map' fill='horizontal' />
       <Layer plain>
         {/* Heading */}
         <Heading

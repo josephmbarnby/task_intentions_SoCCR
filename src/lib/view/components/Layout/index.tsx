@@ -86,6 +86,7 @@ export const Layout = (props: Components.Layout): ReactElement => {
     // Likely a mistake
     default:
       consola.error(`Unknown display type '${props.display}'`);
+      screen = <p>Error.</p>;
       break;
   }
 

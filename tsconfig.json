@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "strict": true,
     "jsx": "react",
     "esModuleInterop": true,
+    "importHelpers": true,
+    "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "allowJs": true,
     "target": "es5"

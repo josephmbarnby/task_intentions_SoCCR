@@ -54,14 +54,14 @@ declare type Data = {
   partnerPoints_option1: number;
   playerPoints_option2: number;
   partnerPoints_option2: number;
-  selectedOption_player: 1 | 2, // uses 1 and 2 rather than strings
+  playerPoints_selected: number;
+  partnerPoints_selected: number;
+  selectedOption_player: -1 | 1 | 2, // uses 1 and 2 rather than strings
   realAnswer: Options;
-  playerPoints: number,
-  partnerPoints: number,
   inferenceResponse_Selfish: number, 
   inferenceResponse_Harm: number,
   agencyResponse: number,
   classification: string,
   trialDuration: number,
-  correctGuess: 0 | 1, // 0 incorrect, 1 correct
+  correctGuess: -1 | 0 | 1, // 0 incorrect, 1 correct
 };

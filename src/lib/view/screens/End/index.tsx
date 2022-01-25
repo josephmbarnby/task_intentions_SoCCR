@@ -11,10 +11,7 @@ import {Box, Heading, Layer, Paragraph, WorldMap} from 'grommet';
 const End = (): ReactElement => {
   return (
     <>
-      <WorldMap
-        color='map'
-        fill='horizontal'
-      />
+      <WorldMap color='map' fill='horizontal' />
       <Layer plain full>
         <Box
           justify='center'

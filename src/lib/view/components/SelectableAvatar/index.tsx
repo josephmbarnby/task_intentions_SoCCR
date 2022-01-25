@@ -2,7 +2,7 @@
 import React, {ReactElement} from 'react';
 
 // Components
-import Avatar from '../../../../../packages/boring-avatars';
+import Avatar from 'boring-avatars';
 import {Box} from 'grommet';
 
 // Configuration

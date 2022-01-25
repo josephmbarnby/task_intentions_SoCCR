@@ -65,7 +65,8 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "crossplatform-jspsych-wrapper": "file:packages/crossplatform-jspsych-wrapper-v1.1.0.tgz",
+    "boring-avatars": "file:packages/boring-avatars-1.5.8.tgz",
+    "crossplatform-jspsych-wrapper": "file:packages/crossplatform-jspsych-wrapper-v1.1.1.tgz",
     "d3": "^7.3.0",
     "d3-array": "^3.1.1",
     "d3-random": "^3.0.1",

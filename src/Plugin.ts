@@ -8,10 +8,7 @@ import consola from 'consola';
 import {Configuration} from './lib/Configuration';
 import {calculatePoints, showDisplay} from './lib/Functions';
 
-// API modules
-import {Experiment} from 'crossplatform-jspsych-wrapper';
-
-jsPsych.plugins['intentions-game'] = (() => {
+jsPsych.plugins[Configuration.pluginName] = (() => {
   const plugin = {
     info: {},
     trial: (displayElement: HTMLElement, trial: Trial) => {
@@ -91,6 +88,8 @@ jsPsych.plugins['intentions-game'] = (() => {
   };
 
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
+    const Experiment = window['Experiment'];
+
     // Setup the trial data to be stored
     const trialData: Data = {
       trial: trial.trial,
@@ -99,16 +98,16 @@ jsPsych.plugins['intentions-game'] = (() => {
       partnerPoints_option1: trial.optionOnePartner,
       playerPoints_option2: trial.optionTwoParticipant,
       partnerPoints_option2: trial.optionTwoPartner,
-      playerPoints: null, // number of points received by the participant
-      partnerPoints: null, // number of points received by the partner
-      selectedOption_player: null, // option selected by participant
+      playerPoints_selected: 0,
+      partnerPoints_selected: 0,
+      selectedOption_player: -1, // option selected by participant
       realAnswer: trial.answer,
-      correctGuess: null, // whether or not the participant guessed correctly
-      inferenceResponse_Selfish: null,
-      inferenceResponse_Harm: null,
-      agencyResponse: null, // float response to agency question
-      classification: null, // classification string selected by participant
-      trialDuration: null, // duration of the trial in ms
+      correctGuess: -1, // whether or not the participant guessed correctly
+      inferenceResponse_Selfish: -1.0,
+      inferenceResponse_Harm: -1.0,
+      agencyResponse: -1.0, // float response to agency question
+      classification: '', // classification string selected by participant
+      trialDuration: 0, // duration of the trial in ms
     };
 
     // Debug statement
@@ -121,11 +120,19 @@ jsPsych.plugins['intentions-game'] = (() => {
 
     // Timeout information
     let duration = 0;
-    let callback: () => void;
+    let callback = () => {
+      consola.debug(`No timeout callback defined`);
+    };
 
     // Sum the points from the previous trials
-    const participantPoints = calculatePoints(trial.display, 'playerPoints');
-    const partnerPoints = calculatePoints(trial.display, 'partnerPoints');
+    const participantPoints = calculatePoints(
+        trial.display,
+        'playerPoints_selected',
+    );
+    const partnerPoints = calculatePoints(
+        trial.display,
+        'partnerPoints_selected',
+    );
 
     // Get the prior phase, checking first that there was a prior trial
     let postPhase: Display;
@@ -290,20 +297,20 @@ jsPsych.plugins['intentions-game'] = (() => {
       // Points in the 'playerGuess' trials are handled differently
       if (trial.display.toLowerCase().includes('guess')) {
         // Add points from option partner selected
-        trialData.playerPoints = answer === 'Option 1' ?
+        trialData.playerPoints_selected = answer === 'Option 1' ?
             trial.optionOneParticipant :
             trial.optionTwoParticipant;
-        trialData.partnerPoints = answer === 'Option 1' ?
+        trialData.partnerPoints_selected = answer === 'Option 1' ?
             trial.optionOnePartner :
             trial.optionTwoPartner;
       } else {
         // All other trials, add points from option participant selected
         if (option === 'Option 1') {
-          trialData.playerPoints = trial.optionOneParticipant;
-          trialData.partnerPoints = trial.optionOnePartner;
+          trialData.playerPoints_selected = trial.optionOneParticipant;
+          trialData.partnerPoints_selected = trial.optionOnePartner;
         } else {
-          trialData.playerPoints = trial.optionTwoParticipant;
-          trialData.partnerPoints = trial.optionTwoPartner;
+          trialData.playerPoints_selected = trial.optionTwoParticipant;
+          trialData.partnerPoints_selected = trial.optionTwoPartner;
         }
       }
 
@@ -321,7 +328,7 @@ jsPsych.plugins['intentions-game'] = (() => {
           Configuration.avatars.names.participant.indexOf(selection);
 
       // Update the global Experiment state
-      (window['Experiment'] as Experiment).setGlobalStateValue(
+      Experiment.setGlobalStateValue(
           'participantAvatar',
           selectedAvatar,
       );
