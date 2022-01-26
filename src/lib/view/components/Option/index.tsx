@@ -27,12 +27,12 @@ const Option = (props: Components.Option): ReactElement => {
     >
       {/* Participant header */}
       <Heading level={2} size='auto' gridArea='participantHeader'>
-        Points for you
+        &nbsp;&nbsp;Points for&nbsp;&nbsp;<br/>you
       </Heading>
 
       {/* Partner header */}
       <Heading level={2} size='auto' gridArea='partnerHeader'>
-        Points for your partner
+        &nbsp;&nbsp;Points for&nbsp;&nbsp;<br/>your partner
       </Heading>
 
       {/* Participant points */}

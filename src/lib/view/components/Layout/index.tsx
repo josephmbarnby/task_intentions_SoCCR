@@ -90,9 +90,18 @@ export const Layout = (props: Components.Layout): ReactElement => {
       break;
   }
 
-  // Return a Grommet instance with the global theme extension
+  // Return a styled Grommet instance with the global theme extension
   return (
-    <Grommet>
+    <Grommet
+      full='min'
+      style={{
+        minHeight: '70vh',
+        minWidth: '70vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <ThemeContext.Extend value={Theme}>
         {screen}
       </ThemeContext.Extend>

@@ -42,9 +42,9 @@ export const Configuration = {
         'f',
       ],
       partner: [
-        'm',
-        'n',
-        'o',
+        'a',
+        'b',
+        'c',
       ],
     },
     colours: [

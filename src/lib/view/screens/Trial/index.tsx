@@ -413,11 +413,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
       rows={['auto', 'medium', 'auto']}
       columns={['flex', '1/2', 'flex']}
       gap='xsmall'
-      margin='auto'
       width={{
-        width: 'auto',
+        min: 'large',
         max: 'xlarge',
       }}
+      fill
       areas={[
         {name: 'trialHeader', start: [0, 0], end: [2, 0]},
         {name: 'playerArea', start: [0, 1], end: [0, 1]},
