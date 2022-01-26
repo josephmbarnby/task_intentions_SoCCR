@@ -75,7 +75,7 @@
     "grommet-icons": "^4.6.0",
     "jspsych": "^6.0.0",
     "jspsych-attention-check": "^1.4.1",
-    "jspsych-wrapper": "file:packages/jspsych-wrapper-v0.1.0.tgz",
+    "jspsych-wrapper": "file:packages/jspsych-wrapper-v0.1.1.tgz",
     "react-text-transition": "^1.3.0"
   }
 }
