@@ -95,12 +95,16 @@ export const Layout = (props: Components.Layout): ReactElement => {
     <Grommet
       full='min'
       style={{
+        // Dimensions
         minHeight: '70vh',
-        minWidth: '70vh',
+        minWidth: '70vw',
+        // Flex properties
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        // Overflow
+        overflow: 'hidden',
       }}>
       <ThemeContext.Extend value={Theme}>
         {screen}

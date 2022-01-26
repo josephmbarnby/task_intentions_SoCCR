@@ -46,11 +46,10 @@ const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
 
       {/* Avatar components */}
       <Box
-        flex='grow'
-        direction='row-responsive'
+        direction='row'
         align='center'
         justify='center'
-        height='flex'
+        height='small'
         margin='medium'
       >
         {avatarComponents}

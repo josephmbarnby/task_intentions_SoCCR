@@ -414,7 +414,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
       columns={['flex', '1/2', 'flex']}
       gap='xsmall'
       width={{
-        min: 'large',
+        min: '1000px',
         max: 'xlarge',
       }}
       fill
