@@ -402,6 +402,15 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         return false;
       });
 
+      // In the case of 'playerGuess', we need to reverse the values
+      // since they are reversed in the display.
+      if (trial.display === 'playerGuess') {
+        trialData.playerPoints_option1 = trial.optionOnePartner;
+        trialData.partnerPoints_option1 = trial.optionOneParticipant;
+        trialData.playerPoints_option2 = trial.optionTwoPartner;
+        trialData.partnerPoints_option2 = trial.optionTwoParticipant;
+      }
+
       // Finish the jsPsych trial
       jsPsych.finishTrial(trialData);
     }
