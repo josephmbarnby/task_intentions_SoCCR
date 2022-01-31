@@ -7,7 +7,7 @@ import {Money} from 'grommet-icons';
 
 // Other imports
 import TextTransition, {presets} from 'react-text-transition';
-import Avatar from '../../../../../packages/boring-avatars';
+import Avatar from 'boring-avatars';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
@@ -23,15 +23,15 @@ const PlayerCard = (props: Components.PlayerCard): ReactElement => {
       gridArea={props.gridArea}
       background='avatarBackground'
       round
-      justify='center'
-      align='center'
       direction='row-responsive'
       id='playerInfo'
       margin={{left: 'small', right: 'small'}}
     >
       <Grid
-        rows={['xsmall', 'flex', 'xsmall']}
+        rows={['auto', 'auto', 'auto']}
         columns={['auto']}
+        justifyContent='center'
+        fill
         areas={[
           {name: 'playerNameArea', start: [0, 0], end: [0, 0]},
           {name: 'PlayerCardArea', start: [0, 1], end: [0, 1]},
@@ -40,6 +40,7 @@ const PlayerCard = (props: Components.PlayerCard): ReactElement => {
       >
         <Box
           align='center'
+          alignSelf='center'
           animation={['pulse']}
           gridArea='PlayerCardArea'
         >
@@ -55,7 +56,7 @@ const PlayerCard = (props: Components.PlayerCard): ReactElement => {
           gridArea='playerNameArea'
           alignSelf='center'
         >
-          <Heading>{props.name}</Heading>
+          <Heading level={1}>{props.name}</Heading>
         </Box>
         <Box
           align='center'

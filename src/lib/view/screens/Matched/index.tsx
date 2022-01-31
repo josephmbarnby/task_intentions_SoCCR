@@ -3,13 +3,10 @@ import React, {ReactElement} from 'react';
 
 // Grommet UI components
 import {Box, Heading, Layer, WorldMap} from 'grommet';
-import Avatar from '../../../../../packages/boring-avatars';
+import Avatar from 'boring-avatars';
 
 // Logging library
 import consola from 'consola';
-
-// API modules
-import {Experiment} from 'crossplatform-jspsych-wrapper';
 
 // Configuration
 import {Configuration} from '../../../Configuration';
@@ -20,7 +17,7 @@ import {Configuration} from '../../../Configuration';
  */
 const Matched = (): ReactElement => {
   // Get the current partner avatar
-  const experiment = (window['Experiment'] as Experiment);
+  const experiment = window['Experiment'];
   const currentPartner = experiment.getGlobalStateValue('partnerAvatar');
 
   // Increment the partner avatar value
@@ -41,10 +38,7 @@ const Matched = (): ReactElement => {
 
   return (
     <>
-      <WorldMap
-        color='map'
-        fill='horizontal'
-      />
+      <WorldMap color='map' fill='horizontal' />
       <Layer plain full>
         <Box
           justify='center'

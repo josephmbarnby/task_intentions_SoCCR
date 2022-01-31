@@ -3,6 +3,8 @@
   "version": "1.2.0",
   "description": "Intentions Game",
   "private": true,
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "dev": "webpack serve --config webpack.dev.js",
     "watch": "webpack --watch",
@@ -31,6 +33,7 @@
     "@babel/preset-typescript": "^7.14.5",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
+    "@types/d3": "^7.1.0",
     "@types/jest": "^27.4.0",
     "@types/jest-axe": "^3.5.3",
     "@types/node": "^17.0.9",
@@ -64,11 +67,15 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "crossplatform-jspsych-wrapper": "file:packages/crossplatform-jspsych-wrapper-v1.1.0.tgz",
+    "boring-avatars": "file:packages/boring-avatars-1.5.8.tgz",
+    "d3": "^7.3.0",
+    "d3-array": "^3.1.1",
+    "d3-random": "^3.0.1",
     "grommet": "^2.17.3",
     "grommet-icons": "^4.6.0",
     "jspsych": "^6.0.0",
     "jspsych-attention-check": "^1.4.1",
+    "jspsych-wrapper": "file:packages/jspsych-wrapper-v0.1.1.tgz",
     "react-text-transition": "^1.3.0"
   }
 }

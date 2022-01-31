@@ -86,12 +86,26 @@ export const Layout = (props: Components.Layout): ReactElement => {
     // Likely a mistake
     default:
       consola.error(`Unknown display type '${props.display}'`);
+      screen = <p>Error.</p>;
       break;
   }
 
-  // Return a Grommet instance with the global theme extension
+  // Return a styled Grommet instance with the global theme extension
   return (
-    <Grommet>
+    <Grommet
+      full='min'
+      style={{
+        // Dimensions
+        minHeight: '70vh',
+        minWidth: '70vw',
+        // Flex properties
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        // Overflow
+        overflow: 'hidden',
+      }}>
       <ThemeContext.Extend value={Theme}>
         {screen}
       </ThemeContext.Extend>

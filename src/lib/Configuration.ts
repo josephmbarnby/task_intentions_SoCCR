@@ -4,8 +4,8 @@ import {LogLevel} from 'consola';
 // Configuration and other required data
 export const Configuration = {
   // General information
-  studyName: 'Intentions game',
-  pluginName: 'intentions-game',
+  name: 'Intentions game',
+  studyName: 'intentions-game',
   locale: 'en-AU',
 
   // Error screen configuration
@@ -21,7 +21,7 @@ export const Configuration = {
   stimuli: {},
 
   // Seed for RNG
-  seed: 'intentions',
+  seed: 0.1234,
 
   // Initial experiment state
   state: {
@@ -42,9 +42,9 @@ export const Configuration = {
         'f',
       ],
       partner: [
-        'm',
-        'n',
-        'o',
+        'a',
+        'b',
+        'c',
       ],
     },
     colours: [

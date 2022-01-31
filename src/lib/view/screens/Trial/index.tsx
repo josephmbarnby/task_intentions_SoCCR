@@ -13,9 +13,6 @@ import PlayerCard from '../../components/PlayerCard';
 // Access theme constants directly
 import {Theme} from '../../../Theme';
 
-// API modules
-import {Experiment} from 'crossplatform-jspsych-wrapper';
-
 // Configuration
 import {Configuration} from '../../../Configuration';
 
@@ -28,7 +25,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
   // Header state
   let defaultHeader = !props.display.startsWith('playerGuess') ?
       'How will you split the points?' :
-      'How will your parter split the points?';
+      'How will your partner split the points?';
 
   // Update the header if this is a practice
   if (props.isPractice) {
@@ -64,7 +61,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
   ] = useState(
       <Text>Oops! There should be content here.</Text>
   );
-  let selectedOption = '';
+  let selectedOption: Options;
 
   // Create references for each Option
   const refs = {
@@ -88,9 +85,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   /**
    * Helper function to end the trial
-   * @param {string} option selected option
+   * @param {Options} option selected option
    */
-  function endTrial(option: string): void {
+  function endTrial(option: Options): void {
     // Bubble the selection handler with selection and answer
     props.selectionHandler(option, answer);
   }
@@ -195,14 +192,16 @@ const Trial = (props: Screens.Trial): ReactElement => {
     setShowOverlay(false);
 
     // Get the references to the nodes
-    const optionOneNode = refs.optionOne.current as HTMLElement;
-    const optionTwoNode = refs.optionTwo.current as HTMLElement;
+    const optionOneNode = refs.optionOne.current as unknown as HTMLElement;
+    const optionTwoNode = refs.optionTwo.current as unknown as HTMLElement;
 
     // Disable all pointer events
-    optionOneNode.style.pointerEvents = 'none';
-    optionTwoNode.style.pointerEvents = 'none';
-    optionOneNode.style.touchAction = 'none';
-    optionTwoNode.style.touchAction = 'none';
+    if (optionOneNode && optionTwoNode) {
+      optionOneNode.style.pointerEvents = 'none';
+      optionTwoNode.style.pointerEvents = 'none';
+      optionOneNode.style.touchAction = 'none';
+      optionTwoNode.style.touchAction = 'none';
+    }
 
     // Get the selected node object
     const selectedNode =
@@ -302,7 +301,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
    * @return {ReactElement}
    */
   function getOverlayContent(): ReactElement {
-    let content: ReactElement;
+    let content: ReactElement = <></>;
 
     switch (props.display) {
       // Simple choice of the player
@@ -384,7 +383,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
   }
 
   // Get the participant's and the partner's avatars
-  const experiment = (window['Experiment'] as Experiment);
+  const experiment = window.Experiment;
 
   // Participant avatar
   const participantAvatar =
@@ -414,11 +413,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
       rows={['auto', 'medium', 'auto']}
       columns={['flex', '1/2', 'flex']}
       gap='xsmall'
-      margin='auto'
       width={{
-        width: 'auto',
+        min: '1000px',
         max: 'xlarge',
       }}
+      fill
       areas={[
         {name: 'trialHeader', start: [0, 0], end: [2, 0]},
         {name: 'playerArea', start: [0, 1], end: [0, 1]},
@@ -465,7 +464,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionKey='optionOne'
             optionName='Option 1'
             pointsParticipant={props.options.one.participant}
-            pointsParter={props.options.one.partner}
+            pointsPartner={props.options.one.partner}
           />
         </Box>
 
@@ -483,7 +482,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
             optionKey='optionTwo'
             optionName='Option 2'
             pointsParticipant={props.options.two.participant}
-            pointsParter={props.options.two.partner}
+            pointsPartner={props.options.two.partner}
           />
         </Box>
       </Box>
