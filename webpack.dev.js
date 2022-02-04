@@ -5,17 +5,23 @@ module.exports = {
   name: 'development',
   mode: 'development',
   entry: {
-    index: './src/Timeline.tsx',
+    index: './src/task/Timeline.tsx',
   },
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'src/task/index.html',
     }),
   ],
   devServer: {
     contentBase: './dist',
     hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        router: () => 'http://localhost:8000',
+      }
+    }
   },
   module: {
     rules: [
