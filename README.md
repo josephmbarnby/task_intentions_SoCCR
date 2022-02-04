@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-Before developing or previewing the game, ensure that the Node.js version 14+ is installed on your system. You can download Node.js [here](https://nodejs.org/en/). After installing Node.js, run `yarn install` in the root directory of this repository. After a short period of time, all dependencies for the tasks will be configured and ready for development.
+Before developing or previewing the game, ensure that the Node.js version 14+ is installed on your system. Download Node.js [here](https://nodejs.org/en/) and install Yarn using this command `npm i -g corepack`. After installing Yarn, run `yarn install` in the root directory of this repository. After a short period of time, all dependencies for the tasks will be configured and ready for development.
 
 ## Commands 👨‍💻
 
@@ -10,7 +10,7 @@ Before developing or previewing the game, ensure that the Node.js version 14+ is
 
 `yarn watch`: Rebuild on changes. The other commands do this automatically anyway.
 
-`yarn build`: Create a production build of the game. Ensure the target field of `config.js` is updated to reflect the target of the build.
+`yarn build`: Create a production build of the game.
 
 `yarn style`: Pipe all the source code through ESLint to check for any style violations.
 

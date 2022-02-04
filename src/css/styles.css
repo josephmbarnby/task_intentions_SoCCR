@@ -1,0 +1,30 @@
+@import 'jspsych/css/jspsych.css';
+
+/* Grow behaviour for Option component */
+.grow { 
+  transition: all .2s ease-in-out; 
+}
+
+.grow:hover { 
+  transform: scale(1.05); 
+  cursor: pointer;
+}
+
+/* Size behaviour for IntentionsAvatar component */
+.selectable {
+  transition: all 0.3s linear;
+}
+
+.selectable:hover {
+  transform: scale(1.2); 
+}
+
+.selectable.selected {
+  transform: scale(1.2) translateY(-20%);
+}
+
+/* Gorilla style overrides */
+h1, h2 {
+  font-weight: bold;
+  letter-spacing: normal;
+}
