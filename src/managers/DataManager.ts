@@ -1,4 +1,0 @@
-/**
- * DataManager
- */
-export class DataManager {}
