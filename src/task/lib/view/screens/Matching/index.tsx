@@ -21,8 +21,6 @@ import {Configuration} from '../../../Configuration';
 const Matching = (props: Screens.Matching): ReactElement => {
   const experiment = window['Experiment'];
 
-  consola.debug(`props:`, props);
-
   // Launch request
   if (props.fetchData) {
     consola.info(`Requesting partner...`);

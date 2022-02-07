@@ -2,6 +2,7 @@
 // screen used in the experiment.
 declare namespace Screens {
   type Generic = {
+    trial: number;
     display: Display;
   }
 

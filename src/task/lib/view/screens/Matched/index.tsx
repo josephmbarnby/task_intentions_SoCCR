@@ -17,7 +17,7 @@ import {Configuration} from '../../../Configuration';
  */
 const Matched = (): ReactElement => {
   // Get the current partner avatar
-  const experiment = window['Experiment'];
+  const experiment = window.Experiment;
   const currentPartner = experiment.getGlobalStateValue('partnerAvatar');
 
   // Increment the partner avatar value

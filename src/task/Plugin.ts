@@ -156,6 +156,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         Screens.SelectAvatar |
         Screens.Trial |
         Screens.Summary = {
+          trial: trial.trial,
           display: 'playerChoice',
         };
     switch (trial.display as Display) {
@@ -167,6 +168,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'playerChoice2': {
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
           isPractice: trial.isPractice,
           participantPoints: participantPoints,
@@ -191,6 +193,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'matched':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
         };
 
@@ -204,6 +207,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'matching':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
           fetchData: trial.fetchData,
         };
@@ -224,6 +228,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'selection':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
           selectionHandler: avatarSelectionHandler,
         };
@@ -233,6 +238,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'inference':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
           selectionHandler: inferenceSelectionHandler,
         };
@@ -242,6 +248,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'agency':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
           selectionHandler: agencySelectionHandler,
         };
@@ -251,6 +258,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'classification':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
           selectionHandler: classificationSelectionHandler,
         };
@@ -260,6 +268,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'summary':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
           postPhase: postPhase,
           selectionHandler: finishTrial,
@@ -270,6 +279,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       case 'end':
         // Setup the props
         props = {
+          trial: trial.trial,
           display: trial.display,
         };
 

@@ -1,9 +1,6 @@
 // React import
 import React, {ReactElement} from 'react';
 
-// API modules
-import {Experiment} from 'jspsych-wrapper';
-
 // Grommet UI components
 import {Box, Button, Grid, Heading, Layer, WorldMap} from 'grommet';
 import {LinkNext} from 'grommet-icons';
@@ -24,7 +21,7 @@ import {calculatePoints} from '../../../Functions';
  */
 const Summary = (props: Screens.Summary): ReactElement => {
   // Get the participant's and the partner's avatars
-  const experiment = (window['Experiment'] as Experiment);
+  const experiment = window.Experiment;
   const participantAvatar = experiment.getGlobalStateValue('participantAvatar');
   const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 

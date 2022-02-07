@@ -78,10 +78,32 @@ const Trial = (props: Screens.Trial): ReactElement => {
   // Store the correct answer, this changes in some practice trials
   let answer = props.answer;
 
+  // Store the option configuration
+  const defaultPoints = {
+    options: {
+      one: {
+        participant: props.options.one.participant,
+        partner: props.options.one.partner,
+      },
+      two: {
+        participant: props.options.two.participant,
+        partner: props.options.two.partner,
+      },
+    },
+  };
+
   // Testing connection to the API
   if (props.display === 'playerGuess') {
     if (experiment.getGlobalStateValue('phaseTwoData') !== null) {
-      consola.debug(`'playerGuess' trial, state data found`);
+      // Update the values stored for the points
+      const phaseTwoData = experiment.getGlobalStateValue('phaseTwoData');
+      const phaseTwoTrialData = phaseTwoData['PARd'][props.trial - 1];
+      consola.debug(`'phaseTwoTrialData':`, phaseTwoTrialData);
+
+      defaultPoints.options.one.participant = phaseTwoTrialData['ppt1'];
+      defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
+      defaultPoints.options.two.participant = phaseTwoTrialData['ppt2'];
+      defaultPoints.options.two.partner = phaseTwoTrialData['par2'];
     } else {
       consola.warn(`'playerGuess' trial, state data not found, using defaults`);
     }
@@ -132,27 +154,27 @@ const Trial = (props: Screens.Trial): ReactElement => {
       // Participant points
       participantPoints =
           answer === 'Option 1' ?
-            props.options.one.participant :
-            props.options.two.participant;
+            defaultPoints.options.one.participant :
+            defaultPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
           answer === 'Option 1' ?
-            props.options.one.partner :
-            props.options.two.partner;
+            defaultPoints.options.one.partner :
+            defaultPoints.options.two.partner;
     } else {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
           option === 'Option 1' ?
-            props.options.one.participant :
-            props.options.two.participant;
+            defaultPoints.options.one.participant :
+            defaultPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
           option === 'Option 1' ?
-            props.options.one.partner :
-            props.options.two.partner;
+            defaultPoints.options.one.partner :
+            defaultPoints.options.two.partner;
     }
 
     // Apply the points
@@ -331,11 +353,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
             <Text size='large' margin='medium'>
               That means
               you get {selectedOption === 'Option 1' ?
-                  props.options.one.participant :
-                  props.options.two.participant
+                  defaultPoints.options.one.participant :
+                  defaultPoints.options.two.participant
               } points and your partner gets {selectedOption === 'Option 1' ?
-                  props.options.one.partner :
-                  props.options.two.partner
+                  defaultPoints.options.one.partner :
+                  defaultPoints.options.two.partner
               } points.
             </Text>
 
@@ -367,11 +389,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
             <Text size='large' margin='medium'>
               That means
               you get {answer === 'Option 1' ?
-                  props.options.one.participant :
-                  props.options.two.participant
+                  defaultPoints.options.one.participant :
+                  defaultPoints.options.two.participant
               } points and your partner gets {answer === 'Option 1' ?
-                  props.options.one.partner :
-                  props.options.two.partner
+                  defaultPoints.options.one.partner :
+                  defaultPoints.options.two.partner
               } points.
             </Text>
 
@@ -475,8 +497,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
           <Option
             optionKey='optionOne'
             optionName='Option 1'
-            pointsParticipant={props.options.one.participant}
-            pointsPartner={props.options.one.partner}
+            pointsParticipant={defaultPoints.options.one.participant}
+            pointsPartner={defaultPoints.options.one.partner}
           />
         </Box>
 
@@ -493,8 +515,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
           <Option
             optionKey='optionTwo'
             optionName='Option 2'
-            pointsParticipant={props.options.two.participant}
-            pointsPartner={props.options.two.partner}
+            pointsParticipant={defaultPoints.options.two.participant}
+            pointsPartner={defaultPoints.options.two.partner}
           />
         </Box>
       </Box>
