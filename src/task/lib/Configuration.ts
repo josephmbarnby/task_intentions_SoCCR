@@ -28,7 +28,11 @@ export const Configuration = {
     participantAvatar: 0,
     partnerAvatar: 0,
     refreshPartner: false,
+    phaseTwoData: [],
   },
+
+  // API endpoint for computations
+  endpoint: 'http://localhost:8080/api/compute',
 
   // Avatar configuration details, including colours and names
   avatars: {

@@ -1,3 +1,5 @@
+source("functions.R")
+
 library(plumber)
 library(jsonlite)
 
@@ -16,22 +18,20 @@ cors <- function(res) {
 function(req, id=0, responses=list()) {
   # Generate a data frame from the responses
   parsed <- fromJSON(responses, simplifyDataFrame = TRUE)
-  
-  # Iterate and increment all values before returning
-  for (row in 1: nrow(parsed)) {
-    optionOne <- parsed[row, "optionOne"]
-    optionTwo <- parsed[row, "optionTwo"]
-    
-    optionOne = optionOne + 1
-    optionTwo = optionTwo + 1
-    
-    parsed[row, "optionOne"] = optionOne
-    parsed[row, "optionTwo"] = optionTwo
-  }
-  
+
+  # Load the full data
+  full_data <- read.csv("fullData.csv") %>% dplyr::select(-X)
+
+  # Run the matching function
+  computed <- matching_partner_phase1(
+    Phase1Data = parsed,
+    full_data,
+    shuffle = F,
+    file_loc = F)
+
   # Respond to the game
   return(list(
     id = id,
-    responses = toJSON(parsed)
+    computed = toJSON(computed)
   ))
 }

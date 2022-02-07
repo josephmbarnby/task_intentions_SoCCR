@@ -1,6 +1,9 @@
 // React import
 import React, {ReactElement, useRef, useState} from 'react';
 
+// Logging library
+import consola from 'consola';
+
 // UI components
 import {Box, Button, Grid, Heading, Layer, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
@@ -22,6 +25,9 @@ import {Configuration} from '../../../Configuration';
  * @return {ReactElement}
  */
 const Trial = (props: Screens.Trial): ReactElement => {
+  // Get the Experiment instance
+  const experiment = window.Experiment;
+
   // Header state
   let defaultHeader = !props.display.startsWith('playerGuess') ?
       'How will you split the points?' :
@@ -71,6 +77,15 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   // Store the correct answer, this changes in some practice trials
   let answer = props.answer;
+
+  // Testing connection to the API
+  if (props.display === 'playerGuess') {
+    if (experiment.getGlobalStateValue('phaseTwoData') !== null) {
+      consola.debug(`'playerGuess' trial, state data found`);
+    } else {
+      consola.warn(`'playerGuess' trial, state data not found, using defaults`);
+    }
+  }
 
   /**
    * Update the points state for the participant and the partner
@@ -381,9 +396,6 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
     return content;
   }
-
-  // Get the participant's and the partner's avatars
-  const experiment = window.Experiment;
 
   // Participant avatar
   const participantAvatar =
