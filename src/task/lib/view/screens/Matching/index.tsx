@@ -110,12 +110,12 @@ const Matching = (props: Screens.Matching): ReactElement => {
             const content = response.data.computed;
 
             // Parse and store the JSON content
-            let phaseTwoData = null;
+            let phaseData = null;
             try {
-              phaseTwoData = JSON.parse(content);
+              phaseData = JSON.parse(content);
               experiment.setGlobalStateValue(
-                  'phaseTwoData',
-                  phaseTwoData);
+                  'phaseData',
+                  phaseData);
               consola.info(`Success, generated new partner for id:`, id);
             } catch (error) {
               consola.warn(`Error occurred when extracting content:`, error);
@@ -129,8 +129,8 @@ const Matching = (props: Screens.Matching): ReactElement => {
         })
         .then(() => {
           consola.info(`Partner request complete`);
-          consola.debug(`'phaseTwoData' state value:`,
-              experiment.getGlobalStateValue('phaseTwoData'));
+          consola.debug(`'phaseData' state value:`,
+              experiment.getGlobalStateValue('phaseData'));
         });
   }
 

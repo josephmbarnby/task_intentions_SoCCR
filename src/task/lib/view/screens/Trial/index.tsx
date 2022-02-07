@@ -94,11 +94,10 @@ const Trial = (props: Screens.Trial): ReactElement => {
 
   // Testing connection to the API
   if (props.display === 'playerGuess') {
-    if (experiment.getGlobalStateValue('phaseTwoData') !== null) {
+    if (experiment.getGlobalStateValue('phaseData') !== null) {
       // Update the values stored for the points
-      const phaseTwoData = experiment.getGlobalStateValue('phaseTwoData');
-      const phaseTwoTrialData = phaseTwoData['PARd'][props.trial - 1];
-      consola.debug(`'phaseTwoTrialData':`, phaseTwoTrialData);
+      const phaseData = experiment.getGlobalStateValue('phaseData');
+      const phaseTwoTrialData = phaseData['PARd'][props.trial - 1];
 
       defaultPoints.options.one.participant = phaseTwoTrialData['ppt1'];
       defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
