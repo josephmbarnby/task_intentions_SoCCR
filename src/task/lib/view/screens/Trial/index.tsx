@@ -104,6 +104,9 @@ const Trial = (props: Screens.Trial): ReactElement => {
       defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
       defaultPoints.options.two.participant = phaseTwoTrialData['ppt2'];
       defaultPoints.options.two.partner = phaseTwoTrialData['par2'];
+
+      // Update the correct answer
+      answer = phaseTwoTrialData['AcPar'] === 1 ? 'Option 1' : 'Option 2';
     } else {
       consola.warn(`'playerGuess' trial, state data not found, using defaults`);
     }

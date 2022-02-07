@@ -26,7 +26,7 @@ function(req, id=0, responses=list()) {
   computed <- matching_partner_phase1(
     Phase1Data = parsed,
     full_data,
-    shuffle = F,
+    shuffle = T,
     file_loc = F)
 
   # Respond to the game
