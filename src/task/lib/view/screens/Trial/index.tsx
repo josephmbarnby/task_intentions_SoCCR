@@ -92,13 +92,14 @@ const Trial = (props: Screens.Trial): ReactElement => {
     },
   };
 
-  // Testing connection to the API
+  // Use data from the API if available
   if (props.display === 'playerGuess') {
-    if (experiment.getGlobalStateValue('phaseData') !== null) {
+    if ('PARd' in experiment.getGlobalStateValue('phaseData')) {
       // Update the values stored for the points
       const phaseData = experiment.getGlobalStateValue('phaseData');
       const phaseTwoTrialData = phaseData['PARd'][props.trial - 1];
 
+      // Switch participant and partner points
       defaultPoints.options.one.participant = phaseTwoTrialData['ppt1'];
       defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
       defaultPoints.options.two.participant = phaseTwoTrialData['ppt2'];
@@ -110,11 +111,12 @@ const Trial = (props: Screens.Trial): ReactElement => {
       consola.warn(`'playerGuess' trial, state data not found, using defaults`);
     }
   } else if (props.display === 'playerChoice2') {
-    if (experiment.getGlobalStateValue('phaseData') !== null) {
+    if ('PPTd' in experiment.getGlobalStateValue('phaseData')) {
       // Update the values stored for the points
       const phaseData = experiment.getGlobalStateValue('phaseData');
       const phaseThreeTrialData = phaseData['PPTd'][props.trial - 1];
 
+      // Switch participant and partner points
       defaultPoints.options.one.participant = phaseThreeTrialData['ppt1'];
       defaultPoints.options.one.partner = phaseThreeTrialData['par1'];
       defaultPoints.options.two.participant = phaseThreeTrialData['ppt2'];
@@ -143,7 +145,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
    */
   function endTrial(option: Options): void {
     // Bubble the selection handler with selection and answer
-    props.selectionHandler(option, answer);
+    props.selectionHandler(option, defaultPoints, answer);
   }
 
   /**
@@ -161,7 +163,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
       // 'playerGuess' trials update points from the correct choice
       if (props.display === 'playerGuessPractice') {
         // Change the 'correct' answer depending on probability
-        if (experiment.random() > 0.6) {
+        if (experiment.random() > 0.7) {
           // Change the 'correct' answer to the opposite of
           // what was selected
           answer = option === 'Option 1' ? 'Option 2' : 'Option 1';

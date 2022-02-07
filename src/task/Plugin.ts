@@ -313,9 +313,14 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     /**
      * Handle selection events in a particular trial
      * @param {Options} option selected option
+     * @param {Points} points selected option
      * @param {Options} answer selected option
      */
-    function optionHandler(option: Options, answer: Options) {
+    function optionHandler(
+        option: Options,
+        points: {options: Points},
+        answer: Options,
+    ) {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
@@ -329,24 +334,19 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       // Store the participant selection
       trialData.selectedOption_player = option === 'Option 1' ? 1 : 2;
 
-      // Points in the 'playerGuess' trials are handled differently
-      if (trial.display.toLowerCase().includes('guess')) {
-        // Add points from option partner selected
-        trialData.playerPoints_selected = answer === 'Option 1' ?
-            trial.optionOneParticipant :
-            trial.optionTwoParticipant;
-        trialData.partnerPoints_selected = answer === 'Option 1' ?
-            trial.optionOnePartner :
-            trial.optionTwoPartner;
+      // Store the points as provided
+      trialData.playerPoints_option1 = points.options.one.participant;
+      trialData.partnerPoints_option1 = points.options.one.partner;
+      trialData.playerPoints_option2 = points.options.two.participant;
+      trialData.partnerPoints_option2 = points.options.two.partner;
+
+      // All other trials, add points from option participant selected
+      if (option === 'Option 1') {
+        trialData.playerPoints_selected = points.options.one.participant;
+        trialData.partnerPoints_selected = points.options.one.partner;
       } else {
-        // All other trials, add points from option participant selected
-        if (option === 'Option 1') {
-          trialData.playerPoints_selected = trial.optionOneParticipant;
-          trialData.partnerPoints_selected = trial.optionOnePartner;
-        } else {
-          trialData.playerPoints_selected = trial.optionTwoParticipant;
-          trialData.partnerPoints_selected = trial.optionTwoPartner;
-        }
+        trialData.playerPoints_selected = points.options.two.participant;
+        trialData.partnerPoints_selected = points.options.two.partner;
       }
 
       // Finish trial
@@ -430,15 +430,6 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       document.removeEventListener('keydown', () => {
         return false;
       });
-
-      // In the case of 'playerGuess', we need to reverse the values
-      // since they are reversed in the display.
-      if (trial.display === 'playerGuess') {
-        trialData.playerPoints_option1 = trial.optionOnePartner;
-        trialData.partnerPoints_option1 = trial.optionOneParticipant;
-        trialData.playerPoints_option2 = trial.optionTwoPartner;
-        trialData.partnerPoints_option2 = trial.optionTwoParticipant;
-      }
 
       // Finish the jsPsych trial
       jsPsych.finishTrial(trialData);

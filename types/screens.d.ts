@@ -22,18 +22,9 @@ declare namespace Screens {
     isPractice: boolean;
     participantPoints: number;
     partnerPoints: number;
-    options: {
-      one: {
-        participant: number,
-        partner: number,
-      },
-      two: {
-        participant: number,
-        partner: number,
-      }
-    };
+    options: Points;
     answer: Options;
-    selectionHandler: (selection: Options, answer: Options) => void;
+    selectionHandler: (selection: Options, points: {options: Points}, answer: Options) => void;
   }
 
   // SelectAvatar screen

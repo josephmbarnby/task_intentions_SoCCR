@@ -51,3 +51,15 @@ declare type Data = {
   trialDuration: number,
   correctGuess: -1 | 0 | 1, // 0 incorrect, 1 correct
 };
+
+// Points storage
+declare type Points = {
+  one: {
+    participant: number,
+    partner: number,
+  },
+  two: {
+    participant: number,
+    partner: number,
+  }
+};

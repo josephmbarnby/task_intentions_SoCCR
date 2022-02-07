@@ -28,7 +28,7 @@ export const Configuration = {
     participantAvatar: 0,
     partnerAvatar: 0,
     refreshPartner: false,
-    phaseData: [],
+    phaseData: {},
   },
 
   // API endpoint for computations
