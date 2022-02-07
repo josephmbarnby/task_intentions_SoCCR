@@ -78,6 +78,12 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         default: false,
         description: 'Show feedback to participants',
       },
+      fetchData: {
+        type: jsPsych.plugins.parameterType.BOOLEAN,
+        pretty_name: 'Enable or disable server queries',
+        default: false,
+        description: 'Used primarily in the \'Matching\' screen',
+      },
       clearScreen: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
         pretty_name: 'Clear after trial',
@@ -181,12 +187,25 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         break;
       }
 
-      // Matching and matched screens
+      // Matched screen
       case 'matched':
+        // Setup the props
+        props = {
+          display: trial.display,
+        };
+
+        duration = 2000;
+
+        // Set the timeout callback function
+        callback = finishTrial;
+        break;
+
+      // Matching screen
       case 'matching':
         // Setup the props
         props = {
           display: trial.display,
+          fetchData: trial.fetchData,
         };
 
         if (trial.display === 'matched') {

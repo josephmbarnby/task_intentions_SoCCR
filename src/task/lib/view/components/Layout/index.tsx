@@ -70,7 +70,7 @@ export const Layout = (props: Components.Layout): ReactElement => {
       screen = <Matched />;
       break;
     case 'matching':
-      screen = <Matching />;
+      screen = <Matching {...props.screen as Screens.Matching} />;
       break;
 
     // Summary screen after each phase

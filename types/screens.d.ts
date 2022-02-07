@@ -12,7 +12,9 @@ declare namespace Screens {
   type Matched = Generic;
 
   // Matching screen
-  type Matching = Generic;
+  type Matching = Generic & {
+    fetchData: boolean;
+  };
 
   // Trial screen
   type Trial = Generic & {

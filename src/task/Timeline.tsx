@@ -179,6 +179,7 @@ experiment.load().then(() => {
   timeline.push({
     type: Configuration.studyName,
     display: 'matching',
+    fetchData: false,
   });
 
   timeline.push({
@@ -493,6 +494,7 @@ experiment.load().then(() => {
         timeline.push({
           type: Configuration.studyName,
           display: 'matching',
+          fetchData: true,
         });
 
         timeline.push({
@@ -597,6 +599,7 @@ experiment.load().then(() => {
         timeline.push({
           type: Configuration.studyName,
           display: 'matching',
+          fetchData: false,
         });
 
         timeline.push({

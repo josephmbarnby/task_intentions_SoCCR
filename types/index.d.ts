@@ -28,6 +28,7 @@ declare type Trial = {
   avatar: 0;
   answer: Options;
   isPractice: boolean;
+  fetchData: boolean;
   clearScreen: boolean;
 };
 
