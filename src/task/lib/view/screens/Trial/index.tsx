@@ -109,6 +109,21 @@ const Trial = (props: Screens.Trial): ReactElement => {
     } else {
       consola.warn(`'playerGuess' trial, state data not found, using defaults`);
     }
+  } else if (props.display === 'playerChoice2') {
+    if (experiment.getGlobalStateValue('phaseData') !== null) {
+      // Update the values stored for the points
+      const phaseData = experiment.getGlobalStateValue('phaseData');
+      const phaseThreeTrialData = phaseData['PPTd'][props.trial - 1];
+
+      defaultPoints.options.one.participant = phaseThreeTrialData['ppt1'];
+      defaultPoints.options.one.partner = phaseThreeTrialData['par1'];
+      defaultPoints.options.two.participant = phaseThreeTrialData['ppt2'];
+      defaultPoints.options.two.partner = phaseThreeTrialData['par2'];
+    } else {
+      consola.warn(
+          `'playerChoice2' trial, state data not found, using defaults`
+      );
+    }
   }
 
   /**
