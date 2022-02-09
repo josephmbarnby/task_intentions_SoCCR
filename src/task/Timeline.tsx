@@ -175,6 +175,142 @@ experiment.load().then(() => {
     show_clickable_nav: true,
   });
 
+  // 5x practice trials for 'playerChoice'
+  timeline.push({
+    type: Configuration.studyName,
+    optionOneParticipant: 10,
+    optionOnePartner: 8,
+    optionTwoParticipant: 8,
+    optionTwoPartner: 8,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: false,
+  });
+
+  timeline.push({
+    type: Configuration.studyName,
+    optionOneParticipant: 7,
+    optionOnePartner: 2,
+    optionTwoParticipant: 8,
+    optionTwoPartner: 6,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: false,
+  });
+
+  timeline.push({
+    type: Configuration.studyName,
+    optionOneParticipant: 7,
+    optionOnePartner: 7,
+    optionTwoParticipant: 10,
+    optionTwoPartner: 7,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: false,
+  });
+
+  timeline.push({
+    type: Configuration.studyName,
+    optionOneParticipant: 12,
+    optionOnePartner: 9,
+    optionTwoParticipant: 9,
+    optionTwoPartner: 9,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: false,
+  });
+
+  timeline.push({
+    type: Configuration.studyName,
+    optionOneParticipant: 4,
+    optionOnePartner: 4,
+    optionTwoParticipant: 8,
+    optionTwoPartner: 4,
+    typeOne: '',
+    typeTwo: '',
+    display: 'playerChoicePractice',
+    answer: '',
+    isPractice: true,
+    clearScreen: true,
+  });
+
+  timeline.push({
+    type: 'instructions',
+    pages: [
+      markup(
+          <Grommet>
+            <Box>
+              <Heading level={1} margin='small' fill>Instructions</Heading>
+              <Paragraph margin='small' size='large' fill>
+                The practice trials are now over. Let's start the first
+                stage of the game.
+              </Paragraph>
+              <Paragraph margin='small' size='large' fill>
+                Press 'Next &gt;' to begin!
+              </Paragraph>
+            </Box>
+          </Grommet>
+      ),
+    ],
+    allow_keys: false,
+    show_page_number: true,
+    show_clickable_nav: true,
+  });
+
+  // Attention check question
+  timeline.push({
+    type: 'attention-check',
+    question: 'In this stage of the game, who will be choosing the ' +
+        'number of points that you and your partner get?',
+    options: [
+      'My partner',
+      'Me',
+      'By lottery',
+    ],
+    options_radio: true,
+    option_correct: 1,
+    confirmation: true,
+    feedback_correct: 'Correct! ' +
+        'You will be choosing the points you and your partner get.',
+    feedback_incorrect: 'Incorrect. You will be choosing the points.',
+  });
+
+  // Insert instructions to let the participant know they will
+  // be matched with a partner
+  timeline.push({
+    type: 'instructions',
+    pages: [
+      markup(
+          <Grommet>
+            <Box>
+              <Heading level={1} margin='small' fill>Instructions</Heading>
+              <Paragraph margin='small' size='large' fill>
+                You will now be matched with a partner.
+              </Paragraph>
+              <Paragraph margin='small' size='large' fill>
+                Press 'Next &gt;' to continue.
+              </Paragraph>
+            </Box>
+          </Grommet>
+      ),
+    ],
+    allow_keys: false,
+    show_page_number: true,
+    show_clickable_nav: true,
+  });
+
   // Insert a 'match' sequence into the timeline
   timeline.push({
     type: Configuration.studyName,
@@ -348,7 +484,63 @@ experiment.load().then(() => {
           show_clickable_nav: true,
         });
 
-        // 1x practice trial for 'playerGuess'
+        // 5x practice trials for 'playerGuess'
+        timeline.push({
+          type: Configuration.studyName,
+          optionOneParticipant: 9,
+          optionOnePartner: 5,
+          optionTwoParticipant: 9,
+          optionTwoPartner: 9,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.studyName,
+          optionOneParticipant: 6,
+          optionOnePartner: 6,
+          optionTwoParticipant: 10,
+          optionTwoPartner: 6,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.studyName,
+          optionOneParticipant: 10,
+          optionOnePartner: 5,
+          optionTwoParticipant: 8,
+          optionTwoPartner: 1,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
+        timeline.push({
+          type: Configuration.studyName,
+          optionOneParticipant: 7,
+          optionOnePartner: 2,
+          optionTwoParticipant: 7,
+          optionTwoPartner: 7,
+          typeOne: '',
+          typeTwo: '',
+          display: 'playerGuessPractice',
+          answer: 'Option 1',
+          isPractice: true,
+          clearScreen: false,
+        });
+
         timeline.push({
           type: Configuration.studyName,
           optionOneParticipant: 8,
