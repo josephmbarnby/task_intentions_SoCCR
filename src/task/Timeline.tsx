@@ -348,63 +348,7 @@ experiment.load().then(() => {
           show_clickable_nav: true,
         });
 
-        // 5x practice trials for 'playerGuess'
-        timeline.push({
-          type: Configuration.studyName,
-          optionOneParticipant: 9,
-          optionOnePartner: 5,
-          optionTwoParticipant: 9,
-          optionTwoPartner: 9,
-          typeOne: '',
-          typeTwo: '',
-          display: 'playerGuessPractice',
-          answer: 'Option 1',
-          isPractice: true,
-          clearScreen: false,
-        });
-
-        timeline.push({
-          type: Configuration.studyName,
-          optionOneParticipant: 6,
-          optionOnePartner: 6,
-          optionTwoParticipant: 10,
-          optionTwoPartner: 6,
-          typeOne: '',
-          typeTwo: '',
-          display: 'playerGuessPractice',
-          answer: 'Option 1',
-          isPractice: true,
-          clearScreen: false,
-        });
-
-        timeline.push({
-          type: Configuration.studyName,
-          optionOneParticipant: 10,
-          optionOnePartner: 5,
-          optionTwoParticipant: 8,
-          optionTwoPartner: 1,
-          typeOne: '',
-          typeTwo: '',
-          display: 'playerGuessPractice',
-          answer: 'Option 1',
-          isPractice: true,
-          clearScreen: false,
-        });
-
-        timeline.push({
-          type: Configuration.studyName,
-          optionOneParticipant: 7,
-          optionOnePartner: 2,
-          optionTwoParticipant: 7,
-          optionTwoPartner: 7,
-          typeOne: '',
-          typeTwo: '',
-          display: 'playerGuessPractice',
-          answer: 'Option 1',
-          isPractice: true,
-          clearScreen: false,
-        });
-
+        // 1x practice trial for 'playerGuess'
         timeline.push({
           type: Configuration.studyName,
           optionOneParticipant: 8,

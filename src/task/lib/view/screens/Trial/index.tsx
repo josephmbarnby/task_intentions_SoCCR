@@ -92,6 +92,20 @@ const Trial = (props: Screens.Trial): ReactElement => {
     },
   };
 
+  // Store a completely separate configuration for the display of the points
+  const displayPoints = {
+    options: {
+      one: {
+        participant: props.options.one.participant,
+        partner: props.options.one.partner,
+      },
+      two: {
+        participant: props.options.two.participant,
+        partner: props.options.two.partner,
+      },
+    },
+  };
+
   // Use data from the API if available
   if (props.display === 'playerGuess') {
     if ('PARd' in experiment.getGlobalStateValue('phaseData')) {
@@ -100,6 +114,12 @@ const Trial = (props: Screens.Trial): ReactElement => {
       const phaseTwoTrialData = phaseData['PARd'][props.trial - 1];
 
       // Switch participant and partner points
+      displayPoints.options.one.participant = phaseTwoTrialData['par1'];
+      displayPoints.options.one.partner = phaseTwoTrialData['ppt1'];
+      displayPoints.options.two.participant = phaseTwoTrialData['par2'];
+      displayPoints.options.two.partner = phaseTwoTrialData['ppt2'];
+
+      // Update default points
       defaultPoints.options.one.participant = phaseTwoTrialData['ppt1'];
       defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
       defaultPoints.options.two.participant = phaseTwoTrialData['ppt2'];
@@ -116,7 +136,13 @@ const Trial = (props: Screens.Trial): ReactElement => {
       const phaseData = experiment.getGlobalStateValue('phaseData');
       const phaseThreeTrialData = phaseData['PPTd'][props.trial - 1];
 
-      // Switch participant and partner points
+      // Set participant and partner points
+      displayPoints.options.one.participant = phaseThreeTrialData['ppt1'];
+      displayPoints.options.one.partner = phaseThreeTrialData['par1'];
+      displayPoints.options.two.participant = phaseThreeTrialData['ppt2'];
+      displayPoints.options.two.partner = phaseThreeTrialData['par2'];
+
+      // Update default points
       defaultPoints.options.one.participant = phaseThreeTrialData['ppt1'];
       defaultPoints.options.one.partner = phaseThreeTrialData['par1'];
       defaultPoints.options.two.participant = phaseThreeTrialData['ppt2'];
@@ -173,27 +199,27 @@ const Trial = (props: Screens.Trial): ReactElement => {
       // Participant points
       participantPoints =
           answer === 'Option 1' ?
-            defaultPoints.options.one.participant :
-            defaultPoints.options.two.participant;
+            displayPoints.options.one.participant :
+            displayPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
           answer === 'Option 1' ?
-            defaultPoints.options.one.partner :
-            defaultPoints.options.two.partner;
+            displayPoints.options.one.partner :
+            displayPoints.options.two.partner;
     } else {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
           option === 'Option 1' ?
-            defaultPoints.options.one.participant :
-            defaultPoints.options.two.participant;
+            displayPoints.options.one.participant :
+            displayPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
           option === 'Option 1' ?
-            defaultPoints.options.one.partner :
-            defaultPoints.options.two.partner;
+            displayPoints.options.one.partner :
+            displayPoints.options.two.partner;
     }
 
     // Apply the points
@@ -372,11 +398,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
             <Text size='large' margin='medium'>
               That means
               you get {selectedOption === 'Option 1' ?
-                  defaultPoints.options.one.participant :
-                  defaultPoints.options.two.participant
+                  displayPoints.options.one.participant :
+                  displayPoints.options.two.participant
               } points and your partner gets {selectedOption === 'Option 1' ?
-                  defaultPoints.options.one.partner :
-                  defaultPoints.options.two.partner
+                  displayPoints.options.one.partner :
+                  displayPoints.options.two.partner
               } points.
             </Text>
 
@@ -408,11 +434,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
             <Text size='large' margin='medium'>
               That means
               you get {answer === 'Option 1' ?
-                  defaultPoints.options.one.participant :
-                  defaultPoints.options.two.participant
+                  displayPoints.options.one.participant :
+                  displayPoints.options.two.participant
               } points and your partner gets {answer === 'Option 1' ?
-                  defaultPoints.options.one.partner :
-                  defaultPoints.options.two.partner
+                  displayPoints.options.one.partner :
+                  displayPoints.options.two.partner
               } points.
             </Text>
 
@@ -516,8 +542,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
           <Option
             optionKey='optionOne'
             optionName='Option 1'
-            pointsParticipant={defaultPoints.options.one.participant}
-            pointsPartner={defaultPoints.options.one.partner}
+            pointsParticipant={displayPoints.options.one.participant}
+            pointsPartner={displayPoints.options.one.partner}
           />
         </Box>
 
@@ -534,8 +560,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
           <Option
             optionKey='optionTwo'
             optionName='Option 2'
-            pointsParticipant={defaultPoints.options.two.participant}
-            pointsPartner={defaultPoints.options.two.partner}
+            pointsParticipant={displayPoints.options.two.participant}
+            pointsPartner={displayPoints.options.two.partner}
           />
         </Box>
       </Box>

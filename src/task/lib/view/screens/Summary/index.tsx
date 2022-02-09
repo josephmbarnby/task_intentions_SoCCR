@@ -1,6 +1,9 @@
 // React import
 import React, {ReactElement} from 'react';
 
+// Logging library
+import consola from 'consola';
+
 // Grommet UI components
 import {Box, Button, Grid, Heading, Layer, WorldMap} from 'grommet';
 import {LinkNext} from 'grommet-icons';
@@ -20,6 +23,8 @@ import {calculatePoints} from '../../../Functions';
  * @return {ReactElement}
  */
 const Summary = (props: Screens.Summary): ReactElement => {
+  consola.debug(`Summary screen for '${props.postPhase}'`);
+
   // Get the participant's and the partner's avatars
   const experiment = window.Experiment;
   const participantAvatar = experiment.getGlobalStateValue('participantAvatar');
