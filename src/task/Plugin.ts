@@ -324,6 +324,9 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
+      // Store the correct answer
+      trialData.realAnswer = answer;
+
       // Adjust for transition time, 2250ms
       trialData.trialDuration = duration - 2250;
 
