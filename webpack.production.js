@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
   mode: 'production',
   entry: {
-    index: './src/Timeline.tsx',
+    index: './src/task/Timeline.tsx',
   },
   devtool: 'inline-source-map',
   module: {
