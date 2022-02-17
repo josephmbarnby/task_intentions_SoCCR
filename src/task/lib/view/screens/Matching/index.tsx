@@ -69,8 +69,13 @@ const Matching = (props: Screens.Matching): ReactElement => {
         let phaseData = null;
         try {
           phaseData = JSON.parse(content);
-          experiment.setGlobalStateValue('phaseData', phaseData);
-          consola.info(`Success, generated new partner for id:`, id);
+          // Check the specification of the data first
+          if ('PARd' in phaseData && 'PPTd' in phaseData) {
+            experiment.setGlobalStateValue('phaseData', phaseData);
+            consola.info(`Success, generated new partner for id:`, id);
+          } else {
+            consola.warn(`Phase data appears to be incomplete`);
+          }
         } catch (error) {
           consola.warn(`Error occurred when extracting content:`, error);
         }
