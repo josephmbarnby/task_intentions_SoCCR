@@ -1,6 +1,3 @@
-// React
-import React from 'react';
-
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -9,21 +6,29 @@ import {axe, toHaveNoViolations} from 'jest-axe';
 // Custom wrapper
 import {render} from './Wrapper';
 
-// Test components
-import Inference from '../../../../src/lib/view/screens/Inference';
+// Screen factory
+import ScreenFactory from
+  '../../../../src/task/lib/classes/factories/ScreenFactory';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
 
+let screenFactory: ScreenFactory;
+beforeAll(() => {
+  screenFactory = new ScreenFactory();
+});
+
 test('loads and displays Inference screen', async () => {
-  render(
-      <Inference
-        display='inference'
-        handler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  render(screenFactory.generate({
+    display: 'inference',
+    screen: {
+      trial: 0,
+      display: 'inference',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   await waitFor(() => screen.queryAllByText('Totally'));
 
@@ -31,14 +36,16 @@ test('loads and displays Inference screen', async () => {
 });
 
 test('check Inference accessibility', async () => {
-  const {container} = render(
-      <Inference
-        display='inference'
-        handler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  const {container} = render(screenFactory.generate({
+    display: 'inference',
+    screen: {
+      trial: 0,
+      display: 'inference',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   const results = await axe(container);
 

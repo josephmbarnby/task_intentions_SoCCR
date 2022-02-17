@@ -21,7 +21,7 @@ import ScreenFactory from '../../../classes/factories/ScreenFactory';
  */
 export const Layout = (props: Props.Components.Layout): ReactElement => {
   // Create a new 'ScreenFactory' instance
-  const screenFactory = new ScreenFactory(props);
+  const screenFactory = new ScreenFactory();
 
   // Return a styled Grommet instance with the global theme extension
   return (
@@ -40,7 +40,7 @@ export const Layout = (props: Props.Components.Layout): ReactElement => {
         overflow: 'hidden',
       }}>
       <ThemeContext.Extend value={Theme}>
-        {screenFactory.generate()}
+        {screenFactory.generate(props)}
       </ThemeContext.Extend>
     </Grommet>
   );

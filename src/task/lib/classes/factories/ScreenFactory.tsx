@@ -19,52 +19,43 @@ import End from '../../view/screens/End';
  * Factory pattern to generate screens
  */
 class ScreenFactory implements Factory {
-  private props: any;
-
-  /**
-   * Default constructor
-   * @param {any} props screen props
-   */
-  constructor(props: any) {
-    this.props = props;
-  }
-
   /**
    * Generate and return the React element representing
    * the screen
+   * @param {any} props screen props
    * @return {ReactElement}
    */
-  public generate(): ReactElement {
+  public generate(props: Props.Components.Layout): ReactElement {
     let screen: ReactElement;
 
     // Define the exact component that is rendered
-    switch (this.props.display as Display) {
+    switch (props.display as Display) {
       // Trial stages
       case 'playerChoice':
       case 'playerChoicePractice':
       case 'playerGuess':
       case 'playerGuessPractice':
       case 'playerChoice2': {
-        screen = <Trial {...this.props.screen as Props.Screens.Trial} />;
+        screen = <Trial {...props.screen as Props.Screens.Trial} />;
         break;
       }
 
       // Inference trials
       case 'inference':
         screen =
-            <Inference {...this.props.screen as Props.Screens.Inference} />;
+            <Inference {...props.screen as Props.Screens.Inference} />;
         break;
 
       // Agency test
       case 'agency':
-        screen = <Agency {...this.props.screen as Props.Screens.Agency} />;
+        screen = <Agency {...props.screen as Props.Screens.Agency} />;
         break;
 
       // Classification question
       case 'classification':
         screen =
             <Classification
-              {...this.props.screen as Props.Screens.Classification}
+              {...props.screen as Props.Screens.Classification}
             />;
         break;
 
@@ -72,7 +63,7 @@ class ScreenFactory implements Factory {
       case 'selection':
         screen =
             <SelectAvatar
-              {...this.props.screen as Props.Screens.SelectAvatar}
+              {...props.screen as Props.Screens.SelectAvatar}
             />;
         break;
 
@@ -81,12 +72,12 @@ class ScreenFactory implements Factory {
         screen = <Matched />;
         break;
       case 'matching':
-        screen = <Matching {...this.props.screen as Props.Screens.Matching} />;
+        screen = <Matching {...props.screen as Props.Screens.Matching} />;
         break;
 
       // Summary screen after each phase
       case 'summary':
-        screen = <Summary {...this.props.screen as Props.Screens.Summary} />;
+        screen = <Summary {...props.screen as Props.Screens.Summary} />;
         break;
 
       // End screen at the conclusion of the game
@@ -96,7 +87,7 @@ class ScreenFactory implements Factory {
 
       // Likely a mistake
       default:
-        consola.error(`Unknown display type '${this.props.display}'`);
+        consola.error(`Unknown display type '${props.display}'`);
         screen = <p>Error.</p>;
         break;
     }

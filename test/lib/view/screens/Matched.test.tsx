@@ -1,6 +1,3 @@
-// React
-import React from 'react';
-
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -9,8 +6,9 @@ import {axe, toHaveNoViolations} from 'jest-axe';
 // Custom wrapper
 import {render} from './Wrapper';
 
-// Test components
-import Matched from '../../../../src/lib/view/screens/Matched';
+// Screen factory
+import ScreenFactory from
+  '../../../../src/task/lib/classes/factories/ScreenFactory';
 
 // Mock the jsPsych wrapper library
 import {Experiment} from 'jspsych-wrapper';
@@ -21,6 +19,11 @@ jest.mock('jspsych-wrapper');
 declare type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 }
+
+let screenFactory: ScreenFactory;
+beforeAll(() => {
+  screenFactory = new ScreenFactory();
+});
 
 // Setup the Experiment instances
 beforeEach(() => {
@@ -35,7 +38,13 @@ beforeEach(() => {
 expect.extend(toHaveNoViolations);
 
 test('loads and displays Matched screen', async () => {
-  render(<Matched />);
+  render(screenFactory.generate({
+    display: 'matched',
+    screen: {
+      trial: 0,
+      display: 'matched',
+    },
+  }));
 
   await waitFor(() => screen.queryByText('Partner found!'));
 
@@ -43,7 +52,13 @@ test('loads and displays Matched screen', async () => {
 });
 
 test('check Matched accessibility', async () => {
-  const {container} = render(<Matched />);
+  const {container} = render(screenFactory.generate({
+    display: 'matched',
+    screen: {
+      trial: 0,
+      display: 'matched',
+    },
+  }));
 
   const results = await axe(container);
 

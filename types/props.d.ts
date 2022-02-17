@@ -9,7 +9,7 @@ declare namespace Props {
       screen:
           Screens.Matched | Screens.Matching | Screens.Trial |
           Screens.SelectAvatar | Screens.Inference | Screens.Agency |
-          Screens.Classification;
+          Screens.Classification | Screens.Summary;
     }
 
     // Option component

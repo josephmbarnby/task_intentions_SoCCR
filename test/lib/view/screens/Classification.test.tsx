@@ -1,6 +1,3 @@
-// React
-import React from 'react';
-
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -9,21 +6,29 @@ import {axe, toHaveNoViolations} from 'jest-axe';
 // Custom wrapper
 import {render} from './Wrapper';
 
-// Test components
-import Classification from '../../../../src/lib/view/screens/Classification';
+// Screen factory
+import ScreenFactory from
+  '../../../../src/task/lib/classes/factories/ScreenFactory';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
 
+let screenFactory: ScreenFactory;
+beforeAll(() => {
+  screenFactory = new ScreenFactory();
+});
+
 test('loads and displays Classification screen', async () => {
-  render(
-      <Classification
-        display='classification'
-        handler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  render(screenFactory.generate({
+    display: 'classification',
+    screen: {
+      trial: 0,
+      display: 'classification',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   await waitFor(() => screen.queryAllByPlaceholderText('Please select'));
 
@@ -31,14 +36,16 @@ test('loads and displays Classification screen', async () => {
 });
 
 test('check Classification accessibility', async () => {
-  const {container} = render(
-      <Classification
-        display='classification'
-        handler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  const {container} = render(screenFactory.generate({
+    display: 'classification',
+    screen: {
+      trial: 0,
+      display: 'classification',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   // Disable the 'nested-interactive' rule.
   // An issue with the Grommet library rather

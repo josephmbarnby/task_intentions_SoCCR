@@ -1,6 +1,3 @@
-// React
-import React from 'react';
-
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -9,21 +6,29 @@ import {axe, toHaveNoViolations} from 'jest-axe';
 // Custom wrapper
 import {render} from './Wrapper';
 
-// Test components
-import Agency from '../../../../src/lib/view/screens/Agency';
+// Screen factory
+import ScreenFactory from
+  '../../../../src/task/lib/classes/factories/ScreenFactory';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
 
+let screenFactory: ScreenFactory;
+beforeAll(() => {
+  screenFactory = new ScreenFactory();
+});
+
 test('loads and displays Agency screen', async () => {
-  render(
-      <Agency
-        display='agency'
-        handler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  render(screenFactory.generate({
+    display: 'agency',
+    screen: {
+      trial: 0,
+      display: 'agency',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   await waitFor(() => screen.queryByText('Agree'));
 
@@ -31,14 +36,16 @@ test('loads and displays Agency screen', async () => {
 });
 
 test('check Agency accessibility', async () => {
-  const {container} = render(
-      <Agency
-        display='agency'
-        handler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  const {container} = render(screenFactory.generate({
+    display: 'agency',
+    screen: {
+      trial: 0,
+      display: 'agency',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   const results = await axe(container);
 
