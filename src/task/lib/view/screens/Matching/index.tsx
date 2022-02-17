@@ -11,7 +11,7 @@ import {Box, Heading, Layer, Spinner, WorldMap} from 'grommet';
 import axios from 'axios';
 
 // Configuration
-import {Configuration} from '../../../configuration';
+import {Configuration} from '../../../../configuration';
 
 /**
  * Generate layout of Matching Screen

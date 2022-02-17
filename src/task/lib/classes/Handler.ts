@@ -1,5 +1,5 @@
 // Configuration
-import {Configuration} from '../configuration';
+import {Configuration} from '../../configuration';
 
 /**
  * Utility class exposing each of the different handlers
@@ -7,7 +7,7 @@ import {Configuration} from '../configuration';
  */
 class Handler {
   private dataframe: Data;
-  private callback: () => void;
+  public callback: () => void;
 
   /**
    * Default constructor
@@ -17,14 +17,6 @@ class Handler {
   constructor(dataframe: Data, callback: () => void) {
     this.dataframe = dataframe;
     this.callback = callback;
-  }
-
-  /**
-   * Get the 'Handler' default callback
-   * @return {function}
-   */
-  public getCallback(): () => void {
-    return this.callback;
   }
 
   /**

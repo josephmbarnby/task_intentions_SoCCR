@@ -5,7 +5,7 @@ import React from 'react';
 import {Box, Grommet, Heading, Paragraph} from 'grommet';
 
 // Configuration
-import {Configuration} from './lib/configuration';
+import {Configuration} from './configuration';
 
 // Import data spreadsheets
 import Competitive from './data/competitive.csv';

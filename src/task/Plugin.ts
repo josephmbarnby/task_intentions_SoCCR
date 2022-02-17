@@ -1,8 +1,10 @@
 // Logging library
 import consola from 'consola';
 
+// Configuration
+import {Configuration} from './configuration';
+
 // Core modules
-import {Configuration} from './lib/configuration';
 import PropFactory from './lib/classes/factories/PropFactory';
 import View from './lib/view';
 import Handler from './lib/classes/Handler';
@@ -158,10 +160,8 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     // Display the view
     view.display(
         trial.display,
-        generated.props,
+        generated,
         displayElement,
-        generated.duration,
-        generated.callback
     );
   };
 

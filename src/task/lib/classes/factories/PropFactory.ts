@@ -88,7 +88,7 @@ class PropFactory implements Factory {
         generated.duration = 2000;
 
         // Set the timeout callback function
-        generated.callback = this.handler.getCallback().bind(this.handler);
+        generated.callback = this.handler.callback.bind(this.handler);
 
         // Setup the props
         generated.props = {
@@ -103,7 +103,7 @@ class PropFactory implements Factory {
         generated.duration = 2000 + (1 + Math.random() * 5) * 1000;
 
         // Set the timeout callback function
-        generated.callback = this.handler.getCallback().bind(this.handler);
+        generated.callback = this.handler.callback.bind(this.handler);
 
         // Setup the props
         generated.props = {
@@ -161,7 +161,7 @@ class PropFactory implements Factory {
           trial: this.trial.trial,
           display: this.trial.display,
           postPhase: postPhase,
-          handler: this.handler.getCallback().bind(this.handler),
+          handler: this.handler.callback.bind(this.handler),
         };
         break;
 
@@ -171,7 +171,7 @@ class PropFactory implements Factory {
         generated.duration = 5000;
 
         // Set the timeout callback function
-        generated.callback = this.handler.getCallback().bind(this.handler);
+        generated.callback = this.handler.callback.bind(this.handler);
 
         // Setup the props
         generated.props = {
@@ -184,7 +184,7 @@ class PropFactory implements Factory {
       default:
         // Log an error message and finish the trial
         consola.error(`Unknown trial stage '${this.trial.display}'`);
-        this.handler.getCallback()();
+        this.handler.callback();
         break;
     }
     return generated;

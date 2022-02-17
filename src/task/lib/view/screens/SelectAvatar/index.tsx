@@ -6,7 +6,7 @@ import {Box, Button, Heading} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
-import {Configuration} from '../../../configuration';
+import {Configuration} from '../../../../configuration';
 
 // Components
 import SelectableAvatar from '../../components/SelectableAvatar';

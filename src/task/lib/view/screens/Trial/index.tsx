@@ -17,7 +17,7 @@ import PlayerCard from '../../components/PlayerCard';
 import {Theme} from '../../../theme';
 
 // Configuration
-import {Configuration} from '../../../configuration';
+import {Configuration} from '../../../../configuration';
 
 /**
  * Generate the choices grid with options

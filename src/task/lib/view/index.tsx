@@ -2,9 +2,6 @@
 import React from 'react';
 import ReactDOM, {render} from 'react-dom';
 
-// Logging library
-import consola from 'consola';
-
 // Foundational 'Layout' component
 import {Layout} from './components/Layout';
 
@@ -33,38 +30,28 @@ class View {
   /**
    * Switch between different screens
    * @param {Display} type screen type
-   * @param {any} props collection of props
+   * @param {GeneratedPropValues} propData collection of props
    * @param {HTMLElement} target target DOM element
-   * @param {number} timeout duration
-   * @param {Function} callback function to run
    */
   public display(
       type: Display,
-      props:
-          Props.Screens.Agency | Props.Screens.Classification |
-          Props.Screens.Inference | Props.Screens.Matched |
-          Props.Screens.Matching | Props.Screens.SelectAvatar |
-          Props.Screens.Trial | Props.Screens.End,
+      propData: GeneratedPropValues,
       target: HTMLElement,
-      timeout=0,
-      callback=() => {
-        consola.info(`No callback defined for timeout`);
-      },
   ): void {
     // Render the 'Layout' component
     render(
         <Layout
           display={type}
-          screen={props}
+          screen={propData.props}
         />,
         target,
     );
 
     // Setup a timeout to execute the callback
-    if (timeout > 0) {
+    if (propData.duration > 0) {
       setTimeout(() => {
-        callback();
-      }, timeout);
+        propData.callback();
+      }, propData.duration);
     }
   }
 

@@ -12,7 +12,7 @@ import {LinkNext} from 'grommet-icons';
 import PlayerCard from '../../components/PlayerCard';
 
 // Configuration
-import {Configuration} from '../../../configuration';
+import {Configuration} from '../../../../configuration';
 
 // Utility functions
 import {calculatePoints} from '../../../util';
