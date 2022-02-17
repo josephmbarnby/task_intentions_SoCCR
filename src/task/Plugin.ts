@@ -127,8 +127,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     const view = new View(displayElement);
 
     /**
-     * export function to finish the trial and unmount React components
-     * cleanly if required
+     * Finish the trial and unmount React components
      */
     const finish = () => {
       // Record the total reaction time

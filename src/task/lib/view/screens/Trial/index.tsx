@@ -159,27 +159,27 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
    * @param {number} participant updated points for the participant
    * @param {number} partner updated points for the partner
    */
-  function addPoints(participant: number, partner: number): void {
+  const addPoints = (participant: number, partner: number): void => {
     // Update the point totals
     setParticipantPoints(participantPoints + participant);
     setPartnerPoints(partnerPoints + partner);
-  }
+  };
 
   /**
    * Helper function to end the trial
    * @param {Options} option selected option
    */
-  function endTrial(option: Options): void {
+  const endTrial = (option: Options): void => {
     // Bubble the selection handler with selection and answer
     props.handler(option, defaultPoints, answer);
-  }
+  };
 
   /**
    * Update the number of points of the participant and the
    * partner. The update process depends on the phase.
    * @param {Options} option selected option
    */
-  function updatePoints(option: Options): void {
+  const updatePoints = (option: Options): void => {
     // Points to apply
     let participantPoints = 0;
     let partnerPoints = 0;
@@ -230,13 +230,13 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
     // Call the selection handler
     handler(option);
-  }
+  };
 
   /**
    * Selection handler
    * @param {Options} option the selected option
    */
-  function handler(option: Options) {
+  const handler = (option: Options) => {
     // Sum the number of correct answers for the phase
     const correctCountInitial = jsPsych.data.get()
         .filter({
@@ -261,12 +261,12 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     if (props.isPractice === false) {
       transition();
     }
-  }
+  };
 
   /**
    * Transition function to end the trial
    */
-  function transition() {
+  const transition = () => {
     // Pull the selection into a function-scoped variable
     const trialSelection = selectedOption;
 
@@ -375,14 +375,14 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
         break;
       }
     }
-  }
+  };
 
   /**
    * Generate and return the content to display in the overlay
    * shown in practice-type trials
    * @return {ReactElement}
    */
-  function getOverlayContent(): ReactElement {
+  const getOverlayContent = (): ReactElement => {
     let content: ReactElement = <></>;
 
     switch (props.display) {
@@ -462,7 +462,7 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     }
 
     return content;
-  }
+  };
 
   // Participant avatar
   const participantAvatar =
