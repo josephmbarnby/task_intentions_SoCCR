@@ -19,7 +19,7 @@ import {Configuration} from '../../../Configuration';
  * @return {ReactElement}
  */
 const Matching = (props: Screens.Matching): ReactElement => {
-  const experiment = window['Experiment'];
+  const experiment = window.Experiment;
 
   // Launch request
   if (props.fetchData) {
@@ -57,36 +57,31 @@ const Matching = (props: Screens.Matching): ReactElement => {
         id: 48294,
         responses: JSON.stringify(requestResponses),
       },
-    })
-        .then((response) => {
-          if (response.data) {
-            consola.debug(`Received response:`, response.data);
-            const id = response.data.id;
-            const content = response.data.computed;
+    }).then((response) => {
+      if (response.data) {
+        consola.debug(`Received response:`, response.data);
 
-            // Parse and store the JSON content
-            let phaseData = null;
-            try {
-              phaseData = JSON.parse(content);
-              experiment.setGlobalStateValue(
-                  'phaseData',
-                  phaseData);
-              consola.info(`Success, generated new partner for id:`, id);
-            } catch (error) {
-              consola.warn(`Error occurred when extracting content:`, error);
-            }
-          } else {
-            consola.warn('No partner data received...');
-          }
-        })
-        .catch((error) => {
-          consola.error(error);
-        })
-        .then(() => {
-          consola.info(`Partner request complete`);
-          consola.debug(`'phaseData' state value:`,
-              experiment.getGlobalStateValue('phaseData'));
-        });
+        // Extract the response data of interest
+        const id = response.data.id;
+        const content = response.data.computed;
+
+        // Parse and store the JSON content
+        let phaseData = null;
+        try {
+          phaseData = JSON.parse(content);
+          experiment.setGlobalStateValue('phaseData', phaseData);
+          consola.info(`Success, generated new partner for id:`, id);
+        } catch (error) {
+          consola.warn(`Error occurred when extracting content:`, error);
+        }
+      } else {
+        consola.warn('No partner data received');
+      }
+    }).catch((error) => {
+      consola.error(error);
+    }).then(() => {
+      consola.info(`Partner request complete`);
+    });
   }
 
   return (
