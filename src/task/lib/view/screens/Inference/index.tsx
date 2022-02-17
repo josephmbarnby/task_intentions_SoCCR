@@ -13,10 +13,10 @@ const SLIDER_DEFAULT = 50;
 
 /**
  * Generate layout of Inference Screen (Inference trial)
- * @param {Screens.Inference} props component props
+ * @param {Props.Screens.Inference} props component props
  * @return {ReactElement}
  */
-const Inference = (props: Screens.Inference): ReactElement => {
+const Inference = (props: Props.Screens.Inference): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [firstMoved, setFirstMoved] = useState(false);
@@ -84,7 +84,7 @@ const Inference = (props: Screens.Inference): ReactElement => {
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          props.selectionHandler(firstValue, secondValue);
+          props.handler(firstValue, secondValue);
         }}
       />
     </Box>

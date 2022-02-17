@@ -19,7 +19,7 @@ test('loads and displays SelectAvatar screen', async () => {
   render(
       <SelectAvatar
         display='selection'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />
@@ -34,7 +34,7 @@ test('check SelectAvatar accessibility', async () => {
   const {container} = render(
       <SelectAvatar
         display='selection'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />

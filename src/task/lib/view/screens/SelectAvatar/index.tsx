@@ -6,17 +6,17 @@ import {Box, Button, Heading} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../configuration';
 
 // Components
 import SelectableAvatar from '../../components/SelectableAvatar';
 
 /**
  * Generic structure for the Avatar Selection Screen
- * @param {Screens.SelectAvatar} props collection of props
+ * @param {Props.Screens.SelectAvatar} props collection of props
  * @return {ReactElement}
  */
-const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
+const SelectAvatar = (props: Props.Screens.SelectAvatar): ReactElement => {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState('none');
 
@@ -67,7 +67,7 @@ const SelectAvatar = (props: Screens.SelectAvatar): ReactElement => {
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          props.selectionHandler(selectedAvatar);
+          props.handler(selectedAvatar);
         }}
       />
     </>

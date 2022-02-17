@@ -13,10 +13,10 @@ const SLIDER_DEFAULT = 50; // Sets the 'thumb' to the middle of the slider
 
 /**
  * Generate layout of Agency Screen (Agency trial)
- * @param {Screens.Agency} props component props
+ * @param {Props.Screens.Agency} props component props
  * @return {ReactElement}
  */
-const Agency = (props: Screens.Agency): ReactElement => {
+const Agency = (props: Props.Screens.Agency): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [sliderMoved, setSliderMoved] = useState(false);
@@ -65,7 +65,7 @@ const Agency = (props: Screens.Agency): ReactElement => {
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          props.selectionHandler(sliderValue);
+          props.handler(sliderValue);
         }}
       />
     </Box>

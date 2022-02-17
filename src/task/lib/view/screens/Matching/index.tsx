@@ -11,14 +11,14 @@ import {Box, Heading, Layer, Spinner, WorldMap} from 'grommet';
 import axios from 'axios';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../configuration';
 
 /**
  * Generate layout of Matching Screen
- * @param {Screens.Matching} props collection of props
+ * @param {Props.Screens.Matching} props collection of props
  * @return {ReactElement}
  */
-const Matching = (props: Screens.Matching): ReactElement => {
+const Matching = (props: Props.Screens.Matching): ReactElement => {
   const experiment = window.Experiment;
 
   // Launch request

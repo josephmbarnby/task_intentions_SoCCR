@@ -19,7 +19,7 @@ test('loads and displays Agency screen', async () => {
   render(
       <Agency
         display='agency'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />
@@ -34,7 +34,7 @@ test('check Agency accessibility', async () => {
   const {container} = render(
       <Agency
         display='agency'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />

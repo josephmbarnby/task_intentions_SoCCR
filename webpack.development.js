@@ -5,7 +5,7 @@ module.exports = {
   name: 'development',
   mode: 'development',
   entry: {
-    index: './src/task/Timeline.tsx',
+    index: './src/task/timeline.tsx',
   },
   devtool: 'inline-source-map',
   plugins: [

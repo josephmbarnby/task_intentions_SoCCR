@@ -19,7 +19,7 @@ test('loads and displays Inference screen', async () => {
   render(
       <Inference
         display='inference'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />
@@ -34,7 +34,7 @@ test('check Inference accessibility', async () => {
   const {container} = render(
       <Inference
         display='inference'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />

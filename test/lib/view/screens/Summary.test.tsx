@@ -43,7 +43,7 @@ test('loads and displays Summary screen', async () => {
       <Summary
         display='summary'
         postPhase='playerChoice'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />
@@ -61,7 +61,7 @@ test('check Summary accessibility', async () => {
       <Summary
         display='summary'
         postPhase='playerChoice'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />

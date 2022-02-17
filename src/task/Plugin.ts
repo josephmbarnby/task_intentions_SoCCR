@@ -1,12 +1,10 @@
-// React
-import ReactDOM from 'react-dom';
-
 // Logging library
 import consola from 'consola';
 
 // Core modules
-import {Configuration} from './lib/Configuration';
-import {calculatePoints, showDisplay} from './lib/Functions';
+import {Configuration} from './lib/configuration';
+import PropFactory from './lib/classes/factories/PropFactory';
+import View from './lib/view';
 
 jsPsych.plugins[Configuration.studyName] = (() => {
   const plugin = {
@@ -94,10 +92,8 @@ jsPsych.plugins[Configuration.studyName] = (() => {
   };
 
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
-    const Experiment = window.Experiment;
-
     // Setup the trial data to be stored
-    const trialData: Data = {
+    const dataframe: Data = {
       trial: trial.trial,
       display: trial.display, // the display type
       playerPoints_option1: trial.optionOneParticipant,
@@ -124,319 +120,19 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       return false;
     });
 
-    // Timeout information
-    let duration = 0;
-    let callback = () => {
-      consola.debug(`No timeout callback defined`);
-    };
-
-    // Sum the points from the previous trials
-    const participantPoints = calculatePoints(
-        trial.display,
-        'playerPoints_selected',
-    );
-    const partnerPoints = calculatePoints(
-        trial.display,
-        'partnerPoints_selected',
-    );
-
-    // Get the prior phase, checking first that there was a prior trial
-    let postPhase: Display = 'playerChoice';
-    if (jsPsych.data.get().last().values().length > 0) {
-      postPhase = jsPsych.data.get().last().values()[0].display;
-    }
-
-    // Generate and configure props based on the stage
-    let props:
-        Screens.Agency |
-        Screens.Classification |
-        Screens.Inference |
-        Screens.Matched |
-        Screens.Matching |
-        Screens.SelectAvatar |
-        Screens.Trial |
-        Screens.Summary = {
-          trial: trial.trial,
-          display: 'playerChoice',
-        };
-    switch (trial.display as Display) {
-      // Phase 1, 2, and 3 trials
-      case 'playerChoice':
-      case 'playerChoicePractice':
-      case 'playerGuess':
-      case 'playerGuessPractice':
-      case 'playerChoice2': {
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-          isPractice: trial.isPractice,
-          participantPoints: participantPoints,
-          partnerPoints: partnerPoints,
-          options: {
-            one: {
-              participant: trial.optionOneParticipant,
-              partner: trial.optionOnePartner,
-            },
-            two: {
-              participant: trial.optionTwoParticipant,
-              partner: trial.optionTwoPartner,
-            },
-          },
-          answer: trial.answer,
-          selectionHandler: optionHandler,
-        };
-        break;
-      }
-
-      // Matched screen
-      case 'matched':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-        };
-
-        duration = 2000;
-
-        // Set the timeout callback function
-        callback = finishTrial;
-        break;
-
-      // Matching screen
-      case 'matching':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-          fetchData: trial.fetchData,
-        };
-
-        if (trial.display === 'matched') {
-          // Short timeout for 'matched' screen
-          duration = 2000;
-        } else {
-          // Random timeout for 'matching' process
-          duration = 2000 + (1 + Math.random() * 5) * 1000;
-        }
-
-        // Set the timeout callback function
-        callback = finishTrial;
-        break;
-
-      // Selection screen
-      case 'selection':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-          selectionHandler: avatarSelectionHandler,
-        };
-        break;
-
-      // Inference screen
-      case 'inference':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-          selectionHandler: inferenceSelectionHandler,
-        };
-        break;
-
-      // Agency screen
-      case 'agency':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-          selectionHandler: agencySelectionHandler,
-        };
-        break;
-
-      // Classification screen
-      case 'classification':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-          selectionHandler: classificationSelectionHandler,
-        };
-        break;
-
-      // Summary screen
-      case 'summary':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-          postPhase: postPhase,
-          selectionHandler: finishTrial,
-        };
-        break;
-
-      // End screen
-      case 'end':
-        // Setup the props
-        props = {
-          trial: trial.trial,
-          display: trial.display,
-        };
-
-        // Set the timeout duration
-        duration = 5000;
-
-        // Set the timeout callback function
-        callback = finishTrial;
-        break;
-
-      // Default error state
-      default:
-        // Log an error message and finish the trial
-        consola.error(`Unknown trial stage '${trial.display}'`);
-        finishTrial();
-        break;
-    }
-
-    // Record the starting time
-    const startTime = performance.now();
+    // Create a new PropFactory
+    const propFactory = new PropFactory(trial, dataframe);
+    const propsGenerated = propFactory.generate();
 
     // Display the screen with the generated props
-    showDisplay(
+    const view = new View();
+    view.display(
         trial.display,
-        props,
+        propsGenerated.props,
         displayElement,
-        duration,
-        callback
+        propsGenerated.duration,
+        propsGenerated.callback
     );
-
-    /**
-     * Handle selection events in a particular trial
-     * @param {Options} option selected option
-     * @param {Points} points selected option
-     * @param {Options} answer selected option
-     */
-    function optionHandler(
-        option: Options,
-        points: {options: Points},
-        answer: Options,
-    ) {
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-
-      // Store the correct answer
-      trialData.realAnswer = answer;
-
-      // Adjust for transition time, 2250ms
-      trialData.trialDuration = duration - 2250;
-
-      // Check if they chose the correct option. We record this
-      // for all trials, but we only need 'playerGuess'-type trials
-      trialData.correctGuess = option === answer ? 1 : 0;
-
-      // Store the participant selection
-      trialData.selectedOption_player = option === 'Option 1' ? 1 : 2;
-
-      // Store the points as provided
-      trialData.playerPoints_option1 = points.options.one.participant;
-      trialData.partnerPoints_option1 = points.options.one.partner;
-      trialData.playerPoints_option2 = points.options.two.participant;
-      trialData.partnerPoints_option2 = points.options.two.partner;
-
-      // All other trials, add points from option participant selected
-      if (option === 'Option 1') {
-        trialData.playerPoints_selected = points.options.one.participant;
-        trialData.partnerPoints_selected = points.options.one.partner;
-      } else {
-        trialData.playerPoints_selected = points.options.two.participant;
-        trialData.partnerPoints_selected = points.options.two.partner;
-      }
-
-      // Finish trial
-      finishTrial();
-    }
-
-    /**
-     * Handler called after avatar selected
-     * @param {string} selection avatar selection key
-     */
-    function avatarSelectionHandler(selection: string): void {
-      // Obtain the selected avatar
-      const selectedAvatar =
-          Configuration.avatars.names.participant.indexOf(selection);
-
-      // Update the global Experiment state
-      Experiment.setGlobalStateValue(
-          'participantAvatar',
-          selectedAvatar,
-      );
-
-      // Finish trial
-      finishTrial();
-    }
-
-    /**
-     * Handler called after questions completed
-     * @param {number} one value of the first slider
-     * @param {number} two value of the second slider
-     */
-    function inferenceSelectionHandler(one: number, two: number): void {
-      // Store the responses
-      trialData.inferenceResponse_Selfish = one;
-      trialData.inferenceResponse_Harm = two;
-
-      // Finish trial
-      finishTrial();
-    }
-
-    /**
-     * Handler called after agency question completed
-     * @param {number} value value of the agency slider
-     */
-    function agencySelectionHandler(value: number): void {
-      // Store the responses
-      trialData.agencyResponse = value;
-
-      // Finish trial
-      finishTrial();
-    }
-
-    /**
-     * Handler called after classification question completed
-     * @param {string} type the participant's classification
-     * of their partner
-     */
-    function classificationSelectionHandler(type: string): void {
-      // Store the responses
-      trialData.classification = type;
-
-      // Finish trial
-      finishTrial();
-    }
-
-    /**
-     * Function to finish the trial and unmount React components
-     * cleanly if required
-     */
-    function finishTrial(): void {
-      // Record the total reaction time
-      const endTime = performance.now();
-      const duration = endTime - startTime;
-      trialData.trialDuration = duration;
-
-      // If the next trial isn't React-based, clean up React
-      if (trial.clearScreen === true) {
-        ReactDOM.unmountComponentAtNode(displayElement);
-      }
-
-      // Re-enable keyboard actions
-      document.removeEventListener('keydown', () => {
-        return false;
-      });
-
-      // Finish the jsPsych trial
-      jsPsych.finishTrial(trialData);
-    }
   };
 
   return plugin;

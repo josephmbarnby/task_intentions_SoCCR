@@ -56,7 +56,7 @@ test('loads and displays Trial screen', async () => {
           },
         }}
         answer='Option 1'
-        selectionHandler={(selection: string) => {
+        handler={(selection: string) => {
           console.info(`Selected:`, selection);
         }}
       />
@@ -87,7 +87,7 @@ test('check Trial accessibility', async () => {
           },
         }}
         answer='Option 1'
-        selectionHandler={(selection: string) => {
+        handler={(selection: string) => {
           console.info(`Selected:`, selection);
         }}
       />

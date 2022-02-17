@@ -19,7 +19,7 @@ test('loads and displays Classification screen', async () => {
   render(
       <Classification
         display='classification'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />
@@ -34,7 +34,7 @@ test('check Classification accessibility', async () => {
   const {container} = render(
       <Classification
         display='classification'
-        selectionHandler={() => {
+        handler={() => {
           console.info('Selection handler called');
         }}
       />

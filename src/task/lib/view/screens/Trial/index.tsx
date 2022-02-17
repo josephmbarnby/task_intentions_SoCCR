@@ -14,17 +14,17 @@ import Option from '../../components/Option';
 import PlayerCard from '../../components/PlayerCard';
 
 // Access theme constants directly
-import {Theme} from '../../../Theme';
+import {Theme} from '../../../theme';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../configuration';
 
 /**
  * Generate the choices grid with options
- * @param {Screens.Trial} props collection of props
+ * @param {Props.Screens.Trial} props collection of props
  * @return {ReactElement}
  */
-const Trial = (props: Screens.Trial): ReactElement => {
+const Trial = (props: Props.Screens.Trial): ReactElement => {
   // Get the Experiment instance
   const experiment = window.Experiment;
 
@@ -171,7 +171,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
    */
   function endTrial(option: Options): void {
     // Bubble the selection handler with selection and answer
-    props.selectionHandler(option, defaultPoints, answer);
+    props.handler(option, defaultPoints, answer);
   }
 
   /**
@@ -229,14 +229,14 @@ const Trial = (props: Screens.Trial): ReactElement => {
     );
 
     // Call the selection handler
-    selectionHandler(option);
+    handler(option);
   }
 
   /**
    * Selection handler
    * @param {Options} option the selected option
    */
-  function selectionHandler(option: Options) {
+  function handler(option: Options) {
     // Sum the number of correct answers for the phase
     const correctCountInitial = jsPsych.data.get()
         .filter({

@@ -10,14 +10,14 @@ import TextTransition, {presets} from 'react-text-transition';
 import Avatar from 'boring-avatars';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../configuration';
 
 /**
  * Generate a PlayerCard component
- * @param {PlayerCard} props component props
+ * @param {Props.Components.PlayerCard} props component props
  * @return {ReactElement}
  */
-const PlayerCard = (props: Components.PlayerCard): ReactElement => {
+const PlayerCard = (props: Props.Components.PlayerCard): ReactElement => {
   return (
     <Box
       gridArea={props.gridArea}

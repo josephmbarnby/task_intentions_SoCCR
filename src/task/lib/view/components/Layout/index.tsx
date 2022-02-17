@@ -8,7 +8,7 @@ import {Grommet, ThemeContext} from 'grommet';
 import '../../../../css/styles.css';
 
 // Apply custom theme globally
-import {Theme} from '../../../Theme';
+import {Theme} from '../../../theme';
 
 // Custom Screens
 import Agency from '../../screens/Agency';
@@ -26,11 +26,11 @@ import consola from 'consola';
 
 /**
  * Generic container for all Grommet components
- * @param {Components.Layout} props collection of props for the primary
+ * @param {Props.Components.Layout} props collection of props for the primary
  * child component
  * @return {ReactElement}
  */
-export const Layout = (props: Components.Layout): ReactElement => {
+export const Layout = (props: Props.Components.Layout): ReactElement => {
   let screen: ReactElement;
 
   // Define the exact component that is rendered
@@ -41,28 +41,29 @@ export const Layout = (props: Components.Layout): ReactElement => {
     case 'playerGuess':
     case 'playerGuessPractice':
     case 'playerChoice2': {
-      screen = <Trial {...props.screen as Screens.Trial} />;
+      screen = <Trial {...props.screen as Props.Screens.Trial} />;
       break;
     }
 
     // Inference trials
     case 'inference':
-      screen = <Inference {...props.screen as Screens.Inference} />;
+      screen = <Inference {...props.screen as Props.Screens.Inference} />;
       break;
 
     // Agency test
     case 'agency':
-      screen = <Agency {...props.screen as Screens.Agency} />;
+      screen = <Agency {...props.screen as Props.Screens.Agency} />;
       break;
 
     // Classification question
     case 'classification':
-      screen = <Classification {...props.screen as Screens.Classification} />;
+      screen =
+          <Classification {...props.screen as Props.Screens.Classification} />;
       break;
 
     // Selection screen
     case 'selection':
-      screen = <SelectAvatar {...props.screen as Screens.SelectAvatar} />;
+      screen = <SelectAvatar {...props.screen as Props.Screens.SelectAvatar} />;
       break;
 
     // Match screens
@@ -70,12 +71,12 @@ export const Layout = (props: Components.Layout): ReactElement => {
       screen = <Matched />;
       break;
     case 'matching':
-      screen = <Matching {...props.screen as Screens.Matching} />;
+      screen = <Matching {...props.screen as Props.Screens.Matching} />;
       break;
 
     // Summary screen after each phase
     case 'summary':
-      screen = <Summary {...props.screen as Screens.Summary} />;
+      screen = <Summary {...props.screen as Props.Screens.Summary} />;
       break;
 
     // End screen at the conclusion of the game

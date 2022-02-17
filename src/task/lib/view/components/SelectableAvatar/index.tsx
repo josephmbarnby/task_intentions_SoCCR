@@ -6,14 +6,16 @@ import Avatar from 'boring-avatars';
 import {Box} from 'grommet';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../configuration';
 
 /**
  * A selectable avatar with grow behaviour
- * @param {SelectableAvatar} props component props
+ * @param {Props.Components.SelectableAvatar} props component props
  * @return {ReactElement}
  */
-const SelectableAvatar = (props: Components.SelectableAvatar): ReactElement => {
+const SelectableAvatar = (
+    props: Props.Components.SelectableAvatar
+): ReactElement => {
   return (
     <Box
       id={`avatar-${props.name}`}

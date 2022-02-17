@@ -6,10 +6,10 @@ import {Box, Heading, RangeInput} from 'grommet';
 
 /**
  * Generate a RangeSlider component
- * @param {RangeSlider} props component props
+ * @param {Props.Components.RangeSlider} props component props
  * @return {ReactElement}
  */
-const RangeSlider = (props: Components.RangeSlider): ReactElement => {
+const RangeSlider = (props: Props.Components.RangeSlider): ReactElement => {
   const [value, setValue] = useState(props.max / 2);
   return (
     <Box

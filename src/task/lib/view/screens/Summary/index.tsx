@@ -12,17 +12,17 @@ import {LinkNext} from 'grommet-icons';
 import PlayerCard from '../../components/PlayerCard';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '../../../configuration';
 
 // Utility functions
-import {calculatePoints} from '../../../Functions';
+import {calculatePoints} from '../../../util';
 
 /**
  * Generate layout of Matching Screen
- * @param {Screens.Summary} props screen props
+ * @param {Props.Screens.Summary} props screen props
  * @return {ReactElement}
  */
-const Summary = (props: Screens.Summary): ReactElement => {
+const Summary = (props: Props.Screens.Summary): ReactElement => {
   consola.debug(`Summary screen for '${props.postPhase}'`);
 
   // Get the participant's and the partner's avatars
@@ -98,7 +98,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
             icon={<LinkNext />}
             reverse
             onClick={() => {
-              props.selectionHandler();
+              props.handler();
             }}
           />
         </Box>

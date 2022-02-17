@@ -5,7 +5,7 @@ import React from 'react';
 import {Box, Grommet, Heading, Paragraph} from 'grommet';
 
 // Configuration
-import {Configuration} from './lib/Configuration';
+import {Configuration} from './lib/configuration';
 
 // Import data spreadsheets
 import Competitive from './data/competitive.csv';
@@ -14,7 +14,7 @@ import Prosocial from './data/prosocial.csv';
 import Test from './data/test.csv';
 
 // Utility functions
-import {markup} from './lib/Functions';
+import View from './lib/view';
 import {shuffle} from 'd3-array';
 
 // Logging library
@@ -28,13 +28,16 @@ import 'jspsych/plugins/jspsych-instructions';
 import 'jspsych-attention-check';
 
 // Import the custom plugin before adding it to the timeline
-import './Plugin';
+import './plugin';
 
 // Timeline setup
 const timeline: Timeline = [];
 
 // Create a new Experiment instance
 const experiment = new Experiment(Configuration);
+
+// Create a new View
+const view = new View();
 
 // Update the partner avatar strings (for unique partners)
 for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
@@ -54,7 +57,7 @@ if (Configuration.fullscreen === true) {
 
 const instructionsPracticeGames = [
   // Overall instructions
-  markup(
+  view.react2html(
       <Grommet>
         <Box style={{maxWidth: '50%', margin: 'auto'}}>
           <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -80,7 +83,7 @@ const instructionsPracticeGames = [
       </Grommet>
   ),
   // Part one instructions
-  markup(
+  view.react2html(
       <Grommet>
         <Box style={{maxWidth: '50%', margin: 'auto'}}>
           <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -108,7 +111,7 @@ const instructionsPracticeGames = [
         </Box>
       </Grommet>
   ),
-  markup(
+  view.react2html(
       <Grommet>
         <Box style={{maxWidth: '50%', margin: 'auto'}}>
           <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -151,7 +154,7 @@ timeline.push({
 timeline.push({
   type: 'instructions',
   pages: [
-    markup(
+    view.react2html(
         <Grommet>
           <Box>
             <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -248,7 +251,7 @@ timeline.push({
 timeline.push({
   type: 'instructions',
   pages: [
-    markup(
+    view.react2html(
         <Grommet>
           <Box>
             <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -291,7 +294,7 @@ timeline.push({
 timeline.push({
   type: 'instructions',
   pages: [
-    markup(
+    view.react2html(
         <Grommet>
           <Box>
             <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -424,7 +427,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'instructions',
         pages: [
-          markup(
+          view.react2html(
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>
@@ -456,7 +459,7 @@ for (let i = 0; i < dataCollection.length; i++) {
                 </Box>
               </Grommet>
           ),
-          markup(
+          view.react2html(
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>
@@ -557,7 +560,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'instructions',
         pages: [
-          markup(
+          view.react2html(
               <Grommet>
                 <Box>
                   <Heading level={1} margin='small' fill>
@@ -604,7 +607,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'instructions',
         pages: [
-          markup(
+          view.react2html(
               <Grommet>
                 <Box>
                   <Heading level={1} margin='small' fill>
@@ -681,7 +684,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: 'instructions',
         pages: [
           // Part three instructions
-          markup(
+          view.react2html(
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>
@@ -709,7 +712,7 @@ for (let i = 0; i < dataCollection.length; i++) {
           ),
           // Insert instructions to let the participant know they will
           // be matched with a partner
-          markup(
+          view.react2html(
               <Grommet>
                 <Box>
                   <Heading level={1} margin='small' fill>

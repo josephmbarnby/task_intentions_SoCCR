@@ -6,10 +6,10 @@ import {Grid, Heading} from 'grommet';
 
 /**
  * Generate an Option for the participant to select
- * @param {Option} props collection of props
+ * @param {Props.Components.Option} props collection of props
  * @return {ReactElement}
  */
-const Option = (props: Components.Option): ReactElement => {
+const Option = (props: Props.Components.Option): ReactElement => {
   return (
     <Grid
       id={props.optionKey}
