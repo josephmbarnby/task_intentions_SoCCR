@@ -271,7 +271,7 @@ timeline.push({
 // Attention check question
 timeline.push({
   type: 'attention-check',
-  question: 'In this stage of the game, who will be choosing the ' +
+  prompt: 'In this stage of the game, who will be choosing the ' +
       'number of points that you and your partner get?',
   options: [
     'My partner',
@@ -582,7 +582,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       // Attention check question
       timeline.push({
         type: 'attention-check',
-        question: 'In this part of task, ' +
+        prompt: 'In this part of task, ' +
             'who will be choosing the points you and your partner get?',
         options: [
           'Me',

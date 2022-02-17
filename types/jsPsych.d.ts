@@ -35,7 +35,7 @@ declare type TimelineNode = {
   fetchData?: boolean;
 
   // Attention-check plugin
-  question?: string;
+  prompt?: string;
   options?: string[];
   options_radio?: boolean;
   option_correct?: number;
