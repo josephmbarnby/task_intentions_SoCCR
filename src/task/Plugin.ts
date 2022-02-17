@@ -5,6 +5,7 @@ import consola from 'consola';
 import {Configuration} from './lib/configuration';
 import PropFactory from './lib/classes/factories/PropFactory';
 import View from './lib/view';
+import Handler from './lib/classes/Handler';
 
 jsPsych.plugins[Configuration.studyName] = (() => {
   const plugin = {
@@ -120,18 +121,48 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       return false;
     });
 
-    // Create a new PropFactory
-    const propFactory = new PropFactory(trial, dataframe);
-    const propsGenerated = propFactory.generate();
+    const startTime = performance.now();
 
     // Display the screen with the generated props
-    const view = new View();
+    const view = new View(displayElement);
+
+    /**
+     * export function to finish the trial and unmount React components
+     * cleanly if required
+     */
+    const finish = () => {
+      // Record the total reaction time
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+      dataframe.trialDuration = duration;
+
+      // If the next trial isn't React-based, clean up React
+      if (trial.clearScreen === true) {
+        view.clear();
+      }
+
+      // Re-enable keyboard actions
+      document.removeEventListener('keydown', () => {
+        return false;
+      });
+
+      // Finish the jsPsych trial
+      jsPsych.finishTrial(dataframe);
+    };
+
+    // Create the Handler instance
+    const handler = new Handler(dataframe, finish);
+
+    // Create a new PropFactory
+    const generated = new PropFactory(trial, handler).generate();
+
+    // Display the view
     view.display(
         trial.display,
-        propsGenerated.props,
+        generated.props,
         displayElement,
-        propsGenerated.duration,
-        propsGenerated.callback
+        generated.duration,
+        generated.callback
     );
   };
 

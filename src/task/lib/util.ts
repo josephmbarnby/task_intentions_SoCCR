@@ -1,10 +1,14 @@
+// React imports
+import {ReactElement} from 'react';
+import ReactDOMServer from 'react-dom/server';
+
 /**
  * Calculate the points gained from a phase
  * @param {Display} display phase to calculate points from
  * @param {string} column named column containing points
  * @return {number}
  */
-export function calculatePoints(display: Display, column: string): number {
+export const calculatePoints = (display: Display, column: string): number => {
   let points = 0;
 
   if (display === 'playerGuess') {
@@ -48,4 +52,14 @@ export function calculatePoints(display: Display, column: string): number {
         .sum();
   }
   return points;
-}
+};
+
+/**
+ * Utility function to turn React elements into HTML markup,
+ * useful when HTML is required
+ * @param {ReactElement} element React element to render
+ * @return {string}
+ */
+export const react2html = (element: ReactElement): string => {
+  return ReactDOMServer.renderToStaticMarkup(element);
+};

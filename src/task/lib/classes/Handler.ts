@@ -6,17 +6,25 @@ import {Configuration} from '../configuration';
  * used by the screens of the game
  */
 class Handler {
-  private startTime: number;
   private dataframe: Data;
+  private callback: () => void;
 
   /**
    * Default constructor
-   * @param {number} startTime starting time
    * @param {Data} dataframe jsPsych data
+   * @param {function} callback default callback after the handlers
    */
-  constructor(startTime: number, dataframe: Data) {
-    this.startTime = startTime;
+  constructor(dataframe: Data, callback: () => void) {
     this.dataframe = dataframe;
+    this.callback = callback;
+  }
+
+  /**
+   * Get the 'Handler' default callback
+   * @return {function}
+   */
+  public getCallback(): () => void {
+    return this.callback;
   }
 
   /**
@@ -30,14 +38,8 @@ class Handler {
       points: {options: Points},
       answer: Options,
   ): void {
-    const endTime = performance.now();
-    const duration = endTime - this.startTime;
-
     // Store the correct answer
     this.dataframe.realAnswer = answer;
-
-    // Adjust for transition time, 2250ms
-    this.dataframe.trialDuration = duration - 2250;
 
     // Check if they chose the correct option. We record this
     // for all trials, but we only need 'playerGuess'-type trials
@@ -62,7 +64,7 @@ class Handler {
     }
 
     // Finish trial
-    this.finish();
+    this.callback();
   }
 
   /**
@@ -81,7 +83,7 @@ class Handler {
     );
 
     // Finish trial
-    this.finish();
+    this.callback();
   }
 
   /**
@@ -95,7 +97,7 @@ class Handler {
     this.dataframe.inferenceResponse_Harm = two;
 
     // Finish trial
-    this.finish();
+    this.callback();
   }
 
   /**
@@ -107,7 +109,7 @@ class Handler {
     this.dataframe.agencyResponse = value;
 
     // Finish trial
-    this.finish();
+    this.callback();
   }
 
   /**
@@ -120,29 +122,7 @@ class Handler {
     this.dataframe.classification = type;
 
     // Finish trial
-    this.finish();
-  }
-
-  /**
-   * export function to finish the trial and unmount React components
-   * cleanly if required
-   */
-  public finish(): void {
-    // Record the total reaction time
-    const endTime = performance.now();
-    const duration = endTime - this.startTime;
-    this.dataframe.trialDuration = duration;
-
-    // If the next trial isn't React-based, clean up React
-    // TODO: We need to clear the sceen.
-
-    // Re-enable keyboard actions
-    document.removeEventListener('keydown', () => {
-      return false;
-    });
-
-    // Finish the jsPsych trial
-    jsPsych.finishTrial(this.dataframe);
+    this.callback();
   }
 }
 

@@ -1,7 +1,6 @@
 // React import
-import React, {ReactElement} from 'react';
+import React from 'react';
 import ReactDOM, {render} from 'react-dom';
-import ReactDOMServer from 'react-dom/server';
 
 // Logging library
 import consola from 'consola';
@@ -13,6 +12,24 @@ import {Layout} from './components/Layout';
  * Static 'View' used to display React-based screens
  */
 class View {
+  private target: HTMLElement;
+
+  /**
+   * Default constructor
+   * @param {HTMLElement} target the target HTML element
+   */
+  constructor(target: HTMLElement) {
+    this.target = target;
+  }
+
+  /**
+   * Get the target HTML element
+   * @return {HTMLElement}
+   */
+  public getTarget(): HTMLElement {
+    return this.target;
+  }
+
   /**
    * Switch between different screens
    * @param {Display} type screen type
@@ -52,21 +69,10 @@ class View {
   }
 
   /**
-   * Utility function to turn React elements into HTML markup,
-   * useful when HTML is required
-   * @param {ReactElement} element React element to render
-   * @return {string}
-   */
-  public react2html(element: ReactElement): string {
-    return ReactDOMServer.renderToStaticMarkup(element);
-  }
-
-  /**
    * Clear the screen if currently using React
-   * @param {HTMLElement} component target element to clear
    */
-  public clear(component: HTMLElement): void {
-    ReactDOM.unmountComponentAtNode(component);
+  public clear(): void {
+    ReactDOM.unmountComponentAtNode(this.target);
   }
 }
 

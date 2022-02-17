@@ -14,7 +14,7 @@ import Prosocial from './data/prosocial.csv';
 import Test from './data/test.csv';
 
 // Utility functions
-import View from './lib/view';
+import {react2html} from './lib/util';
 import {shuffle} from 'd3-array';
 
 // Logging library
@@ -36,9 +36,6 @@ const timeline: Timeline = [];
 // Create a new Experiment instance
 const experiment = new Experiment(Configuration);
 
-// Create a new View
-const view = new View();
-
 // Update the partner avatar strings (for unique partners)
 for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
   const partner = Configuration.avatars.names.partner[i];
@@ -55,90 +52,88 @@ if (Configuration.fullscreen === true) {
   });
 }
 
-const instructionsPracticeGames = [
-  // Overall instructions
-  view.react2html(
-      <Grommet>
-        <Box style={{maxWidth: '50%', margin: 'auto'}}>
-          <Heading level={1} margin='small' fill>Instructions</Heading>
-          <Heading level={2} margin='small' fill>Overview</Heading>
-          <Paragraph margin='small' size='large' fill>
-            During this task you and a partner will be choosing how
-            to divide a sum of points between each other.
-            Your ID will not be revealed to your partner,
-            and you won't be able to see the ID of your partner.
-          </Paragraph>
-          <Paragraph margin='small' size='large' fill>
-            This game consists of three stages.
-            You are matched with a <b>different</b> partner before each stage.
-          </Paragraph>
-          <Paragraph margin='small' size='large' fill>
-            You will be paid a bonus at the end of the game which depends
-            upon the number of points you each managed to accumulate while
-            playing. If you earn over 1000 points in total across all three
-            stages, you will automatically be placed into a lottery for your
-            chance to win an extra $20.
-          </Paragraph>
-        </Box>
-      </Grommet>
-  ),
-  // Part one instructions
-  view.react2html(
-      <Grommet>
-        <Box style={{maxWidth: '50%', margin: 'auto'}}>
-          <Heading level={1} margin='small' fill>Instructions</Heading>
-          <Heading level={2} margin='small' fill>Overview</Heading>
-          <Paragraph margin='small' size='large' fill>
-            In stage one of this game, <b>you</b> will be choosing how the
-            points are split between you and your partner.
-          </Paragraph>
-          <Paragraph margin='small' size='large' fill>
-            In stage two, you will play with a <b>new partner</b> for 54
-            rounds. In this stage your <b>partner</b> will choose how to
-            split the points. You need to guess how your partner plans
-            to divide the points each round. You will earn bonus points
-            for each correct prediction.
-          </Paragraph>
-          <Paragraph margin='small' size='large' fill>
-            In stage three, you will play with <b>yet another new
-            partner</b> where <b>you</b> will again be choosing how to split
-            the points.
-          </Paragraph>
-          <Paragraph margin='small' size='large' fill>
-            At the end of each stage you will be shown a summary of how many
-            points you and your partner accumulated during that phase.
-          </Paragraph>
-        </Box>
-      </Grommet>
-  ),
-  view.react2html(
-      <Grommet>
-        <Box style={{maxWidth: '50%', margin: 'auto'}}>
-          <Heading level={1} margin='small' fill>Instructions</Heading>
-          <Heading level={2} margin='small' fill>Stage one</Heading>
-          <Paragraph margin='small' size='large' fill>
-            In the following <b>you</b> are tasked with distributing points
-            between yourself and your partner. You may choose to distribute
-            the points however you like. This stage will consist of 36 rounds.
-          </Paragraph>
-          <Paragraph margin='small' size='large' fill>
-            Remember, the number of points each player holds at the end of the
-            game will determine if they get a bonus payment.
-          </Paragraph>
-          <Paragraph margin='small' size='large' fill>
-            Click 'Next &gt;' to select an avatar to represent you while
-            you play this game. You will then play <b>5</b> practice rounds
-            before you are matched with your partner.
-          </Paragraph>
-        </Box>
-      </Grommet>
-  ),
-];
-
 // Insert the instructions into the timeline
 timeline.push({
   type: 'instructions',
-  pages: instructionsPracticeGames,
+  pages: [
+    // Overall instructions
+    react2html(
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Overview</Heading>
+            <Paragraph margin='small' size='large' fill>
+              During this task you and a partner will be choosing how
+              to divide a sum of points between each other.
+              Your ID will not be revealed to your partner,
+              and you won't be able to see the ID of your partner.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              This game consists of three stages.
+              You are matched with a <b>different</b> partner before each stage.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              You will be paid a bonus at the end of the game which depends
+              upon the number of points you each managed to accumulate while
+              playing. If you earn over 1000 points in total across all three
+              stages, you will automatically be placed into a lottery for your
+              chance to win an extra $20.
+            </Paragraph>
+          </Box>
+        </Grommet>
+    ),
+    // Part one instructions
+    react2html(
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Overview</Heading>
+            <Paragraph margin='small' size='large' fill>
+              In stage one of this game, <b>you</b> will be choosing how the
+              points are split between you and your partner.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              In stage two, you will play with a <b>new partner</b> for 54
+              rounds. In this stage your <b>partner</b> will choose how to
+              split the points. You need to guess how your partner plans
+              to divide the points each round. You will earn bonus points
+              for each correct prediction.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              In stage three, you will play with <b>yet another new
+              partner</b> where <b>you</b> will again be choosing how to split
+              the points.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              At the end of each stage you will be shown a summary of how many
+              points you and your partner accumulated during that phase.
+            </Paragraph>
+          </Box>
+        </Grommet>
+    ),
+    react2html(
+        <Grommet>
+          <Box style={{maxWidth: '50%', margin: 'auto'}}>
+            <Heading level={1} margin='small' fill>Instructions</Heading>
+            <Heading level={2} margin='small' fill>Stage one</Heading>
+            <Paragraph margin='small' size='large' fill>
+              In the following <b>you</b> are tasked with distributing points
+              between yourself and your partner. You may choose to distribute
+              the points however you like. This stage will consist of 36 rounds.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              Remember, the number of points each player holds at the end of the
+              game will determine if they get a bonus payment.
+            </Paragraph>
+            <Paragraph margin='small' size='large' fill>
+              Click 'Next &gt;' to select an avatar to represent you while
+              you play this game. You will then play <b>5</b> practice rounds
+              before you are matched with your partner.
+            </Paragraph>
+          </Box>
+        </Grommet>
+    ),
+  ],
   allow_keys: false,
   show_page_number: true,
   show_clickable_nav: true,
@@ -154,7 +149,7 @@ timeline.push({
 timeline.push({
   type: 'instructions',
   pages: [
-    view.react2html(
+    react2html(
         <Grommet>
           <Box>
             <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -251,7 +246,7 @@ timeline.push({
 timeline.push({
   type: 'instructions',
   pages: [
-    view.react2html(
+    react2html(
         <Grommet>
           <Box>
             <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -294,7 +289,7 @@ timeline.push({
 timeline.push({
   type: 'instructions',
   pages: [
-    view.react2html(
+    react2html(
         <Grommet>
           <Box>
             <Heading level={1} margin='small' fill>Instructions</Heading>
@@ -364,25 +359,6 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-/*
-  Game Phases:
-  Phase 1: Player chooses how they will split points with their partner
-  Phase 2: Player guesses how their partner will choose to split the points
-  Phase 3: Player chooses how they will split points with their partner
-
-  Game Structure:
-  - Avatar selection
-  - Matching screen (Partner 1)
-  - Phase 1
-  - Agency test
-  - Matching screen (Partner 2)
-  - Phase 2
-  - Evaluate partner
-  - Agency test
-  - Matching screen (Partner 3)
-  - Phase 3
-  - Agency test
-*/
 const randomisedTrials = {
   phaseOne: [] as any[],
   phaseTwo: [] as any[],
@@ -427,7 +403,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'instructions',
         pages: [
-          view.react2html(
+          react2html(
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>
@@ -459,7 +435,7 @@ for (let i = 0; i < dataCollection.length; i++) {
                 </Box>
               </Grommet>
           ),
-          view.react2html(
+          react2html(
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>
@@ -560,7 +536,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'instructions',
         pages: [
-          view.react2html(
+          react2html(
               <Grommet>
                 <Box>
                   <Heading level={1} margin='small' fill>
@@ -607,7 +583,7 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: 'instructions',
         pages: [
-          view.react2html(
+          react2html(
               <Grommet>
                 <Box>
                   <Heading level={1} margin='small' fill>
@@ -684,7 +660,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: 'instructions',
         pages: [
           // Part three instructions
-          view.react2html(
+          react2html(
               <Grommet>
                 <Box style={{maxWidth: '50%', margin: 'auto'}}>
                   <Heading level={1} margin='small' fill>
@@ -712,7 +688,7 @@ for (let i = 0; i < dataCollection.length; i++) {
           ),
           // Insert instructions to let the participant know they will
           // be matched with a partner
-          view.react2html(
+          react2html(
               <Grommet>
                 <Box>
                   <Heading level={1} margin='small' fill>
