@@ -23,7 +23,7 @@ declare type Row = {
 
 // 'Factory' interface
 interface Factory {
-  generate();
+  generate(...args);
 }
 
 // Different screen types that are displayed
