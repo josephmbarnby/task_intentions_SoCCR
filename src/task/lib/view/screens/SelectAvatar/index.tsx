@@ -9,7 +9,7 @@ import {LinkNext} from 'grommet-icons';
 import {Configuration} from '../../../../configuration';
 
 // Components
-import SelectableAvatar from '../../components/SelectableAvatar';
+import Character from '../../components/Character';
 
 /**
  * Generic structure for the Avatar Selection Screen
@@ -25,7 +25,7 @@ const SelectAvatar = (props: Props.Screens.SelectAvatar): ReactElement => {
 
   for (const avatarName of avatars) {
     avatarComponents.push(
-        <SelectableAvatar
+        <Character
           key={avatarName}
           name={avatarName}
           size={128}

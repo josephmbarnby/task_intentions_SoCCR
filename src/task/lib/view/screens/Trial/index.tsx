@@ -11,7 +11,7 @@ import TextTransition, {presets} from 'react-text-transition';
 
 // Custom components
 import Option from '../../components/Option';
-import PlayerCard from '../../components/PlayerCard';
+import Card from '../../components/Card';
 
 // Access theme constants directly
 import {Theme} from '../../../theme';
@@ -52,6 +52,8 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     partnerPoints,
     setPartnerPoints,
   ] = useState(props.partnerPoints);
+
+  // Number of correct answers
   const [
     correctCount,
     setCorrectCount,
@@ -517,7 +519,7 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
       </Heading>
 
       {/* Participant's Avatar */}
-      <PlayerCard
+      <Card
         gridArea='playerArea'
         name='You'
         points={participantPoints}
@@ -567,7 +569,7 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
       </Box>
 
       {/* Partner's Avatar */}
-      <PlayerCard
+      <Card
         gridArea='partnerArea'
         name='Partner'
         points={partnerPoints}

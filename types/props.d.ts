@@ -20,16 +20,16 @@ declare namespace Props {
       pointsPartner: number;
     }
 
-    // PlayerCard component
-    type PlayerCard = {
+    // Card component
+    type Card = {
       gridArea: string;
       name: string;
       points: number;
       avatar: string;
     }
 
-    // RangeSlider component
-    type RangeSlider = {
+    // Slider component
+    type Slider = {
       min: number;
       max: number;
       initial?: number;
@@ -39,8 +39,8 @@ declare namespace Props {
       setValue?: (value: number) => void;
     }
 
-    // SelectableAvatar component
-    type SelectableAvatar = {
+    // Character component
+    type Character = {
       size: number;
       name: string;
       state: string;

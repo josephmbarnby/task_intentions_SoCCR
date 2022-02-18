@@ -13,11 +13,11 @@ import Avatar from 'boring-avatars';
 import {Configuration} from '../../../../configuration';
 
 /**
- * Generate a PlayerCard component
- * @param {Props.Components.PlayerCard} props component props
+ * Generate a Card component
+ * @param {Props.Components.Card} props component props
  * @return {ReactElement}
  */
-const PlayerCard = (props: Props.Components.PlayerCard): ReactElement => {
+const Card = (props: Props.Components.Card): ReactElement => {
   return (
     <Box
       gridArea={props.gridArea}
@@ -82,4 +82,4 @@ const PlayerCard = (props: Props.Components.PlayerCard): ReactElement => {
   );
 };
 
-export default PlayerCard;
+export default Card;

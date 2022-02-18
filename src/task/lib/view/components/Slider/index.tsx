@@ -5,11 +5,11 @@ import React, {ReactElement, useState} from 'react';
 import {Box, Heading, RangeInput} from 'grommet';
 
 /**
- * Generate a RangeSlider component
- * @param {Props.Components.RangeSlider} props component props
+ * Generate a Slider component
+ * @param {Props.Components.Slider} props component props
  * @return {ReactElement}
  */
-const RangeSlider = (props: Props.Components.RangeSlider): ReactElement => {
+const Slider = (props: Props.Components.Slider): ReactElement => {
   const [value, setValue] = useState(props.max / 2);
   return (
     <Box
@@ -46,4 +46,4 @@ const RangeSlider = (props: Props.Components.RangeSlider): ReactElement => {
   );
 };
 
-export default RangeSlider;
+export default Slider;

@@ -10,12 +10,10 @@ import {Configuration} from '../../../../configuration';
 
 /**
  * A selectable avatar with grow behaviour
- * @param {Props.Components.SelectableAvatar} props component props
+ * @param {Props.Components.Character} props component props
  * @return {ReactElement}
  */
-const SelectableAvatar = (
-    props: Props.Components.SelectableAvatar
-): ReactElement => {
+const Character = (props: Props.Components.Character): ReactElement => {
   return (
     <Box
       id={`avatar-${props.name}`}
@@ -39,4 +37,4 @@ const SelectableAvatar = (
   );
 };
 
-export default SelectableAvatar;
+export default Character;

@@ -6,7 +6,7 @@ import {Box, Button, Paragraph} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import RangeSlider from '../../components/RangeSlider';
+import Slider from '../../components/Slider';
 
 // Constants
 const SLIDER_DEFAULT = 50;
@@ -40,7 +40,7 @@ const Inference = (props: Props.Screens.Inference): ReactElement => {
         to which you believe your partner's decisions are
         driven by their desire to earn points in this task.
       </Paragraph>
-      <RangeSlider
+      <Slider
         min={0}
         max={100}
         initial={firstValue}
@@ -58,7 +58,7 @@ const Inference = (props: Props.Screens.Inference): ReactElement => {
         to which you believe your partner's decisions are
         driven by their desire to reduce your bonus in this task.
       </Paragraph>
-      <RangeSlider
+      <Slider
         min={0}
         max={100}
         initial={secondValue}
