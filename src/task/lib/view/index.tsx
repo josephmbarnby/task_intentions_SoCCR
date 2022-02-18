@@ -6,7 +6,7 @@ import ReactDOM, {render} from 'react-dom';
 import {Layout} from './components/Layout';
 
 /**
- * Static 'View' used to display React-based screens
+ * Static 'View' class used to display React-based screens
  */
 class View {
   private target: HTMLElement;

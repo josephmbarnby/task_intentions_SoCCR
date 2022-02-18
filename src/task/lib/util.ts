@@ -12,7 +12,7 @@ export const calculatePoints = (display: Display, column: string): number => {
   let points = 0;
 
   if (display === 'playerGuess') {
-    // `playerGuess` phased calculated differently
+    // `playerGuess` phases calculated differently
     const dataCollection = jsPsych.data.get()
         .filter({
           display: display,
@@ -44,6 +44,7 @@ export const calculatePoints = (display: Display, column: string): number => {
       }
     }
   } else {
+    // All other phases can be calculated normally
     points = jsPsych.data.get()
         .filter({
           display: display,

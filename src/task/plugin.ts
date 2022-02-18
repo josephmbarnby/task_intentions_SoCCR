@@ -83,7 +83,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         type: jsPsych.plugins.parameterType.BOOLEAN,
         pretty_name: 'Enable or disable server queries',
         default: false,
-        description: 'Used primarily in the \'Matching\' screen',
+        description: 'Used exclusively in the \'Matching\' screen',
       },
       clearScreen: {
         type: jsPsych.plugins.parameterType.BOOLEAN,

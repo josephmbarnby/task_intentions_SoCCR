@@ -1,3 +1,4 @@
+// Custom theme parameters
 export const Theme = {
   global: {
     colors: {
