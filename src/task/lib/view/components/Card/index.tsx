@@ -10,7 +10,7 @@ import TextTransition, {presets} from 'react-text-transition';
 import Avatar from 'boring-avatars';
 
 // Configuration
-import {Configuration} from '../../../../configuration';
+import {Configuration} from '@task/configuration';
 
 /**
  * Generate a Card component

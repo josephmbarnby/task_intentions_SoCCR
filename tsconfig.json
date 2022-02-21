@@ -1,12 +1,20 @@
 {
-  "include": ["src", "types"],
+  "include": ["src", "test", "types"],
   "compilerOptions": {
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./src",
+    "baseUrl": "src",
+    "paths": {
+      "@task/*": ["task/*"],
+      "@lib/*": ["task/lib/*"],
+      "@classes/*": ["task/lib/classes/*"],
+      "@components/*": ["task/lib/view/components/*"],
+      "@screens/*": ["task/lib/view/screens/*"],
+    },
+    "rootDirs": ["src", "test"],
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

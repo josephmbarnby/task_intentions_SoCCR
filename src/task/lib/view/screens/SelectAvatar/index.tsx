@@ -6,10 +6,10 @@ import {Box, Button, Heading} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
-import {Configuration} from '../../../../configuration';
+import {Configuration} from '@task/configuration';
 
 // Components
-import Character from '../../components/Character';
+import Character from '@components/Character';
 
 /**
  * Generic structure for the Avatar Selection Screen

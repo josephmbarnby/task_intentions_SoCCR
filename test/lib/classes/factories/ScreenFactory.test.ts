@@ -4,11 +4,10 @@ import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 // Custom wrapper
-import {render} from '../../../util/Wrapper';
+import {render} from '../../Wrapper';
 
 // Screen factory
-import ScreenFactory from
-  '../../../../src/task/lib/classes/factories/ScreenFactory';
+import ScreenFactory from '@classes/factories/ScreenFactory';
 
 // Mock jsPsych
 import 'jspsych';

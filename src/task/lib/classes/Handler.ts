@@ -1,5 +1,5 @@
 // Configuration
-import {Configuration} from '../../configuration';
+import {Configuration} from '@task/configuration';
 
 /**
  * Utility class exposing each of the different handlers

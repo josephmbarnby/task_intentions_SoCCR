@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM, {render} from 'react-dom';
 
 // Foundational 'Layout' component
-import {Layout} from './components/Layout';
+import {Layout} from '@components/Layout';
 
 /**
  * Static 'View' class used to display React-based screens

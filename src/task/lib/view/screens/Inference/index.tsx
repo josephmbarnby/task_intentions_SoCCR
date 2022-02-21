@@ -6,7 +6,7 @@ import {Box, Button, Paragraph} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import Slider from '../../components/Slider';
+import Slider from '@components/Slider';
 
 // Constants
 const SLIDER_DEFAULT = 50;

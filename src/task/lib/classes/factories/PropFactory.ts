@@ -2,10 +2,10 @@
 import consola from 'consola';
 
 // Utility function
-import {calculatePoints} from '../../util';
+import {calculatePoints} from '@lib/util';
 
 // Handlers
-import Handler from '../Handler';
+import Handler from '@classes/Handler';
 
 /**
  * Factory pattern to generate props for screens

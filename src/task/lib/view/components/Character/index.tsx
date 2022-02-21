@@ -6,7 +6,7 @@ import Avatar from 'boring-avatars';
 import {Box} from 'grommet';
 
 // Configuration
-import {Configuration} from '../../../../configuration';
+import {Configuration} from '@task/configuration';
 
 /**
  * A selectable avatar with grow behaviour

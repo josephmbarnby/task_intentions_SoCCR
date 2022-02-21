@@ -42,6 +42,13 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      '@task': path.resolve(__dirname, 'src/task/'),
+      '@lib': path.resolve(__dirname, 'src/task/lib'),
+      '@classes': path.resolve(__dirname, 'src/task/lib/classes'),
+      '@components': path.resolve(__dirname, 'src/task/lib/view/components'),
+      '@screens': path.resolve(__dirname, 'src/task/lib/view/screens'),
+    },
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
