@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import {axe, toHaveNoViolations} from 'jest-axe';
 
 // Custom wrapper
-import {render} from './Wrapper';
+import {render} from '../../../util/Wrapper';
 
 // Screen factory
 import ScreenFactory from
