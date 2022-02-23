@@ -8,7 +8,7 @@ import consola from 'consola';
 import {Box, Heading, Layer, Spinner, WorldMap} from 'grommet';
 
 // Request library
-import axios from 'axios';
+import Compute from '@task/lib/classes/Compute';
 
 // Configuration
 import {Configuration} from '@task/configuration';
@@ -20,6 +20,7 @@ import {Configuration} from '@task/configuration';
  */
 const Matching = (props: Props.Screens.Matching): ReactElement => {
   const experiment = window.Experiment;
+  const compute = new Compute(Configuration.endpoint);
 
   // Launch request
   if (props.fetchData) {
@@ -52,40 +53,28 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
 
     // Launch request to endpoint
     consola.info(`Requesting partner...`);
-    axios.get(Configuration.endpoint, {
-      params: {
-        id: 48294,
-        responses: JSON.stringify(requestResponses),
-      },
-    }).then((response) => {
-      if (response.data) {
-        consola.debug(`Received response:`, response.data);
+    compute.submit({
+      id: 1234,
+      responses: JSON.stringify(requestResponses),
+    }, (data) => {
+      // Extract the response data of interest
+      const id = data.id;
+      const content = data.computed;
 
-        // Extract the response data of interest
-        const id = response.data.id;
-        const content = response.data.computed;
-
-        // Parse and store the JSON content
-        let phaseData = null;
-        try {
-          phaseData = JSON.parse(content);
-          // Check the specification of the data first
-          if ('PARd' in phaseData && 'PPTd' in phaseData) {
-            experiment.setGlobalStateValue('phaseData', phaseData);
-            consola.info(`Success, generated new partner for id:`, id);
-          } else {
-            consola.warn(`Phase data appears to be incomplete`);
-          }
-        } catch (error) {
-          consola.warn(`Error occurred when extracting content:`, error);
+      // Parse and store the JSON content
+      let phaseData = null;
+      try {
+        phaseData = JSON.parse(content);
+        // Check the specification of the data first
+        if ('PARd' in phaseData && 'PPTd' in phaseData) {
+          experiment.setGlobalStateValue('phaseData', phaseData);
+          consola.info(`Success, generated new partner for id:`, id);
+        } else {
+          consola.warn(`Phase data appears to be incomplete`);
         }
-      } else {
-        consola.warn('No partner data received');
+      } catch (error) {
+        consola.warn(`Error occurred when extracting content:`, error);
       }
-    }).catch((error) => {
-      consola.error(error);
-    }).then(() => {
-      consola.info(`Partner request complete`);
     });
   }
 
