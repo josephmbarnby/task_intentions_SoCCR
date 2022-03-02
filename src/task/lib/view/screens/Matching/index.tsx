@@ -75,6 +75,8 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
       } catch (error) {
         consola.warn(`Error occurred when extracting content:`, error);
       }
+    }, (error) => {
+      consola.error(new Error(error));
     });
   }
 

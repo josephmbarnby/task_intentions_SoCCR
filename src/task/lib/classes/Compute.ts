@@ -21,8 +21,7 @@ class Compute {
    */
   constructor(URL: string) {
     this.resourceURL = URL;
-
-    // TODO: Test connection to API
+    consola.debug(`Querying URL: ${this.resourceURL}`);
   }
 
   /**
@@ -45,9 +44,10 @@ class Compute {
   /**
    * Submit a new computing job to the remote resource
    * @param {any} params request parameters
-   * @param {function(data: any): void} callback
+   * @param {function(data: any): void} onSuccess
+   * @param {function(data: any): void} onError
    */
-  public async submit(params: any, callback: (data: any) => void) {
+  public async submit(params: any, onSuccess: (data: any) => void, onError: (data: any) => void) {
     const startTime = performance.now();
     axios.get(this.resourceURL, {
       params: params,
@@ -57,12 +57,12 @@ class Compute {
         consola.debug(`Received response data:`, response.data);
 
         // Pass the data to the callback
-        callback(response.data);
+        onSuccess(response.data);
       } else {
         consola.warn('No data received');
       }
     }).catch((error) => {
-      consola.error(new Error(error));
+      onError(error);
     }).then(() => {
       const endTime = performance.now();
       consola.info(
