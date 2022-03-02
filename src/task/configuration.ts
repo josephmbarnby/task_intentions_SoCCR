@@ -32,7 +32,9 @@ export const Configuration = {
   },
 
   // API endpoint for computations
-  endpoint: 'http://localhost:8080/api/compute',
+  endpoint: process.env.NODE_ENV === 'development' ?
+      'http://localhost:8080/api/compute' :
+      'http://52.168.173.198:8123/api/compute',
 
   // Avatar configuration details, including colours and names
   avatars: {

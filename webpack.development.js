@@ -7,7 +7,7 @@ module.exports = () => {
     mode: 'development',
     target: ['web', 'es5'],
     entry: {
-      index: './src/task/timeline.tsx',
+      index: './src/task/index.tsx',
     },
     devtool: 'inline-source-map',
     plugins: [

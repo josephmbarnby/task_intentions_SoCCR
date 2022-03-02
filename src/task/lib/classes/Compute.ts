@@ -1,12 +1,8 @@
-// Enable 'async' support through Webpack and Babel
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+// Logging library
+import consola from 'consola';
 
 // Request library
 import axios from 'axios';
-
-// Logging library
-import consola from 'consola';
 
 /**
  * Compute class used to connect and submit jobs to a remote computing
@@ -47,7 +43,7 @@ class Compute {
    * @param {function(data: any): void} onSuccess
    * @param {function(data: any): void} onError
    */
-  public async submit(params: any, onSuccess: (data: any) => void, onError: (data: any) => void) {
+  public submit(params: any, onSuccess: (data: any) => void, onError: (data: any) => void) {
     const startTime = performance.now();
     axios.get(this.resourceURL, {
       params: params,
