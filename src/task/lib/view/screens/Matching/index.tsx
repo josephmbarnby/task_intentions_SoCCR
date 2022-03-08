@@ -76,7 +76,8 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
         consola.warn(`Error occurred when extracting content:`, error);
       }
     }, (error) => {
-      consola.error(new Error(error));
+      // If we have an error, we need to end the game
+      experiment.invokeError(error);
     });
   }
 
