@@ -191,7 +191,7 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
       // 'playerGuess' trials update points from the correct choice
       if (props.display === 'playerGuessPractice') {
         // Change the 'correct' answer depending on probability
-        if (experiment.random() > 0.7) {
+        if (experiment.random() < 0.2) {
           // Change the 'correct' answer to the opposite of
           // what was selected
           answer = option === 'Option 1' ? 'Option 2' : 'Option 1';

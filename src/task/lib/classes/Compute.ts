@@ -43,7 +43,11 @@ class Compute {
    * @param {function(data: any): void} onSuccess
    * @param {function(data: any): void} onError
    */
-  public submit(params: any, onSuccess: (data: any) => void, onError: (data: any) => void) {
+  public submit(
+      params: any,
+      onSuccess: (data: any) => void,
+      onError: (data: any) => void
+  ) {
     const startTime = performance.now();
     axios.get(this.resourceURL, {
       params: params,
