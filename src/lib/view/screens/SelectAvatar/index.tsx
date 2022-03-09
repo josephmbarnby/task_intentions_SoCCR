@@ -6,7 +6,7 @@ import {Box, Button, Heading} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Configuration
-import {Configuration} from '@task/configuration';
+import {Configuration} from '@src/configuration';
 
 // Components
 import Character from '@components/Character';

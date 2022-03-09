@@ -17,7 +17,7 @@ import Card from '@components/Card';
 import {Theme} from '@lib/theme';
 
 // Configuration
-import {Configuration} from '@task/configuration';
+import {Configuration} from '@src/configuration';
 
 /**
  * Generate the choices grid with options

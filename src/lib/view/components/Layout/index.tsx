@@ -5,7 +5,7 @@ import React, {ReactElement} from 'react';
 import {Grommet, ThemeContext} from 'grommet';
 
 // Import styling
-import '@task/scss/styles.scss';
+import '@src/scss/styles.scss';
 
 // Apply custom theme globally
 import {Theme} from '@lib/theme';

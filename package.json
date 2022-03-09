@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "server": "cd src/server && Rscript run.R",
+    "server": "cd api && Rscript run.R",
     "dev": "webpack serve --config webpack.development.js",
     "watch": "webpack --watch",
     "build": "webpack --config webpack.production.js",

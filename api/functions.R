@@ -2,6 +2,10 @@
 #
 # Joe Barnby joe.barnby@rhul.ac.uk 2022
 
+library(doParallel)
+library(dplyr)
+library(logger)
+
 # Phase 1 Fly Fitting -----------------------------------------------------
 matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle = T, file_loc = F) {
 
@@ -11,20 +15,36 @@ matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle =
     phase1data <- phase1data
   }
 
-  cat("\n FITTING PARTICIPANT\n")
+  log_debug("FITTING PARTICIPANT", namespace = "requests")
 
   phase1pars <- set_up_beliefs() %>%
                 incremental_fit(data = phase1data) %>%
                 marginalise()
 
-  cat("\n PARTICIPANT PARAMETERS ARE", phase1pars, "\n")
-  cat("\n *** CREATING OPTIMAL PARTNER ***\n")
+  log_debug(
+    paste(
+      "PARTICIPANT PARAMETERS ARE",
+      phase1pars[1],
+      phase1pars[2]),
+    namespace = "requests")
+  log_debug("*** CREATING OPTIMAL PARTNER ***", namespace = "requests")
 
-  participant_decisions <- simulate_phase_decisions(phase1pars,
-                                                    precanned_df %>%
-                                                      mutate(ID = NA, Trial = 1:54, Phase = 2) %>%
-                                                        dplyr::select(ID, Trial, ppt1:par2, Phase, everything()),
-                                                    phase = 2)
+  participant_decisions <-
+    simulate_phase_decisions(phase1pars,
+                              precanned_df %>%
+                                mutate(
+                                  ID = NA,
+                                  Trial = 1:54,
+                                  Phase = 2
+                                ) %>%
+                                  dplyr::select(
+                                    ID,
+                                    Trial,
+                                    ppt1:par2,
+                                    Phase,
+                                    everything()
+                                  ),
+                              phase = 2)
   bound_dfs <- participant_decisions %>%
     cbind(precanned_df %>% dplyr::select(-ppt1:-par2))
 
@@ -44,7 +64,7 @@ matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle =
     index_part <- index_part[1]
   }
 
-  cat("\n PARTNER'S PARAMETERS ARE", colnames(bound_dfs)[index_part + 5], "\n\n")
+  log_debug(paste("PARTNER'S PARAMETERS ARE", paste(colnames(bound_dfs)[index_part + 5])), namespace = "requests")
 
   partner_decisions <- bound_dfs %>%
     dplyr::select(1:4, index_part + 5) %>%
@@ -67,24 +87,24 @@ matching_partner_phase2 <- function(Phase1Data, data, shuffle = F, file_loc = F)
     exampleData <- Phase1Data
   }
 
-  cat("\n\n *** ESTIMATING PARTICIPANT PREFERENCES ***\n\n")
+  log_debug("*** ESTIMATING PARTICIPANT PREFERENCES ***", namespace = "requests")
 
   phase1ppt         <- fit_participant_pars_phase1(exampleData)
   phase1par         <- phase1ppt
 
-  cat("\n PARTICIPANT PARAMETERS ARE", phase1par, "\n")
-  cat("\n *** CREATING OPTIMAL PARTNER ***\n")
+  log_debug(paste("PARTICIPANT PARAMETERS ARE", phase1par[1], phase1pars[2]), namespace = "requests")
+  log_debug("*** CREATING OPTIMAL PARTNER ***", namespace = "requests")
 
   partner_parms <- gridsearch_for_partner_phase2(phase1par, data)
   partner_parms
 
-    cat("\n PARTNER'S PARAMETERS ARE", partner_parms, "\n")
-    cat("\n *** SIMULATING PARTNER DECISIONS ***\n\n")
+  log_debug(paste("PARTNER'S PARAMETERS ARE", partner_parms[1], partner_parms[2]), namespace = "requests")
+  log_debug("*** SIMULATING PARTNER DECISIONS ***", namespace = "requests")
 
   partner_decisions <- simulate_phase_decisions(partner_parms, data)
   partici_decisions <- simulate_phase_decisions(phase1ppt, data)
 
-  cat("\n Done \n")
+  log_debug("Done", namespace = "requests")
 
   if (shuffle == T) {
     set.seed(156)
@@ -119,18 +139,18 @@ matching_partner_phase1 <- function(Phase1Data, data, file_loc = T, shuffle = T)
       test_data_phase1 <- as.data.frame(Phase1Data) %>% rename(PPTANS = 7)
     }
 
-  cat("\n *** CREATING OPTIMAL PARTNER ***\n")
+  log_debug("*** CREATING OPTIMAL PARTNER ***", namespace = "requests")
 
   partner_parms <- gridsearch_for_partner_phase1(test_data_phase1)
   partner_parms2 <- as.numeric(partner_parms[1:2])
 
-    cat("\n PARTNER'S PARAMETERS ARE", partner_parms, "\n")
-    cat("\n *** SIMULATING PARTNER DECISIONS ***\n\n")
+  log_debug(paste("PARTNER'S PARAMETERS ARE", partner_parms), namespace = "requests")
+  log_debug("*** SIMULATING PARTNER DECISIONS ***", namespace = "requests")
 
   partner_decisions <- simulate_phase_decisions(partner_parms2, data, phase = 2)
   partici_decisions <- test_data_phase1
 
-  cat("\n Done \n")
+  log_debug("Done", namespace = "requests")
 
   if (shuffle == T) {
     set.seed(156)
@@ -281,7 +301,7 @@ fit_participant_pars_phase1 <- function(data) {
     #                 method = 'SANN',
     #                 control = list(maxit = 100, trace = 100, temp = 100, REPORT = T))
 
-    #cat('\n SANN estimates are', SANNpar$par, '\n')
+    #log_debug('\n SANN estimates are', SANNpar$par, '\n')
 
     OPTIMpar <- optim(rand_par0, #SANNpar$par,
                      ABA_wrapper_Phase1_Only,
@@ -327,7 +347,7 @@ gridsearch_for_partner_phase2 <- function(phase1par, data, cores = 4, res = 30, 
   }else{
     Partner ='Competitive'; beta = 20; alpha = 0}
 
-  cat('\n PARTNER IS ',Partner,'\n')
+  log_debug(paste("PARTNER IS", Partner), namespace = "requests")
 
   return(c(alpha, beta))
 }
@@ -360,7 +380,7 @@ gridsearch_for_partner_phase1 <- function(phase1_data, cores = 4){
   }else if(series_par==2){ Partner = 'Individualist' ; beta = 0; alpha = 30
   }else{Partner ='Competitive'; beta = 30; alpha = 0}
 
-  cat('\n PARTNER IS ',Partner,'\n')
+  log_debug(paste("PARTNER IS", Partner), namespace = "requests")
   return(c(alpha, beta, Partner))
 }
 
@@ -371,9 +391,9 @@ simulate_phase_decisions <- function(parms, data, phase = 2){
   res = 30; # resolution of belief grid
   T1  = length(data %>% filter(Phase == phase) %>% rownames());  # trials for phase 1
 
-  #Phase 1
-  alpha            = as.numeric(parms[1])
-  beta             = as.numeric(parms[2])
+  # Phase 1
+  alpha = as.numeric(parms[1])
+  beta = as.numeric(parms[2])
 
   # initialised dummy values
   decisions        <- data_frame(

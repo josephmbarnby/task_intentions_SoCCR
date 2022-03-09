@@ -6,7 +6,7 @@ module.exports = () => {
     mode: 'production',
     target: ['web', 'es5'],
     entry: {
-      index: './src/task/index.tsx'
+      index: './src/index.tsx'
     },
     devtool: 'inline-source-map',
     module: {
@@ -64,11 +64,11 @@ module.exports = () => {
     },
     resolve: {
       alias: {
-        '@task': path.resolve(__dirname, 'src/task/'),
-        '@lib': path.resolve(__dirname, 'src/task/lib'),
-        '@classes': path.resolve(__dirname, 'src/task/lib/classes'),
-        '@components': path.resolve(__dirname, 'src/task/lib/view/components'),
-        '@screens': path.resolve(__dirname, 'src/task/lib/view/screens'),
+        '@src': path.resolve(__dirname, 'src'),
+        '@lib': path.resolve(__dirname, 'src/lib'),
+        '@classes': path.resolve(__dirname, 'src/lib/classes'),
+        '@components': path.resolve(__dirname, 'src/lib/view/components'),
+        '@screens': path.resolve(__dirname, 'src/lib/view/screens'),
       },
       extensions: ['.tsx', '.ts', '.js'],
     },
