@@ -9,26 +9,16 @@ import util
 def start(address=""):
   logging.info("Starting parallel tests -> {}".format(address))
 
-  # Run the basic test
+  # Run the tests
   util.runner(ParallelTests.basic, "ParallelTests.basic", args=(address, ))
+  util.runner(ParallelTests.long, "ParallelTests.long", args=(address, ))
 
 
 class ParallelTests:
   def basic(args):
-    # Create a pool of 3 threads
-    jobs = []
-    num = 3
-
-    for i in range(0, num):
-      jobs.append(util.create_thread(ParallelRequests.basic, (args[0], )))
-
-    # Start the threads
-    for j in jobs:
-      j.start()
-
-    # Join the threads
-    for j in jobs:
-      j.join()
+    util.create_pool(3, ParallelRequests.basic, (args[0], ))
+  def long(args):
+    util.create_pool(100, ParallelRequests.basic, (args[0], ))
 
 
 # Class to group parallel requests
@@ -43,7 +33,7 @@ class ParallelRequests:
 
     # Acknowledge a response
     if (response):
-      logging.info("Request succeeded")
+      logging.info("Request succeeded!")
     else:
-      logging.error("Request failed")
+      logging.error("Request failed!")
     

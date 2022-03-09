@@ -1,13 +1,9 @@
 # Packages
 import logging
-from pyclbr import Function
 import requests
 import threading
 import time
-import numpy as np
-
-
-DURATIONS = []
+from types import FunctionType
 
 
 # Create a new worker thread with a function that supports
@@ -17,30 +13,36 @@ def create_thread(func, args=()):
   return threading.Thread(target=func, args=args)
 
 
+# Create a pool of worker threads and run them
+def create_pool(workers, func, args):
+  jobs = []
+
+  for i in range(0, workers):
+    jobs.append(create_thread(func, args))
+
+  # Start the threads
+  for j in jobs:
+    j.start()
+
+  # Join the threads
+  for j in jobs:
+    j.join()
+
+
 # Create and send a GET request to the specified address
 # with parameters
 def create_request(address, params={}):
-  request_sent = time.time()
-
   response = None
+
   try:
     response = requests.get(address, params=params)
   except(requests.exceptions.ConnectionError):
     logging.error("Connection error!")
 
-  DURATIONS.append(round(time.time() - request_sent, ndigits=3))
   return response
 
 
-def get_stats():
-  sigma = np.average(DURATIONS)
-  local_min = np.min(DURATIONS)
-  local_max = np.max(DURATIONS)
-
-  return [sigma, local_min, local_max]
-
-
-def runner(func: Function, name: str, args):
+def runner(func: FunctionType, name: str, args):
   logging.info("Running '{}'".format(name))
   start_time = time.time()
 
