@@ -48,6 +48,7 @@ function(req, id=0, responses="") {
   }
 
   # Generate a data frame from the responses
+  start_time <- Sys.time()
   computed <- list()
   if (valid_request == TRUE && length(parsed) > 0) {
     log_success("Valid request received", namespace = "server")
@@ -70,6 +71,9 @@ function(req, id=0, responses="") {
   } else {
     log_warn("Invalid request received, returning empty response", namespace = "server")
   }
+
+  end_time <- round(Sys.time() - start_time, digits = 2)
+  log_info("ID {id} finished after {end_time}s", namespace = "server")
 
   # Respond to the game
   return(list(
