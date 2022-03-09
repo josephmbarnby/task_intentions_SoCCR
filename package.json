@@ -6,15 +6,16 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "run": "yarn server:run & yarn task:run",
     "clean": "rm -rf dist/ api/logs/",
-    "server:run": "cd api && Rscript run.R",
-    "server:test": "python3 api/tests",
-    "task:run": "webpack serve --config webpack.development.js",
-    "task:build": "webpack --config webpack.production.js",
-    "task:style": "gulp style",
-    "task:lint": "gulp lint",
-    "task:test": "jest"
+    "build:task": "webpack --config webpack.production.js",
+    "style:task": "gulp style",
+    "lint:task": "gulp lint",
+    "start": "yarn start:server & yarn start:task",
+    "start:server": "cd api && Rscript run.R",
+    "start:task": "webpack serve --config webpack.development.js",
+    "test": "yarn test:server && yarn test:task",
+    "test:server": "python3 api/tests",
+    "test:task": "jest"
   },
   "repository": {
     "type": "git",
