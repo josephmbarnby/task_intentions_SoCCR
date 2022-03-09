@@ -10,7 +10,7 @@ def start(address=""):
   logging.info("Starting fuzzing tests -> {}".format(address))
 
   # Run the basic test
-  util.runner(FuzzTests.basic, "FuzzTests.basic", args=(address, ))
+  util.runner(FuzzTests.basic, args=(address, ))
 
 
 # Class to group fuzzing tests

@@ -42,8 +42,8 @@ def create_request(address, params={}):
   return response
 
 
-def runner(func: FunctionType, name: str, args):
-  logging.info("Running '{}'".format(name))
+def runner(func: FunctionType, args):
+  logging.info("Running {}: {}".format(func.__module__, func.__name__))
   start_time = time.time()
 
   # Run the test
@@ -51,4 +51,4 @@ def runner(func: FunctionType, name: str, args):
 
   # Calculated the elapsed time
   elapsed = time.time() - start_time
-  logging.info("'{}' finished after {}s".format(name, round(elapsed, ndigits=3)))
+  logging.info("{}: {} finished after {}s".format(func.__module__, func.__name__, round(elapsed, ndigits=3)))

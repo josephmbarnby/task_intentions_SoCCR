@@ -10,8 +10,8 @@ def start(address=""):
   logging.info("Starting parallel tests -> {}".format(address))
 
   # Run the tests
-  util.runner(ParallelTests.basic, "ParallelTests.basic", args=(address, ))
-  util.runner(ParallelTests.long, "ParallelTests.long", args=(address, ))
+  util.runner(ParallelTests.basic, args=(address, ))
+  util.runner(ParallelTests.long, args=(address, ))
 
 
 class ParallelTests:
