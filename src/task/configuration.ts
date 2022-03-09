@@ -31,9 +31,9 @@ export const Configuration = {
     phaseData: {},
   },
 
-  // API endpoint for computations
+  // API endpoints for computations
   endpoint: process.env.NODE_ENV === 'development' ?
-      'http://localhost:8080/api/compute' :
+      'http://localhost:8000/compute/intentions' :
       'https://api.henryburgess.me/compute/intentions',
 
   // Avatar configuration details, including colours and names

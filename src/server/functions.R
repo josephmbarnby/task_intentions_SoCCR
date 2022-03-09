@@ -2,227 +2,270 @@
 #
 # Joe Barnby joe.barnby@rhul.ac.uk 2022
 
-library(doParallel)
-library(dplyr)
-
 # Phase 1 Fly Fitting -----------------------------------------------------
+matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle = T, file_loc = F) {
+
+  if (file_loc == T) {
+    phase1data <- read.csv(phase1data)
+  } else {
+    phase1data <- phase1data
+  }
+
+  cat("\n FITTING PARTICIPANT\n")
+
+  phase1pars <- set_up_beliefs() %>%
+                incremental_fit(data = phase1data) %>%
+                marginalise()
+
+  cat("\n PARTICIPANT PARAMETERS ARE", phase1pars, "\n")
+  cat("\n *** CREATING OPTIMAL PARTNER ***\n")
+
+  participant_decisions <- simulate_phase_decisions(phase1pars,
+                                                    precanned_df %>%
+                                                      mutate(ID = NA, Trial = 1:54, Phase = 2) %>%
+                                                        dplyr::select(ID, Trial, ppt1:par2, Phase, everything()),
+                                                    phase = 2)
+  bound_dfs <- participant_decisions %>%
+    cbind(precanned_df %>% dplyr::select(-ppt1:-par2))
+
+  n_p <- length(bound_dfs %>% dplyr::select(-ppt1:-Ac))
+
+  similarity_vec <- rep(NA, n_p)
+
+  for (i in 1:n_p) {
+    similarity_vec[i] <- bound_dfs %>%
+      mutate(correct = ifelse(Ac == bound_dfs[,(i + 4)], 1, 0)) %>%
+      summarise(correct = sum(correct) / 54) %>%
+      as.numeric()
+  }
+
+  index_part <- which((similarity_vec > 0.2 & similarity_vec < 0.5), arr.ind = T)
+  if (length(index_part > 1)) {
+    index_part <- index_part[1]
+  }
+
+  cat("\n PARTNER'S PARAMETERS ARE", colnames(bound_dfs)[index_part + 5], "\n\n")
+
+  partner_decisions <- bound_dfs %>%
+    dplyr::select(1:4, index_part + 5) %>%
+    rename(Ac = 5)
+
+  if (shuffle == T) {
+    set.seed(156)
+    row <- sample(nrow(partner_decisions))
+    partner_decisions <- partner_decisions[row, ]
+    partner_decisions
+  }
+
+  return(partner_decisions)
+}
 
 matching_partner_phase2 <- function(Phase1Data, data, shuffle = F, file_loc = F){
-
-  if(file_loc == T){
+  if (file_loc == T) {
     exampleData <- read.csv(Phase1Data)
-  } else if(file_loc == F){
+  } else if (file_loc == F) {
     exampleData <- Phase1Data
   }
 
-    cat('\n\n *** ESTIMATING PARTICIPANT PREFERENCES ***\n\n')
+  cat("\n\n *** ESTIMATING PARTICIPANT PREFERENCES ***\n\n")
 
   phase1ppt         <- fit_participant_pars_phase1(exampleData)
   phase1par         <- phase1ppt
 
-    cat('\n PARTICIPANT PARAMETERS ARE',phase1par,'\n')
-    cat('\n *** CREATING OPTIMAL PARTNER ***\n')
+  cat("\n PARTICIPANT PARAMETERS ARE", phase1par, "\n")
+  cat("\n *** CREATING OPTIMAL PARTNER ***\n")
 
-  partner_parms     <- gridsearch_for_partner_phase2(phase1par, data)
+  partner_parms <- gridsearch_for_partner_phase2(phase1par, data)
   partner_parms
 
-    cat("\n PARTNER'S PARAMETERS ARE",partner_parms, "\n")
-    cat('\n *** SIMULATING PARTNER DECISIONS ***\n\n')
+    cat("\n PARTNER'S PARAMETERS ARE", partner_parms, "\n")
+    cat("\n *** SIMULATING PARTNER DECISIONS ***\n\n")
 
   partner_decisions <- simulate_phase_decisions(partner_parms, data)
   partici_decisions <- simulate_phase_decisions(phase1ppt, data)
 
-    cat('\n Done \n')
+  cat("\n Done \n")
 
-  if(shuffle == T){
-  set.seed(156)
-  row <- sample(nrow(partner_decisions))
-  partner_decisions <- partner_decisions[row,]
-  partner_decisions
+  if (shuffle == T) {
+    set.seed(156)
+    row <- sample(nrow(partner_decisions))
+    partner_decisions <- partner_decisions[row, ]
+    partner_decisions
   }
 
   return(list(PPTp = phase1ppt,
               PARp = partner_parms,
               PPTd = partici_decisions,
               PARd = partner_decisions %>% rename(AcPar = 5)))
-
 }
 
-matching_partner_phase1 <- function(Phase1Data, data, file_loc = T, shuffle = T){
-  if(file_loc == T){
+matching_partner_phase1 <- function(Phase1Data, data, file_loc = T, shuffle = T) {
+  if (file_loc == T) {
+    test_data_real <- read.csv(Phase1Data)
 
-  test_data_real <- read.csv(Phase1Data)
+    test_data_phase1 <- test_data_real %>%
+      as_tibble() %>%
+      rename(ID = Participant.Public.ID
+            ) %>%
+      mutate(ID = as.character(ID), Phase = 1) %>%
+      dplyr::select(ID, trial,
+                    s1 = playerPoints_option1, o1 = partnerPoints_option1,
+                    s2 = playerPoints_option2, o2 = partnerPoints_option2,
+                    PPTANS = selectedOption_player, Phase) %>%
+      filter(!is.na(trial)) %>%
+      slice(1:36) %>%
+      dplyr::select(ID, trial, s1:o2, PPTANS, Phase)
+    } else {
+      test_data_phase1 <- as.data.frame(Phase1Data) %>% rename(PPTANS = 7)
+    }
 
-  test_data_phase1 <- test_data_real %>%
-    as_tibble() %>%
-    rename(ID = Participant.Public.ID
-           ) %>%
-    mutate(ID = as.character(ID), Phase = 1) %>%
-    dplyr::select(ID, trial,
-                  s1 = playerPoints_option1, o1 = partnerPoints_option1,
-                  s2 = playerPoints_option2, o2 = partnerPoints_option2,
-                  PPTANS = selectedOption_player, Phase) %>%
-    filter(!is.na(trial)) %>%
-    slice(1:36) %>%
-    dplyr::select(ID, trial, s1:o2,PPTANS, Phase)
-    } else { test_data_phase1 <- as.data.frame(Phase1Data) %>% rename(PPTANS = 7)}
+  cat("\n *** CREATING OPTIMAL PARTNER ***\n")
 
-    cat('\n *** CREATING OPTIMAL PARTNER ***\n')
+  partner_parms <- gridsearch_for_partner_phase1(test_data_phase1)
+  partner_parms2 <- as.numeric(partner_parms[1:2])
 
-  partner_parms     <- gridsearch_for_partner_phase1(test_data_phase1)
-  partner_parms2    <- as.numeric(partner_parms[1:2])
-
-    cat("\n PARTNER'S PARAMETERS ARE",partner_parms, "\n")
-    cat('\n *** SIMULATING PARTNER DECISIONS ***\n\n')
+    cat("\n PARTNER'S PARAMETERS ARE", partner_parms, "\n")
+    cat("\n *** SIMULATING PARTNER DECISIONS ***\n\n")
 
   partner_decisions <- simulate_phase_decisions(partner_parms2, data, phase = 2)
   partici_decisions <- test_data_phase1
 
-    cat('\n Done \n')
+  cat("\n Done \n")
 
-  if(shuffle == T){
-  set.seed(156)
-  row <- sample(nrow(partner_decisions))
-  partner_decisions <- partner_decisions[row,]
-  partner_decisions
+  if (shuffle == T) {
+    set.seed(156)
+    row <- sample(nrow(partner_decisions))
+    partner_decisions <- partner_decisions[row, ]
+    partner_decisions
   }
 
   return(list(PARp = partner_parms,
               PPTd = partici_decisions,
               PARd = partner_decisions %>% rename(AcPar = 5)))
-
 }
 
-ABA_Phase1_Only <- function(parms, data, sim = 0){
-
+ABA_Phase1_Only <- function(parms, data, sim = 0) {
   # Initialise
-
   res = 30; # resolution of belief grid
   T1  = length(data %>% filter(Phase == 1) %>% rownames());  # trials for phase 1
 
   #Phase 1
-  alpha            = parms[1];
-  beta             = parms[2];
-  alpha_v          = parms[3];
-  beta_v           = parms[4];
+  alpha = parms[1];
+  beta = parms[2];
+  alpha_v = parms[3];
+  beta_v = parms[4];
 
   # grid for a subjects beliefs over their preferences in phase 1
-  #parameters space of alpha and beta
-  grid <- matlab::meshgrid(seq(0, res, 0.125),seq(-res, res, 0.25));
+  # parameters space of alpha and beta
+  grid <- matlab::meshgrid(seq(0, res, 0.125), seq(-res, res, 0.25));
   alpha_grid <- grid$x
   beta_grid  <- grid$y
 
   #generate standardised grid to form priors for preferences
-  pabg <- dnorm(alpha_grid,alpha,alpha_v)*dnorm(beta_grid,beta,beta_v);
+  pabg <- dnorm(alpha_grid, alpha, alpha_v) * dnorm(beta_grid, beta, beta_v);
   pabg <- pabg / sum(as.vector(pabg));
 
   # initialised dummy values
 
-  lik1        <- 0;   # likelihood for choices in phase 1
-  prob1       <- rep(NA, T1)
-  simA        <- rep(NA, T1)
-  LL          <- 0
+  lik1 <- 0;   # likelihood for choices in phase 1
+  prob1 <- rep(NA, T1)
+  simA <- rep(NA, T1)
+  LL <- 0
 
   # Phase 1 choices of the participant
 
-    for (t in 1:T1){
+  for (t in 1:T1) {
+    s1 = as.numeric(data[t, 3] / 10);
+    o1 = as.numeric(data[t, 4] / 10);
+    s2 = as.numeric(data[t, 5] / 10);
+    o2 = as.numeric(data[t, 6] / 10);
 
-    s1 = as.numeric(data[t, 3]/10);
-    o1 = as.numeric(data[t, 4]/10);
-    s2 = as.numeric(data[t, 5]/10);
-    o2 = as.numeric(data[t, 6]/10);
+    val1 = alpha_grid * s1 + beta_grid * max(s1 - o1, 0) ;
+    val2 = alpha_grid * s2 + beta_grid * max(s2 - o2, 0) ;
 
-    val1 = alpha_grid*s1 + beta_grid*max(s1-o1,0) ;
-    val2 = alpha_grid*s2 + beta_grid*max(s2-o2,0) ;
-
-    pchoose1=(1/(1+exp(-(val1 - val2)))); # probability of 1
-    tmp_ppt=pchoose1 * pabg;
+    pchoose1 = (1 / (1 + exp(-(val1 - val2)))); # probability of 1
+    tmp_ppt = pchoose1 * pabg;
     subject_netp1 = sum(as.vector(tmp_ppt));
-    simA[t] = sample(c(1,2),1, prob = c(subject_netp1, 1-subject_netp1));
+    simA[t] = sample(c(1, 2), 1, prob = c(subject_netp1, 1 - subject_netp1));
 
-      if (sim){
-        actual_choice = simA[t];
-      } else {
-        actual_choice = data[t, 7];
-      }
-
-      if (actual_choice==1){
-      lik1 = lik1 + log(subject_netp1); # log likelihood of 1
-      prob1[t] = subject_netp1;
-      } else {
-      lik1 = lik1 + log(1-subject_netp1);
-      prob1[t] = 1-subject_netp1;
-      }
-
+    if (sim) {
+      actual_choice = simA[t];
+    } else {
+      actual_choice = data[t, 7];
     }
 
-    LL = lik1
+    if (actual_choice == 1) {
+      lik1 = lik1 + log(subject_netp1); # log likelihood of 1
+      prob1[t] = subject_netp1;
+    } else {
+      lik1 = lik1 + log(1 - subject_netp1);
+      prob1[t] = 1 - subject_netp1;
+    }
+  }
 
-      if(sim){
-      return(list(Actions = simA, Prob1 = prob1, LL = LL))
-      } else {
-      return(LL)
-      }
+  LL = lik1
 
+  if (sim) {
+    return(list(Actions = simA, Prob1 = prob1, LL = LL))
+  } else {
+    return(LL)
+  }
 } # end of function
 
-ABA_wrapper_Phase1_Only <- function(ParM, datAr, scbeta0=-1,details=0){
-
+ABA_wrapper_Phase1_Only <- function(ParM, datAr, scbeta0 = -1, details = 0) {
   parM <- as.vector(ParM) # in case it's inputted in another format
   parn <- length(parM)
 
-  if ((scbeta0[1] < 0) && !is.na(scbeta0)){
+  if ((scbeta0[1] < 0) && !is.na(scbeta0)) {
     # i.e. a number, but not a valid scaled distr. param.,
     # which means 'use default, weak regularizing priors'
-    scbeta0 <- matrix(c(1.05,1.05,0, 30,
-                        1.05,1.05,-30, 30,
-                        1.05,1.05,0.01, 10,
-                        1.05,1.05,0.01, 10
-    ),
-    nrow=4, ncol=parn)
+    scbeta0 <- matrix(c(1.05, 1.05, 0, 30,
+                        1.05, 1.05, -30, 30,
+                        1.05, 1.05, 0.01, 10,
+                        1.05, 1.05, 0.01, 10
+    ), nrow = 4, ncol = parn)
 
-    if(details){
-      colnames(scbeta0) <-   c('alphappt', 'betappt', 'alphasd', 'betasd')
-      rownames(scbeta0) <-   c('ashape','bshape','min','max')
+    if (details) {
+      colnames(scbeta0) <-   c("alphappt", "betappt", "alphasd", "betasd")
+      rownames(scbeta0) <-   c("ashape", "bshape", "min", "max")
     }
   }
 
   # Cacl. the log prior for MAP purposes etc, all calc'd in short form:
   mSLPrior <- 0;
-  if (length(scbeta0)>1){
-    mSLPrior <- mSLPrior - sum(dbetasc( parM,
-                                        scbeta0[1,1:parn],scbeta0[2,1:parn],
-                                        scbeta0[3,1:parn],scbeta0[4,1:parn], log=TRUE));
+  if (length(scbeta0) > 1) {
+    mSLPrior <- mSLPrior - sum(dbetasc(parM,
+                                       scbeta0[1, 1:parn], scbeta0[2, 1:parn],
+                                       scbeta0[3, 1:parn], scbeta0[4, 1:parn], log=TRUE));
   }
 
-  if (!details){
-    if (mSLPrior == Inf){  # If we are in an a priori prohibited parameter region
+  if (!details) {
+    if (mSLPrior == Inf) {  # If we are in an a priori prohibited parameter region
       # do not attempt to calculate the likelihood - it will be nonsense anyway.
       return(Inf);
     } else {
-      return(mSLPrior - ABA_Phase1_Only(ParM,datAr,sim=0))
+      return(mSLPrior - ABA_Phase1_Only(ParM, datAr, sim = 0))
     }
   } else {
     res = list();
     res[[2]] <- scbeta0;
-    res[[3]] <- ParM;        res[[4]] <- datAr;
-    if (mSLPrior == Inf){
+    res[[3]] <- ParM;
+    res[[4]] <- datAr;
+
+    if (mSLPrior == Inf) {
       res[[1]] <- Inf; res[[5]] <- NA;
     } else {
-      res[[5]] <- ABA_Phase1_Only(ParM,datAr,sim=0);
+      res[[5]] <- ABA_Phase1_Only(ParM, datAr, sim = 0);
       res[[1]] <- mSLPrior - res[[5]];
     }
-    names(res) <- c('sLP','scbeta0','par','dat','sLL')
+    names(res) <- c("sLP", "scbeta0", "par", "dat", "sLL")
     return(res)
   }
-
-
 } # end of function
 
-fit_participant_pars_phase1 <- function(data){
-
+fit_participant_pars_phase1 <- function(data) {
     # Take phase 1 trials only
-    Phase1Trials<- data %>% filter(Phase == 1)
+    Phase1Trials <- data %>% filter(Phase == 1)
 
     # Select some random starting pars
     rand_par0    <- rep(NA, 4)
@@ -240,17 +283,16 @@ fit_participant_pars_phase1 <- function(data){
 
     #cat('\n SANN estimates are', SANNpar$par, '\n')
 
-    OPTIMpar<- optim(rand_par0, #SANNpar$par,
+    OPTIMpar <- optim(rand_par0, #SANNpar$par,
                      ABA_wrapper_Phase1_Only,
                      datAr = Phase1Trials,
                      scbeta0 = -1,
                      control = list(maxit = 500, trace = 10, REPORT = T))
 
     return(OPTIMpar$par)
-
 }
 
-gridsearch_for_partner_phase2 <- function(phase1par, data, cores = 4, res = 30, by = 1){
+gridsearch_for_partner_phase2 <- function(phase1par, data, cores = 4, res = 30, by = 1) {
 
   alpha = c(0, 5, 10, 15, 20)
   beta = c(-30, -20, -10, 0, 10, 20, 30)
@@ -260,27 +302,28 @@ gridsearch_for_partner_phase2 <- function(phase1par, data, cores = 4, res = 30, 
   cor = simulate_phase_decisions(phase1par, data) %>% rename(PPTANS = Ac)
   doParallel::registerDoParallel(cores = cores)
 
-  for (i in 1:length(alpha)){
-    beta_sweep <- foreach (j = 1:length(beta), .combine = rbind)%dopar%{
-
+  for (i in 1:length(alpha)) {
+    beta_sweep <- foreach(j = 1:length(beta), .combine = rbind) %dopar% {
       test_run <- simulate_phase_decisions(c(alpha[i], beta[j]), data, phase = 2)
-      check_cor<- cbind(cor, test_run[,5])
+      check_cor <- cbind(cor, test_run[, 5])
       check_cor %>%
         mutate(Same = ifelse(PPTANS == Ac, 1, 0)) %>%
-        summarise(TotalCorrect = sum(Same)/54) %>%
+        summarise(TotalCorrect = sum(Same) / 54) %>%
         as.numeric()
-
     }
 
-    mat[i,] <- as.numeric(beta_sweep)
-
+    mat[i, ] <- as.numeric(beta_sweep)
   }
 
-  series_par <- which.min(c(mat[1,1],mat[5,4], mat[1,7]))
-  if(series_par == 1) {
-    Partner = 'Prosocial'; beta = -20; alpha = 0
-  }else if(series_par==2){
-    Partner = 'Individualist'; beta = 0; alpha = 20
+  series_par <- which.min(c(mat[1, 1], mat[5, 4], mat[1, 7]))
+  if (series_par == 1) {
+    Partner = "Prosocial";
+    beta = -20;
+    alpha = 0
+  }else if (series_par == 2) {
+    Partner = "Individualist";
+    beta = 0;
+    alpha = 20
   }else{
     Partner ='Competitive'; beta = 20; alpha = 0}
 
@@ -329,8 +372,8 @@ simulate_phase_decisions <- function(parms, data, phase = 2){
   T1  = length(data %>% filter(Phase == phase) %>% rownames());  # trials for phase 1
 
   #Phase 1
-  alpha            = parms[1];
-  beta             = parms[2];
+  alpha            = as.numeric(parms[1])
+  beta             = as.numeric(parms[2])
 
   # initialised dummy values
   decisions        <- data_frame(
@@ -340,6 +383,8 @@ simulate_phase_decisions <- function(parms, data, phase = 2){
     par2 = rep(NA, T1),
     Ac   = rep(NA, T1)
   )
+
+  if(length(parms) == 3){decisions$type = parms[3]}
 
   # Phase 1 choices of the participant
 
@@ -369,6 +414,105 @@ simulate_phase_decisions <- function(parms, data, phase = 2){
 
 
 } # end of function
+
+precan_partners <- function(data){
+
+  alpha = c(5, 10, 15)
+  beta = c(-15, -10, -5, 5, 10, 15)
+  partner_choices <- list()
+
+  for (i in 1:length(alpha)){
+
+    beta_sweep <- foreach(j = 1:length(beta), .combine = rbind)%dopar%{
+
+      phasedecs <- simulate_phase_decisions(c(alpha[i], beta[j]), data, phase = 2) %>%
+        mutate(parsa = alpha[i], parsb = beta[j])
+
+    }
+
+    partner_choices[[i]] <- beta_sweep
+
+  }
+
+  for (i in 1:length(alpha)) {
+    partner_choices[[i]] <- split(partner_choices[[i]],partner_choices[[i]]$parsb)
+    for(j in 1:length(beta)){
+    colnames(partner_choices[[i]][[j]])[5] <- paste(partner_choices[[i]][[j]][1,6], partner_choices[[i]][[j]][1,7])
+    partner_choices[[1]][[1]] <- partner_choices[[1]][[1]] %>% mutate(partner_choices[[i]][[j]])
+    }
+  }
+
+  partner_choices_df <- partner_choices[[1]][[1]] %>% dplyr::select(1:4,
+                                                                    `5 -10`, `5 -15`,
+                                                                    `10 -5`, `10 5`,
+                                                                    `5 10`, `5 15`)
+  return(partner_choices_df)
+}
+
+set_up_beliefs  <- function(){
+
+  grid <- matlab::meshgrid(seq(0, 30, 0.125),seq(-30, 30, 0.25));
+  alpha_grid <- grid$x
+  beta_grid  <- grid$y
+  #generate standardised grid to form priors for preferences
+  belief_grid <- dnorm(alpha_grid,15,10)*dnorm(beta_grid,0,10);
+  belief_grid <- belief_grid / sum(as.vector(belief_grid));
+
+  return(belief_grid)
+
+}
+
+incremental_fit <- function(belief_grid, data){
+
+    #parameters space of alpha and beta
+    grid <- matlab::meshgrid(seq(0, 30, 0.125),seq(-30, 30, 0.25));
+    alpha_grid <- grid$x
+    beta_grid  <- grid$y
+
+    for (t in 1:length(data[,1])){
+
+        s1 = as.numeric(data[t, 3]/10);
+        o1 = as.numeric(data[t, 4]/10);
+        s2 = as.numeric(data[t, 5]/10);
+        o2 = as.numeric(data[t, 6]/10);
+
+        val1 = alpha_grid*s1 + beta_grid*max(s1-o1,0) ;
+        val2 = alpha_grid*s2 + beta_grid*max(s2-o2,0) ;
+
+        subject_choice = data[t,7]
+
+          if (subject_choice==1){
+            pchoose2=(1./(1+exp(-(val1 - val2)))); # probability of 1
+          } else {
+            pchoose2=(1./(1+exp(-(val2 - val1)))); # probability of 2
+          }
+
+        belief_grid = pchoose2*belief_grid; # Bayes rule
+        belief_grid = belief_grid / sum(as.vector(belief_grid)); #normalised distribution
+
+    }
+
+    return(belief_grid)
+
+}
+
+marginalise <- function(belief_grid){
+
+  alpha_vec <- seq(0, 30, 0.125)
+  beta_vec  <- seq(-30, 30, 0.25)
+
+  alpha = colSums(belief_grid);
+  beta  = rowSums(belief_grid);
+
+  #find the indices of maximum likelihood after seeing the partner
+  Ia            = which.max(alpha)
+  Ib            = which.max(beta)
+  mu_alphapar   = alpha_vec[Ia];
+  mu_betapar    = beta_vec[Ib];
+
+  return(c(mu_alphapar, mu_betapar))
+
+}
 
 # Utility -----------------------------------------------------------------
 
