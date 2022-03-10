@@ -1,19 +1,21 @@
-// React
-import React from 'react';
-
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {axe, toHaveNoViolations} from 'jest-axe';
 
 // Custom wrapper
-import {render} from './Wrapper';
+import {render} from '../../Wrapper';
 
-// Test components
-import Summary from '../../../../src/lib/view/screens/Summary';
+// Screen factory
+import ScreenFactory from '@classes/factories/ScreenFactory';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
+
+let screenFactory: ScreenFactory;
+beforeAll(() => {
+  screenFactory = new ScreenFactory();
+});
 
 // Mock jsPsych
 import 'jspsych';
@@ -39,15 +41,17 @@ beforeEach(() => {
 });
 
 test('loads and displays Summary screen', async () => {
-  render(
-      <Summary
-        display='summary'
-        postPhase='playerChoice'
-        selectionHandler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  render(screenFactory.generate({
+    display: 'summary',
+    screen: {
+      trial: 0,
+      display: 'summary',
+      postPhase: 'playerChoice',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   // Waiting for 'TextTransition' elements to have updated
   // upon first rendering the screen
@@ -57,15 +61,17 @@ test('loads and displays Summary screen', async () => {
 });
 
 test('check Summary accessibility', async () => {
-  const {container} = render(
-      <Summary
-        display='summary'
-        postPhase='playerChoice'
-        selectionHandler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  const {container} = render(screenFactory.generate({
+    display: 'summary',
+    screen: {
+      trial: 0,
+      display: 'summary',
+      postPhase: 'playerChoice',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   // Asynchronous chain, waiting for 'TextTransition'
   // elements to have updated upon first rendering the screen

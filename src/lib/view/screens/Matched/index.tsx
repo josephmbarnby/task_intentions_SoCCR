@@ -9,7 +9,7 @@ import Avatar from 'boring-avatars';
 import consola from 'consola';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '@src/configuration';
 
 /**
  * Generate layout of Matched Screen
@@ -17,7 +17,7 @@ import {Configuration} from '../../../Configuration';
  */
 const Matched = (): ReactElement => {
   // Get the current partner avatar
-  const experiment = window['Experiment'];
+  const experiment = window.Experiment;
   const currentPartner = experiment.getGlobalStateValue('partnerAvatar');
 
   // Increment the partner avatar value

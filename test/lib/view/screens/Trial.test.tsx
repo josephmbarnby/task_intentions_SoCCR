@@ -1,16 +1,13 @@
-// React
-import React from 'react';
-
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {axe, toHaveNoViolations} from 'jest-axe';
 
 // Custom wrapper
-import {render} from './Wrapper';
+import {render} from '../../Wrapper';
 
-// Test components
-import Trial from '../../../../src/lib/view/screens/Trial';
+// Screen factory
+import ScreenFactory from '@classes/factories/ScreenFactory';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
@@ -38,29 +35,36 @@ beforeEach(() => {
   };
 });
 
+let screenFactory: ScreenFactory;
+beforeAll(() => {
+  screenFactory = new ScreenFactory();
+});
+
 test('loads and displays Trial screen', async () => {
-  render(
-      <Trial
-        display='playerChoice'
-        isPractice={false}
-        participantPoints={5}
-        partnerPoints={7}
-        options={{
-          one: {
-            participant: 1,
-            partner: 2,
-          },
-          two: {
-            participant: 2,
-            partner: 1,
-          },
-        }}
-        answer='Option 1'
-        selectionHandler={(selection: string) => {
-          console.info(`Selected:`, selection);
-        }}
-      />
-  );
+  render(screenFactory.generate({
+    display: 'playerChoice',
+    screen: {
+      trial: 0,
+      display: 'playerChoice',
+      isPractice: false,
+      participantPoints: 5,
+      partnerPoints: 7,
+      options: {
+        one: {
+          participant: 1,
+          partner: 2,
+        },
+        two: {
+          participant: 2,
+          partner: 1,
+        },
+      },
+      answer: 'Option 1',
+      handler: (selection: string) => {
+        console.info(`Selected:`, selection);
+      },
+    },
+  }));
 
   // Waiting for 'TextTransition' elements to have updated
   // upon first rendering the screen
@@ -70,28 +74,30 @@ test('loads and displays Trial screen', async () => {
 });
 
 test('check Trial accessibility', async () => {
-  const {container} = render(
-      <Trial
-        display='playerChoice'
-        isPractice={false}
-        participantPoints={5}
-        partnerPoints={7}
-        options={{
-          one: {
-            participant: 1,
-            partner: 2,
-          },
-          two: {
-            participant: 2,
-            partner: 1,
-          },
-        }}
-        answer='Option 1'
-        selectionHandler={(selection: string) => {
-          console.info(`Selected:`, selection);
-        }}
-      />
-  );
+  const {container} = render(screenFactory.generate({
+    display: 'playerChoice',
+    screen: {
+      trial: 0,
+      display: 'playerChoice',
+      isPractice: false,
+      participantPoints: 5,
+      partnerPoints: 7,
+      options: {
+        one: {
+          participant: 1,
+          partner: 2,
+        },
+        two: {
+          participant: 2,
+          partner: 1,
+        },
+      },
+      answer: 'Option 1',
+      handler: (selection: string) => {
+        console.info(`Selected:`, selection);
+      },
+    },
+  }));
 
   // Asynchronous chain, waiting for 'TextTransition'
   // elements to have updated upon first rendering the screen

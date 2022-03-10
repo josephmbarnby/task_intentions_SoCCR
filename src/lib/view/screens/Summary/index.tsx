@@ -1,30 +1,32 @@
 // React import
 import React, {ReactElement} from 'react';
 
-// API modules
-import {Experiment} from 'jspsych-wrapper';
+// Logging library
+import consola from 'consola';
 
 // Grommet UI components
 import {Box, Button, Grid, Heading, Layer, WorldMap} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import PlayerCard from '../../components/PlayerCard';
+import Card from '@components/Card';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '@src/configuration';
 
 // Utility functions
-import {calculatePoints} from '../../../Functions';
+import {calculatePoints} from '@lib/util';
 
 /**
  * Generate layout of Matching Screen
- * @param {Screens.Summary} props screen props
+ * @param {Props.Screens.Summary} props screen props
  * @return {ReactElement}
  */
-const Summary = (props: Screens.Summary): ReactElement => {
+const Summary = (props: Props.Screens.Summary): ReactElement => {
+  consola.debug(`Summary screen for '${props.postPhase}'`);
+
   // Get the participant's and the partner's avatars
-  const experiment = (window['Experiment'] as Experiment);
+  const experiment = window.Experiment;
   const participantAvatar = experiment.getGlobalStateValue('participantAvatar');
   const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
 
@@ -65,7 +67,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
           ]}
         >
           {/* Participant */}
-          <PlayerCard
+          <Card
             gridArea='participantArea'
             name='You'
             avatar={Configuration.avatars.names.participant[participantAvatar]}
@@ -73,7 +75,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
           />
 
           {/* Partner */}
-          <PlayerCard
+          <Card
             gridArea='partnerArea'
             name='Partner'
             avatar={Configuration.avatars.names.partner[partnerAvatar]}
@@ -96,7 +98,7 @@ const Summary = (props: Screens.Summary): ReactElement => {
             icon={<LinkNext />}
             reverse
             onClick={() => {
-              props.selectionHandler();
+              props.handler();
             }}
           />
         </Box>

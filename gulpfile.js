@@ -4,7 +4,7 @@ const del = require('del');
 
 /**
  * Run the linter
- * @param {Function} cb callback function
+ * @param {function} cb callback function
  */
 function lint(cb) {
   gulp.src([
@@ -21,7 +21,7 @@ function lint(cb) {
 
 /**
  * Clean up build artefacts
- * @param {Function} cb callback function
+ * @param {function} cb callback function
  */
 function clean(cb) {
   del([

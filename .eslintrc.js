@@ -3,7 +3,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: [
     '@typescript-eslint',
-    'react-hooks',
   ],
   ignorePatterns: [
     '.eslintrc.js',
@@ -16,11 +15,10 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'google',
+    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
   ],
   rules: {
     '@typescript-eslint/no-namespace': 'off',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
   },
 };

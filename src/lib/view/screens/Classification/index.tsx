@@ -7,10 +7,10 @@ import {LinkNext} from 'grommet-icons';
 
 /**
  * Generate layout of Classification Screen (Classification trial)
- * @param {Screens.Classification} props component props
+ * @param {Props.Screens.Classification} props component props
  * @return {ReactElement}
  */
-const Classification = (props: Screens.Classification): ReactElement => {
+const Classification = (props: Props.Screens.Classification): ReactElement => {
   // Configure relevant states
   const [classification, setClassification] = React.useState('');
   const [continueDisabled, setContinueDisabled] = React.useState(true);
@@ -68,7 +68,7 @@ const Classification = (props: Screens.Classification): ReactElement => {
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          props.selectionHandler(classification);
+          props.handler(classification);
         }}
       />
     </Box>

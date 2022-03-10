@@ -31,8 +31,11 @@ declare type TimelineNode = {
   answer?: string;
   isPractice?: boolean;
 
+  // Matching screen
+  fetchData?: boolean;
+
   // Attention-check plugin
-  question?: string;
+  prompt?: string;
   options?: string[];
   options_radio?: boolean;
   option_correct?: number;

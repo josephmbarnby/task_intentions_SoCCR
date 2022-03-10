@@ -1,29 +1,33 @@
-// React
-import React from 'react';
-
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {axe, toHaveNoViolations} from 'jest-axe';
 
 // Custom wrapper
-import {render} from './Wrapper';
+import {render} from '../../Wrapper';
 
-// Test components
-import SelectAvatar from '../../../../src/lib/view/screens/SelectAvatar';
+// Screen factory
+import ScreenFactory from '@classes/factories/ScreenFactory';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
 
+let screenFactory: ScreenFactory;
+beforeAll(() => {
+  screenFactory = new ScreenFactory();
+});
+
 test('loads and displays SelectAvatar screen', async () => {
-  render(
-      <SelectAvatar
-        display='selection'
-        selectionHandler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  render(screenFactory.generate({
+    display: 'selection',
+    screen: {
+      trial: 0,
+      display: 'selection',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   await waitFor(() => screen.getByRole('heading'));
 
@@ -31,14 +35,16 @@ test('loads and displays SelectAvatar screen', async () => {
 });
 
 test('check SelectAvatar accessibility', async () => {
-  const {container} = render(
-      <SelectAvatar
-        display='selection'
-        selectionHandler={() => {
-          console.info('Selection handler called');
-        }}
-      />
-  );
+  const {container} = render(screenFactory.generate({
+    display: 'selection',
+    screen: {
+      trial: 0,
+      display: 'selection',
+      handler: () => {
+        console.info('Selection handler called');
+      },
+    },
+  }));
 
   // Run the check, disabling 'duplicate-id' rule.
   // Rule fails on components inside the avatar SVGs.

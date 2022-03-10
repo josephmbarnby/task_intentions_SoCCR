@@ -6,17 +6,17 @@ import {Box, Button, Paragraph} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import RangeSlider from '../../components/RangeSlider';
+import Slider from '@components/Slider';
 
 // Constants
 const SLIDER_DEFAULT = 50; // Sets the 'thumb' to the middle of the slider
 
 /**
  * Generate layout of Agency Screen (Agency trial)
- * @param {Screens.Agency} props component props
+ * @param {Props.Screens.Agency} props component props
  * @return {ReactElement}
  */
-const Agency = (props: Screens.Agency): ReactElement => {
+const Agency = (props: Props.Screens.Agency): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [sliderMoved, setSliderMoved] = useState(false);
@@ -41,7 +41,7 @@ const Agency = (props: Screens.Agency): ReactElement => {
       <Paragraph margin='small' size='large' fill>
         I believed I was playing with a real person.
       </Paragraph>
-      <RangeSlider
+      <Slider
         min={0}
         max={100}
         initial={sliderValue}
@@ -65,7 +65,7 @@ const Agency = (props: Screens.Agency): ReactElement => {
         icon={<LinkNext />}
         reverse
         onClick={() => {
-          props.selectionHandler(sliderValue);
+          props.handler(sliderValue);
         }}
       />
     </Box>

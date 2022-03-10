@@ -1,27 +1,33 @@
 // React import
 import React, {ReactElement, useRef, useState} from 'react';
 
+// Logging library
+import consola from 'consola';
+
 // UI components
 import {Box, Button, Grid, Heading, Layer, Text} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 import TextTransition, {presets} from 'react-text-transition';
 
 // Custom components
-import Option from '../../components/Option';
-import PlayerCard from '../../components/PlayerCard';
+import Option from '@components/Option';
+import Card from '@components/Card';
 
 // Access theme constants directly
-import {Theme} from '../../../Theme';
+import {Theme} from '@lib/theme';
 
 // Configuration
-import {Configuration} from '../../../Configuration';
+import {Configuration} from '@src/configuration';
 
 /**
  * Generate the choices grid with options
- * @param {Screens.Trial} props collection of props
+ * @param {Props.Screens.Trial} props collection of props
  * @return {ReactElement}
  */
-const Trial = (props: Screens.Trial): ReactElement => {
+const Trial = (props: Props.Screens.Trial): ReactElement => {
+  // Get the Experiment instance
+  const experiment = window.Experiment;
+
   // Header state
   let defaultHeader = !props.display.startsWith('playerGuess') ?
       'How will you split the points?' :
@@ -46,6 +52,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
     partnerPoints,
     setPartnerPoints,
   ] = useState(props.partnerPoints);
+
+  // Number of correct answers
   const [
     correctCount,
     setCorrectCount,
@@ -72,32 +80,108 @@ const Trial = (props: Screens.Trial): ReactElement => {
   // Store the correct answer, this changes in some practice trials
   let answer = props.answer;
 
+  // Store the option configuration
+  const defaultPoints = {
+    options: {
+      one: {
+        participant: props.options.one.participant,
+        partner: props.options.one.partner,
+      },
+      two: {
+        participant: props.options.two.participant,
+        partner: props.options.two.partner,
+      },
+    },
+  };
+
+  // Store a completely separate configuration for the display of the points
+  const displayPoints = {
+    options: {
+      one: {
+        participant: props.options.one.participant,
+        partner: props.options.one.partner,
+      },
+      two: {
+        participant: props.options.two.participant,
+        partner: props.options.two.partner,
+      },
+    },
+  };
+
+  // Use data from the API if available
+  if (props.display === 'playerGuess') {
+    if ('PARd' in experiment.getGlobalStateValue('phaseData')) {
+      // Update the values stored for the points
+      const phaseData = experiment.getGlobalStateValue('phaseData');
+      const phaseTwoTrialData = phaseData['PARd'][props.trial - 1];
+
+      // Switch participant and partner points
+      displayPoints.options.one.participant = phaseTwoTrialData['par1'];
+      displayPoints.options.one.partner = phaseTwoTrialData['ppt1'];
+      displayPoints.options.two.participant = phaseTwoTrialData['par2'];
+      displayPoints.options.two.partner = phaseTwoTrialData['ppt2'];
+
+      // Update default points
+      defaultPoints.options.one.participant = phaseTwoTrialData['ppt1'];
+      defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
+      defaultPoints.options.two.participant = phaseTwoTrialData['ppt2'];
+      defaultPoints.options.two.partner = phaseTwoTrialData['par2'];
+
+      // Update the correct answer
+      answer = phaseTwoTrialData['AcPar'] === 1 ? 'Option 1' : 'Option 2';
+    } else {
+      consola.warn(`'playerGuess' trial, state data not found, using defaults`);
+    }
+  } else if (props.display === 'playerChoice2') {
+    if ('PPTd' in experiment.getGlobalStateValue('phaseData')) {
+      // Update the values stored for the points
+      const phaseData = experiment.getGlobalStateValue('phaseData');
+      const phaseThreeTrialData = phaseData['PPTd'][props.trial - 1];
+
+      // Set participant and partner points
+      displayPoints.options.one.participant = phaseThreeTrialData['ppt1'];
+      displayPoints.options.one.partner = phaseThreeTrialData['par1'];
+      displayPoints.options.two.participant = phaseThreeTrialData['ppt2'];
+      displayPoints.options.two.partner = phaseThreeTrialData['par2'];
+
+      // Update default points
+      defaultPoints.options.one.participant = phaseThreeTrialData['ppt1'];
+      defaultPoints.options.one.partner = phaseThreeTrialData['par1'];
+      defaultPoints.options.two.participant = phaseThreeTrialData['ppt2'];
+      defaultPoints.options.two.partner = phaseThreeTrialData['par2'];
+    } else {
+      consola.warn(
+          `'playerChoice2' trial, state data not found, using defaults`
+      );
+    }
+  }
+
   /**
    * Update the points state for the participant and the partner
    * @param {number} participant updated points for the participant
    * @param {number} partner updated points for the partner
    */
-  function addPoints(participant: number, partner: number): void {
+  const addPoints = (participant: number, partner: number): void => {
     // Update the point totals
     setParticipantPoints(participantPoints + participant);
     setPartnerPoints(partnerPoints + partner);
-  }
+  };
 
   /**
    * Helper function to end the trial
    * @param {Options} option selected option
    */
-  function endTrial(option: Options): void {
+  const endTrial = (option: Options): void => {
     // Bubble the selection handler with selection and answer
-    props.selectionHandler(option, answer);
-  }
+    props.handler(option, defaultPoints, answer);
+  };
 
   /**
    * Update the number of points of the participant and the
    * partner. The update process depends on the phase.
    * @param {Options} option selected option
    */
-  function updatePoints(option: Options): void {
+  const updatePoints = (option: Options): void => {
     // Points to apply
     let participantPoints = 0;
     let partnerPoints = 0;
@@ -107,7 +191,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
       // 'playerGuess' trials update points from the correct choice
       if (props.display === 'playerGuessPractice') {
         // Change the 'correct' answer depending on probability
-        if (experiment.random() > 0.6) {
+        if (experiment.random() < 0.2) {
           // Change the 'correct' answer to the opposite of
           // what was selected
           answer = option === 'Option 1' ? 'Option 2' : 'Option 1';
@@ -117,27 +201,27 @@ const Trial = (props: Screens.Trial): ReactElement => {
       // Participant points
       participantPoints =
           answer === 'Option 1' ?
-            props.options.one.participant :
-            props.options.two.participant;
+            displayPoints.options.one.participant :
+            displayPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
           answer === 'Option 1' ?
-            props.options.one.partner :
-            props.options.two.partner;
+            displayPoints.options.one.partner :
+            displayPoints.options.two.partner;
     } else {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
           option === 'Option 1' ?
-            props.options.one.participant :
-            props.options.two.participant;
+            displayPoints.options.one.participant :
+            displayPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
           option === 'Option 1' ?
-            props.options.one.partner :
-            props.options.two.partner;
+            displayPoints.options.one.partner :
+            displayPoints.options.two.partner;
     }
 
     // Apply the points
@@ -147,14 +231,14 @@ const Trial = (props: Screens.Trial): ReactElement => {
     );
 
     // Call the selection handler
-    selectionHandler(option);
-  }
+    handler(option);
+  };
 
   /**
    * Selection handler
    * @param {Options} option the selected option
    */
-  function selectionHandler(option: Options) {
+  const handler = (option: Options) => {
     // Sum the number of correct answers for the phase
     const correctCountInitial = jsPsych.data.get()
         .filter({
@@ -179,12 +263,12 @@ const Trial = (props: Screens.Trial): ReactElement => {
     if (props.isPractice === false) {
       transition();
     }
-  }
+  };
 
   /**
    * Transition function to end the trial
    */
-  function transition() {
+  const transition = () => {
     // Pull the selection into a function-scoped variable
     const trialSelection = selectedOption;
 
@@ -293,14 +377,14 @@ const Trial = (props: Screens.Trial): ReactElement => {
         break;
       }
     }
-  }
+  };
 
   /**
    * Generate and return the content to display in the overlay
    * shown in practice-type trials
    * @return {ReactElement}
    */
-  function getOverlayContent(): ReactElement {
+  const getOverlayContent = (): ReactElement => {
     let content: ReactElement = <></>;
 
     switch (props.display) {
@@ -316,11 +400,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
             <Text size='large' margin='medium'>
               That means
               you get {selectedOption === 'Option 1' ?
-                  props.options.one.participant :
-                  props.options.two.participant
+                  displayPoints.options.one.participant :
+                  displayPoints.options.two.participant
               } points and your partner gets {selectedOption === 'Option 1' ?
-                  props.options.one.partner :
-                  props.options.two.partner
+                  displayPoints.options.one.partner :
+                  displayPoints.options.two.partner
               } points.
             </Text>
 
@@ -352,11 +436,11 @@ const Trial = (props: Screens.Trial): ReactElement => {
             <Text size='large' margin='medium'>
               That means
               you get {answer === 'Option 1' ?
-                  props.options.one.participant :
-                  props.options.two.participant
+                  displayPoints.options.one.participant :
+                  displayPoints.options.two.participant
               } points and your partner gets {answer === 'Option 1' ?
-                  props.options.one.partner :
-                  props.options.two.partner
+                  displayPoints.options.one.partner :
+                  displayPoints.options.two.partner
               } points.
             </Text>
 
@@ -380,10 +464,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
     }
 
     return content;
-  }
-
-  // Get the participant's and the partner's avatars
-  const experiment = window.Experiment;
+  };
 
   // Participant avatar
   const participantAvatar =
@@ -438,7 +519,7 @@ const Trial = (props: Screens.Trial): ReactElement => {
       </Heading>
 
       {/* Participant's Avatar */}
-      <PlayerCard
+      <Card
         gridArea='playerArea'
         name='You'
         points={participantPoints}
@@ -463,8 +544,8 @@ const Trial = (props: Screens.Trial): ReactElement => {
           <Option
             optionKey='optionOne'
             optionName='Option 1'
-            pointsParticipant={props.options.one.participant}
-            pointsPartner={props.options.one.partner}
+            pointsParticipant={displayPoints.options.one.participant}
+            pointsPartner={displayPoints.options.one.partner}
           />
         </Box>
 
@@ -481,14 +562,14 @@ const Trial = (props: Screens.Trial): ReactElement => {
           <Option
             optionKey='optionTwo'
             optionName='Option 2'
-            pointsParticipant={props.options.two.participant}
-            pointsPartner={props.options.two.partner}
+            pointsParticipant={displayPoints.options.two.participant}
+            pointsPartner={displayPoints.options.two.partner}
           />
         </Box>
       </Box>
 
       {/* Partner's Avatar */}
-      <PlayerCard
+      <Card
         gridArea='partnerArea'
         name='Partner'
         points={partnerPoints}
