@@ -8,13 +8,12 @@
   "scripts": {
     "clean": "rm -rf dist/ api/logs/",
     "build:task": "webpack --config webpack.production.js",
-    "style:task": "gulp style",
     "lint:task": "gulp lint",
     "start": "yarn start:server & yarn start:task",
     "start:server": "cd api && Rscript run.R",
     "start:task": "webpack serve --config webpack.development.js",
     "test": "yarn test:server && yarn test:task",
-    "test:server": "python3 api/tests",
+    "test:server": "pytest api/tests",
     "test:task": "jest"
   },
   "repository": {
