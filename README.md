@@ -15,6 +15,7 @@ To run the API endpoint for task computations, the following R packages should b
 - `logger`
 - `doParallel`
 - `dplyr`
+- `future`
 
 To run the tests for the R API endpoint, ensure Python 3.6+ and the `pytest` are installed. The `pytest` package should be installed using the command `pip3 install -U pytest`. Additonally, the tests use the `requests` package which can be installed using the command `pip3 install requests`.
 
