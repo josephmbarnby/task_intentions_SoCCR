@@ -6,19 +6,24 @@ import time
 from types import FunctionType
 
 
+# Constants
+ADDR = "http://localhost:8000/compute/intentions"
+
+
 # Create a new worker thread with a function that supports
 # a tuple of arguments
-def create_thread(func, args=()):
+def create_thread(target, args=()):
   logging.debug("Creating new thread")
-  return threading.Thread(target=func, args=args)
+  return threading.Thread(target=target, args=args)
 
 
 # Create a pool of worker threads and run them
-def create_pool(workers, func, args):
+def create_pool(workers, target, args):
+  logging.info("Creating {}-worker pool".format(workers))
   jobs = []
 
   for i in range(0, workers):
-    jobs.append(create_thread(func, args))
+    jobs.append(create_thread(target, args))
 
   # Start the threads
   for j in jobs:
@@ -47,8 +52,29 @@ def runner(func: FunctionType, args):
   start_time = time.time()
 
   # Run the test
-  func(args)
+  output = func(*args)
 
   # Calculated the elapsed time
   elapsed = time.time() - start_time
   logging.info("{}: {} finished after {}s".format(func.__module__, func.__name__, round(elapsed, ndigits=3)))
+
+  # Return test output
+  return output
+
+# Class to group requests
+class Requests:
+  # Basic request
+  def basic(address=""): 
+    # Send a request
+    response = create_request(address, params={
+      "id": 1234,
+      "responses": "[{\"ID\":\"NA\",\"Trial\":1,\"ppt1\":2,\"par1\":3,\"ppt2\":2,\"par2\":4,\"Ac\":1,\"Phase\":1}]"
+    })
+
+    # Acknowledge a response
+    if (response):
+      logging.info("Request succeeded!")
+      return True
+    else:
+      logging.error("Request failed!")
+      return False
