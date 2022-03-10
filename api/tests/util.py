@@ -10,6 +10,11 @@ from types import FunctionType
 ADDR = "http://localhost:8000/compute/intentions"
 
 
+# Configure logging
+format = "%(asctime)s: %(message)s"
+logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
+
+
 # Create a new worker thread with a function that supports
 # a tuple of arguments
 def create_thread(target, args=()):
@@ -66,6 +71,7 @@ class Requests:
   # Basic request
   def basic(address=""): 
     # Send a request
+    logging.info("Sending request...")
     response = create_request(address, params={
       "id": 1234,
       "responses": "[{\"ID\":\"NA\",\"Trial\":1,\"ppt1\":2,\"par1\":3,\"ppt2\":2,\"par2\":4,\"Ac\":1,\"Phase\":1}]"

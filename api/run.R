@@ -1,6 +1,8 @@
 # Additional libraries
 library(logger)
 library(plumber)
+library(future)
+future::plan("multicore")
 
 # Configure the logger to use files
 if (dir.exists("logs") == FALSE) {
