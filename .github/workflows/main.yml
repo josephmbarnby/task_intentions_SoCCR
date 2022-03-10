@@ -21,7 +21,7 @@ jobs:
     - name: Install 🚦
       run: yarn
     - name: Build 🔨
-      run: yarn build:task
+      run: yarn build:game
 
   test:
     needs: build
@@ -36,7 +36,7 @@ jobs:
     - name: Install 🚦
       run: yarn
     - name: Test 🧪
-      run: yarn test:task
+      run: yarn test:game
 
   style:
     needs: build
@@ -51,4 +51,4 @@ jobs:
     - name: Install 🚦
       run: yarn
     - name: Style 💅
-      run: yarn lint:task
+      run: yarn lint:game

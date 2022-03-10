@@ -7,14 +7,14 @@
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist/ api/logs/",
-    "build:task": "webpack --config webpack.production.js",
-    "lint:task": "gulp lint",
-    "start": "yarn start:server & yarn start:task",
+    "build:game": "webpack --config webpack.production.js",
+    "lint:game": "gulp lint",
+    "start": "yarn start:server & yarn start:game",
+    "start:game": "webpack serve --config webpack.development.js",
     "start:server": "cd api && Rscript run.R",
-    "start:task": "webpack serve --config webpack.development.js",
-    "test": "yarn test:server && yarn test:task",
-    "test:server": "pytest api/tests",
-    "test:task": "jest"
+    "test": "yarn test:server && yarn test:game",
+    "test:game": "jest",
+    "test:server": "pytest api/tests"
   },
   "repository": {
     "type": "git",

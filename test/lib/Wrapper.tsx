@@ -21,6 +21,7 @@ const Wrapper: FC = ({children}) => {
   );
 };
 
+// Custom rendering function to wrap everything inside of the Wrapper component
 const customRender = (
     ui: ReactElement,
     options?: Omit<RenderOptions, 'wrapper'>,
