@@ -1,7 +1,8 @@
+const {pathsToModuleNameMapper} = require('ts-jest');
+const {compilerOptions} = require('./tsconfig.json');
+
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
-  moduleNameMapper: {
-    '^.+\\.(css|less)$': '<rootDir>/test/__mocks__/styles.js',
-  }
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/src/' }),
 };

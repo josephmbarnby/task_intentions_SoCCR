@@ -12,7 +12,7 @@
       "@lib/*": ["lib/*"],
       "@classes/*": ["lib/classes/*"],
       "@components/*": ["lib/view/components/*"],
-      "@screens/*": ["lib/view/screens/*"],
+      "@screens/*": ["lib/view/screens/*"]
     },
     "rootDirs": ["src", "test"],
     "strict": true,
