@@ -340,14 +340,17 @@ if (process.env.NODE_ENV === 'development') {
       break;
     }
     case 'Individualist': {
+      // Individualist partner
       dataCollection = Individualist;
       break;
     }
     case 'Prosocial': {
+      // Prosocial partner
       dataCollection = Prosocial;
       break;
     }
     case 'Test': {
+      // Test partner
       dataCollection = Test;
       break;
     }
@@ -360,9 +363,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const randomisedTrials = {
-  phaseOne: [] as any[],
-  phaseTwo: [] as any[],
-  phaseThree: [] as any[],
+  phaseOne: [] as Timeline,
+  phaseTwo: [] as Timeline,
+  phaseThree: [] as Timeline,
 };
 
 // Read each row from the data collection and insert the correct
@@ -375,7 +378,7 @@ for (let i = 0; i < dataCollection.length; i++) {
   switch (row.display) {
     case 'mid': {
       // Shuffle, number, and add stage one trials
-      const stageOneTrials = shuffle(randomisedTrials.phaseOne) as any[];
+      const stageOneTrials = shuffle(randomisedTrials.phaseOne);
       let stageOneCounter = 1;
       for (const trial of stageOneTrials) {
         trial.trial = stageOneCounter;
@@ -398,8 +401,6 @@ for (let i = 0; i < dataCollection.length; i++) {
 
       // Break after Phase 1
       // Add the instructions for the first break
-
-      // Push instructions to the timeline
       timeline.push({
         type: 'instructions',
         pages: [
@@ -621,7 +622,7 @@ for (let i = 0; i < dataCollection.length; i++) {
     }
     case 'mid2': {
       // Shuffle, number, and add stage two trials
-      const stageTwoTrials = shuffle(randomisedTrials.phaseTwo) as any[];
+      const stageTwoTrials = shuffle(randomisedTrials.phaseTwo);
       let stageTwoCounter = 1;
       for (const trial of stageTwoTrials) {
         trial['trial'] = stageTwoCounter;
