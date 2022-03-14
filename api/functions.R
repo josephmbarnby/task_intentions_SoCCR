@@ -8,29 +8,33 @@ library(logger)
 
 # Phase 1 Fly Fitting -----------------------------------------------------
 match_incremental_fit <- function(
-  phase1data, precanned_df, shuffle = T, file_loc = F
+  phase_data, precanned_df, shuffle = T, file_loc = F
 ) {
   # Read or parse the data from phase one
   if (file_loc == T) {
-    phase1data <- read.csv(phase1data)
+    phase_data <- read.csv(phase_data)
   } else {
-    phase1data <- phase1data
+    phase_data <- phase_data
   }
 
   log_info("Fitting participant...", namespace = "computations")
 
-  phase1pars <- set_up_beliefs() %>%
-                  incremental_fit(data = phase1data) %>%
-                    marginalise()
+  phase_parameters <- set_up_beliefs() %>%
+                        incremental_fit(data = phase_data) %>%
+                          marginalise()
 
   log_info(
-    paste("Participant parameters are:", phase1pars[1], phase1pars[2]),
+    paste(
+      "Participant parameters are:",
+      phase_parameters[1],
+      phase_parameters[2]
+    ),
     namespace = "computations"
   )
   log_info("Creating optimal partner...", namespace = "computations")
 
   participant_decisions <- simulate_phase_decisions(
-    phase1pars,
+    phase_parameters,
     precanned_df %>%
       mutate(ID = NA, Trial = 1:54, Phase = 2) %>%
         dplyr::select(ID, Trial, ppt1:par2, Phase, everything()),
@@ -80,49 +84,65 @@ match_incremental_fit <- function(
   return(partner_decisions)
 }
 
+# Phase 2 Matching Partner -----------------------------------------------------
 matching_partner_phase2 <- function(
-  Phase1Data, data, shuffle = F, file_loc = F
+  phase_data, data, shuffle = F, file_loc = F
 ) {
-
-  if(file_loc == T){
-    example_data <- read.csv(Phase1Data)
-  } else if(file_loc == F){
-    example_data <- Phase1Data
+  if (file_loc == T) {
+    example_data <- read.csv(phase_data)
+  } else if (file_loc == F) {
+    example_data <- phase_data
   }
 
-    log_info('\n\n *** ESTIMATING PARTICIPANT PREFERENCES ***\n\n')
+  log_info("Estimating participant preferences...", namespace = "computations")
 
-  phase1ppt         <- fit_participant_pars_phase1(example_data)
-  phase1par         <- phase1ppt
+  phase_participant <- fit_participant_pars_phase1(example_data)
+  phase_parameters <- phase_participant
 
-    log_info('\n PARTICIPANT PARAMETERS ARE',phase1par,'\n')
-    log_info('\n *** CREATING OPTIMAL PARTNER ***\n')
+  log_info(
+    paste(
+      "Participant parameters are:",
+      phase_parameters[1],
+      phase_parameters[2]
+    ),
+    namespace = "computations"
+  )
+  log_info("Creating optimal partner...", namespace = "computations")
 
-  partner_parms     <- gridsearch_for_partner_phase2(phase1par, data)
-  partner_parms
+  partner_parameters <- gridsearch_for_partner_phase2(phase_parameters, data)
 
-    log_info("\n PARTNER'S PARAMETERS ARE",partner_parms, "\n")
-    log_info('\n *** SIMULATING PARTNER DECISIONS ***\n\n')
+  log_info(
+    paste(
+      "Partner's parameters are:",
+      partner_parameters[1],
+      partner_parameters[2]
+    ),
+    namespace = "computations"
+  )
+  log_info("Simulating partner decisions...", namespace = "computations")
 
-  partner_decisions <- simulate_phase_decisions(partner_parms, data)
-  partici_decisions <- simulate_phase_decisions(phase1ppt, data)
+  partner_decisions <- simulate_phase_decisions(partner_parameters, data)
+  participant_decisions <- simulate_phase_decisions(phase_participant, data)
 
-    log_info('\n Done \n')
+  log_info("Done!", namespace = "computations")
 
-  if(shuffle == T){
-  set.seed(156)
-  row <- sample(nrow(partner_decisions))
-  partner_decisions <- partner_decisions[row,]
-  partner_decisions
+  if (shuffle == T) {
+    set.seed(156)
+    row <- sample(nrow(partner_decisions))
+    partner_decisions <- partner_decisions[row, ]
+    partner_decisions
   }
 
-  return(list(PPTp = phase1ppt,
-              PARp = partner_parms,
-              PPTd = partici_decisions,
-              PARd = partner_decisions %>% rename(AcPar = 5)))
-
+  return(list(PPTp = phase_participant,
+              PARp = partner_parameters,
+              PPTd = participant_decisions,
+              PARd = partner_decisions %>%
+                rename(AcPar = 5)
+          )
+        )
 }
 
+# Phase 1 Partner Matching -----------------------------------------------------
 matching_partner_phase1 <- function(Phase1Data, data, file_loc = T, shuffle = T){
 
   if(file_loc == T){

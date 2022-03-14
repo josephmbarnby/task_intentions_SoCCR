@@ -100,7 +100,7 @@ handler <- function(.req, .res) {
   computed <- list()
   tryCatch({
       computed <- match_incremental_fit(
-        phase1data = parsed,
+        phase_data = parsed,
         precan_df,
         shuffle = T,
         file_loc = F)
