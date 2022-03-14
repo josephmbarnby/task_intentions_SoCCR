@@ -1,0 +1,8 @@
+Package: intentionsGameAPI
+Title: Intentions Game API
+Version: 1.0.0
+Imports: doParallel,
+         dplyr,
+         logger,
+         jsonlite,
+         RestRserve
