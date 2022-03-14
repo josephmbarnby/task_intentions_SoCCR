@@ -1,4 +1,5 @@
 # Packages
+from json import JSONDecodeError
 import logging
 import requests
 import threading
@@ -78,9 +79,10 @@ class Requests:
     })
 
     # Acknowledge a response
-    if (response):
+    try:
+      content = response.json()
       logging.info("Request succeeded!")
       return True
-    else:
-      logging.error("Request failed!")
+    except (JSONDecodeError):
+      logging.error("Error decoding JSON!")
       return False

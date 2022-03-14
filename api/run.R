@@ -44,8 +44,8 @@ log_debug("Creating partners...", namespace = "server")
 precan_df <- precan_partners(full_data)
 
 handler <- function(.req, .res) {
-  # Parse the ID and responses from the body of the request
-  # Check for an ID
+  # Parse the ID from the body of the request
+  # Check for a valid ID
   valid_id <- FALSE
   if ("id" %in% attributes(.req$parameters_query)$names) {
     id <- as.integer(.req$parameters_query["id"])
@@ -60,32 +60,63 @@ handler <- function(.req, .res) {
     raise(HTTPError$bad_request())
   }
 
-  parsed <- tryCatch(
-    fromJSON(
-      as.character(.req$parameters_query["responses"]),
-      simplifyDataFrame = TRUE
-    ),
+  # Parse the responses
+  valid_response <- FALSE
+  parsed <- list()
+  if ("responses" %in% attributes(.req$parameters_query)$names) {
+    tryCatch({
+        parsed <- fromJSON(
+          as.character(.req$parameters_query["responses"]),
+          simplifyDataFrame = TRUE
+        )
+        valid_response <- TRUE
+      },
+      error = function(e) {
+        log_error(
+          "Error encountered while parsing \'responses\' content",
+          namespace = "server"
+        )
+
+        # Return an empty list
+        list()
+      }
+    )
+  }
+
+  # Reply with a HTTPError if any issues with responses
+  if (valid_response == FALSE) {
+    log_error("\'responses\' invalid or not specified", namespace = "server")
+    raise(HTTPError$bad_request())
+  } else {
+    log_debug("Successfully parsed responses", namespace = "server")
+  }
+
+  log_success("Valid request received", namespace = "server")
+  log_info("Computing for ID: {id}", namespace = "computations")
+
+  # Run the matching function
+  log_debug("Running matching function...", namespace = "server")
+
+  computed <- list()
+  tryCatch({
+      computed <- match_incremental_fit(
+        phase1data = parsed,
+        precan_df,
+        shuffle = T,
+        file_loc = F)
+    },
     error = function(e) {
       log_error(
-        "Error encountered while parsing \'responses\' content",
+        "Error encountered while computing the partner",
         namespace = "server"
       )
+
       # Return an empty list
       list()
     }
   )
 
-  log_success("Valid request received", namespace = "server")
-  log_info("ID: {id}", namespace = "computations")
-
-  # Run the matching function
-  log_debug("Running matching function...", namespace = "server")
-  computed <- match_incremental_fit(
-      phase1data = parsed,
-      precan_df,
-      shuffle = T,
-      file_loc = F)
-
+  # Configure the response body
   .res$set_body(toJSON(list(
     id = id,
     computed = toJSON(computed)
@@ -93,6 +124,7 @@ handler <- function(.req, .res) {
   .res$set_content_type("text/plain")
 }
 
+# Specify the API endpoint and handler
 application$add_get(path = "/compute/intentions", FUN = handler)
 
 # Start the server

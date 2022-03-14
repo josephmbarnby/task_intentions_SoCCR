@@ -57,10 +57,11 @@ match_incremental_fit <- function(
     index_part <- index_part[1]
   }
 
+  partner_parameters <- colnames(bound_dfs)[index_part + 5]
   log_info(
     paste(
       "Partner's parameters are:",
-      as.character(colnames(bound_dfs)[index_part + 5])
+      as.character(partner_parameters)
     ),
     namespace = "computations"
   )
