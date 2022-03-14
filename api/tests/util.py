@@ -1,5 +1,4 @@
 # Packages
-from json import JSONDecodeError
 import logging
 import requests
 import threading
@@ -67,22 +66,41 @@ def runner(func: FunctionType, args):
   # Return test output
   return output
 
-# Class to group requests
-class Requests:
-  # Basic request
-  def basic(address=""): 
-    # Send a request
-    logging.info("Sending request...")
-    response = create_request(address, params={
-      "id": 1234,
-      "responses": "[{\"ID\":\"NA\",\"Trial\":1,\"ppt1\":2,\"par1\":3,\"ppt2\":2,\"par2\":4,\"Ac\":1,\"Phase\":1}]"
-    })
 
-    # Acknowledge a response
-    try:
-      content = response.json()
-      logging.info("Request succeeded!")
-      return True
-    except (JSONDecodeError):
-      logging.error("Error decoding JSON!")
-      return False
+# Check the content of the ID object
+def valid_id(id):
+  valid = True
+
+  if len(id) != 1:
+    # ID specified
+    valid = False
+  elif int(id[0]) <= 0:
+    # ID greater than 0
+    valid = False
+
+  return valid
+
+
+# Check the content of the response object
+def valid_responses(responses):
+  valid = True
+
+  if len(responses) == 0:
+    # Check there are multiple responses
+    valid = False
+
+  for response in responses:
+    # Check each response for all fields
+    if "ppt1" not in response:
+      valid = False
+    if "par1" not in response:
+      valid = False
+    if "ppt2" not in response:
+      valid = False
+    if "par2" not in response:
+      valid = False
+    if "Ac" not in response:
+      valid = False
+
+  return valid
+  
