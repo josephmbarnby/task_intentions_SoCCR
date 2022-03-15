@@ -42,6 +42,7 @@ full_data <- read.csv("./data/fullData.csv") %>% dplyr::select(-X)
 # Create the partners
 log_debug("Creating partners...", namespace = "server")
 precan_df <- precan_partners(full_data)
+log_debug("Ready to start!", namespace = "server")
 
 handler <- function(.req, .res) {
   # Parse the ID from the body of the request

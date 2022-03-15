@@ -1,2 +1,2 @@
 # All imports used in the API
-import(doParallel, dplyr, logger, jsonlite, RestRserve)
+import(doParallel, dplyr, logger, jsonlite, RestRserve, matlab)

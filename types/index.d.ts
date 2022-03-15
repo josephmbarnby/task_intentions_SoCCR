@@ -42,7 +42,7 @@ declare type Options = 'Option 1' | 'Option 2';
 
 // Trial type to enforce parameters
 declare type Trial = {
-  trial: number,
+  trial: number;
   display: Display;
   optionOneParticipant: number;
   optionOnePartner: number;
@@ -59,32 +59,32 @@ declare type Trial = {
 
 // Data type used to enforce trial data storage format
 declare type Data = {
-  trial: number,
-  display: Display,
+  trial: number;
+  display: Display;
   playerPoints_option1: number;
   partnerPoints_option1: number;
   playerPoints_option2: number;
   partnerPoints_option2: number;
   playerPoints_selected: number;
   partnerPoints_selected: number;
-  selectedOption_player: -1 | 1 | 2, // uses 1 and 2 rather than strings
+  selectedOption_player: -1 | 1 | 2; // uses 1 and 2 rather than strings
   realAnswer: Options;
-  inferenceResponse_Selfish: number, 
-  inferenceResponse_Harm: number,
-  agencyResponse: number,
-  classification: string,
-  trialDuration: number,
-  correctGuess: -1 | 0 | 1, // 0 incorrect, 1 correct
+  inferenceResponse_Selfish: number; 
+  inferenceResponse_Harm: number;
+  agencyResponse: number;
+  classification: string;
+  trialDuration: number;
+  correctGuess: -1 | 0 | 1; // 0 incorrect; 1 correct
 };
 
 // Points storage
 declare type Points = {
   one: {
-    participant: number,
-    partner: number,
-  },
+    participant: number;
+    partner: number;
+  };
   two: {
-    participant: number,
-    partner: number,
+    participant: number;
+    partner: number;
   }
 };

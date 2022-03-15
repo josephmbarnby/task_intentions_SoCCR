@@ -98,7 +98,7 @@ declare namespace Props {
   
     // Summary screen
     type Summary = GenericScreenProps & {
-      postPhase: Display,
+      postPhase: Display;
       handler: () => void;
     }
   }
@@ -106,7 +106,7 @@ declare namespace Props {
 
 // Type for the 'PropFactory' return
 declare type GeneratedPropValues = {
-  props: any,
+  props: any;
   callback: (...args) => void;
   duration: number;
 }
