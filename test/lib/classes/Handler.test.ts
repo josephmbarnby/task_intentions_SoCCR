@@ -1,7 +1,7 @@
 // Handler class test
 // Import the Handler class
 import Handler from '@classes/Handler';
-import {getHandler} from '../../util';
+import {getHandler} from '../util';
 
 // Mock jsPsych
 import 'jspsych';

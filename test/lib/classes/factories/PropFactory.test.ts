@@ -3,7 +3,7 @@
 import PropFactory from '@classes/factories/PropFactory';
 
 // Utility functions
-import {getTrialConfiguration, getHandler} from '@src/../test/util';
+import {getTrialConfiguration, getHandler} from '@src/../test/lib/util';
 
 // Mock jsPsych
 import 'jspsych';
