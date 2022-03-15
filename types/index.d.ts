@@ -88,3 +88,9 @@ declare type Points = {
     partner: number;
   }
 };
+
+// Recursive partial type, allows tests using the
+// 'jspsych-wrapper' Experiment class to be run
+declare type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+}

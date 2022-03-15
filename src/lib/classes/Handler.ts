@@ -20,6 +20,14 @@ class Handler {
   }
 
   /**
+   * Get the dataframe being modified
+   * @return {Data}
+   */
+  public getDataframe(): Data {
+    return this.dataframe;
+  }
+
+  /**
    * Handle selection events in a particular trial
    * @param {Options} option selected option
    * @param {Points} points selected option

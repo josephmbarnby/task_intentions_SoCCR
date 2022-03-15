@@ -17,12 +17,6 @@ jest.mock('jspsych');
 import {Experiment} from 'jspsych-wrapper';
 jest.mock('jspsych-wrapper');
 
-// Recursive partial type, allows tests using the
-// 'jspsych-wrapper' Experiment class to be run
-declare type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-}
-
 // Setup the Experiment instances
 beforeEach(() => {
   // Experiment
