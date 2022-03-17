@@ -103,4 +103,3 @@ def valid_responses(responses):
       valid = False
 
   return valid
-  
