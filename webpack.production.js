@@ -1,5 +1,8 @@
 const path = require('path');
 
+// Obfuscation library
+const WebpackObfuscator = require('webpack-obfuscator');
+
 module.exports = () => {
   return {
     name: 'production',
@@ -62,6 +65,11 @@ module.exports = () => {
         },
       ],
     },
+    plugins: [
+      new WebpackObfuscator ({
+        rotateStringArray: true
+      }, [])
+    ],
     resolve: {
       alias: {
         '@src': path.resolve(__dirname, 'src'),
