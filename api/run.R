@@ -6,7 +6,10 @@ library(logger)
 library(jsonlite)
 library(RestRserve)
 
-application <- Application$new()
+# Create a new application with CORS middleware
+application <- Application$new(
+  middleware = list(CORSMiddleware$new())
+)
 
 # Configure the logger to use files
 if (dir.exists("logs") == FALSE) {
