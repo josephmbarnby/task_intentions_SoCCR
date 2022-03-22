@@ -23,10 +23,6 @@ export const Configuration = {
   // Seed for RNG
   seed: 0.1234,
 
-  // Encryption key for secure communications
-  encryptRequests: true,
-  key: 'task_intentions',
-
   // Initial experiment state
   state: {
     participantAvatar: 0,

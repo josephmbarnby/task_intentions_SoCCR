@@ -77,7 +77,6 @@
     "axios": "^0.25.0",
     "boring-avatars": "file:packages/boring-avatars-1.5.8.tgz",
     "core-js": "^3.21.1",
-    "crypto-js": "^4.1.1",
     "d3": "^7.3.0",
     "d3-array": "^3.1.1",
     "d3-random": "^3.0.1",

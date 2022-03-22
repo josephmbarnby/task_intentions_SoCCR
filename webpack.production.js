@@ -68,7 +68,7 @@ module.exports = () => {
     plugins: [
       new WebpackObfuscator ({
         rotateStringArray: true
-      }, [])
+      }, []),
     ],
     resolve: {
       alias: {

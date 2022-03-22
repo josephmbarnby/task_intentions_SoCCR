@@ -20,8 +20,7 @@ import {Configuration} from '@src/configuration';
  */
 const Matching = (props: Props.Screens.Matching): ReactElement => {
   const experiment = window.Experiment;
-  const compute = new Compute(Configuration.endpoint,
-      Configuration.encryptRequests);
+  const compute = new Compute(Configuration.endpoint);
 
   // Launch request
   if (props.fetchData) {

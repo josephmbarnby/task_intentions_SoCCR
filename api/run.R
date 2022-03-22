@@ -45,6 +45,9 @@ precan_df <- precan_partners(full_data)
 log_debug("Ready to start!", namespace = "server")
 
 handler <- function(.req, .res) {
+  # Print the headers
+  log_debug("Host: ", as.character(.req$headers["host"]), namespace = "server")
+
   # Parse the ID from the body of the request
   # Check for a valid ID
   valid_id <- FALSE
