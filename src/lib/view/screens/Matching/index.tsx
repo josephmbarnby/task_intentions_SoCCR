@@ -20,7 +20,8 @@ import {Configuration} from '@src/configuration';
  */
 const Matching = (props: Props.Screens.Matching): ReactElement => {
   const experiment = window.Experiment;
-  const compute = new Compute(Configuration.endpoint);
+  const compute = new Compute(Configuration.endpoint,
+      Configuration.encryptRequests);
 
   // Launch request
   if (props.fetchData) {
@@ -56,7 +57,7 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
     compute.submit({
       id: 1234,
       responses: JSON.stringify(requestResponses),
-    }, (data) => {
+    }, (data: {id: number, computed: string}) => {
       // Extract the response data of interest
       const id = data.id;
       const content = data.computed;
