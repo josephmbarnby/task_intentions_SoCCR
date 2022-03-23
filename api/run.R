@@ -17,9 +17,9 @@ if (dir.exists("logs") == FALSE) {
   dir.create("logs")
 }
 
-# Create a data folder to store responses
-if (dir.exists("responses") == FALSE) {
-  dir.create("responses")
+# Create a data folder to store participant data
+if (dir.exists("participants") == FALSE) {
+  dir.create("participants")
 }
 
 # Set the 'server' log level and namespace
@@ -131,21 +131,31 @@ handler <- function(.req, .res) {
 
   # Save the data in CSV for for each ID
   # Create a folder for the ID if it doesn't exist
-  if (dir.exists(paste0("responses/", id)) == FALSE) {
-    dir.create(paste0("responses/", id))
+  if (dir.exists(paste0("participants/", id)) == FALSE) {
+    dir.create(paste0("participants/", id))
   }
 
   # Generate file path
-  file_path <- paste0("responses/", id, "/")
+  file_path <- paste0("participants/", id, "/")
   file_time <- as.character(round(as.numeric(as.POSIXct(Sys.time()))))
-  file_name <- paste(id, file_time, "partner.csv", sep = "_")
+  partner_file_name <- paste(id, file_time, "partner.csv", sep = "_")
+  responses_file_name <- paste(id, file_time, "responses.csv", sep = "_")
 
-  # Write the CSV file
+  # Write the partner CSV file
   write.csv(
     computed,
     paste0(
       file_path,
-      file_name
+      partner_file_name
+    )
+  )
+
+  # Write the responses CSV file
+  write.csv(
+    parsed,
+    paste0(
+      file_path,
+      responses_file_name
     )
   )
 

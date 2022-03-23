@@ -2,7 +2,7 @@
 .DS_Store
 
 # Participant responses
-api/responses
+api/participants
 
 # Logs
 logs
