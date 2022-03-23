@@ -482,22 +482,8 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: Configuration.studyName,
         optionOneParticipant: 6,
         optionOnePartner: 6,
-        optionTwoParticipant: 6,
-        optionTwoPartner: 10,
-        typeOne: '',
-        typeTwo: '',
-        display: 'playerGuessPractice',
-        answer: 'Option 1',
-        isPractice: true,
-        clearScreen: false,
-      });
-
-      timeline.push({
-        type: Configuration.studyName,
-        optionOneParticipant: 10,
-        optionOnePartner: 5,
         optionTwoParticipant: 10,
-        optionTwoPartner: 10,
+        optionTwoPartner: 6,
         typeOne: '',
         typeTwo: '',
         display: 'playerGuessPractice',
@@ -508,24 +494,38 @@ for (let i = 0; i < dataCollection.length; i++) {
 
       timeline.push({
         type: Configuration.studyName,
-        optionOneParticipant: 5,
-        optionOnePartner: 9,
-        optionTwoParticipant: 1,
-        optionTwoPartner: 7,
-        typeOne: '',
-        typeTwo: '',
-        display: 'playerGuessPractice',
-        answer: 'Option 1',
-        isPractice: true,
-        clearScreen: false,
-      });
-
-      timeline.push({
-        type: Configuration.studyName,
-        optionOneParticipant: 6,
-        optionOnePartner: 10,
-        optionTwoParticipant: 2,
+        optionOneParticipant: 8,
+        optionOnePartner: 8,
+        optionTwoParticipant: 10,
         optionTwoPartner: 8,
+        typeOne: '',
+        typeTwo: '',
+        display: 'playerGuessPractice',
+        answer: 'Option 1',
+        isPractice: true,
+        clearScreen: false,
+      });
+
+      timeline.push({
+        type: Configuration.studyName,
+        optionOneParticipant: 8,
+        optionOnePartner: 2,
+        optionTwoParticipant: 10,
+        optionTwoPartner: 6,
+        typeOne: '',
+        typeTwo: '',
+        display: 'playerGuessPractice',
+        answer: 'Option 1',
+        isPractice: true,
+        clearScreen: false,
+      });
+
+      timeline.push({
+        type: Configuration.studyName,
+        optionOneParticipant: 8,
+        optionOnePartner: 6,
+        optionTwoParticipant: 6,
+        optionTwoPartner: 2,
         typeOne: '',
         typeTwo: '',
         display: 'playerGuessPractice',
