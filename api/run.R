@@ -16,6 +16,11 @@ if (dir.exists("logs") == FALSE) {
   dir.create("logs")
 }
 
+# Create a data folder to store responses
+if (dir.exists("responses") == FALSE) {
+  dir.create("responses")
+}
+
 # Set the 'server' log level and namespace
 log_threshold(DEBUG, namespace = "server")
 log_appender(appender_tee(
@@ -121,6 +126,31 @@ handler <- function(.req, .res) {
       # Return an empty list
       list()
     }
+  )
+
+  # Save the data in CSV for for each ID
+  # Create a folder for the ID if it doesn't exist
+  if (dir.exists(paste0("responses/", id)) == FALSE) {
+    dir.create(paste0("responses/", id))
+  }
+
+  file_path <- paste0(
+    "responses/",
+    id,
+    "/"
+  )
+
+  file_time <- as.character(round(as.numeric(as.POSIXct(Sys.time()))))
+
+  # Write the CSV file
+  write.csv(
+    computed,
+    paste0(
+      file_path,
+      file_time,
+      "_partner",
+      ".csv"
+    )
   )
 
   # Configure the response body
