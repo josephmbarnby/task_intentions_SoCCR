@@ -138,17 +138,9 @@ handler <- function(.req, .res) {
   # Generate file path
   file_path <- paste0("participants/", id, "/")
   file_time <- as.character(round(as.numeric(as.POSIXct(Sys.time()))))
-  partner_file_name <- paste(id, file_time, "partner.csv", sep = "_")
   responses_file_name <- paste(id, file_time, "responses.csv", sep = "_")
-
-  # Write the partner CSV file
-  write.csv(
-    computed,
-    paste0(
-      file_path,
-      partner_file_name
-    )
-  )
+  parameters_file_name <- paste(id, file_time, "parameters.csv", sep = "_")
+  partner_file_name <- paste(id, file_time, "partner.csv", sep = "_")
 
   # Write the responses CSV file
   write.csv(
@@ -159,10 +151,36 @@ handler <- function(.req, .res) {
     )
   )
 
+  # Extract the partner data and write the partner CSV file
+  write.csv(
+    computed[[1]],
+    paste0(
+      file_path,
+      partner_file_name
+    )
+  )
+
+  # Extract participant and partner parameters
+  participant_parameters <- computed[[2]]
+  partner_parameters <- as.list(strsplit(computed[[3]], " "))[[1]]
+
+  # Write the parameters CSV file
+  write.csv(
+    data.frame(
+      mu_alpha = c(participant_parameters[1], partner_parameters[1]),
+      mu_beta = c(participant_parameters[2], partner_parameters[2]),
+      row.names = c("ppt", "par")
+    ),
+    paste0(
+      file_path,
+      parameters_file_name
+    )
+  )
+
   # Configure the response body
   .res$set_body(toJSON(list(
     id = id,
-    computed = toJSON(computed)
+    computed = toJSON(computed[[1]])
   )))
   .res$set_content_type("text/plain")
 }

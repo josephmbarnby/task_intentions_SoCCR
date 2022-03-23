@@ -57,7 +57,7 @@ matching_partner_incremental_fit <- function(phase1data, precan_df, shuffle = T,
     partner_decisions
     }
 
-  return(partner_decisions)
+  return(list(partner_decisions, phase1pars, colnames(bound_dfs)[index_part+5]))
 
 }
 
