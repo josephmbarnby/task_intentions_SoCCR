@@ -1,6 +1,9 @@
 # MacOS
 .DS_Store
 
+# Participant responses
+api/responses
+
 # Logs
 logs
 *.log

@@ -7,142 +7,101 @@ library(dplyr)
 library(logger)
 
 # Phase 1 Fly Fitting -----------------------------------------------------
-match_incremental_fit <- function(
-  phase_data, precanned_df, shuffle = T, file_loc = F
-) {
-  # Read or parse the data from phase one
-  if (file_loc == T) {
-    phase_data <- read.csv(phase_data)
+
+matching_partner_incremental_fit <- function(phase1data, precan_df, shuffle = T, file_loc = F){
+
+  if(file_loc == T){
+    phase1data <- read.csv(phase1data)
   } else {
-    phase_data <- phase_data
+    phase1data <- phase1data
   }
 
-  log_info("Fitting participant...", namespace = "computations")
+    cat('\n FITTING PARTICIPANT\n')
 
-  phase_parameters <- set_up_beliefs() %>%
-                        incremental_fit(data = phase_data) %>%
-                          marginalise()
+  phase1pars <- set_up_beliefs() %>%
+                incremental_fit(data = phase1data) %>%
+                marginalise()
 
-  log_info(
-    paste(
-      "Participant parameters are:",
-      phase_parameters[1],
-      phase_parameters[2]
-    ),
-    namespace = "computations"
-  )
-  log_info("Creating optimal partner...", namespace = "computations")
+    cat('\n PARTICIPANT PARAMETERS ARE',phase1pars,'\n')
+    cat('\n *** CREATING OPTIMAL PARTNER ***\n')
 
-  participant_decisions <- simulate_phase_decisions(
-    phase_parameters,
-    precanned_df %>%
-      mutate(ID = NA, Trial = 1:54, Phase = 2) %>%
-        dplyr::select(ID, Trial, ppt1:par2, Phase, everything()),
-    phase = 2
-  )
+  participant_decisions <- simulate_phase_decisions(phase1pars,
+                                                      precan_df %>%
+                                                        mutate(ID = NA, Trial = 1:54, Phase = 2) %>%
+                                                        dplyr::select(ID, Trial, ppt1:par2, Phase, everything()),
+                                                      phase = 2)
+    bound_dfs <- participant_decisions %>%
+      cbind(precan_df %>% dplyr::select(-ppt1:-par2))
+    n_p <- length(bound_dfs %>% dplyr::select(-ppt1:-Ac))
+    similarity_vec <- rep(NA, n_p)
+    for(i in 1:n_p){
+      similarity_vec[i] <- bound_dfs %>%
+        mutate(correct = ifelse(Ac == bound_dfs[,(i+4)], 1, 0)) %>%
+        summarise(correct = sum(correct)/54) %>%
+        as.numeric()
+    }
 
-  bound_dfs <- participant_decisions %>%
-    cbind(precanned_df %>% dplyr::select(-ppt1:-par2))
+    index_part_1 <- which((similarity_vec > 0.2 & similarity_vec < 0.5), arr.ind = T)
+    index_part   <- sample(index_part_1, 1)
 
-  n_p <- length(bound_dfs %>% dplyr::select(-ppt1:-Ac))
-  similarity_vec <- rep(NA, n_p)
-  for (i in 1:n_p) {
-    similarity_vec[i] <- bound_dfs %>%
-      mutate(correct = ifelse(Ac == bound_dfs[, (i + 4)], 1, 0)) %>%
-        summarise(correct = sum(correct) / 54) %>%
-          as.numeric()
-  }
+    cat("\n PARTNER'S PARAMETERS ARE",colnames(bound_dfs)[index_part+5], "\n\n")
 
-  index_part <- which(
-    (similarity_vec > 0.2 & similarity_vec < 0.5),
-    arr.ind = T
-  )
-  if (length(index_part > 1)) {
-    index_part <- index_part[1]
-  }
-
-  partner_parameters <- colnames(bound_dfs)[index_part + 5]
-  log_info(
-    paste(
-      "Partner's parameters are:",
-      as.character(partner_parameters)
-    ),
-    namespace = "computations"
-  )
-
-  partner_decisions <- bound_dfs %>%
-    dplyr::select(1:4, index_part + 5) %>%
+    partner_decisions <- bound_dfs %>%
+      dplyr::select(1:4, index_part+5) %>%
       rename(Ac = 5)
 
-  if (shuffle == T) {
+    if(shuffle == T){
     set.seed(156)
     row <- sample(nrow(partner_decisions))
-    partner_decisions <- partner_decisions[row, ]
+    partner_decisions <- partner_decisions[row,]
     partner_decisions
-  }
+    }
 
   return(partner_decisions)
+
 }
 
-# Phase 2 Matching Partner -----------------------------------------------------
-matching_partner_phase2 <- function(
-  phase_data, data, shuffle = F, file_loc = F
-) {
-  if (file_loc == T) {
-    example_data <- read.csv(phase_data)
-  } else if (file_loc == F) {
-    example_data <- phase_data
+matching_partner_phase2 <- function(Phase1Data, data, shuffle = F, file_loc = F){
+
+  if(file_loc == T){
+    exampleData <- read.csv(Phase1Data)
+  } else if(file_loc == F){
+    exampleData <- Phase1Data
   }
 
-  log_info("Estimating participant preferences...", namespace = "computations")
+    cat('\n\n *** ESTIMATING PARTICIPANT PREFERENCES ***\n\n')
 
-  phase_participant <- fit_participant_pars_phase1(example_data)
-  phase_parameters <- phase_participant
+  phase1ppt         <- fit_participant_pars_phase1(exampleData)
+  phase1par         <- phase1ppt
 
-  log_info(
-    paste(
-      "Participant parameters are:",
-      phase_parameters[1],
-      phase_parameters[2]
-    ),
-    namespace = "computations"
-  )
-  log_info("Creating optimal partner...", namespace = "computations")
+    cat('\n PARTICIPANT PARAMETERS ARE',phase1par,'\n')
+    cat('\n *** CREATING OPTIMAL PARTNER ***\n')
 
-  partner_parameters <- gridsearch_for_partner_phase2(phase_parameters, data)
+  partner_parms     <- gridsearch_for_partner_phase2(phase1par, data)
+  partner_parms
 
-  log_info(
-    paste(
-      "Partner's parameters are:",
-      partner_parameters[1],
-      partner_parameters[2]
-    ),
-    namespace = "computations"
-  )
-  log_info("Simulating partner decisions...", namespace = "computations")
+    cat("\n PARTNER'S PARAMETERS ARE",partner_parms, "\n")
+    cat('\n *** SIMULATING PARTNER DECISIONS ***\n\n')
 
-  partner_decisions <- simulate_phase_decisions(partner_parameters, data)
-  participant_decisions <- simulate_phase_decisions(phase_participant, data)
+  partner_decisions <- simulate_phase_decisions(partner_parms, data)
+  partici_decisions <- simulate_phase_decisions(phase1ppt, data)
 
-  log_info("Done!", namespace = "computations")
+    cat('\n Done \n')
 
-  if (shuffle == T) {
-    set.seed(156)
-    row <- sample(nrow(partner_decisions))
-    partner_decisions <- partner_decisions[row, ]
-    partner_decisions
+  if(shuffle == T){
+  set.seed(156)
+  row <- sample(nrow(partner_decisions))
+  partner_decisions <- partner_decisions[row,]
+  partner_decisions
   }
 
-  return(list(PPTp = phase_participant,
-              PARp = partner_parameters,
-              PPTd = participant_decisions,
-              PARd = partner_decisions %>%
-                rename(AcPar = 5)
-          )
-        )
+  return(list(PPTp = phase1ppt,
+              PARp = partner_parms,
+              PPTd = partici_decisions,
+              PARd = partner_decisions %>% rename(AcPar = 5)))
+
 }
 
-# Phase 1 Partner Matching -----------------------------------------------------
 matching_partner_phase1 <- function(Phase1Data, data, file_loc = T, shuffle = T){
 
   if(file_loc == T){
@@ -163,18 +122,18 @@ matching_partner_phase1 <- function(Phase1Data, data, file_loc = T, shuffle = T)
     dplyr::select(ID, trial, s1:o2,PPTANS, Phase)
     } else { test_data_phase1 <- as.data.frame(Phase1Data) %>% rename(PPTANS = 7)}
 
-    log_info('\n *** CREATING OPTIMAL PARTNER ***\n')
+    cat('\n *** CREATING OPTIMAL PARTNER ***\n')
 
   partner_parms     <- gridsearch_for_partner_phase1(test_data_phase1)
   partner_parms2    <- as.numeric(partner_parms[1:2])
 
-    log_info("\n PARTNER'S PARAMETERS ARE",partner_parms, "\n")
-    log_info('\n *** SIMULATING PARTNER DECISIONS ***\n\n')
+    cat("\n PARTNER'S PARAMETERS ARE",partner_parms, "\n")
+    cat('\n *** SIMULATING PARTNER DECISIONS ***\n\n')
 
   partner_decisions <- simulate_phase_decisions(partner_parms2, data, phase = 2)
   partici_decisions <- test_data_phase1
 
-    log_info('\n Done \n')
+    cat('\n Done \n')
 
   if(shuffle == T){
   set.seed(156)
@@ -334,7 +293,7 @@ fit_participant_pars_phase1 <- function(data){
     #                 method = 'SANN',
     #                 control = list(maxit = 100, trace = 100, temp = 100, REPORT = T))
 
-    #log_info('\n SANN estimates are', SANNpar$par, '\n')
+    #cat('\n SANN estimates are', SANNpar$par, '\n')
 
     OPTIMpar<- optim(rand_par0, #SANNpar$par,
                      ABA_wrapper_Phase1_Only,
@@ -380,7 +339,7 @@ gridsearch_for_partner_phase2 <- function(phase1par, data, cores = 4, res = 30, 
   }else{
     Partner ='Competitive'; beta = 20; alpha = 0}
 
-  log_info('\n PARTNER IS ',Partner,'\n')
+  cat('\n PARTNER IS ',Partner,'\n')
 
   return(c(alpha, beta))
 }
@@ -413,7 +372,7 @@ gridsearch_for_partner_phase1 <- function(phase1_data, cores = 4){
   }else if(series_par==2){ Partner = 'Individualist' ; beta = 0; alpha = 30
   }else{Partner ='Competitive'; beta = 30; alpha = 0}
 
-  log_info('\n PARTNER IS ',Partner,'\n')
+  cat('\n PARTNER IS ',Partner,'\n')
   return(c(alpha, beta, Partner))
 }
 
@@ -470,8 +429,8 @@ simulate_phase_decisions <- function(parms, data, phase = 2){
 
 precan_partners <- function(data){
 
-  alpha = c(5, 10, 15)
-  beta = c(-15, -10, -5, 5, 10, 15)
+  alpha = c(0, 5, 10, 15)
+  beta = c(-15, -10, -5, 0, 5, 10, 15)
   partner_choices <- list()
 
   for (i in 1:length(alpha)){
@@ -496,9 +455,12 @@ precan_partners <- function(data){
   }
 
   partner_choices_df <- partner_choices[[1]][[1]] %>% dplyr::select(1:4,
-                                                                    `5 -10`, `5 -15`,
-                                                                    `10 -5`, `10 5`,
-                                                                    `5 10`, `5 15`)
+                                                                    `5 -10`, `5 -15`, #prosocial
+                                                                    `10 -5`, `10 5`, #indiv
+                                                                    `5 10`, `5 15`, #compet
+                                                                    `0 10`, `0 -10`, #no alpha
+                                                                    `10 0` #no beta
+                                                                    )
   return(partner_choices_df)
 }
 
@@ -588,3 +550,4 @@ mysamp <- function(n, m, s, lwr, upr, nnorm) {
   }
   stop(simpleError("Not enough values to sample from. Try increasing nnorm."))
 }
+

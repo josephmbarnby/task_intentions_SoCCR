@@ -5,6 +5,7 @@ source("functions.R")
 library(logger)
 library(jsonlite)
 library(RestRserve)
+library(tidyverse)
 
 # Create a new application with CORS middleware
 application <- Application$new(
@@ -111,8 +112,8 @@ handler <- function(.req, .res) {
 
   computed <- list()
   tryCatch({
-      computed <- match_incremental_fit(
-        phase_data = parsed,
+      computed <- matching_partner_incremental_fit(
+        phase1data = parsed,
         precan_df,
         shuffle = T,
         file_loc = F)
@@ -134,22 +135,17 @@ handler <- function(.req, .res) {
     dir.create(paste0("responses/", id))
   }
 
-  file_path <- paste0(
-    "responses/",
-    id,
-    "/"
-  )
-
+  # Generate file path
+  file_path <- paste0("responses/", id, "/")
   file_time <- as.character(round(as.numeric(as.POSIXct(Sys.time()))))
+  file_name <- paste(id, file_time, "partner.csv", sep = "_")
 
   # Write the CSV file
   write.csv(
     computed,
     paste0(
       file_path,
-      file_time,
-      "_partner",
-      ".csv"
+      file_name
     )
   )
 
