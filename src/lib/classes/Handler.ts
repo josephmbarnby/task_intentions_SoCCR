@@ -1,5 +1,5 @@
 // Configuration
-import {Configuration} from '@src/configuration';
+import {Configuration} from 'src/configuration';
 
 /**
  * Utility class exposing each of the different handlers

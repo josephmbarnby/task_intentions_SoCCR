@@ -5,13 +5,13 @@ import React, {ReactElement} from 'react';
 import {Grommet, ThemeContext} from 'grommet';
 
 // Import styling
-import '@src/scss/styles.scss';
+import 'src/scss/styles.scss';
 
 // Apply custom theme globally
-import {Theme} from '@lib/theme';
+import {Theme} from 'src/lib/theme';
 
 // Factory class to generate screens
-import ScreenFactory from '@classes/factories/ScreenFactory';
+import ScreenFactory from 'src/lib/classes/factories/ScreenFactory';
 
 /**
  * Generic container for all Grommet components

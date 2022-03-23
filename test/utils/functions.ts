@@ -1,5 +1,5 @@
-// Import the Handler class
-import Handler from '@classes/Handler';
+// Handler class
+import Handler from 'src/lib/classes/Handler';
 
 /**
  * Generate a Trial configuration for test use

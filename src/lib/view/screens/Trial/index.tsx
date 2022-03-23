@@ -10,14 +10,14 @@ import {LinkNext} from 'grommet-icons';
 import TextTransition, {presets} from 'react-text-transition';
 
 // Custom components
-import Option from '@components/Option';
-import Card from '@components/Card';
+import Option from 'src/lib/view/components/Option';
+import Card from 'src/lib/view/components/Card';
 
 // Access theme constants directly
-import {Theme} from '@lib/theme';
+import {Theme} from 'src/lib/theme';
 
 // Configuration
-import {Configuration} from '@src/configuration';
+import {Configuration} from 'src/configuration';
 
 /**
  * Generate the choices grid with options

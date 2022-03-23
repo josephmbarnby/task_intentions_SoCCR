@@ -1,13 +1,12 @@
-// Screen factory test
 // Test utilities
 import {waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 // Custom wrapper
-import {render} from '../../Wrapper';
+import {render} from 'test/utils/Wrapper';
 
 // Screen factory
-import ScreenFactory from '@classes/factories/ScreenFactory';
+import ScreenFactory from 'src/lib/classes/factories/ScreenFactory';
 
 // Mock jsPsych
 import 'jspsych';

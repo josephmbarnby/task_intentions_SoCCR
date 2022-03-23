@@ -8,10 +8,10 @@ import {act} from 'react-dom/test-utils';
 import React from 'react';
 
 // Custom wrapper
-import {render} from '../../Wrapper';
+import {render} from 'test/utils/Wrapper';
 
 // Slider component
-import Slider from '@components/Slider';
+import Slider from 'src/lib/view/components/Slider';
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);

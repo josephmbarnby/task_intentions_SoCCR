@@ -9,13 +9,13 @@ import {Box, Button, Grid, Heading, Layer, WorldMap} from 'grommet';
 import {LinkNext} from 'grommet-icons';
 
 // Custom components
-import Card from '@components/Card';
+import Card from 'src/lib/view/components/Card';
 
 // Configuration
-import {Configuration} from '@src/configuration';
+import {Configuration} from 'src/configuration';
 
 // Utility functions
-import {calculatePoints} from '@lib/util';
+import {calculatePoints} from 'src/lib/util';
 
 /**
  * Generate layout of Matching Screen

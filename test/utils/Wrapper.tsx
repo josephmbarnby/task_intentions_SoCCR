@@ -5,7 +5,7 @@ import React, {FC, ReactElement} from 'react';
 import {Grommet, ThemeContext} from 'grommet';
 
 // Custom theming
-import {Theme} from '@lib/theme';
+import {Theme} from 'src/lib/theme';
 
 // Testing utilities
 import {render, RenderOptions, RenderResult} from '@testing-library/react';

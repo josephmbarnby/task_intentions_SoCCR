@@ -8,10 +8,10 @@ import consola from 'consola';
 import {Box, Heading, Layer, Spinner, WorldMap} from 'grommet';
 
 // Request library
-import Compute from '@lib/classes/Compute';
+import Compute from 'src/lib/classes/Compute';
 
 // Configuration
-import {Configuration} from '@src/configuration';
+import {Configuration} from 'src/configuration';
 
 /**
  * Generate layout of Matching Screen

@@ -9,7 +9,7 @@ import Avatar from 'boring-avatars';
 import consola from 'consola';
 
 // Configuration
-import {Configuration} from '@src/configuration';
+import {Configuration} from 'src/configuration';
 
 /**
  * Generate layout of Matched Screen

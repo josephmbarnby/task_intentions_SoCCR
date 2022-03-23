@@ -6,14 +6,7 @@
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "baseUrl": "src",
-    "paths": {
-      "@src/*": ["*"],
-      "@lib/*": ["lib/*"],
-      "@classes/*": ["lib/classes/*"],
-      "@components/*": ["lib/view/components/*"],
-      "@screens/*": ["lib/view/screens/*"]
-    },
+    "baseUrl": "./",
     "rootDirs": ["src", "test"],
     "strict": true,
     "noImplicitReturns": true,

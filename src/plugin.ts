@@ -5,9 +5,9 @@ import consola from 'consola';
 import {Configuration} from './configuration';
 
 // Core modules
-import PropFactory from '@lib/classes/factories/PropFactory';
-import View from '@lib/view';
-import Handler from '@lib/classes/Handler';
+import PropFactory from 'src/lib/classes/factories/PropFactory';
+import View from 'src/lib/view';
+import Handler from 'src/lib/classes/Handler';
 
 jsPsych.plugins[Configuration.studyName] = (() => {
   const plugin = {

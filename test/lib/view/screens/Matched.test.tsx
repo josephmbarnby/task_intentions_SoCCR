@@ -4,10 +4,10 @@ import '@testing-library/jest-dom';
 import {axe, toHaveNoViolations} from 'jest-axe';
 
 // Custom wrapper
-import {render} from '../../Wrapper';
+import {render} from 'test/utils/Wrapper';
 
 // Screen factory
-import ScreenFactory from '@classes/factories/ScreenFactory';
+import ScreenFactory from 'src/lib/classes/factories/ScreenFactory';
 
 // Mock the jsPsych wrapper library
 import {Experiment} from 'jspsych-wrapper';

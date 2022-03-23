@@ -4,12 +4,6 @@ import consola from 'consola';
 // Request library
 import axios from 'axios';
 
-// Encryption
-import {AES, enc} from 'crypto-js';
-
-// Configuration
-import {Configuration} from '@src/configuration';
-
 /**
  * Compute class used to connect and submit jobs to a remote computing
  * resource.

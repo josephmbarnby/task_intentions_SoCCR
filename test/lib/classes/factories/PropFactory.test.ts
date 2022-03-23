@@ -1,13 +1,12 @@
-// Prop factory test
-// Prop factory
-import PropFactory from '@classes/factories/PropFactory';
-
-// Utility functions
-import {getTrialConfiguration, getHandler} from '@src/../test/lib/util';
-
 // Mock jsPsych
 import 'jspsych';
 jest.mock('jspsych');
+
+// Prop factory
+import PropFactory from 'src/lib/classes/factories/PropFactory';
+
+// Import utility functions
+import {getHandler, getTrialConfiguration} from 'test/utils/functions';
 
 test('generate props for Agency screen', async () => {
   // Create a new PropFactory instance

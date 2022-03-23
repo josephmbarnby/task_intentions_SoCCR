@@ -71,13 +71,10 @@ module.exports = () => {
       }, []),
     ],
     resolve: {
-      alias: {
-        '@src': path.resolve(__dirname, 'src'),
-        '@lib': path.resolve(__dirname, 'src/lib'),
-        '@classes': path.resolve(__dirname, 'src/lib/classes'),
-        '@components': path.resolve(__dirname, 'src/lib/view/components'),
-        '@screens': path.resolve(__dirname, 'src/lib/view/screens'),
-      },
+      modules: [
+        path.resolve(__dirname, './'),
+        path.resolve(__dirname, 'node_modules'),
+      ],
       extensions: ['.tsx', '.ts', '.js'],
     },
     output: {

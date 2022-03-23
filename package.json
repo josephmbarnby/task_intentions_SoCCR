@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist/ api/logs/",
+    "clean": "rm -rf dist/ .pytest_cache/ && rm api/.Rhistory",
     "build:game": "webpack --config webpack.production.js",
     "lint:game": "gulp lint",
     "start": "yarn start:server & yarn start:game",

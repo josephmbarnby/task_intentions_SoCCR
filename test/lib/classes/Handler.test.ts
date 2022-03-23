@@ -1,7 +1,9 @@
 // Handler class test
 // Import the Handler class
-import Handler from '@classes/Handler';
-import {getHandler} from '../util';
+import Handler from 'src/lib/classes/Handler';
+
+// Import utility functions
+import {getHandler} from 'test/utils/functions';
 
 // Mock jsPsych
 import 'jspsych';

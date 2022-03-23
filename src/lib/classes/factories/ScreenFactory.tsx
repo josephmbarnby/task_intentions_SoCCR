@@ -5,15 +5,15 @@ import React, {ReactElement} from 'react';
 import consola from 'consola';
 
 // Custom Screens
-import Agency from '@screens/Agency';
-import Classification from '@screens/Classification';
-import Trial from '@screens/Trial';
-import SelectAvatar from '@screens/SelectAvatar';
-import Matching from '@screens/Matching';
-import Matched from '@screens/Matched';
-import Inference from '@screens/Inference';
-import Summary from '@screens/Summary';
-import End from '@screens/End';
+import Agency from 'src/lib/view/screens/Agency';
+import Classification from 'src/lib/view/screens/Classification';
+import Trial from 'src/lib/view/screens/Trial';
+import SelectAvatar from 'src/lib/view/screens/SelectAvatar';
+import Matching from 'src/lib/view/screens/Matching';
+import Matched from 'src/lib/view/screens/Matched';
+import Inference from 'src/lib/view/screens/Inference';
+import Summary from 'src/lib/view/screens/Summary';
+import End from 'src/lib/view/screens/End';
 
 /**
  * Factory pattern to generate screens
