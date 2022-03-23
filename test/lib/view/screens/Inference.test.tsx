@@ -34,7 +34,7 @@ test('loads and displays Inference screen', async () => {
   expect(screen.queryAllByText('Totally')).not.toBeNull();
 });
 
-test('check Inference accessibility', async () => {
+test('check Inference screen accessibility', async () => {
   const {container} = render(screenFactory.generate({
     display: 'inference',
     screen: {

@@ -34,7 +34,7 @@ test('loads and displays Agency screen', async () => {
   expect(screen.queryByText('Agree')).not.toBeNull();
 });
 
-test('check Agency accessibility', async () => {
+test('check Agency screen accessibility', async () => {
   const {container} = render(screenFactory.generate({
     display: 'agency',
     screen: {

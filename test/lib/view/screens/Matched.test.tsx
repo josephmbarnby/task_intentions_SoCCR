@@ -13,12 +13,6 @@ import ScreenFactory from '@classes/factories/ScreenFactory';
 import {Experiment} from 'jspsych-wrapper';
 jest.mock('jspsych-wrapper');
 
-// Recursive partial type, allows tests using the
-// 'jspsych-wrapper' Experiment class to be run
-declare type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-}
-
 let screenFactory: ScreenFactory;
 beforeAll(() => {
   screenFactory = new ScreenFactory();
@@ -50,7 +44,7 @@ test('loads and displays Matched screen', async () => {
   expect(screen.queryByText('Partner found!')).not.toBeNull();
 });
 
-test('check Matched accessibility', async () => {
+test('check Matched screen accessibility', async () => {
   const {container} = render(screenFactory.generate({
     display: 'matched',
     screen: {

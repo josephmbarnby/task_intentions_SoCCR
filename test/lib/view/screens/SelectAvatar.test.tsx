@@ -34,7 +34,7 @@ test('loads and displays SelectAvatar screen', async () => {
   expect(screen.getByRole('heading')).toHaveTextContent('Choose your Avatar!');
 });
 
-test('check SelectAvatar accessibility', async () => {
+test('check SelectAvatar screen accessibility', async () => {
   const {container} = render(screenFactory.generate({
     display: 'selection',
     screen: {

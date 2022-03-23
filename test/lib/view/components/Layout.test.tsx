@@ -9,6 +9,8 @@ import React from 'react';
 
 // Custom wrapper
 import {render} from '../../Wrapper';
+
+// Layout component
 import Layout from '@components/Layout';
 
 // Extend the 'expect' function
@@ -32,7 +34,7 @@ test('loads and displays Layout component with Agency screen', async () => {
   await waitFor(() => expect(screen.getByText('Disagree')).toBeInTheDocument());
 });
 
-test('check Layout accessibility', async () => {
+test('check Layout component accessibility', async () => {
   const {container} = render(
       <Layout
         display='agency'

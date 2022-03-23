@@ -34,7 +34,7 @@ test('loads and displays Classification screen', async () => {
   expect(screen.queryAllByPlaceholderText('Please select')).not.toBeNull();
 });
 
-test('check Classification accessibility', async () => {
+test('check Classification screen accessibility', async () => {
   const {container} = render(screenFactory.generate({
     display: 'classification',
     screen: {

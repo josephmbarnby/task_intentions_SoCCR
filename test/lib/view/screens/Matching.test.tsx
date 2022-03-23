@@ -31,7 +31,7 @@ test('loads and displays Matching screen', async () => {
   expect(screen.queryByText('Finding you a partner...')).not.toBeNull();
 });
 
-test('check Matching accessibility', async () => {
+test('check Matching screen accessibility', async () => {
   const {container} = render(screenFactory.generate({
     display: 'matching',
     screen: {

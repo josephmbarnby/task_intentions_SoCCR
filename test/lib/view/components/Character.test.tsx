@@ -9,6 +9,8 @@ import React from 'react';
 
 // Custom wrapper
 import {render} from '../../Wrapper';
+
+// Character component
 import Character from '@components/Character';
 
 // Extend the 'expect' function
@@ -30,7 +32,7 @@ test('loads and displays Character component', async () => {
     expect(container.querySelector('svg')).toBeInTheDocument());
 });
 
-test('check Character accessibility', async () => {
+test('check Character component accessibility', async () => {
   const {container} = render(
       <Character
         size={128}

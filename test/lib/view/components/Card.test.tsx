@@ -9,6 +9,8 @@ import React from 'react';
 
 // Custom wrapper
 import {render} from '../../Wrapper';
+
+// Card component
 import Card from '@components/Card';
 
 // Extend the 'expect' function
@@ -27,7 +29,7 @@ test('loads and displays Card component', async () => {
   await waitFor(() => expect(screen.getByText('Henry')).toBeInTheDocument());
 });
 
-test('check Card accessibility', async () => {
+test('check Card component accessibility', async () => {
   const {container} = render(
       <Card
         gridArea='a'
