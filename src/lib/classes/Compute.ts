@@ -54,8 +54,6 @@ class Compute {
     }).then((response) => {
       // Attempt to handle the response and extract the data
       if (response['data']) {
-        consola.debug(`Received response data:`, response.data);
-
         // Pass the data to the callback
         onSuccess(response.data);
       } else {

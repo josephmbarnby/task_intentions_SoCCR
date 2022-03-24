@@ -58,7 +58,7 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
       participantResponses: JSON.stringify(requestResponses),
     },
     (data: {
-      participantID: number,
+      participantID: string,
       participantParameters: string,
       partnerParameters: string,
       participantChoices: string,
@@ -68,7 +68,7 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
       try {
         // Extract the response data of interest
         // Participant data
-        const participantID = data.participantID;
+        const participantID = JSON.parse(data.participantID);
         const participantParameters = JSON.parse(data.participantParameters);
         const participantChoices = JSON.parse(data.participantChoices) as {
           ppt1: number, par1: number, ppt2: number, par2: number, Ac: number
@@ -86,15 +86,22 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
           experiment.setGlobalStateValue('partnerChoices', partnerChoices);
           experiment.setGlobalStateValue(
               'participantChoices', participantChoices);
-          consola.info(`Success, generated new partner for ID:`, participantID);
+
+          consola.success(`Generated new partner for ID:`, participantID);
 
           // Store parameters
           props.handler(participantParameters, partnerParameters);
         } else {
           consola.warn(`Phase data appears to be incomplete`);
+
+          // If we have an error, we need to end the game
+          experiment.invokeError(new Error('Incomplete response from server'));
         }
       } catch (error) {
         consola.warn(`Error occurred when extracting content:`, error);
+
+        // If we have an error, we need to end the game
+        experiment.invokeError(new Error('Error extracting content'));
       }
     }, (error) => {
       // If we have an error, we need to end the game
