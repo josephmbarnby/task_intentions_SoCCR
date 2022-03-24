@@ -10,7 +10,7 @@ library(logger)
 
 matching_partner_incremental_fit <- function(phase1data, precan_df, shuffle = T, file_loc = F){
 
-  if(file_loc == T){
+  if (file_loc == T) {
     phase1data <- read.csv(phase1data)
   } else {
     phase1data <- phase1data
@@ -50,14 +50,19 @@ matching_partner_incremental_fit <- function(phase1data, precan_df, shuffle = T,
       dplyr::select(1:4, index_part+5) %>%
       rename(Ac = 5)
 
-    if(shuffle == T){
-    set.seed(156)
-    row <- sample(nrow(partner_decisions))
-    partner_decisions <- partner_decisions[row,]
-    partner_decisions
+    if (shuffle == T) {
+      set.seed(156)
+      row <- sample(nrow(partner_decisions))
+      partner_decisions <- partner_decisions[row, ]
+      partner_decisions
     }
 
-  return(list(partner_decisions, phase1pars, colnames(bound_dfs)[index_part+5]))
+  return(list(
+    phase1pars, # Participant parameters
+    colnames(bound_dfs)[index_part + 5], # Partner parameters
+    participant_decisions, # Participant decisions, phase 2
+    partner_decisions # Partner decisions, phase 3
+  ))
 
 }
 

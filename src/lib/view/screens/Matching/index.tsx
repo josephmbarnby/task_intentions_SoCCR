@@ -20,10 +20,10 @@ import {Configuration} from 'src/configuration';
  */
 const Matching = (props: Props.Screens.Matching): ReactElement => {
   const experiment = window.Experiment;
-  const compute = new Compute(Configuration.endpoint);
 
   // Launch request
   if (props.fetchData) {
+    const compute = new Compute(Configuration.endpoint);
     // Collate data from 'playerChoice' trials
     consola.info(`Collating data...`);
     const dataCollection =
@@ -60,21 +60,36 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
     (data: {
       participantID: number,
       participantParameters: string,
-      partnerChoices: string,
       partnerParameters: string,
+      participantChoices: string,
+      partnerChoices: string,
     }) => {
       // Parse and store the JSON content
       try {
         // Extract the response data of interest
+        // Participant data
         const participantID = data.participantID;
-        const participantParameters = data.participantParameters;
-        const partnerChoices = JSON.parse(data.partnerChoices);
-        const partnerParameters = data.partnerParameters;
+        const participantParameters = JSON.parse(data.participantParameters);
+        const participantChoices = JSON.parse(data.participantChoices) as {
+          ppt1: number, par1: number, ppt2: number, par2: number, Ac: number
+        }[];
 
-        // Check the specification of the data first
-        if ('PARd' in partnerChoices && 'PPTd' in partnerChoices) {
+        // Partner data
+        const partnerParameters = JSON.parse(data.partnerParameters);
+        const partnerChoices = JSON.parse(data.partnerChoices) as {
+          ppt1: number, par1: number, ppt2: number, par2: number, Ac: number
+        }[];
+
+        // Check the specification of the data first, require exactly 54 trials
+        if (partnerChoices.length > 0 && participantChoices.length > 0) {
+          // Store the participant and partner choices
           experiment.setGlobalStateValue('partnerChoices', partnerChoices);
+          experiment.setGlobalStateValue(
+              'participantChoices', participantChoices);
           consola.info(`Success, generated new partner for ID:`, participantID);
+
+          // Store parameters
+          props.handler(participantParameters, partnerParameters);
         } else {
           consola.warn(`Phase data appears to be incomplete`);
         }

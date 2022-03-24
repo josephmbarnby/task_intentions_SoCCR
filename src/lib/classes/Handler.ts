@@ -6,7 +6,7 @@ import {Configuration} from 'src/configuration';
  * used by the screens of the game
  */
 class Handler {
-  private dataframe: Data;
+  private dataframe: TrialData;
   public callback: () => void;
 
   /**
@@ -14,7 +14,7 @@ class Handler {
    * @param {Data} dataframe jsPsych data
    * @param {function} callback default callback after the handlers
    */
-  constructor(dataframe: Data, callback: () => void) {
+  constructor(dataframe: TrialData, callback: () => void) {
     this.dataframe = dataframe;
     this.callback = callback;
   }
@@ -23,7 +23,7 @@ class Handler {
    * Get the dataframe being modified
    * @return {Data}
    */
-  public getDataframe(): Data {
+  public getDataframe(): TrialData {
     return this.dataframe;
   }
 
@@ -123,6 +123,28 @@ class Handler {
 
     // Finish trial
     this.callback();
+  }
+
+
+  /**
+   * Handler called after matching request completed
+   * @param {number[]} participantParameters generated model
+   * parameters for participant
+   * @param {number[]} partnerParameters generated model parameters for partner
+   */
+  public matching(
+      participantParameters: number[],
+      partnerParameters: number[]
+  ): void {
+    // Store participant parameters
+    this.dataframe.server_alpha_ppt = participantParameters[0];
+    this.dataframe.server_beta_ppt = participantParameters[1];
+
+    // Store partner parameters
+    this.dataframe.server_alpha_par = partnerParameters[0];
+    this.dataframe.server_beta_par = partnerParameters[1];
+
+    // We don't call the callback on a timer
   }
 }
 

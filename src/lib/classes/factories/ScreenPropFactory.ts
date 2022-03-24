@@ -110,6 +110,7 @@ class ScreenPropFactory implements Factory {
           trial: this.trial.trial,
           display: this.trial.display,
           fetchData: this.trial.fetchData,
+          handler: this.handler.matching.bind(this.handler),
         };
         break;
 

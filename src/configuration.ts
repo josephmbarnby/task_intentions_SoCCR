@@ -29,6 +29,7 @@ export const Configuration = {
     partnerAvatar: 0,
     refreshPartner: false,
     partnerChoices: {},
+    participantChoices: {},
   },
 
   // API endpoints for computations

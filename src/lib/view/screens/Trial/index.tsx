@@ -110,48 +110,51 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
   // Use data from the API if available
   if (props.display === 'playerGuess') {
-    if ('PARd' in experiment.getGlobalStateValue('partnerChoices')) {
+    if (experiment.getGlobalStateValue('partnerChoices').length > 0) {
       // Update the values stored for the points
       const partnerChoices = experiment.getGlobalStateValue('partnerChoices');
-      const phaseTwoTrialData = partnerChoices['PARd'][props.trial - 1];
+      // 'PARd' -> partner decisions
+      const trialData = partnerChoices[props.trial - 1];
 
       // Switch participant and partner points
-      displayPoints.options.one.participant = phaseTwoTrialData['par1'];
-      displayPoints.options.one.partner = phaseTwoTrialData['ppt1'];
-      displayPoints.options.two.participant = phaseTwoTrialData['par2'];
-      displayPoints.options.two.partner = phaseTwoTrialData['ppt2'];
+      displayPoints.options.one.participant = trialData['par1'];
+      displayPoints.options.one.partner = trialData['ppt1'];
+      displayPoints.options.two.participant = trialData['par2'];
+      displayPoints.options.two.partner = trialData['ppt2'];
 
       // Update default points
-      defaultPoints.options.one.participant = phaseTwoTrialData['ppt1'];
-      defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
-      defaultPoints.options.two.participant = phaseTwoTrialData['ppt2'];
-      defaultPoints.options.two.partner = phaseTwoTrialData['par2'];
+      defaultPoints.options.one.participant = trialData['ppt1'];
+      defaultPoints.options.one.partner = trialData['par1'];
+      defaultPoints.options.two.participant = trialData['ppt2'];
+      defaultPoints.options.two.partner = trialData['par2'];
 
       // Update the correct answer
-      answer = phaseTwoTrialData['AcPar'] === 1 ? 'Option 1' : 'Option 2';
+      answer = trialData['Ac'] === 1 ? 'Option 1' : 'Option 2';
     } else {
-      consola.warn(`'playerGuess' trial, state data not found, using defaults`);
+      consola.warn(`'playerGuess' trial state data incomplete, using defaults`);
     }
   } else if (props.display === 'playerChoice2') {
-    if ('PPTd' in experiment.getGlobalStateValue('partnerChoices')) {
+    if (experiment.getGlobalStateValue('participantChoices').length > 0) {
       // Update the values stored for the points
-      const partnerChoices = experiment.getGlobalStateValue('partnerChoices');
-      const phaseThreeTrialData = partnerChoices['PPTd'][props.trial - 1];
+      const participantChoices =
+        experiment.getGlobalStateValue('participantChoices');
+      // 'PPTd' -> participant decisions
+      const trialData = participantChoices[props.trial - 1];
 
       // Set participant and partner points
-      displayPoints.options.one.participant = phaseThreeTrialData['ppt1'];
-      displayPoints.options.one.partner = phaseThreeTrialData['par1'];
-      displayPoints.options.two.participant = phaseThreeTrialData['ppt2'];
-      displayPoints.options.two.partner = phaseThreeTrialData['par2'];
+      displayPoints.options.one.participant = trialData['ppt1'];
+      displayPoints.options.one.partner = trialData['par1'];
+      displayPoints.options.two.participant = trialData['ppt2'];
+      displayPoints.options.two.partner = trialData['par2'];
 
       // Update default points
-      defaultPoints.options.one.participant = phaseThreeTrialData['ppt1'];
-      defaultPoints.options.one.partner = phaseThreeTrialData['par1'];
-      defaultPoints.options.two.participant = phaseThreeTrialData['ppt2'];
-      defaultPoints.options.two.partner = phaseThreeTrialData['par2'];
+      defaultPoints.options.one.participant = trialData['ppt1'];
+      defaultPoints.options.one.partner = trialData['par1'];
+      defaultPoints.options.two.participant = trialData['ppt2'];
+      defaultPoints.options.two.partner = trialData['par2'];
     } else {
       consola.warn(
-          `'playerChoice2' trial, state data not found, using defaults`
+          `'playerChoice2' trial state data incomplete, using defaults`
       );
     }
   }

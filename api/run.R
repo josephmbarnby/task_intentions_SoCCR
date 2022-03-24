@@ -151,18 +151,20 @@ handler <- function(.req, .res) {
     )
   )
 
+  # Extract participant and partner parameters
+  participant_parameters <- computed[[1]]
+  partner_parameters <- as.integer(strsplit(computed[[2]], " ")[[1]])
+  participant_choices <- computed[[3]]
+  partner_choices <- computed[[4]]
+
   # Extract the partner data and write the partner CSV file
   write.csv(
-    computed[[1]],
+    participant_choices,
     paste0(
       file_path,
       partner_file_name
     )
   )
-
-  # Extract participant and partner parameters
-  participant_parameters <- computed[[2]]
-  partner_parameters <- as.integer(strsplit(computed[[3]], " ")[[1]])
 
   # Write the parameters CSV file
   write.csv(
@@ -181,8 +183,9 @@ handler <- function(.req, .res) {
   .res$set_body(toJSON(list(
     participantID = participant_id,
     participantParameters = toJSON(c(participant_parameters[1], participant_parameters[2])),
-    partnerChoices = toJSON(computed[[1]]),
-    partnerParameters = toJSON(c(partner_parameters[1], partner_parameters[2]))
+    partnerParameters = toJSON(c(partner_parameters[1], partner_parameters[2])),
+    participantChoices = toJSON(participant_choices),
+    partnerChoices = toJSON(partner_choices)
   )))
   .res$set_content_type("text/plain")
 }

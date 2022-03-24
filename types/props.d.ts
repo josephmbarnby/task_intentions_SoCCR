@@ -64,6 +64,7 @@ declare namespace Props {
     // Matching screen
     type Matching = GenericScreenProps & {
       fetchData: boolean;
+      handler: (participantParameters: number[], partnerParameters: number[]) => void;
     };
   
     // Trial screen
