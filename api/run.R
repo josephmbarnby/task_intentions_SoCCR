@@ -32,15 +32,15 @@ log_appender(appender_tee(
   max_files = 1L
 ), namespace = "server")
 
-# Set the 'computations' log level and namespace
-log_threshold(DEBUG, namespace = "computations")
+# Set the 'participants' log level and namespace
+log_threshold(DEBUG, namespace = "participants")
 log_appender(appender_tee(
-  "./logs/computations.log",
+  "./logs/participants.log",
   append = TRUE,
   max_lines = Inf,
   max_bytes = Inf,
   max_files = 1L
-), namespace = "computations")
+), namespace = "participants")
 
 # Start the server
 log_info("Starting server...", namespace = "server")
@@ -60,33 +60,33 @@ handler <- function(.req, .res) {
   # Parse the ID from the body of the request
   # Check for a valid ID
   valid_id <- FALSE
-  if ("id" %in% attributes(.req$parameters_query)$names) {
-    id <- as.integer(.req$parameters_query["id"])
-    if (!is.na(id)) {
+  if ("participantID" %in% attributes(.req$parameters_query)$names) {
+    participant_id <- as.integer(.req$parameters_query["participantID"])
+    if (!is.na(participant_id)) {
       valid_id <- TRUE
     }
   }
 
-  # Reply with a HTTPError if any issues with ID
+  # Reply with a HTTPError if any issues with participant ID
   if (valid_id == FALSE) {
-    log_error("ID invalid or not specified", namespace = "server")
+    log_error("Participant ID invalid or not specified", namespace = "server")
     raise(HTTPError$bad_request())
   }
 
-  # Parse the responses
+  # Parse the participant responses
   valid_response <- FALSE
   parsed <- list()
-  if ("responses" %in% attributes(.req$parameters_query)$names) {
+  if ("participantResponses" %in% attributes(.req$parameters_query)$names) {
     tryCatch({
         parsed <- fromJSON(
-          as.character(.req$parameters_query["responses"]),
+          as.character(.req$parameters_query["participantResponses"]),
           simplifyDataFrame = TRUE
         )
         valid_response <- TRUE
       },
       error = function(e) {
         log_error(
-          "Error encountered while parsing \'responses\' content",
+          "Error encountered while parsing \'participantResponses\' content",
           namespace = "server"
         )
 
@@ -96,16 +96,16 @@ handler <- function(.req, .res) {
     )
   }
 
-  # Reply with a HTTPError if any issues with responses
+  # Reply with a HTTPError if any issues with participant responses
   if (valid_response == FALSE) {
-    log_error("\'responses\' invalid or not specified", namespace = "server")
+    log_error("\'participantResponses\' invalid or not specified", namespace = "server")
     raise(HTTPError$bad_request())
   } else {
-    log_debug("Successfully parsed responses", namespace = "server")
+    log_debug("Successfully parsed participant responses", namespace = "server")
   }
 
   log_success("Valid request received", namespace = "server")
-  log_info("Computing for ID: {id}", namespace = "computations")
+  log_info("Computing for ID: {participant_id}", namespace = "participants")
 
   # Run the matching function
   log_debug("Running matching function...", namespace = "server")
@@ -129,18 +129,18 @@ handler <- function(.req, .res) {
     }
   )
 
-  # Save the data in CSV for for each ID
-  # Create a folder for the ID if it doesn't exist
-  if (dir.exists(paste0("participants/", id)) == FALSE) {
-    dir.create(paste0("participants/", id))
+  # Save the data in CSV for for each participant ID
+  # Create a folder for the participant ID if it doesn't exist
+  if (dir.exists(paste0("participants/", participant_id)) == FALSE) {
+    dir.create(paste0("participants/", participant_id))
   }
 
   # Generate file path
-  file_path <- paste0("participants/", id, "/")
+  file_path <- paste0("participants/", participant_id, "/")
   file_time <- as.character(round(as.numeric(as.POSIXct(Sys.time()))))
-  responses_file_name <- paste(id, file_time, "responses.csv", sep = "_")
-  parameters_file_name <- paste(id, file_time, "parameters.csv", sep = "_")
-  partner_file_name <- paste(id, file_time, "partner.csv", sep = "_")
+  responses_file_name <- paste(participant_id, file_time, "responses.csv", sep = "_")
+  parameters_file_name <- paste(participant_id, file_time, "parameters.csv", sep = "_")
+  partner_file_name <- paste(participant_id, file_time, "partner.csv", sep = "_")
 
   # Write the responses CSV file
   write.csv(
@@ -162,7 +162,7 @@ handler <- function(.req, .res) {
 
   # Extract participant and partner parameters
   participant_parameters <- computed[[2]]
-  partner_parameters <- as.list(strsplit(computed[[3]], " "))[[1]]
+  partner_parameters <- as.integer(strsplit(computed[[3]], " ")[[1]])
 
   # Write the parameters CSV file
   write.csv(
@@ -179,14 +179,16 @@ handler <- function(.req, .res) {
 
   # Configure the response body
   .res$set_body(toJSON(list(
-    id = id,
-    computed = toJSON(computed[[1]])
+    participantID = participant_id,
+    participantParameters = toJSON(c(participant_parameters[1], participant_parameters[2])),
+    partnerChoices = toJSON(computed[[1]]),
+    partnerParameters = toJSON(c(partner_parameters[1], partner_parameters[2]))
   )))
   .res$set_content_type("text/plain")
 }
 
 # Specify the API endpoint and handler
-application$add_get(path = "/compute/intentions", FUN = handler)
+application$add_get(path = "/task/intentions", FUN = handler)
 
 # Start the server
 backend <- BackendRserve$new()
