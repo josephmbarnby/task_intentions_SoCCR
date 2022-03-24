@@ -44,7 +44,7 @@ class Compute {
    * @param {function(data: any): void} onError
    */
   public submit(
-      params: {id: string | number, responses: string},
+      params: {participantID: string | number, participantResponses: string},
       onSuccess: (data: any) => void,
       onError: (data: any) => void
   ): void {

@@ -28,13 +28,13 @@ export const Configuration = {
     participantAvatar: 0,
     partnerAvatar: 0,
     refreshPartner: false,
-    phaseData: {},
+    partnerChoices: {},
   },
 
   // API endpoints for computations
   endpoint: process.env.NODE_ENV === 'development' ?
-      'http://localhost:8000/compute/intentions' :
-      'https://api.henryburgess.me/compute/intentions',
+      'http://localhost:8000/task/intentions' :
+      'https://api.henryburgess.me/task/intentions',
 
   // Avatar configuration details, including colours and names
   avatars: {
