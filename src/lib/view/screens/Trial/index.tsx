@@ -110,10 +110,10 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
   // Use data from the API if available
   if (props.display === 'playerGuess') {
-    if ('PARd' in experiment.getGlobalStateValue('phaseData')) {
+    if ('PARd' in experiment.getGlobalStateValue('partnerChoices')) {
       // Update the values stored for the points
-      const phaseData = experiment.getGlobalStateValue('phaseData');
-      const phaseTwoTrialData = phaseData['PARd'][props.trial - 1];
+      const partnerChoices = experiment.getGlobalStateValue('partnerChoices');
+      const phaseTwoTrialData = partnerChoices['PARd'][props.trial - 1];
 
       // Switch participant and partner points
       displayPoints.options.one.participant = phaseTwoTrialData['par1'];
@@ -133,10 +133,10 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
       consola.warn(`'playerGuess' trial, state data not found, using defaults`);
     }
   } else if (props.display === 'playerChoice2') {
-    if ('PPTd' in experiment.getGlobalStateValue('phaseData')) {
+    if ('PPTd' in experiment.getGlobalStateValue('partnerChoices')) {
       // Update the values stored for the points
-      const phaseData = experiment.getGlobalStateValue('phaseData');
-      const phaseThreeTrialData = phaseData['PPTd'][props.trial - 1];
+      const partnerChoices = experiment.getGlobalStateValue('partnerChoices');
+      const phaseThreeTrialData = partnerChoices['PPTd'][props.trial - 1];
 
       // Set participant and partner points
       displayPoints.options.one.participant = phaseThreeTrialData['ppt1'];

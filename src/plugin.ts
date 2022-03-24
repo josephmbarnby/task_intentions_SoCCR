@@ -5,7 +5,7 @@ import consola from 'consola';
 import {Configuration} from './configuration';
 
 // Core modules
-import PropFactory from 'src/lib/classes/factories/PropFactory';
+import ScreenPropFactory from 'src/lib/classes/factories/ScreenPropFactory';
 import View from 'src/lib/view';
 import Handler from 'src/lib/classes/Handler';
 
@@ -154,13 +154,13 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     // Create the Handler instance
     const handler = new Handler(dataframe, finish);
 
-    // Create a new PropFactory
-    const generated = new PropFactory(trial, handler).generate();
+    // Create a new ScreenPropFactory
+    const displayProps = new ScreenPropFactory(trial, handler).generate();
 
     // Display the view
     view.display(
         trial.display,
-        generated,
+        displayProps,
         displayElement,
     );
   };

@@ -3,20 +3,20 @@ import 'jspsych';
 jest.mock('jspsych');
 
 // Prop factory
-import PropFactory from 'src/lib/classes/factories/PropFactory';
+import ScreenPropFactory from 'src/lib/classes/factories/ScreenPropFactory';
 
 // Import utility functions
 import {getHandler, getTrialConfiguration} from 'test/utils/functions';
 
 test('generate props for Agency screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('agency'),
       getHandler('agency'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);
@@ -25,14 +25,14 @@ test('generate props for Agency screen', async () => {
 });
 
 test('generate props for Classification screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('classification'),
       getHandler('classification'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);
@@ -41,14 +41,14 @@ test('generate props for Classification screen', async () => {
 });
 
 test('generate props for End screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('end'),
       getHandler('end'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);
@@ -57,14 +57,14 @@ test('generate props for End screen', async () => {
 });
 
 test('generate props for Inference screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('inference'),
       getHandler('inference'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);
@@ -73,14 +73,14 @@ test('generate props for Inference screen', async () => {
 });
 
 test('generate props for Matched screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('matched'),
       getHandler('matched'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);
@@ -89,14 +89,14 @@ test('generate props for Matched screen', async () => {
 });
 
 test('generate props for Matching screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('matching'),
       getHandler('matching'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);
@@ -106,14 +106,14 @@ test('generate props for Matching screen', async () => {
 });
 
 test('generate props for Summary screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('summary'),
       getHandler('summary'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);
@@ -123,14 +123,14 @@ test('generate props for Summary screen', async () => {
 });
 
 test('generate props for Trial screen', async () => {
-  // Create a new PropFactory instance
-  const propFactory = new PropFactory(
+  // Create a new ScreenPropFactory instance
+  const screenPropFactory = new ScreenPropFactory(
       getTrialConfiguration('playerChoice'),
       getHandler('playerChoice'),
   );
 
   // Generate the props
-  const generated = propFactory.generate();
+  const generated = screenPropFactory.generate();
 
   // Check contents of props
   expect(generated.props.trial).toBe(1);

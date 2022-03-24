@@ -54,21 +54,27 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
     // Launch request to endpoint
     consola.info(`Requesting partner...`);
     compute.submit({
-      id: 1234,
-      responses: JSON.stringify(requestResponses),
-    }, (data: {id: number, computed: string}) => {
-      // Extract the response data of interest
-      const id = data.id;
-      const content = data.computed;
-
+      participantID: 1234,
+      participantResponses: JSON.stringify(requestResponses),
+    },
+    (data: {
+      participantID: number,
+      participantParameters: string,
+      partnerChoices: string,
+      partnerParameters: string,
+    }) => {
       // Parse and store the JSON content
-      let phaseData = null;
       try {
-        phaseData = JSON.parse(content);
+        // Extract the response data of interest
+        const participantID = data.participantID;
+        const participantParameters = data.participantParameters;
+        const partnerChoices = JSON.parse(data.partnerChoices);
+        const partnerParameters = data.partnerParameters;
+
         // Check the specification of the data first
-        if ('PARd' in phaseData && 'PPTd' in phaseData) {
-          experiment.setGlobalStateValue('phaseData', phaseData);
-          consola.info(`Success, generated new partner for id:`, id);
+        if ('PARd' in partnerChoices && 'PPTd' in partnerChoices) {
+          experiment.setGlobalStateValue('partnerChoices', partnerChoices);
+          consola.info(`Success, generated new partner for ID:`, participantID);
         } else {
           consola.warn(`Phase data appears to be incomplete`);
         }

@@ -10,7 +10,7 @@ import Handler from 'src/lib/classes/Handler';
 /**
  * Factory pattern to generate props for screens
  */
-class PropFactory implements Factory {
+class ScreenPropFactory implements Factory {
   private trial: Trial;
   private handler: Handler;
 
@@ -28,8 +28,8 @@ class PropFactory implements Factory {
    * Generate props
    * @return {any} props
    */
-  public generate(): GeneratedPropValues {
-    const generated = {
+  public generate(): ScreenProps {
+    const returned = {
       props: {},
       duration: 0,
       callback: () => {
@@ -61,7 +61,7 @@ class PropFactory implements Factory {
       case 'playerGuessPractice':
       case 'playerChoice2': {
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
           isPractice: this.trial.isPractice,
@@ -85,13 +85,13 @@ class PropFactory implements Factory {
 
       // Matched screen
       case 'matched':
-        generated.duration = 2000;
+        returned.duration = 2000;
 
         // Set the timeout callback function
-        generated.callback = this.handler.callback.bind(this.handler);
+        returned.callback = this.handler.callback.bind(this.handler);
 
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
         };
@@ -100,13 +100,13 @@ class PropFactory implements Factory {
       // Matching screen
       case 'matching':
         // Random timeout for 'matching' process
-        generated.duration = 2000 + (1 + Math.random() * 5) * 1000;
+        returned.duration = 2000 + (1 + Math.random() * 5) * 1000;
 
         // Set the timeout callback function
-        generated.callback = this.handler.callback.bind(this.handler);
+        returned.callback = this.handler.callback.bind(this.handler);
 
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
           fetchData: this.trial.fetchData,
@@ -116,7 +116,7 @@ class PropFactory implements Factory {
       // Selection screen
       case 'selection':
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
           handler: this.handler.selection.bind(this.handler),
@@ -126,7 +126,7 @@ class PropFactory implements Factory {
       // Inference screen
       case 'inference':
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
           handler: this.handler.inference.bind(this.handler),
@@ -136,7 +136,7 @@ class PropFactory implements Factory {
       // Agency screen
       case 'agency':
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
           handler: this.handler.agency.bind(this.handler),
@@ -146,7 +146,7 @@ class PropFactory implements Factory {
       // Classification screen
       case 'classification':
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
           handler:
@@ -157,7 +157,7 @@ class PropFactory implements Factory {
       // Summary screen
       case 'summary':
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
           postPhase: postPhase,
@@ -168,13 +168,13 @@ class PropFactory implements Factory {
       // End screen
       case 'end':
         // Set the timeout duration
-        generated.duration = 5000;
+        returned.duration = 5000;
 
         // Set the timeout callback function
-        generated.callback = this.handler.callback.bind(this.handler);
+        returned.callback = this.handler.callback.bind(this.handler);
 
         // Setup the props
-        generated.props = {
+        returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
         };
@@ -187,8 +187,8 @@ class PropFactory implements Factory {
         this.handler.callback();
         break;
     }
-    return generated;
+    return returned;
   }
 }
 
-export default PropFactory;
+export default ScreenPropFactory;

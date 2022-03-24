@@ -30,12 +30,12 @@ class View {
   /**
    * Switch between different screens
    * @param {Display} type screen type
-   * @param {GeneratedPropValues} propData collection of props
+   * @param {ScreenProps} propData collection of props
    * @param {HTMLElement} target target DOM element
    */
   public display(
       type: Display,
-      propData: GeneratedPropValues,
+      propData: ScreenProps,
       target: HTMLElement,
   ): void {
     // Render the 'Layout' component

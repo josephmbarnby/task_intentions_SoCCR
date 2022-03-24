@@ -18,7 +18,7 @@ import End from 'src/lib/view/screens/End';
 /**
  * Factory pattern to generate screens
  */
-class ScreenFactory implements Factory {
+class Screens implements Factory {
   /**
    * Generate and return the React element representing
    * the screen
@@ -96,4 +96,4 @@ class ScreenFactory implements Factory {
   }
 }
 
-export default ScreenFactory;
+export default Screens;
