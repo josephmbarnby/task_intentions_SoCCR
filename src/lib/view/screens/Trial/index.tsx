@@ -470,7 +470,7 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
   return (
     <Grid
-      rows={['auto', 'medium', 'auto']}
+      rows={['xsmall', 'medium', 'xsmall']}
       columns={['flex', '1/2', 'flex']}
       gap='xsmall'
       width={{
