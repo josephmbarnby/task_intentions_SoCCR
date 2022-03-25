@@ -61,7 +61,6 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
       participantID: string,
       participantParameters: string,
       partnerParameters: string,
-      participantChoices: string,
       partnerChoices: string,
     }) => {
       // Parse and store the JSON content
@@ -70,9 +69,6 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
         // Participant data
         const participantID = JSON.parse(data.participantID);
         const participantParameters = JSON.parse(data.participantParameters);
-        const participantChoices = JSON.parse(data.participantChoices) as {
-          ppt1: number, par1: number, ppt2: number, par2: number, Ac: number
-        }[];
 
         // Partner data
         const partnerParameters = JSON.parse(data.partnerParameters);
@@ -81,11 +77,9 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
         }[];
 
         // Check the specification of the data first, require exactly 54 trials
-        if (partnerChoices.length > 0 && participantChoices.length > 0) {
-          // Store the participant and partner choices
+        if (partnerChoices.length > 0) {
+          // Store the partner choices
           experiment.setGlobalStateValue('partnerChoices', partnerChoices);
-          experiment.setGlobalStateValue(
-              'participantChoices', participantChoices);
 
           consola.success(`Generated new partner for ID:`, participantID);
 

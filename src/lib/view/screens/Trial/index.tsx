@@ -133,30 +133,6 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     } else {
       consola.warn(`'playerGuess' trial state data incomplete, using defaults`);
     }
-  } else if (props.display === 'playerChoice2') {
-    if (experiment.getGlobalStateValue('participantChoices').length > 0) {
-      // Update the values stored for the points
-      const participantChoices =
-        experiment.getGlobalStateValue('participantChoices');
-      // 'PPTd' -> participant decisions
-      const trialData = participantChoices[props.trial - 1];
-
-      // Set participant and partner points
-      displayPoints.options.one.participant = trialData['ppt1'];
-      displayPoints.options.one.partner = trialData['par1'];
-      displayPoints.options.two.participant = trialData['ppt2'];
-      displayPoints.options.two.partner = trialData['par2'];
-
-      // Update default points
-      defaultPoints.options.one.participant = trialData['ppt1'];
-      defaultPoints.options.one.partner = trialData['par1'];
-      defaultPoints.options.two.participant = trialData['ppt2'];
-      defaultPoints.options.two.partner = trialData['par2'];
-    } else {
-      consola.warn(
-          `'playerChoice2' trial state data incomplete, using defaults`
-      );
-    }
   }
 
   /**
