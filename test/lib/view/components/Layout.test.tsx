@@ -1,51 +1,53 @@
 // Test utilities
-import {waitFor, screen} from '@testing-library/react';
-import '@testing-library/jest-dom';
-import {axe, toHaveNoViolations} from 'jest-axe';
-import {act} from 'react-dom/test-utils';
+import { waitFor, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { axe, toHaveNoViolations } from "jest-axe";
+import { act } from "react-dom/test-utils";
 
 // React
-import React from 'react';
+import React from "react";
 
 // Custom wrapper
-import {render} from 'test/utils/Wrapper';
+import { render } from "test/utils/Wrapper";
 
 // Layout component
-import Layout from 'src/lib/view/components/Layout';
+import Layout from "src/lib/view/components/Layout";
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
 
-test('loads and displays Layout component with Agency screen', async () => {
-  await waitFor(() => render(
+test("loads and displays Layout component with Agency screen", async () => {
+  await waitFor(() =>
+    render(
       <Layout
-        display='agency'
+        display="agency"
         screen={{
           trial: 1,
-          display: 'agency',
+          display: "agency",
           handler: () => {
             return;
           },
         }}
       />
-  ));
+    )
+  );
 
-  await waitFor(() => expect(screen.getByText('Agree')).toBeInTheDocument());
-  await waitFor(() => expect(screen.getByText('Disagree')).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText("Agree")).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText("Disagree")).toBeInTheDocument());
 });
 
-test('check Layout component accessibility', async () => {
-  const {container} = render(
-      <Layout
-        display='agency'
-        screen={{
-          trial: 1,
-          display: 'agency',
-          handler: () => {
-            return;
-          },
-        }}
-      />
+test("check Layout component accessibility", async () => {
+  const { container } = render(
+    <Layout
+      display="agency"
+      screen={{
+        trial: 1,
+        display: "agency",
+        handler: () => {
+          return;
+        },
+      }}
+    />
   );
 
   await act(async () => {

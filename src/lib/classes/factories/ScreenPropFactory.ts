@@ -1,11 +1,11 @@
 // Logging library
-import consola from 'consola';
+import consola from "consola";
 
 // Utility function
-import {calculatePoints} from 'src/lib/util';
+import { calculatePoints } from "src/lib/util";
 
 // Handlers
-import Handler from 'src/lib/classes/Handler';
+import Handler from "src/lib/classes/Handler";
 
 /**
  * Factory pattern to generate props for screens
@@ -39,27 +39,27 @@ class ScreenPropFactory implements Factory {
 
     // Sum the points from the previous trials
     const participantPoints = calculatePoints(
-        this.trial.display,
-        'playerPoints_selected',
+      this.trial.display,
+      "playerPoints_selected"
     );
     const partnerPoints = calculatePoints(
-        this.trial.display,
-        'partnerPoints_selected',
+      this.trial.display,
+      "partnerPoints_selected"
     );
 
     // Get the prior phase, checking first that there was a prior trial
-    let postPhase: Display = 'playerChoice';
+    let postPhase: Display = "playerChoice";
     if (jsPsych.data.get().last().values().length > 0) {
       postPhase = jsPsych.data.get().last().values()[0].display;
     }
 
     switch (this.trial.display) {
       // Phase 1, 2, and 3 trials
-      case 'playerChoice':
-      case 'playerChoicePractice':
-      case 'playerGuess':
-      case 'playerGuessPractice':
-      case 'playerChoice2': {
+      case "playerChoice":
+      case "playerChoicePractice":
+      case "playerGuess":
+      case "playerGuessPractice":
+      case "playerChoice2": {
         // Setup the props
         returned.props = {
           trial: this.trial.trial,
@@ -84,7 +84,7 @@ class ScreenPropFactory implements Factory {
       }
 
       // Matched screen
-      case 'matched':
+      case "matched":
         returned.duration = 2000;
 
         // Set the timeout callback function
@@ -98,7 +98,7 @@ class ScreenPropFactory implements Factory {
         break;
 
       // Matching screen
-      case 'matching':
+      case "matching":
         // Random timeout for 'matching' process
         returned.duration = 2000 + (1 + Math.random() * 5) * 1000;
 
@@ -115,7 +115,7 @@ class ScreenPropFactory implements Factory {
         break;
 
       // Selection screen
-      case 'selection':
+      case "selection":
         // Setup the props
         returned.props = {
           trial: this.trial.trial,
@@ -125,7 +125,7 @@ class ScreenPropFactory implements Factory {
         break;
 
       // Inference screen
-      case 'inference':
+      case "inference":
         // Setup the props
         returned.props = {
           trial: this.trial.trial,
@@ -135,7 +135,7 @@ class ScreenPropFactory implements Factory {
         break;
 
       // Agency screen
-      case 'agency':
+      case "agency":
         // Setup the props
         returned.props = {
           trial: this.trial.trial,
@@ -145,18 +145,17 @@ class ScreenPropFactory implements Factory {
         break;
 
       // Classification screen
-      case 'classification':
+      case "classification":
         // Setup the props
         returned.props = {
           trial: this.trial.trial,
           display: this.trial.display,
-          handler:
-            this.handler.classification.bind(this.handler),
+          handler: this.handler.classification.bind(this.handler),
         };
         break;
 
       // Summary screen
-      case 'summary':
+      case "summary":
         // Setup the props
         returned.props = {
           trial: this.trial.trial,
@@ -167,7 +166,7 @@ class ScreenPropFactory implements Factory {
         break;
 
       // End screen
-      case 'end':
+      case "end":
         // Set the timeout duration
         returned.duration = 5000;
 

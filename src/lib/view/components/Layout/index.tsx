@@ -1,17 +1,17 @@
 // React import
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from "react";
 
 // Grommet component
-import {Grommet, ThemeContext} from 'grommet';
+import { Grommet, ThemeContext } from "grommet";
 
 // Import styling
-import 'src/scss/styles.scss';
+import "src/scss/styles.scss";
 
 // Apply custom theme globally
-import {Theme} from 'src/lib/theme';
+import { Theme } from "src/lib/theme";
 
 // Factory class to generate screens
-import ScreenFactory from 'src/lib/classes/factories/ScreenFactory';
+import ScreenFactory from "src/lib/classes/factories/ScreenFactory";
 
 /**
  * Generic container for all Grommet components
@@ -26,19 +26,20 @@ export const Layout = (props: Props.Components.Layout): ReactElement => {
   // Return a styled Grommet instance with the global theme extension
   return (
     <Grommet
-      full='min'
+      full="min"
       style={{
         // Dimensions
-        minHeight: '70vh',
-        minWidth: '70vw',
+        minHeight: "70vh",
+        minWidth: "70vw",
         // Flex properties
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         // Overflow
-        overflow: 'hidden',
-      }}>
+        overflow: "hidden",
+      }}
+    >
       <ThemeContext.Extend value={Theme}>
         {screenFactory.generate(props)}
       </ThemeContext.Extend>

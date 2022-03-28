@@ -1,12 +1,12 @@
 // React
-import React, {ReactElement, useState} from 'react';
+import React, { ReactElement, useState } from "react";
 
 // Grommet UI components
-import {Box, Button, Paragraph} from 'grommet';
-import {LinkNext} from 'grommet-icons';
+import { Box, Button, Paragraph } from "grommet";
+import { LinkNext } from "grommet-icons";
 
 // Custom components
-import Slider from 'src/lib/view/components/Slider';
+import Slider from "src/lib/view/components/Slider";
 
 // Constants
 const SLIDER_DEFAULT = 50;
@@ -28,24 +28,24 @@ const Inference = (props: Props.Screens.Inference): ReactElement => {
 
   return (
     <Box
-      justify='center'
-      align='center'
-      gap='small'
-      style={{maxWidth: '50%', margin: 'auto'}}
-      animation={['fadeIn']}
+      justify="center"
+      align="center"
+      gap="small"
+      style={{ maxWidth: "50%", margin: "auto" }}
+      animation={["fadeIn"]}
     >
       {/* First question */}
-      <Paragraph margin='small' size='large' fill>
-        Please use the slider below to indicate the extent
-        to which you believe your partner's decisions are
-        driven by their desire to earn points in this task.
+      <Paragraph margin="small" size="large" fill>
+        Please use the slider below to indicate the extent to which you believe
+        your partner's decisions are driven by their desire to earn points in
+        this task.
       </Paragraph>
       <Slider
         min={0}
         max={100}
         initial={firstValue}
-        leftLabel='Not at all'
-        rightLabel='Totally'
+        leftLabel="Not at all"
+        rightLabel="Totally"
         onChange={() => {
           setFirstMoved(true);
         }}
@@ -53,17 +53,17 @@ const Inference = (props: Props.Screens.Inference): ReactElement => {
       />
 
       {/* Second question */}
-      <Paragraph margin='small' size='large' fill>
-        Please use the slider below to indicate the extent
-        to which you believe your partner's decisions are
-        driven by their desire to reduce your bonus in this task.
+      <Paragraph margin="small" size="large" fill>
+        Please use the slider below to indicate the extent to which you believe
+        your partner's decisions are driven by their desire to reduce your bonus
+        in this task.
       </Paragraph>
       <Slider
         min={0}
         max={100}
         initial={secondValue}
-        leftLabel='Not at all'
-        rightLabel='Totally'
+        leftLabel="Not at all"
+        rightLabel="Totally"
         onChange={() => {
           setSecondMoved(true);
         }}
@@ -73,14 +73,14 @@ const Inference = (props: Props.Screens.Inference): ReactElement => {
       {/* Continue button */}
       <Button
         primary
-        margin={{top: 'auto'}}
-        color='button'
-        label='Continue'
+        margin={{ top: "auto" }}
+        color="button"
+        label="Continue"
         disabled={
           // Disabled until both sliders have been interacted with
           firstMoved === false || secondMoved === false
         }
-        size='large'
+        size="large"
         icon={<LinkNext />}
         reverse
         onClick={() => {

@@ -1,5 +1,5 @@
 // Configuration
-import {Configuration} from 'src/configuration';
+import { Configuration } from "src/configuration";
 
 /**
  * Utility class exposing each of the different handlers
@@ -34,9 +34,9 @@ class Handler {
    * @param {Options} answer selected option
    */
   public option(
-      option: Options,
-      points: {options: Points},
-      answer: Options,
+    option: Options,
+    points: { options: Points },
+    answer: Options
   ): void {
     // Store the correct answer
     this.dataframe.realAnswer = answer;
@@ -46,7 +46,7 @@ class Handler {
     this.dataframe.correctGuess = option === answer ? 1 : 0;
 
     // Store the participant selection
-    this.dataframe.selectedOption_player = option === 'Option 1' ? 1 : 2;
+    this.dataframe.selectedOption_player = option === "Option 1" ? 1 : 2;
 
     // Store the points as provided
     this.dataframe.playerPoints_option1 = points.options.one.participant;
@@ -55,7 +55,7 @@ class Handler {
     this.dataframe.partnerPoints_option2 = points.options.two.partner;
 
     // All other trials, add points from option participant selected
-    if (option === 'Option 1') {
+    if (option === "Option 1") {
       this.dataframe.playerPoints_selected = points.options.one.participant;
       this.dataframe.partnerPoints_selected = points.options.one.partner;
     } else {
@@ -74,13 +74,10 @@ class Handler {
   public selection(selection: string): void {
     // Obtain the selected avatar
     const selectedAvatar =
-        Configuration.avatars.names.participant.indexOf(selection);
+      Configuration.avatars.names.participant.indexOf(selection);
 
     // Update the global Experiment state
-    window.Experiment.setGlobalStateValue(
-        'participantAvatar',
-        selectedAvatar,
-    );
+    window.Experiment.setGlobalStateValue("participantAvatar", selectedAvatar);
 
     // Finish trial
     this.callback();
@@ -125,7 +122,6 @@ class Handler {
     this.callback();
   }
 
-
   /**
    * Handler called after matching request completed
    * @param {number[]} participantParameters generated model
@@ -133,8 +129,8 @@ class Handler {
    * @param {number[]} partnerParameters generated model parameters for partner
    */
   public matching(
-      participantParameters: number[],
-      partnerParameters: number[]
+    participantParameters: number[],
+    partnerParameters: number[]
   ): void {
     // Store participant parameters
     this.dataframe.server_alpha_ppt = participantParameters[0];

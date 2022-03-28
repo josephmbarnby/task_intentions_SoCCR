@@ -1,9 +1,9 @@
 // React import
-import React from 'react';
-import ReactDOM, {render} from 'react-dom';
+import React from "react";
+import ReactDOM, { render } from "react-dom";
 
 // Foundational 'Layout' component
-import {Layout} from 'src/lib/view/components/Layout';
+import { Layout } from "src/lib/view/components/Layout";
 
 /**
  * Static 'View' class used to display React-based screens
@@ -34,18 +34,12 @@ class View {
    * @param {HTMLElement} target target DOM element
    */
   public display(
-      type: Display,
-      propData: ScreenProps,
-      target: HTMLElement,
+    type: Display,
+    propData: ScreenProps,
+    target: HTMLElement
   ): void {
     // Render the 'Layout' component
-    render(
-        <Layout
-          display={type}
-          screen={propData.props}
-        />,
-        target,
-    );
+    render(<Layout display={type} screen={propData.props} />, target);
 
     // Setup a timeout to execute the callback
     if (propData.duration > 0) {

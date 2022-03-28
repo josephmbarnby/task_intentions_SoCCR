@@ -4,13 +4,18 @@ declare namespace Props {
   // Props for 'Components'
   declare namespace Components {
     // Layout component
-    type Layout =  {
+    type Layout = {
       display: Display;
       screen:
-          Screens.Matched | Screens.Matching | Screens.Trial |
-          Screens.SelectAvatar | Screens.Inference | Screens.Agency |
-          Screens.Classification | Screens.Summary;
-    }
+        | Screens.Matched
+        | Screens.Matching
+        | Screens.Trial
+        | Screens.SelectAvatar
+        | Screens.Inference
+        | Screens.Agency
+        | Screens.Classification
+        | Screens.Summary;
+    };
 
     // Option component
     type Option = {
@@ -18,7 +23,7 @@ declare namespace Props {
       optionName: string;
       pointsParticipant: number;
       pointsPartner: number;
-    }
+    };
 
     // Card component
     type Card = {
@@ -26,7 +31,7 @@ declare namespace Props {
       name: string;
       points: number;
       avatar: string;
-    }
+    };
 
     // Slider component
     type Slider = {
@@ -37,7 +42,7 @@ declare namespace Props {
       rightLabel: string;
       onChange?: () => any;
       setValue?: (value: number) => void;
-    }
+    };
 
     // Character component
     type Character = {
@@ -45,7 +50,7 @@ declare namespace Props {
       name: string;
       state: string;
       setState: (avatar: string) => void;
-    }
+    };
   }
 
   // Props for 'Screens'
@@ -53,20 +58,23 @@ declare namespace Props {
     type GenericScreenProps = {
       trial: number;
       display: Display;
-    }
-  
+    };
+
     // End screen
     type End = GenericScreenProps;
-  
+
     // Matched screen
     type Matched = GenericScreenProps;
-  
+
     // Matching screen
     type Matching = GenericScreenProps & {
       fetchData: boolean;
-      handler: (participantParameters: number[], partnerParameters: number[]) => void;
+      handler: (
+        participantParameters: number[],
+        partnerParameters: number[]
+      ) => void;
     };
-  
+
     // Trial screen
     type Trial = GenericScreenProps & {
       isPractice: boolean;
@@ -74,34 +82,38 @@ declare namespace Props {
       partnerPoints: number;
       options: Points;
       answer: Options;
-      handler: (selection: Options, points: {options: Points}, answer: Options) => void;
-    }
-  
+      handler: (
+        selection: Options,
+        points: { options: Points },
+        answer: Options
+      ) => void;
+    };
+
     // SelectAvatar screen
     type SelectAvatar = GenericScreenProps & {
       handler: (selection: string) => void;
-    }
-  
+    };
+
     // Inference screen
     type Inference = GenericScreenProps & {
       handler: (firstValue: number, secondValue: number) => void;
-    }
-  
+    };
+
     // Agency screen
     type Agency = GenericScreenProps & {
       handler: (firstValue: number) => void;
-    }
-  
+    };
+
     // Classification screen
     type Classification = GenericScreenProps & {
       handler: (classification: string) => void;
-    }
-  
+    };
+
     // Summary screen
     type Summary = GenericScreenProps & {
       postPhase: Display;
       handler: () => void;
-    }
+    };
   }
 }
 
@@ -110,4 +122,4 @@ declare type ScreenProps = {
   props: any;
   callback: (...args) => void;
   duration: number;
-}
+};

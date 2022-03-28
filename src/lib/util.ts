@@ -1,10 +1,10 @@
 // Logging library
-import consola from 'consola';
+import consola from "consola";
 
 // React imports
-import {ReactElement} from 'react';
-import ReactDOM from 'react-dom';
-import ReactDOMServer from 'react-dom/server';
+import { ReactElement } from "react";
+import ReactDOM from "react-dom";
+import ReactDOMServer from "react-dom/server";
 
 /**
  * Clear the HTML contents of an element without
@@ -40,21 +40,22 @@ export function clear(target: HTMLElement | null, isReact = false): void {
 export const calculatePoints = (display: Display, column: string): number => {
   let points = 0;
 
-  if (display === 'playerGuess') {
+  if (display === "playerGuess") {
     // `playerGuess` phases calculated differently
-    const dataCollection = jsPsych.data.get()
-        .filter({
-          display: display,
-        })
-        .values();
+    const dataCollection = jsPsych.data
+      .get()
+      .filter({
+        display: display,
+      })
+      .values();
 
     // Iterate through the data collection
     for (const row of dataCollection) {
       const realAnswer = row.realAnswer;
       // Determine if for the player or the partner
-      if (column.startsWith('player')) {
+      if (column.startsWith("player")) {
         // Points for the player, sum partner points
-        if (realAnswer === 'Option 1') {
+        if (realAnswer === "Option 1") {
           // Option 1
           points += row.partnerPoints_option1;
         } else {
@@ -63,7 +64,7 @@ export const calculatePoints = (display: Display, column: string): number => {
         }
       } else {
         // Points for the partner, sum player points
-        if (realAnswer === 'Option 1') {
+        if (realAnswer === "Option 1") {
           // Option 1
           points += row.playerPoints_option1;
         } else {
@@ -74,12 +75,13 @@ export const calculatePoints = (display: Display, column: string): number => {
     }
   } else {
     // All other phases can be calculated normally
-    points = jsPsych.data.get()
-        .filter({
-          display: display,
-        })
-        .select(column)
-        .sum();
+    points = jsPsych.data
+      .get()
+      .filter({
+        display: display,
+      })
+      .select(column)
+      .sum();
   }
   return points;
 };

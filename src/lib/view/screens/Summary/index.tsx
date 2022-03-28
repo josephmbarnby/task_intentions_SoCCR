@@ -1,21 +1,21 @@
 // React import
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from "react";
 
 // Logging library
-import consola from 'consola';
+import consola from "consola";
 
 // Grommet UI components
-import {Box, Button, Grid, Heading, Layer, WorldMap} from 'grommet';
-import {LinkNext} from 'grommet-icons';
+import { Box, Button, Grid, Heading, Layer, WorldMap } from "grommet";
+import { LinkNext } from "grommet-icons";
 
 // Custom components
-import Card from 'src/lib/view/components/Card';
+import Card from "src/lib/view/components/Card";
 
 // Configuration
-import {Configuration} from 'src/configuration';
+import { Configuration } from "src/configuration";
 
 // Utility functions
-import {calculatePoints} from 'src/lib/util';
+import { calculatePoints } from "src/lib/util";
 
 /**
  * Generate layout of Matching Screen
@@ -27,74 +27,70 @@ const Summary = (props: Props.Screens.Summary): ReactElement => {
 
   // Get the participant's and the partner's avatars
   const experiment = window.Experiment;
-  const participantAvatar = experiment.getGlobalStateValue('participantAvatar');
-  const partnerAvatar = experiment.getGlobalStateValue('partnerAvatar');
+  const participantAvatar = experiment.getGlobalStateValue("participantAvatar");
+  const partnerAvatar = experiment.getGlobalStateValue("partnerAvatar");
 
   // Get the participant's and the partner's points
   const participantPoints = calculatePoints(
-      props.postPhase,
-      'playerPoints_selected',
+    props.postPhase,
+    "playerPoints_selected"
   );
   const partnerPoints = calculatePoints(
-      props.postPhase,
-      'partnerPoints_selected',
+    props.postPhase,
+    "partnerPoints_selected"
   );
 
   return (
     <>
-      <WorldMap color='map' fill='horizontal' />
+      <WorldMap color="map" fill="horizontal" />
       <Layer plain>
         {/* Heading */}
         <Heading
-          level='1'
+          level="1"
           fill
-          alignSelf='center'
+          alignSelf="center"
           margin={{
-            top: 'large',
+            top: "large",
           }}
         >
           Summary
         </Heading>
         {/* Participant and partner info */}
         <Grid
-          rows={['auto']}
-          columns={['medium', 'medium']}
-          justifyContent='center'
-          gap='small'
+          rows={["auto"]}
+          columns={["medium", "medium"]}
+          justifyContent="center"
+          gap="small"
           areas={[
-            {name: 'participantArea', start: [0, 0], end: [0, 0]},
-            {name: 'partnerArea', start: [1, 0], end: [1, 0]},
+            { name: "participantArea", start: [0, 0], end: [0, 0] },
+            { name: "partnerArea", start: [1, 0], end: [1, 0] },
           ]}
         >
           {/* Participant */}
           <Card
-            gridArea='participantArea'
-            name='You'
+            gridArea="participantArea"
+            name="You"
             avatar={Configuration.avatars.names.participant[participantAvatar]}
             points={participantPoints}
           />
 
           {/* Partner */}
           <Card
-            gridArea='partnerArea'
-            name='Partner'
+            gridArea="partnerArea"
+            name="Partner"
             avatar={Configuration.avatars.names.partner[partnerAvatar]}
             points={partnerPoints}
           />
         </Grid>
 
         {/* Continue button */}
-        <Box
-          justify='center'
-          align='center'
-          margin='small'
-        >
+        <Box justify="center" align="center" margin="small">
           <Button
             primary
-            color='button'
-            label='Continue'
-            size='large'
-            margin='medium'
+            color="button"
+            label="Continue"
+            size="large"
+            margin="medium"
             icon={<LinkNext />}
             reverse
             onClick={() => {

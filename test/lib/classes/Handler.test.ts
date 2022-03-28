@@ -1,22 +1,22 @@
 // Handler class test
 // Import the Handler class
-import Handler from 'src/lib/classes/Handler';
+import Handler from "src/lib/classes/Handler";
 
 // Import utility functions
-import {getHandler} from 'test/utils/functions';
+import { getHandler } from "test/utils/functions";
 
 // Mock jsPsych
-import 'jspsych';
-jest.mock('jspsych');
+import "jspsych";
+jest.mock("jspsych");
 
 // Mock the jsPsych wrapper library
-import {Experiment} from 'jspsych-wrapper';
-jest.mock('jspsych-wrapper');
+import { Experiment } from "jspsych-wrapper";
+jest.mock("jspsych-wrapper");
 
 // Setup the Experiment instances
 beforeEach(() => {
   // Experiment
-  (window['Experiment'] as RecursivePartial<Experiment>) = {
+  (window["Experiment"] as RecursivePartial<Experiment>) = {
     getGlobalStateValue: jest.fn(),
     setGlobalStateValue: jest.fn(),
   };
@@ -24,23 +24,27 @@ beforeEach(() => {
 
 let handler: Handler;
 beforeEach(() => {
-  handler = getHandler('agency');
+  handler = getHandler("agency");
 });
 
 // Option handler
-test('check the Option handler', async () => {
-  handler.option('Option 1', {
-    options: {
-      one: {
-        participant: 1,
-        partner: 1,
-      },
-      two: {
-        participant: 2,
-        partner: 2,
+test("check the Option handler", async () => {
+  handler.option(
+    "Option 1",
+    {
+      options: {
+        one: {
+          participant: 1,
+          partner: 1,
+        },
+        two: {
+          participant: 2,
+          partner: 2,
+        },
       },
     },
-  }, 'Option 1');
+    "Option 1"
+  );
 
   const dataframe = handler.getDataframe();
 
@@ -54,15 +58,15 @@ test('check the Option handler', async () => {
 });
 
 // Selection handler
-test('check the Selection handler', async () => {
-  handler.selection('a');
+test("check the Selection handler", async () => {
+  handler.selection("a");
 
   // Validate the stored selection
   expect(window.Experiment.setGlobalStateValue).toBeCalled();
 });
 
 // Inference handler
-test('check the Inference handler', async () => {
+test("check the Inference handler", async () => {
   handler.inference(1, 2);
 
   const dataframe = handler.getDataframe();
@@ -73,7 +77,7 @@ test('check the Inference handler', async () => {
 });
 
 // Agency handler
-test('check the Agency handler', async () => {
+test("check the Agency handler", async () => {
   handler.agency(1);
 
   const dataframe = handler.getDataframe();
@@ -83,11 +87,11 @@ test('check the Agency handler', async () => {
 });
 
 // Classification handler
-test('check the Classification handler', async () => {
-  handler.classification('Prosocial');
+test("check the Classification handler", async () => {
+  handler.classification("Prosocial");
 
   const dataframe = handler.getDataframe();
 
   // Validate the stored responses
-  expect(dataframe.classification).toBe('Prosocial');
+  expect(dataframe.classification).toBe("Prosocial");
 });

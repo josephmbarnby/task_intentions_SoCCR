@@ -1,47 +1,48 @@
 // Test utilities
-import {waitFor} from '@testing-library/react';
-import '@testing-library/jest-dom';
-import {axe, toHaveNoViolations} from 'jest-axe';
-import {act} from 'react-dom/test-utils';
+import { waitFor } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { axe, toHaveNoViolations } from "jest-axe";
+import { act } from "react-dom/test-utils";
 
 // React
-import React from 'react';
+import React from "react";
 
 // Custom wrapper
-import {render} from 'test/utils/Wrapper';
+import { render } from "test/utils/Wrapper";
 
 // Character component
-import Character from 'src/lib/view/components/Character';
+import Character from "src/lib/view/components/Character";
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
 
-test('loads and displays Character component', async () => {
-  const {container} = render(
-      <Character
-        size={128}
-        name='a'
-        state='a'
-        setState={() => {
-          return;
-        }}
-      />
+test("loads and displays Character component", async () => {
+  const { container } = render(
+    <Character
+      size={128}
+      name="a"
+      state="a"
+      setState={() => {
+        return;
+      }}
+    />
   );
 
   await waitFor(() =>
-    expect(container.querySelector('svg')).toBeInTheDocument());
+    expect(container.querySelector("svg")).toBeInTheDocument()
+  );
 });
 
-test('check Character component accessibility', async () => {
-  const {container} = render(
-      <Character
-        size={128}
-        name='a'
-        state='a'
-        setState={() => {
-          return;
-        }}
-      />
+test("check Character component accessibility", async () => {
+  const { container } = render(
+    <Character
+      size={128}
+      name="a"
+      state="a"
+      setState={() => {
+        return;
+      }}
+    />
   );
 
   await act(async () => {

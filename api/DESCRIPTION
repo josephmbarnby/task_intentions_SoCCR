@@ -5,4 +5,6 @@ Imports: doParallel,
          dplyr,
          logger,
          jsonlite,
-         RestRserve
+         RestRserve,
+         matlab,
+         tidyverse
