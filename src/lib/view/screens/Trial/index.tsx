@@ -81,7 +81,8 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     },
   };
 
-  // Store a completely separate configuration for the display of the points
+  // Store a completely separate configuration for the display of the points,
+  // for the purpose of adjustment in 'playerGuess' trials
   const displayPoints = {
     options: {
       one: {

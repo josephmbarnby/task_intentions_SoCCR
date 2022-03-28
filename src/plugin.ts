@@ -138,8 +138,17 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     const finish = () => {
       // Record the total reaction time
       const endTime = performance.now();
-      const duration = endTime - startTime;
-      dataframe.trialDuration = duration;
+
+      // Update the value of duration
+      dataframe.trialDuration = endTime - startTime;
+      consola.debug(`Reaction time: ${dataframe.trialDuration}ms`);
+
+      // Correct for any transitions
+      if (trial.display.startsWith("player")) {
+        // 'player-' trials include transitions at the end of the
+        // trial after participant selection
+        dataframe.trialDuration = dataframe.trialDuration - 2250;
+      }
 
       // If the next trial isn't React-based, clean up React
       if (trial.clearScreen === true) {
