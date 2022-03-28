@@ -4,12 +4,6 @@ import consola from "consola";
 // Request library
 import axios from "axios";
 
-// OpenPGP
-import * as openpgp from "openpgp";
-
-// Experiment configuration
-import { Configuration } from "src/configuration";
-
 /**
  * Compute class used to connect and submit jobs to a remote computing
  * resource.
@@ -41,38 +35,6 @@ class Compute {
    */
   public setResourceURL(URL: string): void {
     this.resourceURL = URL;
-  }
-
-  /**
-   * Encrypt content to send for computation
-   * @param {string} content content to encrypt
-   * @return {Promise<openpgp.WebStream<string>>}
-   */
-  private encryptContent(content: string): Promise<openpgp.WebStream<string>> {
-    return openpgp
-      .createMessage({ text: content })
-      .then((message) => {
-        return openpgp.encrypt({
-          message: message,
-          passwords: [Configuration.encryptionKey]
-        });
-      });
-  }
-
-  /**
-   * Decrypt content from computation
-   * @param {openpgp.WebStream<string>} content received content for decryption
-   * @return {string}
-   */
-  private decryptContent(content: openpgp.WebStream<string>) {
-    return openpgp
-      .readMessage({ armoredMessage: content, })
-      .then((message) => {
-        return openpgp.decrypt({
-          message: message,
-          passwords: [Configuration.encryptionKey],
-        })
-      });
   }
 
   /**
