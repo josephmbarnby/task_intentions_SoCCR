@@ -51,11 +51,24 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
     }
     consola.debug(`Request content 'requestResponses':`, requestResponses);
 
+    // Determine the ID of the participant
+    let participantID = experiment.getGlobalStateValue("participantID");
+    if (experiment.getPlatform() === "gorilla") {
+      // Attempt a Gorilla API call to get the participant ID
+      consola.debug(`Retrieving Gorilla participant ID...`);
+      if (experiment.getHook("gorilla") !== null) {
+        // Attempt to retrieve the Gorilla API instance
+        participantID = experiment.getHook("gorilla").getParticipantID();
+        experiment.setGlobalStateValue("participantID", participantID);
+        consola.debug(`Participant ID:`, participantID);
+      }
+    }
+
     // Launch request to endpoint
     consola.info(`Requesting partner...`);
     compute.submit(
       {
-        participantID: 1234,
+        participantID: participantID,
         participantResponses: JSON.stringify(requestResponses),
       },
       (data: {

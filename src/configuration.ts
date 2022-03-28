@@ -25,6 +25,7 @@ export const Configuration = {
 
   // Initial experiment state
   state: {
+    participantID: "1234",
     participantAvatar: 0,
     partnerAvatar: 0,
     refreshPartner: false,

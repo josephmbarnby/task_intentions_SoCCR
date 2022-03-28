@@ -4540,9 +4540,9 @@ electron-to-chromium@^1.4.71:
   integrity sha512-LxgUNeu3BVU7sXaKjUDD9xivocQLxFtq6wgERrutdY/yIOps3ODOZExK1jg8DTEg4U8TUCb5MLGeWFOYuxjF3Q==
 
 electron-to-chromium@^1.4.84:
-  version "1.4.92"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.92.tgz#88996e9aceb3a500710fd439abfa89b6cc1ac56c"
-  integrity sha512-YAVbvQIcDE/IJ/vzDMjD484/hsRbFPW2qXJPaYTfOhtligmfYEYOep+5QojpaEU9kq6bMvNeC2aG7arYvTHYsA==
+  version "1.4.96"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.96.tgz#a97438a01d5db1460343fea4a344960b09330990"
+  integrity sha512-DPNjvNGPabv6FcyjzLAN4C0psN/GgD9rSGvMTuv81SeXG/EX3mCz0wiw9N1tUEnfQXYCJi3H8M0oFPRziZh7rw==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -7128,9 +7128,9 @@ jspsych-attention-check@^1.4.1:
   dependencies:
     jspsych "6.3"
 
-"jspsych-wrapper@file:packages/jspsych-wrapper-v0.2.6.tgz":
-  version "0.2.6"
-  resolved "file:packages/jspsych-wrapper-v0.2.6.tgz#2d1a1f3ef7a0065d3179612e82069444dc6f9316"
+"jspsych-wrapper@file:packages/jspsych-wrapper-v0.2.7.tgz":
+  version "0.2.7"
+  resolved "file:packages/jspsych-wrapper-v0.2.7.tgz#9ba767cb654911e794534968e7c3f2ea207d32d6"
   dependencies:
     "@types/d3" "^7.1.0"
     consola "^2.15.3"
