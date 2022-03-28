@@ -52,6 +52,9 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
   // Overlay visibility state
   const [showOverlay, setShowOverlay] = useState(false);
 
+  // Selection state
+  const [hasSelected, setHasSelected] = useState(false);
+
   // Content of the overlay
   const [overlayContent, setOverlayContent] = useState(
     <Text>Oops! There should be content here.</Text>
@@ -139,6 +142,9 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
    * @param {Options} option selected option
    */
   const endTrial = (option: Options): void => {
+    // Reset the selection state
+    setHasSelected(false);
+
     // Bubble the selection handler with selection and answer
     props.handler(option, defaultPoints, answer);
   };
@@ -248,8 +254,6 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     if (optionOneNode && optionTwoNode) {
       optionOneNode.style.pointerEvents = "none";
       optionTwoNode.style.pointerEvents = "none";
-      optionOneNode.style.touchAction = "none";
-      optionTwoNode.style.touchAction = "none";
     }
 
     // Get the selected node object
@@ -282,8 +286,6 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
             optionTwoNode.style.opacity = "1";
             optionOneNode.style.pointerEvents = "auto";
             optionTwoNode.style.pointerEvents = "auto";
-            optionOneNode.style.touchAction = "auto";
-            optionTwoNode.style.touchAction = "auto";
 
             // End the trial
             endTrial(trialSelection);
@@ -328,8 +330,6 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
             optionTwoNode.style.opacity = "1";
             optionOneNode.style.pointerEvents = "auto";
             optionTwoNode.style.pointerEvents = "auto";
-            optionOneNode.style.touchAction = "auto";
-            optionTwoNode.style.touchAction = "auto";
 
             // Reset the header state
             setTrialHeader(defaultHeader);
@@ -499,7 +499,10 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
         <Box
           ref={refs.optionOne}
           onClick={() => {
-            updatePoints("Option 1");
+            if (hasSelected === false) {
+              setHasSelected(true);
+              updatePoints("Option 1");
+            }
           }}
           className="grow"
           round
@@ -517,7 +520,10 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
         <Box
           ref={refs.optionTwo}
           onClick={() => {
-            updatePoints("Option 2");
+            if (hasSelected === false) {
+              setHasSelected(true);
+              updatePoints("Option 2");
+            }
           }}
           className="grow"
           round
