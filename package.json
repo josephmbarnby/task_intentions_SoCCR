@@ -60,6 +60,7 @@
     "javascript-obfuscator": "^4.0.0",
     "jest": "^27.4.7",
     "jest-axe": "^5.0.1",
+    "openpgp": "^5.2.1",
     "prettier": "2.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

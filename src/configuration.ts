@@ -23,6 +23,10 @@ export const Configuration = {
   // Seed for RNG
   seed: 0.1234,
 
+  // Encryption parameters
+  enableEncryption: true,
+  encryptionKey: "participant",
+
   // Initial experiment state
   state: {
     participantAvatar: 0,

@@ -4,6 +4,12 @@ import consola from "consola";
 // Request library
 import axios from "axios";
 
+// OpenPGP
+import * as openpgp from "openpgp";
+
+// Experiment configuration
+import { Configuration } from "src/configuration";
+
 /**
  * Compute class used to connect and submit jobs to a remote computing
  * resource.
@@ -38,17 +44,50 @@ class Compute {
   }
 
   /**
+   * Encrypt content to send for computation
+   * @param {string} content content to encrypt
+   * @return {Promise<openpgp.WebStream<string>>}
+   */
+  private encryptContent(content: string): Promise<openpgp.WebStream<string>> {
+    return openpgp
+      .createMessage({ text: content })
+      .then((message) => {
+        return openpgp.encrypt({
+          message: message,
+          passwords: [Configuration.encryptionKey]
+        });
+      });
+  }
+
+  /**
+   * Decrypt content from computation
+   * @param {openpgp.WebStream<string>} content received content for decryption
+   * @return {string}
+   */
+  private decryptContent(content: openpgp.WebStream<string>) {
+    return openpgp
+      .readMessage({ armoredMessage: content, })
+      .then((message) => {
+        return openpgp.decrypt({
+          message: message,
+          passwords: [Configuration.encryptionKey],
+        })
+      });
+  }
+
+  /**
    * Submit a new computing job to the remote resource
    * @param {any} params request parameters
    * @param {function(data: any): void} onSuccess
    * @param {function(data: any): void} onError
    */
-  public submit(
+   public submit(
     params: { participantID: string | number; participantResponses: string },
     onSuccess: (data: any) => void,
     onError: (data: any) => void
   ): void {
     const startTime = performance.now();
+
     axios
       .get(this.resourceURL, {
         params: params,
