@@ -13,7 +13,9 @@ export const Configuration = {
   contact: "henry.burgess@wustl.edu",
 
   // Manipulations that are configurable in Gorilla
-  manipulations: {},
+  manipulations: {
+    partner: "default",
+  },
 
   // Collection of any stimuli used in the trials
   stimuli: {},
