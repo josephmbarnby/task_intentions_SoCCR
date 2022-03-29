@@ -8,9 +8,7 @@ import { Box, Grommet, Heading, Paragraph } from "grommet";
 import { Configuration } from "./configuration";
 
 // Import data spreadsheets
-import Competitive from "./data/competitive.csv";
-import Individualist from "./data/individualist.csv";
-import Prosocial from "./data/prosocial.csv";
+import Default from "./data/default.csv";
 import Test from "./data/test.csv";
 
 // Utility functions
@@ -39,9 +37,7 @@ const experiment = new Experiment(Configuration);
 // Update the partner avatar strings (for unique partners)
 for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
   const partner = Configuration.avatars.names.partner[i];
-  Configuration.avatars.names.partner[
-    i
-  ] = `${partner} ${Configuration.manipulations.partner.toLowerCase()}`;
+  Configuration.avatars.names.partner[i] = `${partner} ${performance.now()}`;
 }
 
 // Set the experiment to run in fullscreen mode
@@ -344,33 +340,8 @@ if (process.env.NODE_ENV === "development") {
   dataCollection = Test;
   consola.info(`Loading 'Test' partner`);
 } else {
-  consola.info(`Loading '${Configuration.manipulations.partner}' partner`);
-  switch (Configuration.manipulations.partner as Partner) {
-    case "Competitive": {
-      // Competitive partner
-      dataCollection = Competitive;
-      break;
-    }
-    case "Individualist": {
-      // Individualist partner
-      dataCollection = Individualist;
-      break;
-    }
-    case "Prosocial": {
-      // Prosocial partner
-      dataCollection = Prosocial;
-      break;
-    }
-    case "Test": {
-      // Test partner
-      dataCollection = Test;
-      break;
-    }
-    default:
-      throw new Error(
-        `Unknown partner type ` + `'${Configuration.manipulations.partner}'`
-      );
-  }
+  consola.info(`Loading default phase one partner`);
+  dataCollection = Default;
 }
 
 const randomisedTrials = {
