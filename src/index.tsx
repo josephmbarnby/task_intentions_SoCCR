@@ -336,7 +336,10 @@ let dataCollection: Row[];
 
 // Detect if we are running locally (use test data)
 // or online (use the configured individual data)
-if (process.env.NODE_ENV === "development" || Configuration.manipulations.partner === "test") {
+if (
+  process.env.NODE_ENV === "development" ||
+  Configuration.manipulations.partner === "test"
+) {
   dataCollection = Test;
   consola.info(`Loading test phase one partner`);
 } else {
