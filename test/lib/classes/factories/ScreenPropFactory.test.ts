@@ -102,7 +102,7 @@ test("generate props for Matching screen", async () => {
   expect(generated.props.trial).toBe(1);
   expect(generated.props.display).toBe("matching");
   expect(generated.props.fetchData).toBe(false);
-  expect(generated.props).not.toHaveProperty("handler");
+  expect(generated.props).toHaveProperty("handler");
 });
 
 test("generate props for Summary screen", async () => {
