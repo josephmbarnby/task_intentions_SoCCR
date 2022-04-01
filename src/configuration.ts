@@ -36,7 +36,7 @@ export const Configuration = {
   endpoint:
     process.env.NODE_ENV === "development"
       ? "http://localhost:8000/task/intentions"
-      : "https://api.henryburgess.me/task/intentions",
+      : "https://ccdresearch.wustl.edu/task/intentions",
 
   // Avatar configuration details, including colours and names
   avatars: {
