@@ -61,7 +61,7 @@ handler <- function(.req, .res) {
   # Check for a valid ID
   valid_id <- FALSE
   if ("participantID" %in% attributes(.req$parameters_query)$names) {
-    participant_id <- as.integer(.req$parameters_query["participantID"])
+    participant_id <- as.character(.req$parameters_query["participantID"])
     if (!is.na(participant_id)) {
       valid_id <- TRUE
     }

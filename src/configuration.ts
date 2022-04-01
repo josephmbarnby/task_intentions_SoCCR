@@ -21,11 +21,11 @@ export const Configuration = {
   stimuli: {},
 
   // Seed for RNG
-  seed: 0.1234,
+  seed: 0.4837,
 
   // Initial experiment state
   state: {
-    participantID: "1234",
+    participantID: "default",
     participantAvatar: 0,
     partnerAvatar: 0,
     refreshPartner: false,

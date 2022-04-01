@@ -53,15 +53,14 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
 
     // Determine the ID of the participant
     let participantID = experiment.getGlobalStateValue("participantID");
-    if (experiment.getPlatform() === "gorilla") {
-      // Attempt a Gorilla API call to get the participant ID
-      consola.debug(`Retrieving Gorilla participant ID...`);
-      if (experiment.getHook("gorilla") !== null) {
-        // Attempt to retrieve the Gorilla API instance
-        participantID = experiment.getHook("gorilla").getParticipantID();
-        experiment.setGlobalStateValue("participantID", participantID);
-        consola.debug(`Participant ID:`, participantID);
-      }
+    if (participantID === "default") {
+      // If no custom participant ID has been specified, generate our own
+      consola.debug(`Generating custom participant ID...`);
+      participantID = `ppt_${Date.now()}`;
+      consola.debug(`Generated participant ID:`, participantID);
+
+      // Update the stored participant ID
+      experiment.setGlobalStateValue("participantID", participantID);
     }
 
     // Launch request to endpoint
@@ -72,7 +71,7 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
         participantResponses: JSON.stringify(requestResponses),
       },
       (data: {
-        participantID: string;
+        participantID: string[];
         participantParameters: string;
         partnerParameters: string;
         partnerChoices: string;
@@ -81,7 +80,7 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
         try {
           // Extract the response data of interest
           // Participant data
-          const participantID = JSON.parse(data.participantID);
+          const participantID = data.participantID[0];
           const participantParameters = JSON.parse(data.participantParameters);
 
           // Partner data
