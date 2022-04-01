@@ -1,13 +1,13 @@
 // Test utilities
-import {waitFor, screen} from '@testing-library/react';
-import '@testing-library/jest-dom';
-import {axe, toHaveNoViolations} from 'jest-axe';
+import { waitFor, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { axe, toHaveNoViolations } from "jest-axe";
 
 // Custom wrapper
-import {render} from '../../Wrapper';
+import { render } from "test/utils/Wrapper";
 
 // Screen factory
-import ScreenFactory from '@classes/factories/ScreenFactory';
+import ScreenFactory from "src/lib/classes/factories/ScreenFactory";
 
 // Extend the 'expect' function
 expect.extend(toHaveNoViolations);
@@ -17,40 +17,44 @@ beforeAll(() => {
   screenFactory = new ScreenFactory();
 });
 
-test('loads and displays SelectAvatar screen', async () => {
-  render(screenFactory.generate({
-    display: 'selection',
-    screen: {
-      trial: 0,
-      display: 'selection',
-      handler: () => {
-        console.info('Selection handler called');
+test("loads and displays SelectAvatar screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "selection",
+      screen: {
+        trial: 0,
+        display: "selection",
+        handler: () => {
+          console.info("Selection handler called");
+        },
       },
-    },
-  }));
+    })
+  );
 
-  await waitFor(() => screen.getByRole('heading'));
+  await waitFor(() => screen.getByRole("heading"));
 
-  expect(screen.getByRole('heading')).toHaveTextContent('Choose your Avatar!');
+  expect(screen.getByRole("heading")).toHaveTextContent("Choose your Avatar!");
 });
 
-test('check SelectAvatar accessibility', async () => {
-  const {container} = render(screenFactory.generate({
-    display: 'selection',
-    screen: {
-      trial: 0,
-      display: 'selection',
-      handler: () => {
-        console.info('Selection handler called');
+test("check SelectAvatar screen accessibility", async () => {
+  const { container } = render(
+    screenFactory.generate({
+      display: "selection",
+      screen: {
+        trial: 0,
+        display: "selection",
+        handler: () => {
+          console.info("Selection handler called");
+        },
       },
-    },
-  }));
+    })
+  );
 
   // Run the check, disabling 'duplicate-id' rule.
   // Rule fails on components inside the avatar SVGs.
   const results = await axe(container, {
     rules: {
-      'duplicate-id': {
+      "duplicate-id": {
         enabled: false,
       },
     },

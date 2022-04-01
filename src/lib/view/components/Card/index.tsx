@@ -1,16 +1,16 @@
 // React
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from "react";
 
 // Grommet UI components
-import {Box, Grid, Heading} from 'grommet';
-import {Money} from 'grommet-icons';
+import { Box, Grid, Heading } from "grommet";
+import { Money } from "grommet-icons";
 
 // Other imports
-import TextTransition, {presets} from 'react-text-transition';
-import Avatar from 'boring-avatars';
+import TextTransition, { presets } from "react-text-transition";
+import Avatar from "boring-avatars";
 
 // Configuration
-import {Configuration} from '@src/configuration';
+import { Configuration } from "src/configuration";
 
 /**
  * Generate a Card component
@@ -21,28 +21,28 @@ const Card = (props: Props.Components.Card): ReactElement => {
   return (
     <Box
       gridArea={props.gridArea}
-      background='avatarBackground'
+      background="avatarBackground"
       round
-      direction='row-responsive'
-      id='playerInfo'
-      margin={{left: 'small', right: 'small'}}
+      direction="row-responsive"
+      id="playerInfo"
+      margin={{ left: "small", right: "small" }}
     >
       <Grid
-        rows={['auto', 'auto', 'auto']}
-        columns={['auto']}
-        justifyContent='center'
+        rows={["auto", "auto", "auto"]}
+        columns={["auto"]}
+        justifyContent="center"
         fill
         areas={[
-          {name: 'playerNameArea', start: [0, 0], end: [0, 0]},
-          {name: 'PlayerCardArea', start: [0, 1], end: [0, 1]},
-          {name: 'playerPointsArea', start: [0, 2], end: [0, 2]},
+          { name: "playerNameArea", start: [0, 0], end: [0, 0] },
+          { name: "PlayerCardArea", start: [0, 1], end: [0, 1] },
+          { name: "playerPointsArea", start: [0, 2], end: [0, 2] },
         ]}
       >
         <Box
-          align='center'
-          alignSelf='center'
-          animation={['pulse']}
-          gridArea='PlayerCardArea'
+          align="center"
+          alignSelf="center"
+          animation={["pulse"]}
+          gridArea="PlayerCardArea"
         >
           <Avatar
             size={128}
@@ -51,31 +51,21 @@ const Card = (props: Props.Components.Card): ReactElement => {
             colors={Configuration.avatars.colours}
           />
         </Box>
-        <Box
-          align='center'
-          gridArea='playerNameArea'
-          alignSelf='center'
-        >
+        <Box align="center" gridArea="playerNameArea" alignSelf="center">
           <Heading level={1}>{props.name}</Heading>
         </Box>
         <Box
-          align='center'
-          gridArea='playerPointsArea'
-          alignSelf='center'
-          direction='row'
-          justify='center'
-          gap='small'
+          align="center"
+          gridArea="playerPointsArea"
+          alignSelf="center"
+          direction="row"
+          justify="center"
+          gap="small"
         >
           <Heading level={1}>
-            <TextTransition
-              text={props.points}
-              springConfig={presets.slow}
-            />
+            <TextTransition text={props.points} springConfig={presets.slow} />
           </Heading>
-          <Money
-            size='large'
-            color='pointsIconBackground'
-          />
+          <Money size="large" color="pointsIconBackground" />
         </Box>
       </Grid>
     </Box>

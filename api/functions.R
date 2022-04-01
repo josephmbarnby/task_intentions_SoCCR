@@ -4,12 +4,13 @@
 
 library(doParallel)
 library(dplyr)
+library(logger)
 
 # Phase 1 Fly Fitting -----------------------------------------------------
 
-matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle = T, file_loc = F){
+matching_partner_incremental_fit <- function(phase1data, precan_df, shuffle = T, file_loc = F){
 
-  if(file_loc == T){
+  if (file_loc == T) {
     phase1data <- read.csv(phase1data)
   } else {
     phase1data <- phase1data
@@ -25,12 +26,12 @@ matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle =
     cat('\n *** CREATING OPTIMAL PARTNER ***\n')
 
   participant_decisions <- simulate_phase_decisions(phase1pars,
-                                                      precanned_df %>%
+                                                      precan_df %>%
                                                         mutate(ID = NA, Trial = 1:54, Phase = 2) %>%
                                                         dplyr::select(ID, Trial, ppt1:par2, Phase, everything()),
                                                       phase = 2)
     bound_dfs <- participant_decisions %>%
-      cbind(precanned_df %>% dplyr::select(-ppt1:-par2))
+      cbind(precan_df %>% dplyr::select(-ppt1:-par2))
     n_p <- length(bound_dfs %>% dplyr::select(-ppt1:-Ac))
     similarity_vec <- rep(NA, n_p)
     for(i in 1:n_p){
@@ -40,8 +41,8 @@ matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle =
         as.numeric()
     }
 
-    index_part <- which((similarity_vec > 0.2 & similarity_vec < 0.5), arr.ind = T)
-    if(length(index_part > 1)){index_part <- index_part[1]}
+    index_part_1 <- which((similarity_vec > 0.2 & similarity_vec < 0.5), arr.ind = T)
+    index_part   <- sample(index_part_1, 1)
 
     cat("\n PARTNER'S PARAMETERS ARE",colnames(bound_dfs)[index_part+5], "\n\n")
 
@@ -49,14 +50,18 @@ matching_partner_incremental_fit <- function(phase1data, precanned_df, shuffle =
       dplyr::select(1:4, index_part+5) %>%
       rename(Ac = 5)
 
-    if(shuffle == T){
-    set.seed(156)
-    row <- sample(nrow(partner_decisions))
-    partner_decisions <- partner_decisions[row,]
-    partner_decisions
+    if (shuffle == T) {
+      set.seed(156)
+      row <- sample(nrow(partner_decisions))
+      partner_decisions <- partner_decisions[row, ]
+      partner_decisions
     }
 
-  return(partner_decisions)
+  return(list(
+    phase1pars, # Participant parameters
+    colnames(bound_dfs)[index_part + 5], # Partner parameters
+    partner_decisions # Partner decisions, phase 2
+  ))
 
 }
 
@@ -428,8 +433,8 @@ simulate_phase_decisions <- function(parms, data, phase = 2){
 
 precan_partners <- function(data){
 
-  alpha = c(5, 10, 15)
-  beta = c(-15, -10, -5, 5, 10, 15)
+  alpha = c(0, 5, 10, 15)
+  beta = c(-15, -10, -5, 0, 5, 10, 15)
   partner_choices <- list()
 
   for (i in 1:length(alpha)){
@@ -454,9 +459,12 @@ precan_partners <- function(data){
   }
 
   partner_choices_df <- partner_choices[[1]][[1]] %>% dplyr::select(1:4,
-                                                                    `5 -10`, `5 -15`,
-                                                                    `10 -5`, `10 5`,
-                                                                    `5 10`, `5 15`)
+                                                                    `5 -10`, `5 -15`, #prosocial
+                                                                    `10 -5`, `10 5`, #indiv
+                                                                    `5 10`, `5 15`, #compet
+                                                                    `0 10`, `0 -10`, #no alpha
+                                                                    `10 0` #no beta
+                                                                    )
   return(partner_choices_df)
 }
 
@@ -546,3 +554,4 @@ mysamp <- function(n, m, s, lwr, upr, nnorm) {
   }
   stop(simpleError("Not enough values to sample from. Try increasing nnorm."))
 }
+

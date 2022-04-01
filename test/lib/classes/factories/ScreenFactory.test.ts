@@ -1,32 +1,25 @@
-// Screen factory test
 // Test utilities
-import {waitFor, screen} from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { waitFor, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 // Custom wrapper
-import {render} from '../../Wrapper';
+import { render } from "test/utils/Wrapper";
 
 // Screen factory
-import ScreenFactory from '@classes/factories/ScreenFactory';
+import ScreenFactory from "src/lib/classes/factories/ScreenFactory";
 
 // Mock jsPsych
-import 'jspsych';
-jest.mock('jspsych');
+import "jspsych";
+jest.mock("jspsych");
 
 // Mock the jsPsych wrapper library
-import {Experiment} from 'jspsych-wrapper';
-jest.mock('jspsych-wrapper');
-
-// Recursive partial type, allows tests using the
-// 'jspsych-wrapper' Experiment class to be run
-declare type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-}
+import { Experiment } from "jspsych-wrapper";
+jest.mock("jspsych-wrapper");
 
 // Setup the Experiment instances
 beforeEach(() => {
   // Experiment
-  (window['Experiment'] as RecursivePartial<Experiment>) = {
+  (window["Experiment"] as RecursivePartial<Experiment>) = {
     getGlobalStateValue: jest.fn(),
     setGlobalStateValue: jest.fn(),
   };
@@ -38,158 +31,174 @@ beforeAll(() => {
 });
 
 // Agency screen
-test('loads and displays Agency screen', async () => {
-  render(screenFactory.generate({
-    display: 'agency',
-    screen: {
-      trial: 0,
-      display: 'agency',
-      handler: () => {
-        console.info('Selection handler called');
+test("loads and displays Agency screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "agency",
+      screen: {
+        trial: 0,
+        display: "agency",
+        handler: () => {
+          console.info("Selection handler called");
+        },
       },
-    },
-  }));
+    })
+  );
 
-  await waitFor(() => screen.queryByText('Agree'));
+  await waitFor(() => screen.queryByText("Agree"));
 
-  expect(screen.queryByText('Agree')).not.toBeNull();
+  expect(screen.queryByText("Agree")).not.toBeNull();
 });
 
 // Classification screen
-test('loads and displays Classification screen', async () => {
-  render(screenFactory.generate({
-    display: 'classification',
-    screen: {
-      trial: 0,
-      display: 'classification',
-      handler: () => {
-        console.info('Selection handler called');
+test("loads and displays Classification screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "classification",
+      screen: {
+        trial: 0,
+        display: "classification",
+        handler: () => {
+          console.info("Selection handler called");
+        },
       },
-    },
-  }));
+    })
+  );
 
-  await waitFor(() => screen.queryAllByPlaceholderText('Please select'));
+  await waitFor(() => screen.queryAllByPlaceholderText("Please select"));
 
-  expect(screen.queryAllByPlaceholderText('Please select')).not.toBeNull();
+  expect(screen.queryAllByPlaceholderText("Please select")).not.toBeNull();
 });
 
 // Inference screen
-test('loads and displays Inference screen', async () => {
-  render(screenFactory.generate({
-    display: 'inference',
-    screen: {
-      trial: 0,
-      display: 'inference',
-      handler: () => {
-        console.info('Selection handler called');
+test("loads and displays Inference screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "inference",
+      screen: {
+        trial: 0,
+        display: "inference",
+        handler: () => {
+          console.info("Selection handler called");
+        },
       },
-    },
-  }));
+    })
+  );
 
-  await waitFor(() => screen.queryAllByText('Totally'));
+  await waitFor(() => screen.queryAllByText("Totally"));
 
-  expect(screen.queryAllByText('Totally')).not.toBeNull();
+  expect(screen.queryAllByText("Totally")).not.toBeNull();
 });
 
 // Matched screen
-test('loads and displays Matched screen', async () => {
-  render(screenFactory.generate({
-    display: 'matched',
-    screen: {
-      trial: 0,
-      display: 'matched',
-    },
-  }));
+test("loads and displays Matched screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "matched",
+      screen: {
+        trial: 0,
+        display: "matched",
+      },
+    })
+  );
 
-  await waitFor(() => screen.queryByText('Partner found!'));
+  await waitFor(() => screen.queryByText("Partner found!"));
 
-  expect(screen.queryByText('Partner found!')).not.toBeNull();
+  expect(screen.queryByText("Partner found!")).not.toBeNull();
 });
 
 // Matching screen
-test('loads and displays Matching screen', async () => {
-  render(screenFactory.generate({
-    display: 'matching',
-    screen: {
-      trial: 0,
-      display: 'matching',
-    },
-  }));
+test("loads and displays Matching screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "matching",
+      screen: {
+        trial: 0,
+        display: "matching",
+      },
+    })
+  );
 
-  await waitFor(() => screen.queryByText('Finding you a partner...'));
+  await waitFor(() => screen.queryByText("Finding you a partner..."));
 
-  expect(screen.queryByText('Finding you a partner...')).not.toBeNull();
+  expect(screen.queryByText("Finding you a partner...")).not.toBeNull();
 });
 
 // SelectAvatar screen
-test('loads and displays SelectAvatar screen', async () => {
-  render(screenFactory.generate({
-    display: 'selection',
-    screen: {
-      trial: 0,
-      display: 'selection',
-      handler: () => {
-        console.info('Selection handler called');
+test("loads and displays SelectAvatar screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "selection",
+      screen: {
+        trial: 0,
+        display: "selection",
+        handler: () => {
+          console.info("Selection handler called");
+        },
       },
-    },
-  }));
+    })
+  );
 
-  await waitFor(() => screen.getByRole('heading'));
+  await waitFor(() => screen.getByRole("heading"));
 
-  expect(screen.getByRole('heading')).toHaveTextContent('Choose your Avatar!');
+  expect(screen.getByRole("heading")).toHaveTextContent("Choose your Avatar!");
 });
 
 // Summary screen
-test('loads and displays Summary screen', async () => {
-  render(screenFactory.generate({
-    display: 'summary',
-    screen: {
-      trial: 0,
-      display: 'summary',
-      postPhase: 'playerChoice',
-      handler: () => {
-        console.info('Selection handler called');
+test("loads and displays Summary screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "summary",
+      screen: {
+        trial: 0,
+        display: "summary",
+        postPhase: "playerChoice",
+        handler: () => {
+          console.info("Selection handler called");
+        },
       },
-    },
-  }));
+    })
+  );
 
   // Waiting for 'TextTransition' elements to have updated
   // upon first rendering the screen
   await waitFor(() => {
-    expect(screen.getAllByText('0')).not.toBe(null);
+    expect(screen.getAllByText("0")).not.toBe(null);
   });
 });
 
 // Trial screen
-test('loads and displays Trial screen', async () => {
-  render(screenFactory.generate({
-    display: 'playerChoice',
-    screen: {
-      trial: 0,
-      display: 'playerChoice',
-      isPractice: false,
-      participantPoints: 5,
-      partnerPoints: 7,
-      options: {
-        one: {
-          participant: 1,
-          partner: 2,
+test("loads and displays Trial screen", async () => {
+  render(
+    screenFactory.generate({
+      display: "playerChoice",
+      screen: {
+        trial: 0,
+        display: "playerChoice",
+        isPractice: false,
+        participantPoints: 5,
+        partnerPoints: 7,
+        options: {
+          one: {
+            participant: 1,
+            partner: 2,
+          },
+          two: {
+            participant: 2,
+            partner: 1,
+          },
         },
-        two: {
-          participant: 2,
-          partner: 1,
+        answer: "Option 1",
+        handler: (selection: string) => {
+          console.info(`Selected:`, selection);
         },
       },
-      answer: 'Option 1',
-      handler: (selection: string) => {
-        console.info(`Selected:`, selection);
-      },
-    },
-  }));
+    })
+  );
 
   // Waiting for 'TextTransition' elements to have updated
   // upon first rendering the screen
   await waitFor(() => {
-    expect(screen.getAllByText('You')).not.toBe(null);
+    expect(screen.getAllByText("You")).not.toBe(null);
   });
 });

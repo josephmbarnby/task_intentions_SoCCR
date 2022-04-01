@@ -1,13 +1,13 @@
 // Logging library
-import consola from 'consola';
+import consola from "consola";
 
 // Configuration
-import {Configuration} from './configuration';
+import { Configuration } from "./configuration";
 
 // Core modules
-import PropFactory from '@lib/classes/factories/PropFactory';
-import View from '@lib/view';
-import Handler from '@lib/classes/Handler';
+import ScreenPropFactory from "src/lib/classes/factories/ScreenPropFactory";
+import View from "src/lib/view";
+import Handler from "src/lib/classes/Handler";
 
 jsPsych.plugins[Configuration.studyName] = (() => {
   const plugin = {
@@ -27,99 +27,103 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     parameters: {
       optionOneParticipant: {
         type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Option One Participant',
+        pretty_name: "Option One Participant",
         default: 0,
-        description: 'Number of points for the participant in option one.',
+        description: "Number of points for the participant in option one.",
       },
       optionOnePartner: {
         type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Option One Partner',
+        pretty_name: "Option One Partner",
         default: 0,
-        description: 'Number of points for the partner in option one.',
+        description: "Number of points for the partner in option one.",
       },
       optionTwoParticipant: {
         type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Option Two Participant',
+        pretty_name: "Option Two Participant",
         default: 0,
-        description: 'Number of points for the participant in option two.',
+        description: "Number of points for the participant in option two.",
       },
       optionTwoPartner: {
         type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Option Two Partner',
+        pretty_name: "Option Two Partner",
         default: 0,
-        description: 'Number of points for the partner in option two.',
+        description: "Number of points for the partner in option two.",
       },
       typeOne: {
         type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Type One',
-        default: '',
-        description: 'The type of option one.',
+        pretty_name: "Type One",
+        default: "",
+        description: "The type of option one.",
       },
       typeTwo: {
         type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Type Two',
-        default: '',
-        description: 'The type of option two',
+        pretty_name: "Type Two",
+        default: "",
+        description: "The type of option two",
       },
       display: {
         type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Type of trial screen',
+        pretty_name: "Type of trial screen",
         default: undefined,
-        description: 'The type of trial screen to display',
+        description: "The type of trial screen to display",
       },
       answer: {
         type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Correct answer',
-        default: '',
-        description: 'The correct answer to select',
+        pretty_name: "Correct answer",
+        default: "",
+        description: "The correct answer to select",
       },
       isPractice: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
-        pretty_name: 'Trial is a practice trial',
+        pretty_name: "Trial is a practice trial",
         default: false,
-        description: 'Show feedback to participants',
+        description: "Show feedback to participants",
       },
       fetchData: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
-        pretty_name: 'Enable or disable server queries',
+        pretty_name: "Enable or disable server queries",
         default: false,
-        description: 'Used exclusively in the \'Matching\' screen',
+        description: "Used exclusively in the 'Matching' screen",
       },
       clearScreen: {
         type: jsPsych.plugins.parameterType.BOOLEAN,
-        pretty_name: 'Clear after trial',
+        pretty_name: "Clear after trial",
         default: false,
-        description: 'Clear the screen after this trial',
+        description: "Clear the screen after this trial",
       },
     },
   };
 
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
     // Setup the trial data to be stored
-    const dataframe: Data = {
+    const dataframe: TrialData = {
       trial: trial.trial,
       display: trial.display, // the display type
       playerPoints_option1: trial.optionOneParticipant,
       partnerPoints_option1: trial.optionOnePartner,
       playerPoints_option2: trial.optionTwoParticipant,
       partnerPoints_option2: trial.optionTwoPartner,
-      playerPoints_selected: 0,
+      playerPoints_selected: NaN,
       partnerPoints_selected: 0,
-      selectedOption_player: -1, // option selected by participant
+      selectedOption_player: NaN, // option selected by participant
       realAnswer: trial.answer,
-      correctGuess: -1, // whether or not the participant guessed correctly
-      inferenceResponse_Selfish: -1.0,
-      inferenceResponse_Harm: -1.0,
-      agencyResponse: -1.0, // float response to agency question
-      classification: '', // classification string selected by participant
-      trialDuration: 0, // duration of the trial in ms
+      correctGuess: NaN, // whether or not the participant guessed correctly
+      inferenceResponse_Selfish: NaN,
+      inferenceResponse_Harm: NaN,
+      agencyResponse: NaN, // float response to agency question
+      classification: "", // classification string selected by participant
+      trialDuration: NaN, // duration of the trial in ms
+      server_alpha_ppt: NaN, // parameters generated by server
+      server_beta_ppt: NaN, // parameters generated by server
+      server_alpha_par: NaN, // parameters generated by server
+      server_beta_par: NaN, // parameters generated by server
     };
 
     // Debug statement
-    consola.debug(`Running trial stage '${trial.display}'`);
+    consola.debug(`Presenting screen: '${trial.display}'`);
 
     // Disable keyboard input beforehand
-    document.addEventListener('keydown', () => {
+    document.addEventListener("keydown", () => {
       return false;
     });
 
@@ -134,8 +138,17 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     const finish = () => {
       // Record the total reaction time
       const endTime = performance.now();
-      const duration = endTime - startTime;
-      dataframe.trialDuration = duration;
+
+      // Update the value of duration
+      dataframe.trialDuration = endTime - startTime;
+      consola.debug(`Reaction time: ${dataframe.trialDuration}ms`);
+
+      // Correct for any transitions
+      if (trial.display.startsWith("player")) {
+        // 'player-' trials include transitions at the end of the
+        // trial after participant selection
+        dataframe.trialDuration = dataframe.trialDuration - 2250;
+      }
 
       // If the next trial isn't React-based, clean up React
       if (trial.clearScreen === true) {
@@ -143,7 +156,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       }
 
       // Re-enable keyboard actions
-      document.removeEventListener('keydown', () => {
+      document.removeEventListener("keydown", () => {
         return false;
       });
 
@@ -154,15 +167,11 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     // Create the Handler instance
     const handler = new Handler(dataframe, finish);
 
-    // Create a new PropFactory
-    const generated = new PropFactory(trial, handler).generate();
+    // Create a new ScreenPropFactory
+    const displayProps = new ScreenPropFactory(trial, handler).generate();
 
     // Display the view
-    view.display(
-        trial.display,
-        generated,
-        displayElement,
-    );
+    view.display(trial.display, displayProps, displayElement);
   };
 
   return plugin;

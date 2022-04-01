@@ -1,6 +1,9 @@
 # MacOS
 .DS_Store
 
+# Participant responses
+api/participants
+
 # Logs
 logs
 *.log
@@ -186,7 +189,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/

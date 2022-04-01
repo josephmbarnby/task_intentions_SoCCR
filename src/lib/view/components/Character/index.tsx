@@ -1,12 +1,12 @@
 // React imports
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from "react";
 
 // Components
-import Avatar from 'boring-avatars';
-import {Box} from 'grommet';
+import Avatar from "boring-avatars";
+import { Box } from "grommet";
 
 // Configuration
-import {Configuration} from '@src/configuration';
+import { Configuration } from "src/configuration";
 
 /**
  * A selectable avatar with grow behaviour
@@ -17,10 +17,10 @@ const Character = (props: Props.Components.Character): ReactElement => {
   return (
     <Box
       id={`avatar-${props.name}`}
-      margin='medium'
-      round={{size: '50%'}}
+      margin="medium"
+      round={{ size: "50%" }}
       className={
-        props.name === props.state ? 'selectable selected' : 'selectable'
+        props.name === props.state ? "selectable selected" : "selectable"
       }
       onClick={() => {
         // Call the state update function with the name

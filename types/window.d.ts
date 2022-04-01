@@ -1,5 +1,5 @@
 // 'Experiment' jsPsych wrapper library
-import {Experiment} from 'jspsych-wrapper';
+import { Experiment } from "jspsych-wrapper";
 
 // Add 'Experiment' to the global Window interface
 declare global {

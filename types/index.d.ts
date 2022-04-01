@@ -1,8 +1,8 @@
 // Module declaration
-declare module 'intentions-game' {};
+declare module "intentions-game" {}
 
 // Declare CSV module type
-declare module '*.csv';
+declare module "*.csv";
 
 // CSV data row types
 declare type Row = {
@@ -27,22 +27,41 @@ interface Factory {
 }
 
 // Different screen types that are displayed
-declare type Display = 'playerChoice' | 'playerChoicePractice' | 'playerChoice2' | 'mid' | 'mid2' |
-  'playerGuess' | 'playerGuessPractice' | 'matching' | 'matched' | 'selection' |
-  'inference' | 'agency' | 'classification' | 'summary' | 'end';
+declare type Display =
+  | "playerChoice"
+  | "playerChoicePractice"
+  | "playerChoice2"
+  | "mid"
+  | "mid2"
+  | "playerGuess"
+  | "playerGuessPractice"
+  | "matching"
+  | "matched"
+  | "selection"
+  | "inference"
+  | "agency"
+  | "classification"
+  | "summary"
+  | "end";
 
 // The three partner types
-declare type Partner = 'Test' | 'Prosocial' | 'Individualist' | 'Competitive';
+declare type Partner = "Test" | "Prosocial" | "Individualist" | "Competitive";
 
 // Avatar styles
-declare type AvatarStyles = 'beam' | 'marble' | 'pixel' | 'sunset' | 'ring' | 'bauhaus';
+declare type AvatarStyles =
+  | "beam"
+  | "marble"
+  | "pixel"
+  | "sunset"
+  | "ring"
+  | "bauhaus";
 
 // Selection options
-declare type Options = 'Option 1' | 'Option 2';
+declare type Options = "Option 1" | "Option 2";
 
 // Trial type to enforce parameters
 declare type Trial = {
-  trial: number,
+  trial: number;
   display: Display;
   optionOneParticipant: number;
   optionOnePartner: number;
@@ -58,33 +77,43 @@ declare type Trial = {
 };
 
 // Data type used to enforce trial data storage format
-declare type Data = {
-  trial: number,
-  display: Display,
+declare type TrialData = {
+  trial: number;
+  display: Display;
   playerPoints_option1: number;
   partnerPoints_option1: number;
   playerPoints_option2: number;
   partnerPoints_option2: number;
   playerPoints_selected: number;
   partnerPoints_selected: number;
-  selectedOption_player: -1 | 1 | 2, // uses 1 and 2 rather than strings
+  selectedOption_player: NaN | 1 | 2; // uses 1 and 2 rather than strings
   realAnswer: Options;
-  inferenceResponse_Selfish: number, 
-  inferenceResponse_Harm: number,
-  agencyResponse: number,
-  classification: string,
-  trialDuration: number,
-  correctGuess: -1 | 0 | 1, // 0 incorrect, 1 correct
+  inferenceResponse_Selfish: number;
+  inferenceResponse_Harm: number;
+  agencyResponse: number;
+  classification: string;
+  trialDuration: number;
+  correctGuess: NaN | 0 | 1; // 0 incorrect; 1 correct
+  server_alpha_ppt: number;
+  server_beta_ppt: number;
+  server_alpha_par: number;
+  server_beta_par: number;
 };
 
 // Points storage
 declare type Points = {
   one: {
-    participant: number,
-    partner: number,
-  },
+    participant: number;
+    partner: number;
+  };
   two: {
-    participant: number,
-    partner: number,
-  }
+    participant: number;
+    partner: number;
+  };
+};
+
+// Recursive partial type, allows tests using the
+// 'jspsych-wrapper' Experiment class to be run
+declare type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
 };

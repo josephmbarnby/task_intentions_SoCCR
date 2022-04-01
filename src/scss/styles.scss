@@ -1,12 +1,12 @@
-@import 'jspsych/css/jspsych.css';
+@import "jspsych/css/jspsych.css";
 
 /* Grow behaviour for Option component */
-.grow { 
-  transition: all .2s ease-in-out; 
+.grow {
+  transition: all 0.2s ease-in-out;
 }
 
-.grow:hover { 
-  transform: scale(1.05); 
+.grow:hover {
+  transform: scale(1.05);
   cursor: pointer;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .selectable:hover {
-  transform: scale(1.2); 
+  transform: scale(1.2);
 }
 
 .selectable.selected {
@@ -24,7 +24,8 @@
 }
 
 /* Gorilla style overrides */
-h1, h2 {
+h1,
+h2 {
   font-weight: bold;
   letter-spacing: normal;
 }

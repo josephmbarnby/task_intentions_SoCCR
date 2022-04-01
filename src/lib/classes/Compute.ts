@@ -1,8 +1,8 @@
 // Logging library
-import consola from 'consola';
+import consola from "consola";
 
 // Request library
-import axios from 'axios';
+import axios from "axios";
 
 /**
  * Compute class used to connect and submit jobs to a remote computing
@@ -44,30 +44,34 @@ class Compute {
    * @param {function(data: any): void} onError
    */
   public submit(
-      params: any,
-      onSuccess: (data: any) => void,
-      onError: (data: any) => void
-  ) {
+    params: { participantID: string | number; participantResponses: string },
+    onSuccess: (data: any) => void,
+    onError: (data: any) => void
+  ): void {
     const startTime = performance.now();
-    axios.get(this.resourceURL, {
-      params: params,
-    }).then((response) => {
-      // Attempt to handle the response and extract the data
-      if (response['data']) {
-        consola.debug(`Received response data:`, response.data);
 
-        // Pass the data to the callback
-        onSuccess(response.data);
-      } else {
-        consola.warn('No data received');
-      }
-    }).catch((error) => {
-      onError(error);
-    }).then(() => {
-      const endTime = performance.now();
-      consola.info(
-          `Compute complete after ${Math.round(endTime - startTime)}ms`);
-    });
+    axios
+      .get(this.resourceURL, {
+        params: params,
+      })
+      .then((response) => {
+        // Attempt to handle the response and extract the data
+        if (response["data"]) {
+          // Pass the data to the callback
+          onSuccess(response.data);
+        } else {
+          consola.warn("No data received");
+        }
+      })
+      .catch((error) => {
+        onError(error);
+      })
+      .then(() => {
+        const endTime = performance.now();
+        consola.info(
+          `Compute complete after ${Math.round(endTime - startTime)}ms`
+        );
+      });
   }
 }
 

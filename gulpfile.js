@@ -1,35 +1,12 @@
-const gulp = require('gulp');
-const eslint = require('gulp-eslint');
-const del = require('del');
-
-/**
- * Run the linter
- * @param {function} cb callback function
- */
-function lint(cb) {
-  gulp.src([
-    'src/*.ts',
-    'src/*.tsx',
-    '!node_modules/**',
-    '!dist/**'
-  ])
-      .pipe(eslint())
-      .pipe(eslint.format())
-      .pipe(eslint.failAfterError());
-  cb();
-}
+const del = require("del");
 
 /**
  * Clean up build artefacts
  * @param {function} cb callback function
  */
 function clean(cb) {
-  del([
-    'dist',
-  ]);
+  del(["dist", ".pytest_cache", "api/logs", "api/.Rhistory"]);
   cb();
 }
 
 exports.clean = clean;
-exports.lint = lint;
-exports.default = lint;

@@ -1,8 +1,8 @@
 // React
-import React, {ReactElement, useState} from 'react';
+import React, { ReactElement, useState } from "react";
 
 // Grommet UI components
-import {Box, Heading, RangeInput} from 'grommet';
+import { Box, Heading, RangeInput } from "grommet";
 
 /**
  * Generate a Slider component
@@ -13,27 +13,27 @@ const Slider = (props: Props.Components.Slider): ReactElement => {
   const [value, setValue] = useState(props.max / 2);
   return (
     <Box
-      align='center'
-      direction='row'
-      justify='between'
-      gap='large'
-      width='xlarge'
+      align="center"
+      direction="row"
+      justify="between"
+      gap="large"
+      width="xlarge"
     >
       <Heading level={3}>{props.leftLabel}</Heading>
       <RangeInput
-        aria-label='Slider'
+        aria-label="Slider"
         value={value}
         min={props.min}
         max={props.max}
         onChange={(event) => {
           const updatedValue = parseInt(event.target.value);
           // Call the given onChange function if provided
-          if (typeof props.onChange !== 'undefined') {
+          if (typeof props.onChange !== "undefined") {
             props.onChange();
           }
 
           // Call the given setValue function if provided
-          if (typeof props.setValue !== 'undefined') {
+          if (typeof props.setValue !== "undefined") {
             props.setValue(updatedValue);
           }
 

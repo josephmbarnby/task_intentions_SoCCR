@@ -1,23 +1,23 @@
 // React import
-import React, {ReactElement, useRef, useState} from 'react';
+import React, { ReactElement, useRef, useState } from "react";
 
 // Logging library
-import consola from 'consola';
+import consola from "consola";
 
 // UI components
-import {Box, Button, Grid, Heading, Layer, Text} from 'grommet';
-import {LinkNext} from 'grommet-icons';
-import TextTransition, {presets} from 'react-text-transition';
+import { Box, Button, Grid, Heading, Layer, Text } from "grommet";
+import { LinkNext } from "grommet-icons";
+import TextTransition, { presets } from "react-text-transition";
 
 // Custom components
-import Option from '@components/Option';
-import Card from '@components/Card';
+import Option from "src/lib/view/components/Option";
+import Card from "src/lib/view/components/Card";
 
 // Access theme constants directly
-import {Theme} from '@lib/theme';
+import { Theme } from "src/lib/theme";
 
 // Configuration
-import {Configuration} from '@src/configuration';
+import { Configuration } from "src/configuration";
 
 /**
  * Generate the choices grid with options
@@ -29,45 +29,35 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
   const experiment = window.Experiment;
 
   // Header state
-  let defaultHeader = !props.display.startsWith('playerGuess') ?
-      'How will you split the points?' :
-      'How will your partner split the points?';
+  let defaultHeader = !props.display.startsWith("playerGuess")
+    ? "How will you split the points?"
+    : "How will your partner split the points?";
 
   // Update the header if this is a practice
   if (props.isPractice) {
     defaultHeader = `(Practice) ${defaultHeader}`;
   }
 
-  const [
-    trialHeader,
-    setTrialHeader,
-  ] = useState(defaultHeader);
+  const [trialHeader, setTrialHeader] = useState(defaultHeader);
 
   // Points state
-  const [
-    participantPoints,
-    setParticipantPoints,
-  ] = useState(props.participantPoints);
-  const [
-    partnerPoints,
-    setPartnerPoints,
-  ] = useState(props.partnerPoints);
+  const [participantPoints, setParticipantPoints] = useState(
+    props.participantPoints
+  );
+  const [partnerPoints, setPartnerPoints] = useState(props.partnerPoints);
 
   // Number of correct answers
-  const [
-    correctCount,
-    setCorrectCount,
-  ] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
 
   // Overlay visibility state
   const [showOverlay, setShowOverlay] = useState(false);
 
+  // Selection state
+  const [hasSelected, setHasSelected] = useState(false);
+
   // Content of the overlay
-  const [
-    overlayContent,
-    setOverlayContent,
-  ] = useState(
-      <Text>Oops! There should be content here.</Text>
+  const [overlayContent, setOverlayContent] = useState(
+    <Text>Oops! There should be content here.</Text>
   );
   let selectedOption: Options;
 
@@ -94,7 +84,8 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     },
   };
 
-  // Store a completely separate configuration for the display of the points
+  // Store a completely separate configuration for the display of the points,
+  // for the purpose of adjustment in 'playerGuess' trials
   const displayPoints = {
     options: {
       one: {
@@ -109,50 +100,29 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
   };
 
   // Use data from the API if available
-  if (props.display === 'playerGuess') {
-    if ('PARd' in experiment.getGlobalStateValue('phaseData')) {
+  if (props.display === "playerGuess") {
+    if (experiment.getGlobalStateValue("partnerChoices").length > 0) {
       // Update the values stored for the points
-      const phaseData = experiment.getGlobalStateValue('phaseData');
-      const phaseTwoTrialData = phaseData['PARd'][props.trial - 1];
+      const partnerChoices = experiment.getGlobalStateValue("partnerChoices");
+      // 'PARd' -> partner decisions
+      const trialData = partnerChoices[props.trial - 1];
 
       // Switch participant and partner points
-      displayPoints.options.one.participant = phaseTwoTrialData['par1'];
-      displayPoints.options.one.partner = phaseTwoTrialData['ppt1'];
-      displayPoints.options.two.participant = phaseTwoTrialData['par2'];
-      displayPoints.options.two.partner = phaseTwoTrialData['ppt2'];
+      displayPoints.options.one.participant = trialData["par1"];
+      displayPoints.options.one.partner = trialData["ppt1"];
+      displayPoints.options.two.participant = trialData["par2"];
+      displayPoints.options.two.partner = trialData["ppt2"];
 
       // Update default points
-      defaultPoints.options.one.participant = phaseTwoTrialData['ppt1'];
-      defaultPoints.options.one.partner = phaseTwoTrialData['par1'];
-      defaultPoints.options.two.participant = phaseTwoTrialData['ppt2'];
-      defaultPoints.options.two.partner = phaseTwoTrialData['par2'];
+      defaultPoints.options.one.participant = trialData["ppt1"];
+      defaultPoints.options.one.partner = trialData["par1"];
+      defaultPoints.options.two.participant = trialData["ppt2"];
+      defaultPoints.options.two.partner = trialData["par2"];
 
       // Update the correct answer
-      answer = phaseTwoTrialData['AcPar'] === 1 ? 'Option 1' : 'Option 2';
+      answer = trialData["Ac"] === 1 ? "Option 1" : "Option 2";
     } else {
-      consola.warn(`'playerGuess' trial, state data not found, using defaults`);
-    }
-  } else if (props.display === 'playerChoice2') {
-    if ('PPTd' in experiment.getGlobalStateValue('phaseData')) {
-      // Update the values stored for the points
-      const phaseData = experiment.getGlobalStateValue('phaseData');
-      const phaseThreeTrialData = phaseData['PPTd'][props.trial - 1];
-
-      // Set participant and partner points
-      displayPoints.options.one.participant = phaseThreeTrialData['ppt1'];
-      displayPoints.options.one.partner = phaseThreeTrialData['par1'];
-      displayPoints.options.two.participant = phaseThreeTrialData['ppt2'];
-      displayPoints.options.two.partner = phaseThreeTrialData['par2'];
-
-      // Update default points
-      defaultPoints.options.one.participant = phaseThreeTrialData['ppt1'];
-      defaultPoints.options.one.partner = phaseThreeTrialData['par1'];
-      defaultPoints.options.two.participant = phaseThreeTrialData['ppt2'];
-      defaultPoints.options.two.partner = phaseThreeTrialData['par2'];
-    } else {
-      consola.warn(
-          `'playerChoice2' trial, state data not found, using defaults`
-      );
+      consola.warn(`'playerGuess' trial state data incomplete, using defaults`);
     }
   }
 
@@ -172,6 +142,9 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
    * @param {Options} option selected option
    */
   const endTrial = (option: Options): void => {
+    // Reset the selection state
+    setHasSelected(false);
+
     // Bubble the selection handler with selection and answer
     props.handler(option, defaultPoints, answer);
   };
@@ -187,48 +160,45 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
     let partnerPoints = 0;
 
     // Check what Phase is running
-    if (props.display.toLowerCase().includes('guess')) {
+    if (props.display.toLowerCase().includes("guess")) {
       // 'playerGuess' trials update points from the correct choice
-      if (props.display === 'playerGuessPractice') {
+      if (props.display === "playerGuessPractice") {
         // Change the 'correct' answer depending on probability
         if (experiment.random() < 0.2) {
           // Change the 'correct' answer to the opposite of
           // what was selected
-          answer = option === 'Option 1' ? 'Option 2' : 'Option 1';
+          answer = option === "Option 1" ? "Option 2" : "Option 1";
         }
       }
 
       // Participant points
       participantPoints =
-          answer === 'Option 1' ?
-            displayPoints.options.one.participant :
-            displayPoints.options.two.participant;
+        answer === "Option 1"
+          ? displayPoints.options.one.participant
+          : displayPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
-          answer === 'Option 1' ?
-            displayPoints.options.one.partner :
-            displayPoints.options.two.partner;
+        answer === "Option 1"
+          ? displayPoints.options.one.partner
+          : displayPoints.options.two.partner;
     } else {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
-          option === 'Option 1' ?
-            displayPoints.options.one.participant :
-            displayPoints.options.two.participant;
+        option === "Option 1"
+          ? displayPoints.options.one.participant
+          : displayPoints.options.two.participant;
 
       // Partner points
       partnerPoints =
-          option === 'Option 1' ?
-            displayPoints.options.one.partner :
-            displayPoints.options.two.partner;
+        option === "Option 1"
+          ? displayPoints.options.one.partner
+          : displayPoints.options.two.partner;
     }
 
     // Apply the points
-    addPoints(
-        participantPoints,
-        partnerPoints,
-    );
+    addPoints(participantPoints, partnerPoints);
 
     // Call the selection handler
     handler(option);
@@ -240,12 +210,13 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
    */
   const handler = (option: Options) => {
     // Sum the number of correct answers for the phase
-    const correctCountInitial = jsPsych.data.get()
-        .filter({
-          display: props.display,
-        })
-        .select('correctGuess')
-        .sum();
+    const correctCountInitial = jsPsych.data
+      .get()
+      .filter({
+        display: props.display,
+      })
+      .select("correctGuess")
+      .sum();
     if (option === answer) {
       setCorrectCount(correctCountInitial + 1);
     } else {
@@ -281,44 +252,40 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
     // Disable all pointer events
     if (optionOneNode && optionTwoNode) {
-      optionOneNode.style.pointerEvents = 'none';
-      optionTwoNode.style.pointerEvents = 'none';
-      optionOneNode.style.touchAction = 'none';
-      optionTwoNode.style.touchAction = 'none';
+      optionOneNode.style.pointerEvents = "none";
+      optionTwoNode.style.pointerEvents = "none";
     }
 
     // Get the selected node object
     const selectedNode =
-        selectedOption === 'Option 1' ? optionOneNode : optionTwoNode;
+      selectedOption === "Option 1" ? optionOneNode : optionTwoNode;
     const unselectedNode =
-        selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
+      selectedNode === optionOneNode ? optionTwoNode : optionOneNode;
     const correctSelection = selectedOption === answer;
 
     // Check the stage of the trial
     switch (props.display) {
       // Simple choice of the player
-      case 'playerChoice':
-      case 'playerChoicePractice':
-      case 'playerChoice2': {
+      case "playerChoice":
+      case "playerChoicePractice":
+      case "playerChoice2": {
         // Timeout to change the opacity of the options
         window.setTimeout(() => {
           // Hide the unselected option
-          unselectedNode.style.opacity = '0';
+          unselectedNode.style.opacity = "0";
 
           window.setTimeout(() => {
             // Hide the selected option
-            selectedNode.style.opacity = '0';
+            selectedNode.style.opacity = "0";
           }, 1500);
 
           // Set a timeout for continuing
           window.setTimeout(() => {
             // Reset the styling
-            optionOneNode.style.opacity = '1';
-            optionTwoNode.style.opacity = '1';
-            optionOneNode.style.pointerEvents = 'auto';
-            optionTwoNode.style.pointerEvents = 'auto';
-            optionOneNode.style.touchAction = 'auto';
-            optionTwoNode.style.touchAction = 'auto';
+            optionOneNode.style.opacity = "1";
+            optionTwoNode.style.opacity = "1";
+            optionOneNode.style.pointerEvents = "auto";
+            optionTwoNode.style.pointerEvents = "auto";
 
             // End the trial
             endTrial(trialSelection);
@@ -328,12 +295,12 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
       }
 
       // Player guessing partner choices, show feedback
-      case 'playerGuess':
-      case 'playerGuessPractice': {
+      case "playerGuess":
+      case "playerGuessPractice": {
         if (correctSelection === true) {
-          setTrialHeader('You chose correctly!');
+          setTrialHeader("You chose correctly!");
         } else {
-          setTrialHeader('You chose incorrectly.');
+          setTrialHeader("You chose incorrectly.");
         }
 
         // Timeout to change the color of the selected answer
@@ -341,31 +308,28 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
         window.setTimeout(() => {
           // Set the background of the two options
           // depending on the correct selection
-          selectedNode.style.background =
-              correctSelection ?
-              Theme.global.colors.correct :
-              Theme.global.colors.incorrect;
+          selectedNode.style.background = correctSelection
+            ? Theme.global.colors.correct
+            : Theme.global.colors.incorrect;
 
           window.setTimeout(() => {
             // Hide the options before trial end
-            optionOneNode.style.opacity = '0';
-            optionTwoNode.style.opacity = '0';
+            optionOneNode.style.opacity = "0";
+            optionTwoNode.style.opacity = "0";
 
             optionOneNode.style.background =
-                Theme.global.colors.optionBackground;
+              Theme.global.colors.optionBackground;
             optionTwoNode.style.background =
-                Theme.global.colors.optionBackground;
+              Theme.global.colors.optionBackground;
           }, 1500);
 
           // Set a timeout to reset view and end the trial
           window.setTimeout(() => {
             // Reset the styling
-            optionOneNode.style.opacity = '1';
-            optionTwoNode.style.opacity = '1';
-            optionOneNode.style.pointerEvents = 'auto';
-            optionTwoNode.style.pointerEvents = 'auto';
-            optionOneNode.style.touchAction = 'auto';
-            optionTwoNode.style.touchAction = 'auto';
+            optionOneNode.style.opacity = "1";
+            optionTwoNode.style.opacity = "1";
+            optionOneNode.style.pointerEvents = "auto";
+            optionTwoNode.style.pointerEvents = "auto";
 
             // Reset the header state
             setTrialHeader(defaultHeader);
@@ -389,32 +353,33 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
     switch (props.display) {
       // Simple choice of the player
-      case 'playerChoice':
-      case 'playerChoicePractice':
-      case 'playerChoice2': {
-        content =
-          <Box pad='small' align='center'>
-            <Text size='large' margin='medium'>
+      case "playerChoice":
+      case "playerChoicePractice":
+      case "playerChoice2": {
+        content = (
+          <Box pad="small" align="center">
+            <Text size="large" margin="medium">
               You chose <b>{selectedOption}</b>.
             </Text>
-            <Text size='large' margin='medium'>
-              That means
-              you get {selectedOption === 'Option 1' ?
-                  displayPoints.options.one.participant :
-                  displayPoints.options.two.participant
-              } points and your partner gets {selectedOption === 'Option 1' ?
-                  displayPoints.options.one.partner :
-                  displayPoints.options.two.partner
-              } points.
+            <Text size="large" margin="medium">
+              That means you get{" "}
+              {selectedOption === "Option 1"
+                ? displayPoints.options.one.participant
+                : displayPoints.options.two.participant}{" "}
+              points and your partner gets{" "}
+              {selectedOption === "Option 1"
+                ? displayPoints.options.one.partner
+                : displayPoints.options.two.partner}{" "}
+              points.
             </Text>
 
             {/* Continue button */}
             <Button
               primary
-              color='button'
-              label='Next'
-              size='large'
-              margin='medium'
+              color="button"
+              label="Next"
+              size="large"
+              margin="medium"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -422,35 +387,37 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
                 transition();
               }}
             />
-          </Box>;
+          </Box>
+        );
         break;
       }
-      case 'playerGuess':
-      case 'playerGuessPractice': {
-        content =
-          <Box pad='small' align='center'>
-            <Text size='large' margin='medium'>
-              {selectedOption === answer ? 'Correct! ' : 'Incorrect. '}
+      case "playerGuess":
+      case "playerGuessPractice": {
+        content = (
+          <Box pad="small" align="center">
+            <Text size="large" margin="medium">
+              {selectedOption === answer ? "Correct! " : "Incorrect. "}
               Your partner chose <b>{answer}</b>.
             </Text>
-            <Text size='large' margin='medium'>
-              That means
-              you get {answer === 'Option 1' ?
-                  displayPoints.options.one.participant :
-                  displayPoints.options.two.participant
-              } points and your partner gets {answer === 'Option 1' ?
-                  displayPoints.options.one.partner :
-                  displayPoints.options.two.partner
-              } points.
+            <Text size="large" margin="medium">
+              That means you get{" "}
+              {answer === "Option 1"
+                ? displayPoints.options.one.participant
+                : displayPoints.options.two.participant}{" "}
+              points and your partner gets{" "}
+              {answer === "Option 1"
+                ? displayPoints.options.one.partner
+                : displayPoints.options.two.partner}{" "}
+              points.
             </Text>
 
             {/* Continue button */}
             <Button
               primary
-              color='button'
-              label='Next'
-              size='large'
-              margin='medium'
+              color="button"
+              label="Next"
+              size="large"
+              margin="medium"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -458,7 +425,8 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
                 transition();
               }}
             />
-          </Box>;
+          </Box>
+        );
         break;
       }
     }
@@ -468,82 +436,82 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
   // Participant avatar
   const participantAvatar =
-      Configuration.avatars.names.participant[
-          experiment.getGlobalStateValue('participantAvatar')
-      ];
+    Configuration.avatars.names.participant[
+      experiment.getGlobalStateValue("participantAvatar")
+    ];
 
   // Partner avatar
   let partnerAvatar: string;
-  if (props.display.toLowerCase().endsWith('practice')) {
-    partnerAvatar = 'example';
+  if (props.display.toLowerCase().endsWith("practice")) {
+    partnerAvatar = "example";
   } else {
     // Get the global state of the partner avatar
     partnerAvatar =
-        Configuration.avatars.names.partner[
-            experiment.getGlobalStateValue('partnerAvatar')
-        ];
+      Configuration.avatars.names.partner[
+        experiment.getGlobalStateValue("partnerAvatar")
+      ];
 
     // Update state to refresh partner avatar at next match screen
-    if (experiment.getGlobalStateValue('refreshPartner') === false) {
-      experiment.setGlobalStateValue('refreshPartner', true);
+    if (experiment.getGlobalStateValue("refreshPartner") === false) {
+      experiment.setGlobalStateValue("refreshPartner", true);
     }
   }
 
   return (
     <Grid
-      rows={['auto', 'medium', 'auto']}
-      columns={['flex', '1/2', 'flex']}
-      gap='xsmall'
+      rows={["xsmall", "medium", "xsmall"]}
+      columns={["flex", "1/2", "flex"]}
+      gap="xsmall"
       width={{
-        min: '1000px',
-        max: 'xlarge',
+        min: "1000px",
+        max: "xlarge",
       }}
       fill
       areas={[
-        {name: 'trialHeader', start: [0, 0], end: [2, 0]},
-        {name: 'playerArea', start: [0, 1], end: [0, 1]},
-        {name: 'choiceArea', start: [1, 1], end: [1, 1]},
-        {name: 'partnerArea', start: [2, 1], end: [2, 1]},
-        {name: 'counterHeader', start: [0, 2], end: [2, 2]},
+        { name: "trialHeader", start: [0, 0], end: [2, 0] },
+        { name: "playerArea", start: [0, 1], end: [0, 1] },
+        { name: "choiceArea", start: [1, 1], end: [1, 1] },
+        { name: "partnerArea", start: [2, 1], end: [2, 1] },
+        { name: "counterHeader", start: [0, 2], end: [2, 2] },
       ]}
     >
       <Heading
-        textAlign='center'
+        textAlign="center"
         fill
         level={2}
-        size='auto'
-        margin='small'
-        gridArea='trialHeader'
+        size="auto"
+        margin="small"
+        gridArea="trialHeader"
       >
         {trialHeader}
       </Heading>
 
       {/* Participant's Avatar */}
       <Card
-        gridArea='playerArea'
-        name='You'
+        gridArea="playerArea"
+        name="You"
         points={participantPoints}
         avatar={participantAvatar}
       />
 
       {/* Choices */}
-      <Box
-        gridArea='choiceArea'
-        gap='small'
-      >
+      <Box gridArea="choiceArea" gap="small">
         <Box
           ref={refs.optionOne}
           onClick={() => {
-            updatePoints('Option 1');
+            if (hasSelected === false) {
+              setHasSelected(true);
+              updatePoints("Option 1");
+            }
           }}
-          className='grow'
+          className="grow"
           round
-          background='optionBackground'
+          background="optionBackground"
           fill
         >
           <Option
-            optionKey='optionOne'
-            optionName='Option 1'
+            optionKey="optionOne"
+            optionName="Option 1"
             pointsParticipant={displayPoints.options.one.participant}
             pointsPartner={displayPoints.options.one.partner}
           />
@@ -552,16 +520,19 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
         <Box
           ref={refs.optionTwo}
           onClick={() => {
-            updatePoints('Option 2');
+            if (hasSelected === false) {
+              setHasSelected(true);
+              updatePoints("Option 2");
+            }
           }}
-          className='grow'
+          className="grow"
           round
-          background='optionBackground'
+          background="optionBackground"
           fill
         >
           <Option
-            optionKey='optionTwo'
-            optionName='Option 2'
+            optionKey="optionTwo"
+            optionName="Option 2"
             pointsParticipant={displayPoints.options.two.participant}
             pointsPartner={displayPoints.options.two.partner}
           />
@@ -570,42 +541,39 @@ const Trial = (props: Props.Screens.Trial): ReactElement => {
 
       {/* Partner's Avatar */}
       <Card
-        gridArea='partnerArea'
-        name='Partner'
+        gridArea="partnerArea"
+        name="Partner"
         points={partnerPoints}
         avatar={partnerAvatar}
       />
 
       {/* Counter for correct guesses */}
-      {props.display.startsWith('playerGuess') &&
+      {props.display.startsWith("playerGuess") && (
         <Box
-          direction='row'
-          justify='center'
-          margin='xsmall'
-          gridArea='counterHeader'
+          direction="row"
+          justify="center"
+          margin="xsmall"
+          gridArea="counterHeader"
         >
-          <Heading level={2} size='auto' margin='xsmall'>
+          <Heading level={2} size="auto" margin="xsmall">
             Correct guesses:&nbsp;
           </Heading>
-          <Heading level={2} size='auto' margin='xsmall'>
-            <TextTransition
-              text={correctCount}
-              springConfig={presets.slow}
-            />
+          <Heading level={2} size="auto" margin="xsmall">
+            <TextTransition text={correctCount} springConfig={presets.slow} />
           </Heading>
         </Box>
-      }
+      )}
 
       {/* Practice overlay */}
-      {showOverlay &&
+      {showOverlay && (
         <Layer>
-          <Box pad='small' align='center'>
-            <Heading size='auto'>Practice Trial</Heading>
+          <Box pad="small" align="center">
+            <Heading size="auto">Practice Trial</Heading>
             {/* Display the overlay content */}
             {overlayContent}
           </Box>
         </Layer>
-      }
+      )}
     </Grid>
   );
 };
