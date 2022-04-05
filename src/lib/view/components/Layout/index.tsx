@@ -1,5 +1,13 @@
+/**
+ * @file 'Layout' component acting as a container for all React screens and
+ * components displayed throughout the game. Grommet and Themecontext.Extend
+ * components enclose the child screen generated using the `ScreenFactory`
+ * class.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React import
-import React, { ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 
 // Grommet component
 import { Grommet, ThemeContext } from "grommet";
@@ -14,12 +22,12 @@ import { Theme } from "src/lib/theme";
 import ScreenFactory from "src/lib/classes/factories/ScreenFactory";
 
 /**
- * Generic container for all Grommet components
+ * @summary Generate a 'Layout' component
  * @param {Props.Components.Layout} props collection of props for the primary
  * child component
- * @return {ReactElement}
+ * @return {ReactElement} 'Layout' component
  */
-export const Layout = (props: Props.Components.Layout): ReactElement => {
+export const Layout: FC<Props.Components.Layout> = (props: Props.Components.Layout): ReactElement => {
   // Create a new 'ScreenFactory' instance
   const screenFactory = new ScreenFactory();
 
