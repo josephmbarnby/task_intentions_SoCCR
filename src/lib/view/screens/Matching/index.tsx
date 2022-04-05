@@ -36,6 +36,8 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
       `'dataCollection' containing trials with 'display' = 'playerChoice':`,
       dataCollection
     );
+
+    // Format the responses to be sent to the server
     const requestResponses = [];
     for (const row of dataCollection) {
       requestResponses.push({

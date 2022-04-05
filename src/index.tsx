@@ -22,17 +22,18 @@ import consola from "consola";
 import { Experiment } from "jspsych-wrapper";
 
 // Import jsPsych plugins
+import "jspsych/plugins/jspsych-fullscreen";
 import "jspsych/plugins/jspsych-instructions";
 import "jspsych-attention-check";
 
 // Import the custom plugin before adding it to the timeline
 import "./plugin";
 
-// Timeline setup
-const timeline: Timeline = [];
-
 // Create a new Experiment instance
 const experiment = new Experiment(Configuration);
+
+// Timeline setup
+const timeline: Timeline = [];
 
 // Update the partner avatar strings (for unique partners)
 for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
@@ -153,6 +154,7 @@ timeline.push({
   clearScreen: true,
 });
 
+// Pre-'playerChoice' instructions
 timeline.push({
   type: "instructions",
   pages: [
@@ -252,6 +254,7 @@ timeline.push({
   clearScreen: true,
 });
 
+// Post-'playerChoice' instructions
 timeline.push({
   type: "instructions",
   pages: [
@@ -347,9 +350,13 @@ if (
   dataCollection = Default;
 }
 
+// Setup data storage for trial shuffling
 const randomisedTrials = {
+  // 'playerChoice' trials
   phaseOne: [] as Timeline,
+  // 'playerGuess' trials, will be ignored if request successful
   phaseTwo: [] as Timeline,
+  // 'playerChoice2' trials
   phaseThree: [] as Timeline,
 };
 
@@ -524,6 +531,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         clearScreen: true,
       });
 
+      // Post-'playerGuess' practice instructions
       timeline.push({
         type: "instructions",
         pages: [

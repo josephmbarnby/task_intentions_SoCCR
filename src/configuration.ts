@@ -12,7 +12,7 @@ export const Configuration = {
   allowParticipantContact: false,
   contact: "henry.burgess@wustl.edu",
 
-  // Manipulations that are configurable in Gorilla
+  // Manipulations that are configured in Gorilla
   manipulations: {
     partner: "default",
   },
@@ -32,6 +32,13 @@ export const Configuration = {
     partnerChoices: {},
   },
 
+  // Force fullscreen when deployed
+  fullscreen: process.env.NODE_ENV !== "development",
+
+  // Set the logging level
+  logging:
+    process.env.NODE_ENV === "development" ? LogLevel.Verbose : LogLevel.Error,
+
   // API endpoints for computations
   endpoint:
     process.env.NODE_ENV === "development"
@@ -47,11 +54,4 @@ export const Configuration = {
     colours: ["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"],
     variant: "beam",
   },
-
-  // Force fullscreen
-  fullscreen: false,
-
-  // Set the logging level
-  logging:
-    process.env.NODE_ENV === "development" ? LogLevel.Verbose : LogLevel.Error,
 };
