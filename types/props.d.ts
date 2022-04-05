@@ -119,7 +119,7 @@ declare namespace Props {
 
 // Type for the 'ScreenPropFactory' return
 declare type ScreenProps = {
-  props: any;
+  props: Props.Screens;
   callback: (...args) => void;
   duration: number;
 };

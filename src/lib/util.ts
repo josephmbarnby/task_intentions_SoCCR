@@ -7,11 +7,11 @@ import ReactDOM from "react-dom";
 import ReactDOMServer from "react-dom/server";
 
 /**
- * Clear the HTML contents of an element without
- * editing innerHTML.
- * @param {HTMLElement} target element to clear contents
- * @param {boolean} isReact specify if additiona clearing
- * is required for React content
+ * Clear the HTML contents of an element without editing innerHTML. Unmounts
+ * React instances if specified.
+ * @param {HTMLElement} target element to clear the contents of
+ * @param {boolean} isReact specify if additional clearing is required for
+ * React content
  */
 export function clear(target: HTMLElement | null, isReact = false): void {
   if (target) {
@@ -32,16 +32,18 @@ export function clear(target: HTMLElement | null, isReact = false): void {
 }
 
 /**
- * Calculate the points gained from a phase
- * @param {Display} display phase to calculate points from
- * @param {string} column named column containing points
- * @return {number}
+ * Calculate the points gained from all prior trials of a specific display type
+ * @param {Display} display the type of display to calculate total points from
+ * @param {string} column the name of the column storing the points received
+ * from each trial
+ * @return {number} total points received from trials with a specific display
  */
 export const calculatePoints = (display: Display, column: string): number => {
   let points = 0;
 
   if (display === "playerGuess") {
-    // `playerGuess` phases calculated differently
+    // `playerGuess` phases calculated differently, since options are presented
+    // in reverse order
     const dataCollection = jsPsych.data
       .get()
       .filter({
@@ -74,7 +76,7 @@ export const calculatePoints = (display: Display, column: string): number => {
       }
     }
   } else {
-    // All other phases can be calculated normally
+    // All other phases can be calculated using a jsPsych data query
     points = jsPsych.data
       .get()
       .filter({
@@ -87,10 +89,9 @@ export const calculatePoints = (display: Display, column: string): number => {
 };
 
 /**
- * Utility function to turn React elements into HTML markup,
- * useful when HTML is required
- * @param {ReactElement} element React element to render
- * @return {string}
+ * Utility function to turn React elements into a string of HTML markup
+ * @param {ReactElement} element the React element to render
+ * @return {string} raw HTML
  */
 export const react2html = (element: ReactElement): string => {
   return ReactDOMServer.renderToStaticMarkup(element);

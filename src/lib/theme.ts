@@ -1,4 +1,4 @@
-// Custom theme parameters
+// Custom theming parameters
 export const Theme = {
   global: {
     colors: {
@@ -6,18 +6,13 @@ export const Theme = {
         dark: "#CBF3F0",
         light: "#2EC4B6",
       },
-      correct: "#00C781",
-      incorrect: "#FF4040",
-      avatarBackground: "#89C2D9",
-      optionBackground: "#2A6F97",
-      button: "#01497C",
-      pointsIconBackground: "#FFDB33",
-      partners: {
-        prosocial: "#E843D2",
-        individualistic: "#E8A643",
-        competitive: "#43C2E8",
-      },
-      map: "#E7F2F7",
+      correct: "#00C781", // Green
+      incorrect: "#FF4040", // Red
+      avatarBackground: "#89C2D9", // Avatar card background
+      optionBackground: "#2A6F97", // Option component background
+      button: "#01497C", // Continue button
+      pointsIconBackground: "#FFDB33", // Coins
+      map: "#E7F2F7", // Map dots
       border: {
         dark: "#444444",
         light: "#CCCCCC",

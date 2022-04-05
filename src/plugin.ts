@@ -147,7 +147,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
 
       // If the next trial isn't React-based, clean up React
       if (trial.clearScreen === true) {
-        view.clear();
+        view.unmount();
       }
 
       // Re-enable keyboard actions

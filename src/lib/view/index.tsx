@@ -6,9 +6,11 @@ import ReactDOM, { render } from "react-dom";
 import { Layout } from "src/lib/view/components/Layout";
 
 /**
- * Static 'View' class used to display React-based screens
+ * 'View' class to abstract the display and clean-up of React-based screens
+ * used in the game
  */
 class View {
+  // This is the element containing the jsPsych target
   private target: HTMLElement;
 
   /**
@@ -29,8 +31,9 @@ class View {
 
   /**
    * Switch between different screens
-   * @param {Display} type screen type
-   * @param {ScreenProps} propData collection of props
+   * @param {Display} type the type of screen to display
+   * @param {ScreenProps} propData collection of props for that specific
+   * screen
    * @param {HTMLElement} target target DOM element
    */
   public display(
@@ -50,9 +53,9 @@ class View {
   }
 
   /**
-   * Clear the screen if currently using React
+   * Unmount a React instance from the target element
    */
-  public clear(): void {
+  public unmount(): void {
     ReactDOM.unmountComponentAtNode(this.target);
   }
 }
