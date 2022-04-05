@@ -1,5 +1,14 @@
+/**
+ * @file 'Matching' screen presenting a loading indicator and describing to
+ * the participant that a matching process is taking place. Overall duration
+ * of the screen is between 3 and 7 seconds. If the `props.fetchData` flag is
+ * `true`, a `Compute` instance will collate data from the 'playerChoice'phase
+ * before attempting to communicate with a remote server.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React import
-import React, { ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 
 // Logging library
 import consola from "consola";
@@ -14,16 +23,20 @@ import Compute from "src/lib/classes/Compute";
 import { Configuration } from "src/configuration";
 
 /**
- * Generate layout of Matching Screen
+ * @summary Generate a 'Matching' screen presenting a loading indicator and
+ * text describing a matching process taking place. Fetches data in the
+ * background if specified.
  * @param {Props.Screens.Matching} props collection of props
- * @return {ReactElement}
+ * @return {ReactElement} 'Matching' screen
  */
-const Matching = (props: Props.Screens.Matching): ReactElement => {
+const Matching: FC<Props.Screens.Matching> = (props: Props.Screens.Matching): ReactElement => {
   const experiment = window.Experiment;
 
   // Launch request
   if (props.fetchData) {
+    // Setup a new 'Compute' instance with the configured endpoint URL
     const compute = new Compute(Configuration.endpoint);
+
     // Collate data from 'playerChoice' trials
     consola.info(`Collating data...`);
     const dataCollection = jsPsych.data
@@ -32,6 +45,7 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
         display: "playerChoice",
       })
       .values();
+
     consola.debug(
       `'dataCollection' containing trials with 'display' = 'playerChoice':`,
       dataCollection
@@ -57,6 +71,7 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
     let participantID = experiment.getGlobalStateValue("participantID");
     if (participantID === "default") {
       // If no custom participant ID has been specified, generate our own
+      // using ID protocol `ppt_<timestamp>`
       consola.debug(`Generating custom participant ID...`);
       participantID = `ppt_${Date.now()}`;
       consola.debug(`Generated participant ID:`, participantID);
@@ -68,10 +83,12 @@ const Matching = (props: Props.Screens.Matching): ReactElement => {
     // Launch request to endpoint
     consola.info(`Requesting partner...`);
     compute.submit(
+      // Request data
       {
         participantID: participantID,
         participantResponses: JSON.stringify(requestResponses),
       },
+      // Response callback
       (data: {
         participantID: string[];
         participantParameters: string;

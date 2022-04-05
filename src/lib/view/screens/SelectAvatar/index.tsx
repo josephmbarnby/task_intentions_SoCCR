@@ -1,5 +1,13 @@
-// React
-import React, { ReactElement } from "react";
+/**
+ * @file 'SelectAvatar' screen presenting a row of six avatars for the
+ * participant to select for the game. The avatar increases in size when
+ * selected, enabling the participant to proceed once they have
+ * selected an avatar.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement } from "react";
 
 // Grommet UI components
 import { Box, Button, Heading } from "grommet";
@@ -12,23 +20,25 @@ import { Configuration } from "src/configuration";
 import Character from "src/lib/view/components/Character";
 
 /**
- * Generic structure for the Avatar Selection Screen
+ * @summary Generate a 'SelectAvatar' screen presenting a row of six avatars
+ * for the participant to select above a continue button
  * @param {Props.Screens.SelectAvatar} props collection of props
- * @return {ReactElement}
+ * @return {ReactElement} 'SelectAvatar' screen
  */
-const SelectAvatar = (props: Props.Screens.SelectAvatar): ReactElement => {
+const SelectAvatar: FC<Props.Screens.SelectAvatar> = (props: Props.Screens.SelectAvatar): ReactElement => {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState("none");
 
   const avatars = Configuration.avatars.names.participant;
   const avatarComponents = [];
 
+  // Collate the avatars into an array of 'Character' components
   for (const avatarName of avatars) {
     avatarComponents.push(
       <Character
         key={avatarName}
         name={avatarName}
-        size={128}
+        size={128} // Size is fixed at 128
         state={selectedAvatar}
         setState={setAvatar}
       />
@@ -37,6 +47,7 @@ const SelectAvatar = (props: Props.Screens.SelectAvatar): ReactElement => {
 
   return (
     <>
+      {/* Heading component */}
       <Heading margin="medium" fill>
         Choose your Avatar!
       </Heading>

@@ -27,9 +27,10 @@ import { Configuration } from "src/configuration";
 import { calculatePoints } from "src/lib/util";
 
 /**
- * Generate layout of Matching Screen
+ * @summary Generate a 'Summary' screen with two cards displaying each avatar
+ * and point totals above a continue button
  * @param {Props.Screens.Summary} props screen props
- * @return {ReactElement}
+ * @return {ReactElement} 'Summary' screen
  */
 const Summary: FC<Props.Screens.Summary> = (props: Props.Screens.Summary): ReactElement => {
   consola.debug(`Summary screen for '${props.postPhase}'`);

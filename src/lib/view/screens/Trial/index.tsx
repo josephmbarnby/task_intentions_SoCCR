@@ -27,9 +27,10 @@ import { Theme } from "src/lib/theme";
 import { Configuration } from "src/configuration";
 
 /**
- * Generate the choices grid with options
+ * @summary Generate a 'Trial' screen with two options and avatar cards on
+ * the left and right of the options
  * @param {Props.Screens.Trial} props collection of props
- * @return {ReactElement}
+ * @return {ReactElement} 'Trial' screen
  */
 const Trial: FC<Props.Screens.Trial> = (props: Props.Screens.Trial): ReactElement => {
   // Get the Experiment instance
