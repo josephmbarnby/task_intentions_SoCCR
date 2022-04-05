@@ -1,5 +1,13 @@
-// React
-import React, { ReactElement, useState } from "react";
+/**
+ * @file 'Inference' screen presenting two sliders for participant interaction.
+ * Each slider is accompanied by a question regarding the participant's
+ * thoughts on their partner from the previous phase. Participant is required
+ * to move the thumb on each slide before the continue button is enabled.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement, useState } from "react";
 
 // Grommet UI components
 import { Box, Button, Paragraph } from "grommet";
@@ -12,11 +20,13 @@ import Slider from "src/lib/view/components/Slider";
 const SLIDER_DEFAULT = 50;
 
 /**
- * Generate layout of Inference Screen (Inference trial)
+ * @summary Generate an 'Inference' screen presenting two sliders for
+ * participant interaction. Questions accompany each slider, and the
+ * sliders require interaction before the continue button is enabled.
  * @param {Props.Screens.Inference} props component props
- * @return {ReactElement}
+ * @return {ReactElement} 'Inference' screen
  */
-const Inference = (props: Props.Screens.Inference): ReactElement => {
+const Inference: FC<Props.Screens.Inference> = (props: Props.Screens.Inference): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [firstMoved, setFirstMoved] = useState(false);
