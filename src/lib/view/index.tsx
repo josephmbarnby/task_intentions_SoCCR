@@ -1,3 +1,9 @@
+/**
+ * @file 'View' class to abstract the display and clean-up of React-based screens
+ * used in the game.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React import
 import React from "react";
 import ReactDOM, { render } from "react-dom";
@@ -6,7 +12,7 @@ import ReactDOM, { render } from "react-dom";
 import { Layout } from "src/lib/view/components/Layout";
 
 /**
- * 'View' class to abstract the display and clean-up of React-based screens
+ * @summary 'View' class to abstract the display and clean-up of React-based screens
  * used in the game
  */
 class View {
@@ -16,6 +22,7 @@ class View {
   /**
    * Default constructor
    * @param {HTMLElement} target the target HTML element
+   * @class
    */
   constructor(target: HTMLElement) {
     this.target = target;

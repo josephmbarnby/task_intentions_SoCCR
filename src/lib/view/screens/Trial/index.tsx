@@ -1,5 +1,12 @@
+/**
+ * @file 'Trial' screen containing components for trials requiring the
+ * participant to interact with their partner directly or indirectly.
+ * Core components include 'Option' and 'Card'.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React import
-import React, { ReactElement, useRef, useState } from "react";
+import React, { FC, ReactElement, useRef, useState } from "react";
 
 // Logging library
 import consola from "consola";
@@ -24,7 +31,7 @@ import { Configuration } from "src/configuration";
  * @param {Props.Screens.Trial} props collection of props
  * @return {ReactElement}
  */
-const Trial = (props: Props.Screens.Trial): ReactElement => {
+const Trial: FC<Props.Screens.Trial> = (props: Props.Screens.Trial): ReactElement => {
   // Get the Experiment instance
   const experiment = window.Experiment;
 

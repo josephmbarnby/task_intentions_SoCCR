@@ -1,5 +1,14 @@
+/**
+ * @file 'Summary' screen presenting a left card and right card with the
+ * avatar's point totals below each image. The left avatar represents the
+ * participant, and the right avatar represents the partner. The background
+ * consists of a map graphic. Points for the summary are calculated from the
+ * phase specified in the `props.postPhase` prop.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React import
-import React, { ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 
 // Logging library
 import consola from "consola";
@@ -22,7 +31,7 @@ import { calculatePoints } from "src/lib/util";
  * @param {Props.Screens.Summary} props screen props
  * @return {ReactElement}
  */
-const Summary = (props: Props.Screens.Summary): ReactElement => {
+const Summary: FC<Props.Screens.Summary> = (props: Props.Screens.Summary): ReactElement => {
   consola.debug(`Summary screen for '${props.postPhase}'`);
 
   // Get the participant's and the partner's avatars
