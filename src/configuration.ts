@@ -1,3 +1,11 @@
+/**
+ * @file Configuration file used by the crossplatform API to configure
+ * the experiment. Contains standard information about experiment parameters and
+ * error handling. Extended to contain custom parameters for avatars and
+ * networking configuration.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Logging level
 import { LogLevel } from "consola";
 

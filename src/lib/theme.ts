@@ -1,4 +1,10 @@
-// Custom theming parameters
+/**
+ * @file Theming file used to specify styling for Grommet React elements.
+ * Referenced primarily in the `ThemeContext.Extend` component.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// Theme object
 export const Theme = {
   global: {
     colors: {

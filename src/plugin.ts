@@ -1,3 +1,11 @@
+/**
+ * @file Plugin file containing code establishing a jsPsych plugin for the
+ * Intentions Game. Configures data storage and displays a React screen
+ * to the participant. Handles the end of the trial by storing data and
+ * cleaning up the display.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Logging library
 import consola from "consola";
 

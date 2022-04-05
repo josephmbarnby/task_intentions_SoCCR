@@ -1,3 +1,11 @@
+/**
+ * @file Utility functions used throughout different classes. The `clear`
+ * function is straightforward, clearing the screen with optional extra
+ * steps for React-based screens. `react2html` receives a React element
+ * and returns HTML as a string.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Logging library
 import consola from "consola";
 

@@ -1,3 +1,12 @@
+/**
+ * @file Index file containing code describing the entire experiment timeline.
+ * Imports multiple jsPsych plugins and custom plugins before organising them
+ * into the experiment flow. Utility functions used to convert React to HTML
+ * and shuffle experiment trials. The crossplatform API is configured at the
+ * start of the file and the experiment is started at the end of the file.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React
 import React from "react";
 
