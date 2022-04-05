@@ -1,16 +1,26 @@
-// React
-import React, { ReactElement } from "react";
+/**
+ * @file 'Classification' screen presenting a dropdown menu to the participant.
+ * The participant is required to select one of three options from the dropdown
+ * before the continue button is enabled. The participant is selecting the
+ * option that best matches their opinion of their participant from the
+ * previous phase.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement } from "react";
 
 // Grommet UI components
 import { Box, Button, Select, Paragraph } from "grommet";
 import { LinkNext } from "grommet-icons";
 
 /**
- * Generate layout of Classification Screen (Classification trial)
+ * @summary Generate a 'Classification' screen containing a dropdown
+ * menu with three options, one for each partner type.
  * @param {Props.Screens.Classification} props component props
- * @return {ReactElement}
+ * @return {ReactElement} 'Classification' screen
  */
-const Classification = (props: Props.Screens.Classification): ReactElement => {
+const Classification: FC<Props.Screens.Classification> = (props: Props.Screens.Classification): ReactElement => {
   // Configure relevant states
   const [classification, setClassification] = React.useState("");
   const [continueDisabled, setContinueDisabled] = React.useState(true);
