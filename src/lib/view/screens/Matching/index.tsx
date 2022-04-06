@@ -29,7 +29,9 @@ import { Configuration } from "src/configuration";
  * @param {Props.Screens.Matching} props collection of props
  * @return {ReactElement} 'Matching' screen
  */
-const Matching: FC<Props.Screens.Matching> = (props: Props.Screens.Matching): ReactElement => {
+const Matching: FC<Props.Screens.Matching> = (
+  props: Props.Screens.Matching
+): ReactElement => {
   const experiment = window.Experiment;
 
   // Launch request

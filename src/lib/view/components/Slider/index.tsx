@@ -14,7 +14,9 @@ import { Box, Heading, RangeInput } from "grommet";
  * @param {Props.Components.Slider} props component props
  * @return {ReactElement} 'Slider' component
  */
-const Slider: FC<Props.Components.Slider> = (props: Props.Components.Slider): ReactElement => {
+const Slider: FC<Props.Components.Slider> = (
+  props: Props.Components.Slider
+): ReactElement => {
   const [value, setValue] = useState(props.max / 2);
   return (
     <Box

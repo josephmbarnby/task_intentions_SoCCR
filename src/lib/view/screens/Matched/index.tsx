@@ -23,7 +23,7 @@ import { Configuration } from "src/configuration";
 /**
  * @summary Generate a 'Matched' screen containing a card with the partner
  * of the participant for the subsequent phase of the game.screen
- * @return {ReactElement} 'Matched' 
+ * @return {ReactElement} 'Matched'
  */
 const Matched: FC = (): ReactElement => {
   // Get the current partner avatar

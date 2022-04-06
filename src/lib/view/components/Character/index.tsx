@@ -19,7 +19,9 @@ import { Configuration } from "src/configuration";
  * @param {Props.Components.Character} props component props
  * @return {ReactElement} 'Character' component
  */
-const Character: FC<Props.Components.Character> = (props: Props.Components.Character): ReactElement => {
+const Character: FC<Props.Components.Character> = (
+  props: Props.Components.Character
+): ReactElement => {
   return (
     <Box
       id={`avatar-${props.name}`}

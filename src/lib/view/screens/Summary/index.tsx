@@ -32,7 +32,9 @@ import { calculatePoints } from "src/lib/util";
  * @param {Props.Screens.Summary} props screen props
  * @return {ReactElement} 'Summary' screen
  */
-const Summary: FC<Props.Screens.Summary> = (props: Props.Screens.Summary): ReactElement => {
+const Summary: FC<Props.Screens.Summary> = (
+  props: Props.Screens.Summary
+): ReactElement => {
   consola.debug(`Summary screen for '${props.postPhase}'`);
 
   // Get the participant's and the partner's avatars

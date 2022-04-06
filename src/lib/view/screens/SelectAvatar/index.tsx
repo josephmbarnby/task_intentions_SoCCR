@@ -25,7 +25,9 @@ import Character from "src/lib/view/components/Character";
  * @param {Props.Screens.SelectAvatar} props collection of props
  * @return {ReactElement} 'SelectAvatar' screen
  */
-const SelectAvatar: FC<Props.Screens.SelectAvatar> = (props: Props.Screens.SelectAvatar): ReactElement => {
+const SelectAvatar: FC<Props.Screens.SelectAvatar> = (
+  props: Props.Screens.SelectAvatar
+): ReactElement => {
   // Configure relevant states
   const [selectedAvatar, setAvatar] = React.useState("none");
 

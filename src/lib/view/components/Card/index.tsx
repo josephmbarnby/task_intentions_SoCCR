@@ -24,7 +24,9 @@ import { Configuration } from "src/configuration";
  * @param {Props.Components.Card} props component props
  * @return {ReactElement} 'Card' component
  */
-const Card: FC<Props.Components.Card> = (props: Props.Components.Card): ReactElement => {
+const Card: FC<Props.Components.Card> = (
+  props: Props.Components.Card
+): ReactElement => {
   return (
     <Box
       gridArea={props.gridArea}

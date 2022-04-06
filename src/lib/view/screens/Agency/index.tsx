@@ -24,7 +24,9 @@ const SLIDER_DEFAULT = 50; // Sets the 'thumb' to the middle of the slider
  * @param {Props.Screens.Agency} props component props
  * @return {ReactElement} 'Agency' screen
  */
-const Agency: FC<Props.Screens.Agency> = (props: Props.Screens.Agency): ReactElement => {
+const Agency: FC<Props.Screens.Agency> = (
+  props: Props.Screens.Agency
+): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [sliderMoved, setSliderMoved] = useState(false);

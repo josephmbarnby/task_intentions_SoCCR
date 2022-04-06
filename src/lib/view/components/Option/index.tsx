@@ -16,7 +16,9 @@ import { Grid, Heading } from "grommet";
  * @param {Props.Components.Option} props collection of props
  * @return {ReactElement} 'Option' component
  */
-const Option: FC<Props.Components.Option> = (props: Props.Components.Option): ReactElement => {
+const Option: FC<Props.Components.Option> = (
+  props: Props.Components.Option
+): ReactElement => {
   return (
     <Grid
       id={props.optionKey}

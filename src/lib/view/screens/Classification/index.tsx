@@ -20,7 +20,9 @@ import { LinkNext } from "grommet-icons";
  * @param {Props.Screens.Classification} props component props
  * @return {ReactElement} 'Classification' screen
  */
-const Classification: FC<Props.Screens.Classification> = (props: Props.Screens.Classification): ReactElement => {
+const Classification: FC<Props.Screens.Classification> = (
+  props: Props.Screens.Classification
+): ReactElement => {
   // Configure relevant states
   const [classification, setClassification] = React.useState("");
   const [continueDisabled, setContinueDisabled] = React.useState(true);

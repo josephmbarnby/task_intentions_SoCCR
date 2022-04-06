@@ -32,7 +32,9 @@ import { Configuration } from "src/configuration";
  * @param {Props.Screens.Trial} props collection of props
  * @return {ReactElement} 'Trial' screen
  */
-const Trial: FC<Props.Screens.Trial> = (props: Props.Screens.Trial): ReactElement => {
+const Trial: FC<Props.Screens.Trial> = (
+  props: Props.Screens.Trial
+): ReactElement => {
   // Get the Experiment instance
   const experiment = window.Experiment;
 

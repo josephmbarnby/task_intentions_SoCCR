@@ -26,7 +26,9 @@ const SLIDER_DEFAULT = 50;
  * @param {Props.Screens.Inference} props component props
  * @return {ReactElement} 'Inference' screen
  */
-const Inference: FC<Props.Screens.Inference> = (props: Props.Screens.Inference): ReactElement => {
+const Inference: FC<Props.Screens.Inference> = (
+  props: Props.Screens.Inference
+): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [firstMoved, setFirstMoved] = useState(false);

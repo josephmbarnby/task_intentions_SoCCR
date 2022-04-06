@@ -21,7 +21,7 @@ import ReactDOMServer from "react-dom/server";
  * @param {boolean} isReact specify if additional clearing is required for
  * React content
  */
-export function clear(target: HTMLElement | null, isReact = false): void {
+export const clear = (target: HTMLElement | null, isReact = false): void => {
   if (target) {
     consola.debug(`Target is not null, clearing...`);
     if (isReact) {
@@ -37,7 +37,7 @@ export function clear(target: HTMLElement | null, isReact = false): void {
   } else {
     consola.warn(`Target was not cleared, target not found`);
   }
-}
+};
 
 /**
  * Calculate the points gained from all prior trials of a specific display type

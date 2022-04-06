@@ -27,7 +27,9 @@ import ScreenFactory from "src/lib/classes/factories/ScreenFactory";
  * child component
  * @return {ReactElement} 'Wrapper' component
  */
-const Wrapper: FC<Props.Components.Wrapper> = (props: Props.Components.Wrapper): ReactElement => {
+const Wrapper: FC<Props.Components.Wrapper> = (
+  props: Props.Components.Wrapper
+): ReactElement => {
   // Create a new 'ScreenFactory' instance
   const screenFactory = new ScreenFactory();
 
