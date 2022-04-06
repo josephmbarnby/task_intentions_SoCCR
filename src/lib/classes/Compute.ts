@@ -1,3 +1,10 @@
+/**
+ * @file 'Compute' class managing the sending and receiving of remote
+ * resources. The 'axios' request library is used, and the class is
+ * initialised with a URL for the endpoint to request data from.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Logging library
 import consola from "consola";
 
@@ -5,15 +12,17 @@ import consola from "consola";
 import axios from "axios";
 
 /**
- * Compute class used to connect and submit jobs to a remote computing
+ * @summary Compute class used to connect and submit jobs to a remote computing
  * resource.
  */
 class Compute {
+  // URL of the endpoint receiving requests
   private resourceURL: string;
 
   /**
    * Default constructor
    * @param {string} URL default URL of the computing resource
+   * @class
    */
   constructor(URL: string) {
     this.resourceURL = URL;
