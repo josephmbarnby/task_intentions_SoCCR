@@ -103,10 +103,14 @@ jsPsych.plugins[Configuration.studyName] = (() => {
   };
 
   plugin.trial = (displayElement: HTMLElement, trial: Trial) => {
+    // Get the global 'Experiment' instance
+    const experiment = window.Experiment;
+
     // Setup the trial data to be stored
     const dataframe: TrialData = {
       trial: trial.trial,
       display: trial.display, // the display type
+      participantID: experiment.getGlobalStateValue("participantID"),
       playerPoints_option1: trial.optionOneParticipant,
       partnerPoints_option1: trial.optionOnePartner,
       playerPoints_option2: trial.optionTwoParticipant,
@@ -142,10 +146,8 @@ jsPsych.plugins[Configuration.studyName] = (() => {
      */
     const finish = () => {
       // Record the total reaction time
-      const endTime = performance.now();
+      dataframe.trialDuration = performance.now() - startTime;
 
-      // Update the value of duration
-      dataframe.trialDuration = endTime - startTime;
       if (trial.display.startsWith("player")) {
         // 'player-' trials include transitions at the end of the
         // trial after participant selection

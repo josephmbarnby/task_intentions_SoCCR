@@ -1,3 +1,9 @@
+/**
+ * @file 'ScreenPropFactory' class implementing a factory pattern for
+ * generating props used to create each screen.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Logging library
 import consola from "consola";
 
@@ -8,16 +14,20 @@ import { calculatePoints } from "src/lib/util";
 import Handler from "src/lib/classes/Handler";
 
 /**
- * Factory pattern to generate props for screens
+ * @summary Factory pattern to generate props for screens
  */
 class ScreenPropFactory implements Factory {
+  // jsPsych trial data
   private trial: Trial;
+
+  // Callback function from 'Handler' class
   private handler: Handler;
 
   /**
    * Default constructor
    * @param {Trial} trial jsPsych trial data
-   * @param {Handler} handler jsPsych trial dataframe
+   * @param {Handler} handler callback function from 'Handler' class
+   * @class
    */
   constructor(trial: Trial, handler: Handler) {
     this.trial = trial;

@@ -1,15 +1,24 @@
-// React
-import React, { ReactElement } from "react";
+/**
+ * @file 'Option' component containing a set of points to split between the
+ * participant and their partner. Consists of a heading row and a row
+ * containing the points.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement } from "react";
 
 // Grommet UI components
 import { Grid, Heading } from "grommet";
 
 /**
- * Generate an Option for the participant to select
+ * @summary Generate an 'Option' component for the participant to select
  * @param {Props.Components.Option} props collection of props
- * @return {ReactElement}
+ * @return {ReactElement} 'Option' component
  */
-const Option = (props: Props.Components.Option): ReactElement => {
+const Option: FC<Props.Components.Option> = (
+  props: Props.Components.Option
+): ReactElement => {
   return (
     <Grid
       id={props.optionKey}

@@ -1,16 +1,24 @@
+/**
+ * @file 'End' screen notifying the participant that they have reached the end
+ * of the game.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React import
-import React, { ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 
 // Grommet UI components
 import { Box, Heading, Layer, Paragraph, WorldMap } from "grommet";
 
 /**
- * Generate layout of End Screen
- * @return {ReactElement}
+ * @summary Generate a 'End' screen containing text to inform the participant
+ * they have completed the game.
+ * @return {ReactElement} 'End' screen
  */
-const End = (): ReactElement => {
+const End: FC = (): ReactElement => {
   return (
     <>
+      {/* WorldMap background */}
       <WorldMap color="map" fill="horizontal" />
       <Layer plain full>
         <Box justify="center" align="center" gap="small" fill>

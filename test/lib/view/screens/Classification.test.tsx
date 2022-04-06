@@ -1,10 +1,15 @@
+/**
+ * @file 'Classification' screen tests
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Test utilities
 import { waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
 
-// Custom wrapper
-import { render } from "test/utils/Wrapper";
+// Custom render function
+import { render } from "test/utils/functions";
 
 // Screen factory
 import ScreenFactory from "src/lib/classes/factories/ScreenFactory";

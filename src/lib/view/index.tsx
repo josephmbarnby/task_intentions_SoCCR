@@ -1,12 +1,18 @@
+/**
+ * @file 'View' class to abstract the display and clean-up of React-based screens
+ * used in the game.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React import
 import React from "react";
 import ReactDOM, { render } from "react-dom";
 
-// Foundational 'Layout' component
-import { Layout } from "src/lib/view/components/Layout";
+// Foundational 'Wrapper' component
+import Wrapper from "src/lib/view/components/Wrapper";
 
 /**
- * 'View' class to abstract the display and clean-up of React-based screens
+ * @summary 'View' class to abstract the display and clean-up of React-based screens
  * used in the game
  */
 class View {
@@ -16,6 +22,7 @@ class View {
   /**
    * Default constructor
    * @param {HTMLElement} target the target HTML element
+   * @class
    */
   constructor(target: HTMLElement) {
     this.target = target;
@@ -41,8 +48,8 @@ class View {
     propData: ScreenProps,
     target: HTMLElement
   ): void {
-    // Render the 'Layout' component
-    render(<Layout display={type} screen={propData.props} />, target);
+    // Render the 'Wrapper' component
+    render(<Wrapper display={type} screen={propData.props} />, target);
 
     // Setup a timeout to execute the callback
     if (propData.duration > 0) {

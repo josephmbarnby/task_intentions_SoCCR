@@ -1,8 +1,16 @@
+/**
+ * @file 'Handler' class containing each of the handler functions called
+ * for a specific trial. Each trial has a new 'Handler' instance, so the
+ * existing dataframe and trial callback function are passed to the class
+ * on initialisation.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Configuration
 import { Configuration } from "src/configuration";
 
 /**
- * Utility class exposing each of the different handlers
+ * @summary Utility class exposing each of the different handlers
  * used by the screens of the game
  */
 class Handler {
@@ -13,6 +21,7 @@ class Handler {
    * Default constructor
    * @param {Data} dataframe jsPsych data
    * @param {function} callback default callback after the handlers
+   * @class
    */
   constructor(dataframe: TrialData, callback: () => void) {
     this.dataframe = dataframe;

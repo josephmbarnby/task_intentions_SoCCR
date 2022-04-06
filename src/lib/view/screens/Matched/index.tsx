@@ -1,5 +1,14 @@
-// React
-import React, { ReactElement } from "react";
+/**
+ * @file 'Matched' screen presenting an avatar to the participant
+ * as their 'partner' for the subsequent phase of the game. The overall game
+ * state is queried to ensure that the partner is updated correctly between
+ * phases so that each partner will be different, even if the participant
+ * has played the game before.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement } from "react";
 
 // Grommet UI components
 import { Box, Heading, Layer, WorldMap } from "grommet";
@@ -12,10 +21,11 @@ import consola from "consola";
 import { Configuration } from "src/configuration";
 
 /**
- * Generate layout of Matched Screen
- * @return {ReactElement}
+ * @summary Generate a 'Matched' screen containing a card with the partner
+ * of the participant for the subsequent phase of the game.screen
+ * @return {ReactElement} 'Matched'
  */
-const Matched = (): ReactElement => {
+const Matched: FC = (): ReactElement => {
   // Get the current partner avatar
   const experiment = window.Experiment;
   const currentPartner = experiment.getGlobalStateValue("partnerAvatar");

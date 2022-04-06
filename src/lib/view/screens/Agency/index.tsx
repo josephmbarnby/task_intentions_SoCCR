@@ -1,5 +1,12 @@
-// React
-import React, { ReactElement, useState } from "react";
+/**
+ * @file 'Agency' screen presenting a slider to the participant alongside
+ * a question for the participant. The participant must interact with the
+ * slider before the continue button is enabled.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement, useState } from "react";
 
 // Grommet UI components
 import { Box, Button, Paragraph } from "grommet";
@@ -12,11 +19,14 @@ import Slider from "src/lib/view/components/Slider";
 const SLIDER_DEFAULT = 50; // Sets the 'thumb' to the middle of the slider
 
 /**
- * Generate layout of Agency Screen (Agency trial)
+ * @summary Generate an 'Agency' containing a slider accompanied by a
+ * question to the participant, requiring the participant to respond.
  * @param {Props.Screens.Agency} props component props
- * @return {ReactElement}
+ * @return {ReactElement} 'Agency' screen
  */
-const Agency = (props: Props.Screens.Agency): ReactElement => {
+const Agency: FC<Props.Screens.Agency> = (
+  props: Props.Screens.Agency
+): ReactElement => {
   // Slider states, monitor if they have been interacted with
   // Top slider
   const [sliderMoved, setSliderMoved] = useState(false);

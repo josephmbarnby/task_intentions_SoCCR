@@ -1,15 +1,22 @@
-// React
-import React, { ReactElement, useState } from "react";
+/**
+ * @file 'Slider' component displaying a horizontal slider with a thumb.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement, useState } from "react";
 
 // Grommet UI components
 import { Box, Heading, RangeInput } from "grommet";
 
 /**
- * Generate a Slider component
+ * @summary Generate a 'Slider' component
  * @param {Props.Components.Slider} props component props
- * @return {ReactElement}
+ * @return {ReactElement} 'Slider' component
  */
-const Slider = (props: Props.Components.Slider): ReactElement => {
+const Slider: FC<Props.Components.Slider> = (
+  props: Props.Components.Slider
+): ReactElement => {
   const [value, setValue] = useState(props.max / 2);
   return (
     <Box

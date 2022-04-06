@@ -1,3 +1,8 @@
+/**
+ * @file 'Card' component tests
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Test utilities
 import { waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -7,8 +12,8 @@ import { act } from "react-dom/test-utils";
 // React
 import React from "react";
 
-// Custom wrapper
-import { render } from "test/utils/Wrapper";
+// Custom render function
+import { render } from "test/utils/functions";
 
 // Card component
 import Card from "src/lib/view/components/Card";

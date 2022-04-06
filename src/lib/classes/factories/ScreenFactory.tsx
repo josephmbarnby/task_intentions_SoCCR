@@ -1,3 +1,9 @@
+/**
+ * @file 'ScreenFactory' class implementing a factory pattern for
+ * generating each screen using a display type and associated props.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // React imports
 import React, { ReactElement } from "react";
 
@@ -16,7 +22,7 @@ import Summary from "src/lib/view/screens/Summary";
 import End from "src/lib/view/screens/End";
 
 /**
- * Factory pattern to generate screens
+ * @summary Factory pattern to generate screens
  */
 class ScreenFactory implements Factory {
   /**
@@ -25,7 +31,7 @@ class ScreenFactory implements Factory {
    * @param {any} props screen props
    * @return {ReactElement}
    */
-  public generate(props: Props.Components.Layout): ReactElement {
+  public generate(props: Props.Components.Wrapper): ReactElement {
     let screen: ReactElement;
 
     // Define the exact component that is rendered

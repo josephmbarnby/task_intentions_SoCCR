@@ -1,4 +1,8 @@
-// Handler class test
+/**
+ * @file 'Handler' class tests
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Import the Handler class
 import Handler from "src/lib/classes/Handler";
 
