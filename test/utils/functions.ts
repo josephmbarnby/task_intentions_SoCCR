@@ -47,6 +47,7 @@ export const getHandler = (display: Display): Handler => {
     {
       trial: 1,
       display: display,
+      participantID: "default",
       playerPoints_option1: NaN,
       partnerPoints_option1: NaN,
       playerPoints_option2: NaN,
