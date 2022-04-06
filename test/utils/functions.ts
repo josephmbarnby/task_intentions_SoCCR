@@ -1,3 +1,16 @@
+/**
+ * @file Utility functions for testing workflow. Used to pre-configure some
+ * classes and components, defines custom render function.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import { ReactElement } from "react";
+
+// Testing utilities
+import { render, RenderOptions, RenderResult } from "@testing-library/react";
+import TestWrapper from "./TestWrapper";
+
 // Handler class
 import Handler from "src/lib/classes/Handler";
 
@@ -58,3 +71,12 @@ export const getHandler = (display: Display): Handler => {
     }
   );
 };
+
+// Custom rendering function to place everything inside of the 'TestWrapper' component
+const customRender = (
+  ui: ReactElement,
+  options?: Omit<RenderOptions, "wrapper">
+): RenderResult => render(ui, { wrapper: TestWrapper, ...options });
+
+export * from "@testing-library/react";
+export { customRender as render };

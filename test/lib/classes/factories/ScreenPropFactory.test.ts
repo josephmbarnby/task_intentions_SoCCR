@@ -1,3 +1,8 @@
+/**
+ * @file 'ScreenPropFactory' class tests
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Mock jsPsych
 import "jspsych";
 jest.mock("jspsych");
