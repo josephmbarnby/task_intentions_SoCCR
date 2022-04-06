@@ -1,3 +1,8 @@
+/**
+ * @file Extension of the 'Window' interface.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // 'Experiment' jsPsych wrapper library
 import { Experiment } from "jspsych-wrapper";
 

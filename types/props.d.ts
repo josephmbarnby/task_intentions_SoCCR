@@ -1,3 +1,8 @@
+/**
+ * @file Prop declarations for React components and screens.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
 // Declare a 'Components' namespace to define props for each
 // of the components used in the experiment.
 declare namespace Props {
