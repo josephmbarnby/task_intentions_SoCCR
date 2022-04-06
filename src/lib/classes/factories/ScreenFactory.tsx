@@ -25,7 +25,7 @@ class ScreenFactory implements Factory {
    * @param {any} props screen props
    * @return {ReactElement}
    */
-  public generate(props: Props.Components.Layout): ReactElement {
+  public generate(props: Props.Components.Wrapper): ReactElement {
     let screen: ReactElement;
 
     // Define the exact component that is rendered

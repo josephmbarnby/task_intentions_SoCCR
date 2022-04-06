@@ -3,8 +3,8 @@
 declare namespace Props {
   // Props for 'Components'
   declare namespace Components {
-    // Layout component
-    type Layout = {
+    // Wrapper component
+    type Wrapper = {
       display: Display;
       screen:
         | Screens.Matched

@@ -1,5 +1,11 @@
-// React imports
-import React, { ReactElement } from "react";
+/**
+ * @file 'Character' component implementing a clickable avatar. When clicked,
+ * the avatar will change in size by toggling the presence of CSS classes.
+ * @author Henry Burgess <henry.burgess@wustl.edu>
+ */
+
+// React import
+import React, { FC, ReactElement } from "react";
 
 // Components
 import Avatar from "boring-avatars";
@@ -9,11 +15,11 @@ import { Box } from "grommet";
 import { Configuration } from "src/configuration";
 
 /**
- * A selectable avatar with grow behaviour
+ * @summary Generate a 'Character' component implementing a clickable avatar
  * @param {Props.Components.Character} props component props
- * @return {ReactElement}
+ * @return {ReactElement} 'Character' component
  */
-const Character = (props: Props.Components.Character): ReactElement => {
+const Character: FC<Props.Components.Character> = (props: Props.Components.Character): ReactElement => {
   return (
     <Box
       id={`avatar-${props.name}`}
