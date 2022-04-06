@@ -59,6 +59,18 @@ if (Configuration.fullscreen === true) {
   });
 }
 
+// Determine the ID of the participant
+if (experiment.getGlobalStateValue("participantID") === "default") {
+  // If no custom participant ID has been specified, generate our own
+  // using ID protocol `ppt_<timestamp>`
+  consola.debug(`Generating custom participant ID...`);
+  experiment.setGlobalStateValue("participantID", `ppt_${Date.now()}`);
+  consola.debug(
+    `Generated participant ID:`,
+    experiment.getGlobalStateValue("participantID")
+  );
+}
+
 // Insert the instructions into the timeline
 timeline.push({
   type: "instructions",

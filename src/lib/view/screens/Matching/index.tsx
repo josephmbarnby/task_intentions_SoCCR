@@ -69,25 +69,12 @@ const Matching: FC<Props.Screens.Matching> = (
     }
     consola.debug(`Request content 'requestResponses':`, requestResponses);
 
-    // Determine the ID of the participant
-    let participantID = experiment.getGlobalStateValue("participantID");
-    if (participantID === "default") {
-      // If no custom participant ID has been specified, generate our own
-      // using ID protocol `ppt_<timestamp>`
-      consola.debug(`Generating custom participant ID...`);
-      participantID = `ppt_${Date.now()}`;
-      consola.debug(`Generated participant ID:`, participantID);
-
-      // Update the stored participant ID
-      experiment.setGlobalStateValue("participantID", participantID);
-    }
-
     // Launch request to endpoint
     consola.info(`Requesting partner...`);
     compute.submit(
       // Request data
       {
-        participantID: participantID,
+        participantID: experiment.getGlobalStateValue("participantID"),
         participantResponses: JSON.stringify(requestResponses),
       },
       // Response callback

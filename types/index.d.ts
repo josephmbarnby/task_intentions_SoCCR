@@ -86,6 +86,7 @@ declare type Trial = {
 declare type TrialData = {
   trial: number;
   display: Display;
+  participantID: string;
   playerPoints_option1: number;
   partnerPoints_option1: number;
   playerPoints_option2: number;
