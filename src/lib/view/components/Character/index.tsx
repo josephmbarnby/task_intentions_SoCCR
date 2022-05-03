@@ -8,7 +8,7 @@
 import React, { FC, ReactElement } from "react";
 
 // Components
-import Avatar from "boring-avatars";
+import Avatar from "boring-neutral-avatars";
 import { Box } from "grommet";
 
 // Configuration

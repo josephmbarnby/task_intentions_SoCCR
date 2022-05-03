@@ -14,7 +14,7 @@ import { Money } from "grommet-icons";
 
 // Other imports
 import TextTransition, { presets } from "react-text-transition";
-import Avatar from "boring-avatars";
+import Avatar from "boring-neutral-avatars";
 
 // Configuration
 import { Configuration } from "src/configuration";
