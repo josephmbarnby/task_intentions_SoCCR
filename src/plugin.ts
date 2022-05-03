@@ -110,7 +110,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
     const dataframe: TrialData = {
       trial: trial.trial,
       display: trial.display, // the display type
-      participantID: experiment.getGlobalStateValue("participantID"),
+      participantID: experiment.getState().get("participantID"),
       playerPoints_option1: trial.optionOneParticipant,
       partnerPoints_option1: trial.optionOnePartner,
       playerPoints_option2: trial.optionTwoParticipant,

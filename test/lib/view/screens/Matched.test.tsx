@@ -15,8 +15,8 @@ import { render } from "test/utils/functions";
 import ScreenFactory from "src/lib/classes/factories/ScreenFactory";
 
 // Mock the jsPsych wrapper library
-import { Experiment } from "jspsych-wrapper";
-jest.mock("jspsych-wrapper");
+import { Experiment } from "neurocog";
+jest.mock("neurocog");
 
 let screenFactory: ScreenFactory;
 beforeAll(() => {
@@ -27,8 +27,7 @@ beforeAll(() => {
 beforeEach(() => {
   // Experiment
   (window["Experiment"] as RecursivePartial<Experiment>) = {
-    getGlobalStateValue: jest.fn(),
-    setGlobalStateValue: jest.fn(),
+    getState: jest.fn(),
   };
 });
 

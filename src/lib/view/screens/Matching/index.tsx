@@ -74,7 +74,7 @@ const Matching: FC<Props.Screens.Matching> = (
     compute.submit(
       // Request data
       {
-        participantID: experiment.getGlobalStateValue("participantID"),
+        participantID: experiment.getState().get("participantID"),
         participantResponses: JSON.stringify(requestResponses),
       },
       // Response callback
@@ -104,7 +104,7 @@ const Matching: FC<Props.Screens.Matching> = (
           // Check the specification of the data first, require exactly 54 trials
           if (partnerChoices.length > 0) {
             // Store the partner choices
-            experiment.setGlobalStateValue("partnerChoices", partnerChoices);
+            experiment.getState().set("partnerChoices", partnerChoices);
 
             consola.success(`Generated new partner for ID:`, participantID);
 

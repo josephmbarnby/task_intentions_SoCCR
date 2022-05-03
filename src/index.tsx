@@ -28,7 +28,7 @@ import { shuffle } from "d3-array";
 import consola from "consola";
 
 // Import crossplatform API
-import { Experiment } from "jspsych-wrapper";
+import { Experiment } from "neurocog";
 
 // Import jsPsych plugins
 import "jspsych/plugins/jspsych-fullscreen";
@@ -60,14 +60,14 @@ if (Configuration.fullscreen === true) {
 }
 
 // Determine the ID of the participant
-if (experiment.getGlobalStateValue("participantID") === "default") {
+if (experiment.getState().get("participantID") === "default") {
   // If no custom participant ID has been specified, generate our own
   // using ID protocol `ppt_<timestamp>`
   consola.debug(`Generating custom participant ID...`);
-  experiment.setGlobalStateValue("participantID", `ppt_${Date.now()}`);
+  experiment.getState().set("participantID", `ppt_${Date.now()}`);
   consola.debug(
     `Generated participant ID:`,
-    experiment.getGlobalStateValue("participantID")
+    experiment.getState().get("participantID")
   );
 }
 

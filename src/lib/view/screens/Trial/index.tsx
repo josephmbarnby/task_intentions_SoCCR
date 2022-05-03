@@ -111,9 +111,9 @@ const Trial: FC<Props.Screens.Trial> = (
 
   // Use data from the API if available
   if (props.display === "playerGuess") {
-    if (experiment.getGlobalStateValue("partnerChoices").length > 0) {
+    if (experiment.getState().get("partnerChoices").length > 0) {
       // Update the values stored for the points
-      const partnerChoices = experiment.getGlobalStateValue("partnerChoices");
+      const partnerChoices = experiment.getState().get("partnerChoices");
       // 'PARd' -> partner decisions
       const trialData = partnerChoices[props.trial - 1];
 
@@ -447,7 +447,7 @@ const Trial: FC<Props.Screens.Trial> = (
   // Participant avatar
   const participantAvatar =
     Configuration.avatars.names.participant[
-      experiment.getGlobalStateValue("participantAvatar")
+      experiment.getState().get("participantAvatar")
     ];
 
   // Partner avatar
@@ -458,12 +458,12 @@ const Trial: FC<Props.Screens.Trial> = (
     // Get the global state of the partner avatar
     partnerAvatar =
       Configuration.avatars.names.partner[
-        experiment.getGlobalStateValue("partnerAvatar")
+        experiment.getState().get("partnerAvatar")
       ];
 
     // Update state to refresh partner avatar at next match screen
-    if (experiment.getGlobalStateValue("refreshPartner") === false) {
-      experiment.setGlobalStateValue("refreshPartner", true);
+    if (experiment.getState().get("refreshPartner") === false) {
+      experiment.getState().set("refreshPartner", true);
     }
   }
 

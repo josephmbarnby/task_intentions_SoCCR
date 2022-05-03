@@ -86,7 +86,7 @@ class Handler {
       Configuration.avatars.names.participant.indexOf(selection);
 
     // Update the global Experiment state
-    window.Experiment.setGlobalStateValue("participantAvatar", selectedAvatar);
+    window.Experiment.getState().set("participantAvatar", selectedAvatar);
 
     // Finish trial
     this.callback();

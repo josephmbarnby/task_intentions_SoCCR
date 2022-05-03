@@ -39,8 +39,8 @@ const Summary: FC<Props.Screens.Summary> = (
 
   // Get the participant's and the partner's avatars
   const experiment = window.Experiment;
-  const participantAvatar = experiment.getGlobalStateValue("participantAvatar");
-  const partnerAvatar = experiment.getGlobalStateValue("partnerAvatar");
+  const participantAvatar = experiment.getState().get("participantAvatar");
+  const partnerAvatar = experiment.getState().get("partnerAvatar");
 
   // Get the participant's and the partner's points
   const participantPoints = calculatePoints(
