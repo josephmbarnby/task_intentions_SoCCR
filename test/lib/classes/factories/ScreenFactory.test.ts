@@ -25,7 +25,12 @@ jest.mock("neurocog");
 beforeEach(() => {
   // Experiment
   (window["Experiment"] as RecursivePartial<Experiment>) = {
-    getState: jest.fn(),
+    getState: jest.fn(() => {
+      return {
+        get: jest.fn(),
+        set: jest.fn(),
+      };
+    }),
   };
 });
 

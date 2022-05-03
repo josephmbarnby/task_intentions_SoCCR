@@ -51,7 +51,11 @@ test("check Character component accessibility", async () => {
   );
 
   await act(async () => {
-    const results = await axe(container);
+    const results = await axe(container, {
+      rules: {
+        "svg-img-alt": { enabled: false },
+      },
+    });
     await waitFor(() => expect(results).toHaveNoViolations());
   });
 });

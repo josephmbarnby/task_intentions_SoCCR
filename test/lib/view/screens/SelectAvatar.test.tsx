@@ -62,6 +62,7 @@ test("check SelectAvatar screen accessibility", async () => {
       "duplicate-id": {
         enabled: false,
       },
+      "svg-img-alt": { enabled: false },
     },
   });
 
