@@ -41,7 +41,7 @@ matching_partner_incremental_fit <- function(phase1data, precan_df, shuffle = T,
         as.numeric()
     }
 
-    index_part_1 <- which((similarity_vec > 0.2 & similarity_vec < 0.5), arr.ind = T)
+    index_part_1 <- which((similarity_vec > 0.3 & similarity_vec < 0.5), arr.ind = T)
     index_part   <- sample(index_part_1, 1)
 
     cat("\n PARTNER'S PARAMETERS ARE",colnames(bound_dfs)[index_part+5], "\n\n")
@@ -459,11 +459,9 @@ precan_partners <- function(data){
   }
 
   partner_choices_df <- partner_choices[[1]][[1]] %>% dplyr::select(1:4,
-                                                                    `5 -10`, `5 -15`, #prosocial
-                                                                    `10 -5`, `10 5`, #indiv
-                                                                    `5 10`, `5 15`, #compet
-                                                                    `0 10`, `0 -10`, #no alpha
-                                                                    `10 0` #no beta
+                                                                    `5 -10`, `5 -15`, `0 -10`, `10 -15`, #prosocial
+                                                                    `10 -5`, `10 5`, `15 5`, `15 -5`, `5 0`,`10 0`, #indiv
+                                                                    `5 10`, `5 15`, `0 10`, `10 -15` #compet
                                                                     )
   return(partner_choices_df)
 }
