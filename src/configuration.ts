@@ -28,6 +28,9 @@ export const Configuration = {
   // Collection of any stimuli used in the trials
   stimuli: {},
 
+  // Collection of any resources used in the trials
+  resources: {},
+
   // Seed for RNG
   seed: 0.4837,
 
