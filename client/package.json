@@ -7,14 +7,14 @@
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "gulp clean",
-    "build:game": "webpack --config webpack.production.js",
-    "lint:game": "prettier --write .",
-    "start": "yarn start:server & yarn start:game",
-    "start:game": "webpack serve --config webpack.development.js",
-    "start:server": "cd api && Rscript run.R",
-    "test": "yarn test:server && yarn test:game",
-    "test:game": "jest",
-    "test:server": "pytest api/tests"
+    "build:client": "webpack --config webpack.production.js",
+    "lint:client": "prettier --write .",
+    "start": "yarn start:server & yarn start:client",
+    "start:client": "webpack serve --config webpack.development.js",
+    "start:server": "cd ../server && Rscript run.R",
+    "test": "yarn test:server && yarn test:client",
+    "test:client": "jest",
+    "test:server": "pytest ../server/tests"
   },
   "repository": {
     "type": "git",
