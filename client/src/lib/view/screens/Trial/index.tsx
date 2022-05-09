@@ -469,11 +469,11 @@ const Trial: FC<Props.Screens.Trial> = (
 
   return (
     <Grid
-      rows={["xsmall", "medium", "xsmall"]}
+      rows={["xxsmall", "medium", "xxsmall"]}
       columns={["flex", "1/2", "flex"]}
       gap="xsmall"
       width={{
-        min: "1000px",
+        min: "960px",
         max: "xlarge",
       }}
       fill
@@ -490,7 +490,7 @@ const Trial: FC<Props.Screens.Trial> = (
         fill
         level={2}
         size="auto"
-        margin="small"
+        margin="xsmall"
         gridArea="trialHeader"
       >
         {trialHeader}
