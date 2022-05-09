@@ -28,7 +28,7 @@ Additional configuration is required when deploying this endpoint in an online s
 
 ## Request Format
 
-The API expects request to have two parameters:
+The API is accessible via the `ccdresearch.wustl.edu` domain. The exact endpoint is `https://ccdresearch.wustl.edu/task/intentions`. The API expects a GET request, and checks for two parameters:
 
 1. Participant ID, in either string, float, or a mixture of formats.
 2. Participant responses from Phase one of the intentions game. Originally stored as an array of JavaScript objects, the responses are serialized from JSON to a string.
@@ -39,3 +39,5 @@ An example set of parameters is given below:
 | --------- | ---- | ------- |
 | `participantID` | `string` or `float` or `int` | `participantA1`, `12.34`, `1234` |
 | `participantResponses` | `string` | `[{"ID":"NA","Trial":1,"ppt1":2,"par1":4,"ppt2":2,"par2":4,"Ac":1,"Phase":1}]` **Note:** This example is a list of responses containing only a single trial. |
+
+The API will respond with an error if any of the received parameters are formatted incorrectly.
