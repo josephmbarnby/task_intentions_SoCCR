@@ -578,7 +578,7 @@ const Trial: FC<Props.Screens.Trial> = (
       {showOverlay && Configuration.enableTutorialOverlay && (
         <Layer position="top">
           <Box pad="small" align="center">
-            <Heading size="auto">Practice Trial</Heading>
+            <Heading margin="xsmall" size="auto">Practice</Heading>
             {/* Display the overlay content */}
             {overlayContent}
           </Box>
