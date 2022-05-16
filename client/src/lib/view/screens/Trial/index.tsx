@@ -368,10 +368,10 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerChoice2": {
         content = (
           <Box pad="small" align="center">
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               You chose <b>{selectedOption}</b>.
             </Text>
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               That means you get{" "}
               {selectedOption === "Option 1"
                 ? displayPoints.options.one.participant
@@ -387,9 +387,9 @@ const Trial: FC<Props.Screens.Trial> = (
             <Button
               primary
               color="button"
-              label="Next"
-              size="large"
-              margin="medium"
+              label="Continue"
+              size="medium"
+              margin="small"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -405,11 +405,11 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerGuessPractice": {
         content = (
           <Box pad="small" align="center">
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               {selectedOption === answer ? "Correct! " : "Incorrect. "}
               Your partner chose <b>{answer}</b>.
             </Text>
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               That means you get{" "}
               {answer === "Option 1"
                 ? displayPoints.options.one.participant
@@ -425,9 +425,9 @@ const Trial: FC<Props.Screens.Trial> = (
             <Button
               primary
               color="button"
-              label="Next"
-              size="large"
-              margin="medium"
+              label="Continue"
+              size="medium"
+              margin="small"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -576,7 +576,7 @@ const Trial: FC<Props.Screens.Trial> = (
 
       {/* Practice overlay */}
       {showOverlay && Configuration.enableTutorialOverlay && (
-        <Layer>
+        <Layer position="top">
           <Box pad="small" align="center">
             <Heading size="auto">Practice Trial</Heading>
             {/* Display the overlay content */}
