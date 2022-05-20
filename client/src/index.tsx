@@ -156,7 +156,7 @@ timeline.push({
           </Paragraph>
           <Paragraph margin="small" size="large" fill>
             Click 'Next &gt;' to select an avatar to represent you while you
-            play this game. You will then play <b>5</b> practice rounds before
+            play this game. You will then play <b>3</b> practice rounds before
             you are matched with your partner.
           </Paragraph>
         </Box>
@@ -204,7 +204,7 @@ timeline.push({
   show_clickable_nav: true,
 });
 
-// 5x practice trials for 'playerChoice'
+// 3x practice trials for 'playerChoice'
 timeline.push({
   type: Configuration.studyName,
   optionOneParticipant: 10,
@@ -239,34 +239,6 @@ timeline.push({
   optionOnePartner: 7,
   optionTwoParticipant: 10,
   optionTwoPartner: 7,
-  typeOne: "",
-  typeTwo: "",
-  display: "playerChoicePractice",
-  answer: "",
-  isPractice: true,
-  clearScreen: false,
-});
-
-timeline.push({
-  type: Configuration.studyName,
-  optionOneParticipant: 12,
-  optionOnePartner: 9,
-  optionTwoParticipant: 9,
-  optionTwoPartner: 9,
-  typeOne: "",
-  typeTwo: "",
-  display: "playerChoicePractice",
-  answer: "",
-  isPractice: true,
-  clearScreen: false,
-});
-
-timeline.push({
-  type: Configuration.studyName,
-  optionOneParticipant: 4,
-  optionOnePartner: 4,
-  optionTwoParticipant: 8,
-  optionTwoPartner: 4,
   typeOne: "",
   typeTwo: "",
   display: "playerChoicePractice",
@@ -481,7 +453,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         show_clickable_nav: true,
       });
 
-      // 5x practice trials for 'playerGuess'
+      // 3x practice trials for 'playerGuess'
       timeline.push({
         type: Configuration.studyName,
         optionOneParticipant: 5,
@@ -520,34 +492,6 @@ for (let i = 0; i < dataCollection.length; i++) {
         typeTwo: "",
         display: "playerGuessPractice",
         answer: "Option 1",
-        isPractice: true,
-        clearScreen: false,
-      });
-
-      timeline.push({
-        type: Configuration.studyName,
-        optionOneParticipant: 8,
-        optionOnePartner: 2,
-        optionTwoParticipant: 10,
-        optionTwoPartner: 6,
-        typeOne: "",
-        typeTwo: "",
-        display: "playerGuessPractice",
-        answer: "Option 1",
-        isPractice: true,
-        clearScreen: false,
-      });
-
-      timeline.push({
-        type: Configuration.studyName,
-        optionOneParticipant: 8,
-        optionOnePartner: 6,
-        optionTwoParticipant: 6,
-        optionTwoPartner: 2,
-        typeOne: "",
-        typeTwo: "",
-        display: "playerGuessPractice",
-        answer: "Option 2",
         isPractice: true,
         clearScreen: true,
       });
