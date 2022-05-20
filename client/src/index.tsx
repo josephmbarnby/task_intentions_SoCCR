@@ -298,7 +298,8 @@ timeline.push({
   confirmation: true,
   feedback_correct:
     "Correct! You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery.",
-  feedback_incorrect: "Incorrect. You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery.",
+  feedback_incorrect:
+    "Incorrect. You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery.",
 });
 
 // Insert instructions to let the participant know they will
@@ -557,13 +558,17 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: "attention-check",
         prompt:
           "What multiplier will be added to your total correct predictions about your partner?",
-        options: ["My total correct answers will be multiplied by 5 and added to my points.", "My total correct answers will be multiplied by 10 and added to my points."],
+        options: [
+          "My total correct answers will be multiplied by 5 and added to my points.",
+          "My total correct answers will be multiplied by 10 and added to my points.",
+        ],
         options_radio: true,
         option_correct: 1,
         confirmation: true,
         feedback_correct:
           "Correct! Your total correct answers will be multiplied by 10 and added to your points.",
-        feedback_incorrect: "Incorrect. Your total correct answers will be multiplied by 10 and added to your points.",
+        feedback_incorrect:
+          "Incorrect. Your total correct answers will be multiplied by 10 and added to your points.",
       });
 
       // Insert instructions to let the participant know they will
@@ -674,7 +679,7 @@ for (let i = 0; i < dataCollection.length; i++) {
                 </Paragraph>
               </Box>
             </Grommet>
-          )
+          ),
         ],
         allow_keys: false,
         show_page_number: true,
@@ -685,13 +690,17 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: "attention-check",
         prompt:
           "Who is going to be your interaction partner in this next phase?",
-        options: ["A new anonymous partner.", "My partner from the last phase."],
+        options: [
+          "A new anonymous partner.",
+          "My partner from the last phase.",
+        ],
         options_radio: true,
         option_correct: 0,
         confirmation: true,
         feedback_correct:
           "Correct! You will be interacting with a new anonymous partner in this next phase.",
-        feedback_incorrect: "Incorrect. You will be interacting with a new anonymous partner in this next phase.",
+        feedback_incorrect:
+          "Incorrect. You will be interacting with a new anonymous partner in this next phase.",
       });
 
       timeline.push({

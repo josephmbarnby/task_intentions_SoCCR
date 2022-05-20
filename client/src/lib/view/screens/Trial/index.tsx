@@ -241,7 +241,10 @@ const Trial: FC<Props.Screens.Trial> = (
     setShowOverlay(props.isPractice);
 
     // Invoke the transition if non-practice trial
-    if (props.isPractice === false || Configuration.enableTutorialOverlay === false) {
+    if (
+      props.isPractice === false ||
+      Configuration.enableTutorialOverlay === false
+    ) {
       transition();
     }
   };
@@ -578,7 +581,9 @@ const Trial: FC<Props.Screens.Trial> = (
       {showOverlay && Configuration.enableTutorialOverlay && (
         <Layer position="top">
           <Box pad="small" align="center">
-            <Heading margin="xsmall" size="auto">Practice</Heading>
+            <Heading margin="xsmall" size="auto">
+              Practice
+            </Heading>
             {/* Display the overlay content */}
             {overlayContent}
           </Box>
