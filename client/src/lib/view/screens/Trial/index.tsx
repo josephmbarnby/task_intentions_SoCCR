@@ -45,7 +45,7 @@ const Trial: FC<Props.Screens.Trial> = (
 
   // Update the header if this is a practice
   if (props.isPractice) {
-    defaultHeader = `(Practice) ${defaultHeader}`;
+    defaultHeader = `Practice: ${defaultHeader}`;
   }
 
   const [trialHeader, setTrialHeader] = useState(defaultHeader);
@@ -241,7 +241,10 @@ const Trial: FC<Props.Screens.Trial> = (
     setShowOverlay(props.isPractice);
 
     // Invoke the transition if non-practice trial
-    if (props.isPractice === false) {
+    if (
+      props.isPractice === false ||
+      Configuration.enableTutorialOverlay === false
+    ) {
       transition();
     }
   };
@@ -368,10 +371,10 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerChoice2": {
         content = (
           <Box pad="small" align="center">
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               You chose <b>{selectedOption}</b>.
             </Text>
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               That means you get{" "}
               {selectedOption === "Option 1"
                 ? displayPoints.options.one.participant
@@ -387,9 +390,9 @@ const Trial: FC<Props.Screens.Trial> = (
             <Button
               primary
               color="button"
-              label="Next"
-              size="large"
-              margin="medium"
+              label="Continue"
+              size="medium"
+              margin="small"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -405,11 +408,11 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerGuessPractice": {
         content = (
           <Box pad="small" align="center">
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               {selectedOption === answer ? "Correct! " : "Incorrect. "}
               Your partner chose <b>{answer}</b>.
             </Text>
-            <Text size="large" margin="medium">
+            <Text size="large" margin="small">
               That means you get{" "}
               {answer === "Option 1"
                 ? displayPoints.options.one.participant
@@ -425,9 +428,9 @@ const Trial: FC<Props.Screens.Trial> = (
             <Button
               primary
               color="button"
-              label="Next"
-              size="large"
-              margin="medium"
+              label="Continue"
+              size="medium"
+              margin="small"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -482,7 +485,7 @@ const Trial: FC<Props.Screens.Trial> = (
         { name: "playerArea", start: [0, 1], end: [0, 1] },
         { name: "choiceArea", start: [1, 1], end: [1, 1] },
         { name: "partnerArea", start: [2, 1], end: [2, 1] },
-        { name: "counterHeader", start: [0, 2], end: [2, 2] },
+        { name: "gridFooter", start: [0, 2], end: [2, 2] },
       ]}
     >
       <Heading
@@ -563,7 +566,7 @@ const Trial: FC<Props.Screens.Trial> = (
           direction="row"
           justify="center"
           margin="xsmall"
-          gridArea="counterHeader"
+          gridArea="gridFooter"
         >
           <Heading level={2} size="auto" margin="xsmall">
             Correct guesses:&nbsp;
@@ -575,10 +578,12 @@ const Trial: FC<Props.Screens.Trial> = (
       )}
 
       {/* Practice overlay */}
-      {showOverlay && (
-        <Layer>
+      {showOverlay && Configuration.enableTutorialOverlay && (
+        <Layer position="top">
           <Box pad="small" align="center">
-            <Heading size="auto">Practice Trial</Heading>
+            <Heading margin="xsmall" size="auto">
+              Practice
+            </Heading>
             {/* Display the overlay content */}
             {overlayContent}
           </Box>

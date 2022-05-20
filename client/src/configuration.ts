@@ -43,6 +43,9 @@ export const Configuration = {
     partnerChoices: {},
   },
 
+  // Enable the tutorial overlay
+  enableTutorialOverlay: true,
+
   // Force fullscreen when deployed
   fullscreen: process.env.NODE_ENV !== "development",
 

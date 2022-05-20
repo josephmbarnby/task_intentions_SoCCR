@@ -45,11 +45,11 @@ const Agency: FC<Props.Screens.Agency> = (
       <Paragraph margin="small" size="large" fill>
         The Brain Development and Disorders lab does not use deception. All
         partner decisions are real. Nevertheless, for our own purposes, it is
-        helpful to know to what extent you believed that the other player really
-        existed.
+        helpful to know to what extent you believe that the other partners
+        really exist.
       </Paragraph>
       <Paragraph margin="small" size="large" fill>
-        I believed I was playing with a real person.
+        I believe I am playing with real partners.
       </Paragraph>
       <Slider
         min={0}
