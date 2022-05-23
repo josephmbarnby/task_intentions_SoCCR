@@ -370,12 +370,9 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerChoicePractice":
       case "playerChoice2": {
         content = (
-          <Box pad="small" align="center">
-            <Text size="large" margin="small">
-              You chose <b>{selectedOption}</b>.
-            </Text>
-            <Text size="large" margin="small">
-              That means you get{" "}
+          <Box pad="xsmall" align="center" width="large" gap="xsmall">
+            <Text size="medium" margin="small">
+              You chose <b>{selectedOption}</b>. That means you get{" "}
               {selectedOption === "Option 1"
                 ? displayPoints.options.one.participant
                 : displayPoints.options.two.participant}{" "}
@@ -392,7 +389,7 @@ const Trial: FC<Props.Screens.Trial> = (
               color="button"
               label="Continue"
               size="medium"
-              margin="small"
+              margin="xsmall"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -407,13 +404,10 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerGuess":
       case "playerGuessPractice": {
         content = (
-          <Box pad="small" align="center">
-            <Text size="large" margin="small">
+          <Box pad="xsmall" align="center" width="large" gap="xsmall">
+            <Text size="medium" margin="small">
               {selectedOption === answer ? "Correct! " : "Incorrect. "}
-              Your partner chose <b>{answer}</b>.
-            </Text>
-            <Text size="large" margin="small">
-              That means you get{" "}
+              Your partner chose <b>{answer}</b>. That means you get{" "}
               {answer === "Option 1"
                 ? displayPoints.options.one.participant
                 : displayPoints.options.two.participant}{" "}
@@ -580,8 +574,8 @@ const Trial: FC<Props.Screens.Trial> = (
       {/* Practice overlay */}
       {showOverlay && Configuration.enableTutorialOverlay && (
         <Layer position="top">
-          <Box pad="small" align="center">
-            <Heading margin="xsmall" size="auto">
+          <Box pad="small" align="center" gap="xsmall">
+            <Heading margin="xsmall" level="2">
               Practice
             </Heading>
             {/* Display the overlay content */}
