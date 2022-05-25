@@ -8,7 +8,7 @@
  */
 
 // React import
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useState } from "react";
 
 // Logging library
 import consola from "consola";
@@ -16,6 +16,9 @@ import consola from "consola";
 // Grommet UI components
 import { Box, Button, Heading, Layer, WorldMap } from "grommet";
 import { LinkNext } from "grommet-icons";
+
+// Confetti
+import Confetti from 'react-confetti';
 
 // Custom components
 import Card from "src/lib/view/components/Card";
@@ -25,6 +28,7 @@ import { Configuration } from "src/configuration";
 
 // Utility functions
 import { calculatePoints } from "src/lib/util";
+import useWindowSize from 'react-use/lib/useWindowSize';
 
 /**
  * @summary Generate a 'Summary' screen with two cards displaying each avatar
@@ -50,8 +54,17 @@ const Summary: FC<Props.Screens.Summary> = (
   // Convert to strings for display
   const participantPoints = totalParticipantPoints.toString();
 
+  // Configure confetti animation
+  const { width, height } = useWindowSize();
+  const [runConfetti, setRunConfetti] = useState(true);
+
   return (
     <>
+      <Confetti
+        width={width}
+        height={height}
+        run={runConfetti}
+      />
       <WorldMap color="map" fill="horizontal" />
       <Layer plain>
         <Box direction="column" justify="center" width={{min: "large"}} fill>
@@ -86,6 +99,10 @@ const Summary: FC<Props.Screens.Summary> = (
               icon={<LinkNext />}
               reverse
               onClick={() => {
+                // Stop the confetti
+                setRunConfetti(false);
+
+                // Run the handler function
                 props.handler();
               }}
             />
