@@ -383,6 +383,11 @@ for (let i = 0; i < dataCollection.length; i++) {
         trial.trial = stageOneCounter;
         stageOneCounter++;
       }
+
+      // Set the final trial to clear the screen before moving to instructions
+      stageOneTrials[stageOneTrials.length - 1].clearScreen = true;
+
+      // Push trials to the timeline
       timeline.push(...stageOneTrials);
 
       // Break after Phase 1
