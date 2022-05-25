@@ -51,8 +51,8 @@ const Trial: FC<Props.Screens.Trial> = (
   const [trialHeader, setTrialHeader] = useState(defaultHeader);
 
   // Points state
-  const [participantPoints, setParticipantPoints] = useState("0");
-  const [partnerPoints, setPartnerPoints] = useState("0");
+  const [participantPoints, setParticipantPoints] = useState("");
+  const [partnerPoints, setPartnerPoints] = useState("");
 
   // Number of correct answers
   const [correctCount, setCorrectCount] = useState(0);
@@ -164,8 +164,8 @@ const Trial: FC<Props.Screens.Trial> = (
    */
   const updatePoints = (option: Options): void => {
     // Points to apply
-    let participantPoints = "0";
-    let partnerPoints = "0";
+    let participantPoints = "";
+    let partnerPoints = "";
 
     // Check what Phase is running
     if (props.display.toLowerCase().includes("guess")) {
@@ -299,8 +299,8 @@ const Trial: FC<Props.Screens.Trial> = (
             optionTwoNode.style.pointerEvents = "auto";
 
             // Update the point values to trigger animation
-            setParticipantPoints("0");
-            setPartnerPoints("0");
+            setParticipantPoints("");
+            setPartnerPoints("");
 
             // End the trial
             endTrial(trialSelection);
@@ -347,8 +347,8 @@ const Trial: FC<Props.Screens.Trial> = (
             optionTwoNode.style.pointerEvents = "auto";
 
             // Update the point values to trigger animation
-            setParticipantPoints("0");
-            setPartnerPoints("0");
+            setParticipantPoints("");
+            setPartnerPoints("");
 
             // Reset the header state
             setTrialHeader(defaultHeader);

@@ -385,12 +385,6 @@ for (let i = 0; i < dataCollection.length; i++) {
       }
       timeline.push(...stageOneTrials);
 
-      // Add a summary screen
-      timeline.push({
-        type: Configuration.studyName,
-        display: "summary",
-      });
-
       // Break after Phase 1
       // Add the instructions for the first break
       timeline.push({
@@ -614,12 +608,6 @@ for (let i = 0; i < dataCollection.length; i++) {
         stageTwoCounter++;
       }
       timeline.push(...stageTwoTrials);
-
-      // Summary screen
-      timeline.push({
-        type: Configuration.studyName,
-        display: "summary",
-      });
 
       // Inference screen
       timeline.push({
