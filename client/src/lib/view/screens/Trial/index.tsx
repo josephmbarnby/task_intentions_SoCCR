@@ -51,10 +51,8 @@ const Trial: FC<Props.Screens.Trial> = (
   const [trialHeader, setTrialHeader] = useState(defaultHeader);
 
   // Points state
-  const [participantPoints, setParticipantPoints] = useState(
-    props.participantPoints
-  );
-  const [partnerPoints, setPartnerPoints] = useState(props.partnerPoints);
+  const [participantPoints, setParticipantPoints] = useState("0");
+  const [partnerPoints, setPartnerPoints] = useState("0");
 
   // Number of correct answers
   const [correctCount, setCorrectCount] = useState(0);
@@ -141,10 +139,10 @@ const Trial: FC<Props.Screens.Trial> = (
    * @param {number} participant updated points for the participant
    * @param {number} partner updated points for the partner
    */
-  const addPoints = (participant: number, partner: number): void => {
+  const addPoints = (participant: string, partner: string): void => {
     // Update the point totals
-    setParticipantPoints(participantPoints + participant);
-    setPartnerPoints(partnerPoints + partner);
+    setParticipantPoints(participant);
+    setPartnerPoints(partner);
   };
 
   /**
@@ -166,8 +164,8 @@ const Trial: FC<Props.Screens.Trial> = (
    */
   const updatePoints = (option: Options): void => {
     // Points to apply
-    let participantPoints = 0;
-    let partnerPoints = 0;
+    let participantPoints = "0";
+    let partnerPoints = "0";
 
     // Check what Phase is running
     if (props.display.toLowerCase().includes("guess")) {
@@ -184,31 +182,31 @@ const Trial: FC<Props.Screens.Trial> = (
       // Participant points
       participantPoints =
         answer === "Option 1"
-          ? displayPoints.options.one.participant
-          : displayPoints.options.two.participant;
+          ? displayPoints.options.one.participant.toString()
+          : displayPoints.options.two.participant.toString();
 
       // Partner points
       partnerPoints =
         answer === "Option 1"
-          ? displayPoints.options.one.partner
-          : displayPoints.options.two.partner;
+          ? displayPoints.options.one.partner.toString()
+          : displayPoints.options.two.partner.toString();
     } else {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
         option === "Option 1"
-          ? displayPoints.options.one.participant
-          : displayPoints.options.two.participant;
+          ? displayPoints.options.one.participant.toString()
+          : displayPoints.options.two.participant.toString();
 
       // Partner points
       partnerPoints =
         option === "Option 1"
-          ? displayPoints.options.one.partner
-          : displayPoints.options.two.partner;
+          ? displayPoints.options.one.partner.toString()
+          : displayPoints.options.two.partner.toString();
     }
 
     // Apply the points
-    addPoints(participantPoints, partnerPoints);
+    addPoints(`+${participantPoints}`, `+${partnerPoints}`);
 
     // Call the selection handler
     handler(option);
@@ -300,6 +298,10 @@ const Trial: FC<Props.Screens.Trial> = (
             optionOneNode.style.pointerEvents = "auto";
             optionTwoNode.style.pointerEvents = "auto";
 
+            // Update the point values to trigger animation
+            setParticipantPoints("0");
+            setPartnerPoints("0");
+
             // End the trial
             endTrial(trialSelection);
           }, 2000);
@@ -343,6 +345,10 @@ const Trial: FC<Props.Screens.Trial> = (
             optionTwoNode.style.opacity = "1";
             optionOneNode.style.pointerEvents = "auto";
             optionTwoNode.style.pointerEvents = "auto";
+
+            // Update the point values to trigger animation
+            setParticipantPoints("0");
+            setPartnerPoints("0");
 
             // Reset the header state
             setTrialHeader(defaultHeader);
