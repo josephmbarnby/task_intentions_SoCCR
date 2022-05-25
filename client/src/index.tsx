@@ -391,13 +391,6 @@ for (let i = 0; i < dataCollection.length; i++) {
         display: "summary",
       });
 
-      // Agency screen
-      timeline.push({
-        type: Configuration.studyName,
-        display: "agency",
-        clearScreen: true,
-      });
-
       // Break after Phase 1
       // Add the instructions for the first break
       timeline.push({
@@ -638,13 +631,6 @@ for (let i = 0; i < dataCollection.length; i++) {
       timeline.push({
         type: Configuration.studyName,
         display: "classification",
-        clearScreen: true,
-      });
-
-      // Agency screen
-      timeline.push({
-        type: Configuration.studyName,
-        display: "agency",
         clearScreen: true,
       });
 
