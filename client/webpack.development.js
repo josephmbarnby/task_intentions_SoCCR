@@ -5,7 +5,7 @@ module.exports = () => {
   return {
     name: "development",
     mode: "development",
-    target: ["web", "es5"],
+    target: "web",
     entry: {
       index: "./src/index.tsx",
     },
