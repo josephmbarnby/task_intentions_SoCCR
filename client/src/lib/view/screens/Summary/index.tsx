@@ -18,7 +18,7 @@ import { Box, Button, Heading, Layer, WorldMap } from "grommet";
 import { LinkNext } from "grommet-icons";
 
 // Confetti
-import Confetti from 'react-confetti';
+import Confetti from "react-confetti";
 
 // Custom components
 import Card from "src/lib/view/components/Card";
@@ -28,7 +28,7 @@ import { Configuration } from "src/configuration";
 
 // Utility functions
 import { calculatePoints } from "src/lib/util";
-import useWindowSize from 'react-use/lib/useWindowSize';
+import useWindowSize from "react-use/lib/useWindowSize";
 
 /**
  * @summary Generate a 'Summary' screen with two cards displaying each avatar
@@ -60,14 +60,10 @@ const Summary: FC<Props.Screens.Summary> = (
 
   return (
     <>
-      <Confetti
-        width={width}
-        height={height}
-        run={runConfetti}
-      />
+      <Confetti width={width} height={height} run={runConfetti} />
       <WorldMap color="map" fill="horizontal" />
       <Layer plain>
-        <Box direction="column" justify="center" width={{min: "large"}} fill>
+        <Box direction="column" justify="center" width={{ min: "large" }} fill>
           {/* Heading */}
           <Heading
             level="1"

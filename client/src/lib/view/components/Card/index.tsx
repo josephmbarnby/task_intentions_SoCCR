@@ -50,8 +50,12 @@ const Card: FC<Props.Components.Card> = (
 
       <Heading level={1}>
         <Box direction="row" gap="xsmall">
-          <Money size="large" color="pointsIconBackground"/>
-          <TextTransition text={props.points} springConfig={presets.gentle} inline />
+          <Money size="large" color="pointsIconBackground" />
+          <TextTransition
+            text={props.points}
+            springConfig={presets.gentle}
+            inline
+          />
         </Box>
       </Heading>
     </Box>

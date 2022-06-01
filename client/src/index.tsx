@@ -84,19 +84,19 @@ const phaseOneInstructions = [
         </Heading>
         <Paragraph margin="small" size="large" fill>
           During this task you and a partner will be choosing how to divide a
-          sum of points between each other. Your ID will not be revealed to
-          your partner, and you won't be able to see the ID of your partner.
+          sum of points between each other. Your ID will not be revealed to your
+          partner, and you won't be able to see the ID of your partner.
         </Paragraph>
         <Paragraph margin="small" size="large" fill>
           This game consists of three stages. You are matched with a{" "}
           <b>different</b> partner before each stage.
         </Paragraph>
         <Paragraph margin="small" size="large" fill>
-          You will be paid a bonus at the end of the game which depends upon
-          the number of points you each managed to accumulate while playing.
-          If you earn over 1000 points in total across all three stages, you
-          will automatically be placed into a lottery for your chance to win
-          an extra $20.
+          You will be paid a bonus at the end of the game which depends upon the
+          number of points you each managed to accumulate while playing. If you
+          earn over 1000 points in total across all three stages, you will
+          automatically be placed into a lottery for your chance to win an extra
+          $20.
         </Paragraph>
       </Box>
     </Grommet>
@@ -112,15 +112,14 @@ const phaseOneInstructions = [
           Overview
         </Heading>
         <Paragraph margin="small" size="large" fill>
-          In stage one of this game, <b>you</b> will be choosing how the
-          points are split between you and your partner.
+          In stage one of this game, <b>you</b> will be choosing how the points
+          are split between you and your partner.
         </Paragraph>
         <Paragraph margin="small" size="large" fill>
           In stage two, you will play with a <b>new partner</b> for 54 rounds.
-          In this stage your <b>partner</b> will choose how to split the
-          points. You need to guess how your partner plans to divide the
-          points each round. You will earn bonus points for each correct
-          prediction.
+          In this stage your <b>partner</b> will choose how to split the points.
+          You need to guess how your partner plans to divide the points each
+          round. You will earn bonus points for each correct prediction.
         </Paragraph>
         <Paragraph margin="small" size="large" fill>
           In stage three, you will play with <b>yet another new partner</b>{" "}
@@ -152,9 +151,9 @@ const phaseOneInstructions = [
           game will determine if they get a bonus payment.
         </Paragraph>
         <Paragraph margin="small" size="large" fill>
-          Click 'Next &gt;' to select an avatar to represent you while you
-          play this game. You will then play <b>3</b> practice rounds before
-          you are matched with your partner.
+          Click 'Next &gt;' to select an avatar to represent you while you play
+          this game. You will then play <b>3</b> practice rounds before you are
+          matched with your partner.
         </Paragraph>
       </Box>
     </Grommet>
@@ -287,17 +286,20 @@ timeline.push({
   confirmation: true,
   feedback_correct:
     "Correct! " + "You will be choosing the points you and your partner get.",
-  feedback_incorrect: "Incorrect. You will be choosing the points. Please review the following instructions.",
+  feedback_incorrect:
+    "Incorrect. You will be choosing the points. Please review the following instructions.",
 });
 
 timeline.push({
-  timeline: [{
-    type: "instructions",
-    pages: phaseOneInstructions,
-    allow_keys: false,
-    show_page_number: true,
-    show_clickable_nav: true,
-  }],
+  timeline: [
+    {
+      type: "instructions",
+      pages: phaseOneInstructions,
+      allow_keys: false,
+      show_page_number: true,
+      show_clickable_nav: true,
+    },
+  ],
   conditional_function: () => {
     // Check if the response from the previous trial was correct
     const data = jsPsych.data.get().last(1).values()[0];
@@ -306,7 +308,7 @@ timeline.push({
     } else {
       return true;
     }
-  }
+  },
 });
 
 timeline.push({
@@ -324,13 +326,15 @@ timeline.push({
 });
 
 timeline.push({
-  timeline: [{
-    type: "instructions",
-    pages: phaseOneInstructions,
-    allow_keys: false,
-    show_page_number: true,
-    show_clickable_nav: true,
-  }],
+  timeline: [
+    {
+      type: "instructions",
+      pages: phaseOneInstructions,
+      allow_keys: false,
+      show_page_number: true,
+      show_clickable_nav: true,
+    },
+  ],
   conditional_function: () => {
     // Check if the response from the previous trial was correct
     const data = jsPsych.data.get().last(1).values()[0];
@@ -339,7 +343,7 @@ timeline.push({
     } else {
       return true;
     }
-  }
+  },
 });
 
 // Insert instructions to let the participant know they will
@@ -458,12 +462,11 @@ for (let i = 0; i < dataCollection.length; i++) {
               </Paragraph>
               <Paragraph margin="small" size="large" fill>
                 <b>
-                  The number of times you correctly guess your partner's
-                  choices will be multiplied by 10 and added to your total
-                  points
+                  The number of times you correctly guess your partner's choices
+                  will be multiplied by 10 and added to your total points
                 </b>
-                . This will contribute to your chance to win a bonus at the
-                end of the task.
+                . This will contribute to your chance to win a bonus at the end
+                of the task.
               </Paragraph>
             </Box>
           </Grommet>
@@ -475,13 +478,11 @@ for (let i = 0; i < dataCollection.length; i++) {
                 Instructions
               </Heading>
               <Paragraph margin="small" size="large" fill>
-                Let's get used to how stage two looks with some practice
-                trials.
+                Let's get used to how stage two looks with some practice trials.
               </Paragraph>
               <Paragraph margin="small" size="large" fill>
-                In these practice trials, the points will not count toward
-                your total and the decisions made by your partner are not
-                real.
+                In these practice trials, the points will not count toward your
+                total and the decisions made by your partner are not real.
               </Paragraph>
               <Paragraph margin="small" size="large" fill>
                 Click 'Next &gt;' to begin!
@@ -589,13 +590,15 @@ for (let i = 0; i < dataCollection.length; i++) {
       });
 
       timeline.push({
-        timeline: [{
-          type: "instructions",
-          pages: phaseTwoInstructions,
-          allow_keys: false,
-          show_page_number: true,
-          show_clickable_nav: true,
-        }],
+        timeline: [
+          {
+            type: "instructions",
+            pages: phaseTwoInstructions,
+            allow_keys: false,
+            show_page_number: true,
+            show_clickable_nav: true,
+          },
+        ],
         conditional_function: () => {
           // Check if the response from the previous trial was correct
           const data = jsPsych.data.get().last(1).values()[0];
@@ -604,7 +607,7 @@ for (let i = 0; i < dataCollection.length; i++) {
           } else {
             return true;
           }
-        }
+        },
       });
 
       timeline.push({
@@ -625,13 +628,15 @@ for (let i = 0; i < dataCollection.length; i++) {
       });
 
       timeline.push({
-        timeline: [{
-          type: "instructions",
-          pages: phaseTwoInstructions,
-          allow_keys: false,
-          show_page_number: true,
-          show_clickable_nav: true,
-        }],
+        timeline: [
+          {
+            type: "instructions",
+            pages: phaseTwoInstructions,
+            allow_keys: false,
+            show_page_number: true,
+            show_clickable_nav: true,
+          },
+        ],
         conditional_function: () => {
           // Check if the response from the previous trial was correct
           const data = jsPsych.data.get().last(1).values()[0];
@@ -640,7 +645,7 @@ for (let i = 0; i < dataCollection.length; i++) {
           } else {
             return true;
           }
-        }
+        },
       });
 
       // Insert instructions to let the participant know they will
@@ -765,13 +770,15 @@ for (let i = 0; i < dataCollection.length; i++) {
       });
 
       timeline.push({
-        timeline: [{
-          type: "instructions",
-          pages: phaseThreeInstructions,
-          allow_keys: false,
-          show_page_number: true,
-          show_clickable_nav: true,
-        }],
+        timeline: [
+          {
+            type: "instructions",
+            pages: phaseThreeInstructions,
+            allow_keys: false,
+            show_page_number: true,
+            show_clickable_nav: true,
+          },
+        ],
         conditional_function: () => {
           // Check if the response from the previous trial was correct
           const data = jsPsych.data.get().last(1).values()[0];
@@ -780,7 +787,7 @@ for (let i = 0; i < dataCollection.length; i++) {
           } else {
             return true;
           }
-        }
+        },
       });
 
       timeline.push({
