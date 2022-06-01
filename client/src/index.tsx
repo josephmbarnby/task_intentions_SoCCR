@@ -71,98 +71,100 @@ if (experiment.getState().get("participantID") === "default") {
   );
 }
 
+const phaseOneInstructions = [
+  // Overall instructions
+  react2html(
+    <Grommet>
+      <Box style={{ maxWidth: "50%", margin: "auto" }}>
+        <Heading level={1} margin="small" fill>
+          Instructions
+        </Heading>
+        <Heading level={2} margin="small" fill>
+          Overview
+        </Heading>
+        <Paragraph margin="small" size="large" fill>
+          During this task you and a partner will be choosing how to divide a
+          sum of points between each other. Your ID will not be revealed to
+          your partner, and you won't be able to see the ID of your partner.
+        </Paragraph>
+        <Paragraph margin="small" size="large" fill>
+          This game consists of three stages. You are matched with a{" "}
+          <b>different</b> partner before each stage.
+        </Paragraph>
+        <Paragraph margin="small" size="large" fill>
+          You will be paid a bonus at the end of the game which depends upon
+          the number of points you each managed to accumulate while playing.
+          If you earn over 1000 points in total across all three stages, you
+          will automatically be placed into a lottery for your chance to win
+          an extra $20.
+        </Paragraph>
+      </Box>
+    </Grommet>
+  ),
+  // Part one instructions
+  react2html(
+    <Grommet>
+      <Box style={{ maxWidth: "50%", margin: "auto" }}>
+        <Heading level={1} margin="small" fill>
+          Instructions
+        </Heading>
+        <Heading level={2} margin="small" fill>
+          Overview
+        </Heading>
+        <Paragraph margin="small" size="large" fill>
+          In stage one of this game, <b>you</b> will be choosing how the
+          points are split between you and your partner.
+        </Paragraph>
+        <Paragraph margin="small" size="large" fill>
+          In stage two, you will play with a <b>new partner</b> for 54 rounds.
+          In this stage your <b>partner</b> will choose how to split the
+          points. You need to guess how your partner plans to divide the
+          points each round. You will earn bonus points for each correct
+          prediction.
+        </Paragraph>
+        <Paragraph margin="small" size="large" fill>
+          In stage three, you will play with <b>yet another new partner</b>{" "}
+          where <b>you</b> will again be choosing how to split the points.
+        </Paragraph>
+        <Paragraph margin="small" size="large" fill>
+          At the end of each stage you will be shown a summary of how many
+          points you and your partner accumulated during that phase.
+        </Paragraph>
+      </Box>
+    </Grommet>
+  ),
+  react2html(
+    <Grommet>
+      <Box style={{ maxWidth: "50%", margin: "auto" }}>
+        <Heading level={1} margin="small" fill>
+          Instructions
+        </Heading>
+        <Heading level={2} margin="small" fill>
+          Stage one
+        </Heading>
+        <Paragraph margin="small" size="large" fill>
+          In the following <b>you</b> are tasked with distributing points
+          between yourself and your partner. You may choose to distribute the
+          points however you like. This stage will consist of 36 rounds.
+        </Paragraph>
+        <Paragraph margin="small" size="large" fill>
+          Remember, the number of points each player holds at the end of the
+          game will determine if they get a bonus payment.
+        </Paragraph>
+        <Paragraph margin="small" size="large" fill>
+          Click 'Next &gt;' to select an avatar to represent you while you
+          play this game. You will then play <b>3</b> practice rounds before
+          you are matched with your partner.
+        </Paragraph>
+      </Box>
+    </Grommet>
+  ),
+];
+
 // Insert the instructions into the timeline
 timeline.push({
   type: "instructions",
-  pages: [
-    // Overall instructions
-    react2html(
-      <Grommet>
-        <Box style={{ maxWidth: "50%", margin: "auto" }}>
-          <Heading level={1} margin="small" fill>
-            Instructions
-          </Heading>
-          <Heading level={2} margin="small" fill>
-            Overview
-          </Heading>
-          <Paragraph margin="small" size="large" fill>
-            During this task you and a partner will be choosing how to divide a
-            sum of points between each other. Your ID will not be revealed to
-            your partner, and you won't be able to see the ID of your partner.
-          </Paragraph>
-          <Paragraph margin="small" size="large" fill>
-            This game consists of three stages. You are matched with a{" "}
-            <b>different</b> partner before each stage.
-          </Paragraph>
-          <Paragraph margin="small" size="large" fill>
-            You will be paid a bonus at the end of the game which depends upon
-            the number of points you each managed to accumulate while playing.
-            If you earn over 1000 points in total across all three stages, you
-            will automatically be placed into a lottery for your chance to win
-            an extra $20.
-          </Paragraph>
-        </Box>
-      </Grommet>
-    ),
-    // Part one instructions
-    react2html(
-      <Grommet>
-        <Box style={{ maxWidth: "50%", margin: "auto" }}>
-          <Heading level={1} margin="small" fill>
-            Instructions
-          </Heading>
-          <Heading level={2} margin="small" fill>
-            Overview
-          </Heading>
-          <Paragraph margin="small" size="large" fill>
-            In stage one of this game, <b>you</b> will be choosing how the
-            points are split between you and your partner.
-          </Paragraph>
-          <Paragraph margin="small" size="large" fill>
-            In stage two, you will play with a <b>new partner</b> for 54 rounds.
-            In this stage your <b>partner</b> will choose how to split the
-            points. You need to guess how your partner plans to divide the
-            points each round. You will earn bonus points for each correct
-            prediction.
-          </Paragraph>
-          <Paragraph margin="small" size="large" fill>
-            In stage three, you will play with <b>yet another new partner</b>{" "}
-            where <b>you</b> will again be choosing how to split the points.
-          </Paragraph>
-          <Paragraph margin="small" size="large" fill>
-            At the end of each stage you will be shown a summary of how many
-            points you and your partner accumulated during that phase.
-          </Paragraph>
-        </Box>
-      </Grommet>
-    ),
-    react2html(
-      <Grommet>
-        <Box style={{ maxWidth: "50%", margin: "auto" }}>
-          <Heading level={1} margin="small" fill>
-            Instructions
-          </Heading>
-          <Heading level={2} margin="small" fill>
-            Stage one
-          </Heading>
-          <Paragraph margin="small" size="large" fill>
-            In the following <b>you</b> are tasked with distributing points
-            between yourself and your partner. You may choose to distribute the
-            points however you like. This stage will consist of 36 rounds.
-          </Paragraph>
-          <Paragraph margin="small" size="large" fill>
-            Remember, the number of points each player holds at the end of the
-            game will determine if they get a bonus payment.
-          </Paragraph>
-          <Paragraph margin="small" size="large" fill>
-            Click 'Next &gt;' to select an avatar to represent you while you
-            play this game. You will then play <b>3</b> practice rounds before
-            you are matched with your partner.
-          </Paragraph>
-        </Box>
-      </Grommet>
-    ),
-  ],
+  pages: phaseOneInstructions,
   allow_keys: false,
   show_page_number: true,
   show_clickable_nav: true,
@@ -285,7 +287,26 @@ timeline.push({
   confirmation: true,
   feedback_correct:
     "Correct! " + "You will be choosing the points you and your partner get.",
-  feedback_incorrect: "Incorrect. You will be choosing the points.",
+  feedback_incorrect: "Incorrect. You will be choosing the points. Please review the following instructions.",
+});
+
+timeline.push({
+  timeline: [{
+    type: "instructions",
+    pages: phaseOneInstructions,
+    allow_keys: false,
+    show_page_number: true,
+    show_clickable_nav: true,
+  }],
+  conditional_function: () => {
+    // Check if the response from the previous trial was correct
+    const data = jsPsych.data.get().last(1).values()[0];
+    if (data.correct === true) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 });
 
 timeline.push({
@@ -299,7 +320,26 @@ timeline.push({
   feedback_correct:
     "Correct! You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery.",
   feedback_incorrect:
-    "Incorrect. You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery.",
+    "Incorrect. You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery. Please review the following instructions.",
+});
+
+timeline.push({
+  timeline: [{
+    type: "instructions",
+    pages: phaseOneInstructions,
+    allow_keys: false,
+    show_page_number: true,
+    show_clickable_nav: true,
+  }],
+  conditional_function: () => {
+    // Check if the response from the previous trial was correct
+    const data = jsPsych.data.get().last(1).values()[0];
+    if (data.correct === true) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 });
 
 // Insert instructions to let the participant know they will
@@ -390,70 +430,72 @@ for (let i = 0; i < dataCollection.length; i++) {
       // Push trials to the timeline
       timeline.push(...stageOneTrials);
 
+      const phaseTwoInstructions = [
+        react2html(
+          <Grommet>
+            <Box style={{ maxWidth: "50%", margin: "auto" }}>
+              <Heading level={1} margin="small" fill>
+                Instructions
+              </Heading>
+              <Heading level={2} margin="small" fill>
+                Stage two
+              </Heading>
+              <Paragraph margin="small" size="large" fill>
+                In the following <b>you will play with a new partner</b>. This
+                time your partner will be the one choosing how the points are
+                split between you both.
+              </Paragraph>
+              <Paragraph margin="small" size="large" fill>
+                Remember, your partner will be different to the one you played
+                with earlier. Your partner will not know how many points you
+                have accumulated over the course of the game so far.
+              </Paragraph>
+              <Paragraph margin="small" size="large" fill>
+                <b>
+                  Your task will be to try to guess how your partner plans to
+                  divide the points between the two of you each round.
+                </b>
+              </Paragraph>
+              <Paragraph margin="small" size="large" fill>
+                <b>
+                  The number of times you correctly guess your partner's
+                  choices will be multiplied by 10 and added to your total
+                  points
+                </b>
+                . This will contribute to your chance to win a bonus at the
+                end of the task.
+              </Paragraph>
+            </Box>
+          </Grommet>
+        ),
+        react2html(
+          <Grommet>
+            <Box style={{ maxWidth: "50%", margin: "auto" }}>
+              <Heading level={1} margin="small" fill>
+                Instructions
+              </Heading>
+              <Paragraph margin="small" size="large" fill>
+                Let's get used to how stage two looks with some practice
+                trials.
+              </Paragraph>
+              <Paragraph margin="small" size="large" fill>
+                In these practice trials, the points will not count toward
+                your total and the decisions made by your partner are not
+                real.
+              </Paragraph>
+              <Paragraph margin="small" size="large" fill>
+                Click 'Next &gt;' to begin!
+              </Paragraph>
+            </Box>
+          </Grommet>
+        ),
+      ];
+
       // Break after Phase 1
       // Add the instructions for the first break
       timeline.push({
         type: "instructions",
-        pages: [
-          react2html(
-            <Grommet>
-              <Box style={{ maxWidth: "50%", margin: "auto" }}>
-                <Heading level={1} margin="small" fill>
-                  Instructions
-                </Heading>
-                <Heading level={2} margin="small" fill>
-                  Stage two
-                </Heading>
-                <Paragraph margin="small" size="large" fill>
-                  In the following <b>you will play with a new partner</b>. This
-                  time your partner will be the one choosing how the points are
-                  split between you both.
-                </Paragraph>
-                <Paragraph margin="small" size="large" fill>
-                  Remember, your partner will be different to the one you played
-                  with earlier. Your partner will not know how many points you
-                  have accumulated over the course of the game so far.
-                </Paragraph>
-                <Paragraph margin="small" size="large" fill>
-                  <b>
-                    Your task will be to try to guess how your partner plans to
-                    divide the points between the two of you each round.
-                  </b>
-                </Paragraph>
-                <Paragraph margin="small" size="large" fill>
-                  <b>
-                    The number of times you correctly guess your partner's
-                    choices will be multiplied by 10 and added to your total
-                    points
-                  </b>
-                  . This will contribute to your chance to win a bonus at the
-                  end of the task.
-                </Paragraph>
-              </Box>
-            </Grommet>
-          ),
-          react2html(
-            <Grommet>
-              <Box style={{ maxWidth: "50%", margin: "auto" }}>
-                <Heading level={1} margin="small" fill>
-                  Instructions
-                </Heading>
-                <Paragraph margin="small" size="large" fill>
-                  Let's get used to how stage two looks with some practice
-                  trials.
-                </Paragraph>
-                <Paragraph margin="small" size="large" fill>
-                  In these practice trials, the points will not count toward
-                  your total and the decisions made by your partner are not
-                  real.
-                </Paragraph>
-                <Paragraph margin="small" size="large" fill>
-                  Click 'Next &gt;' to begin!
-                </Paragraph>
-              </Box>
-            </Grommet>
-          ),
-        ],
+        pages: phaseTwoInstructions,
         allow_keys: false,
         show_page_number: true,
         show_clickable_nav: true,
@@ -543,7 +585,26 @@ for (let i = 0; i < dataCollection.length; i++) {
           "Your partner will be choosing the points you and your " +
           "partner get.",
         feedback_incorrect:
-          "Incorrect. Your partner will be choosing " + "the points.",
+          "Incorrect. Your partner will be choosing the points. Please review the following instructions.",
+      });
+
+      timeline.push({
+        timeline: [{
+          type: "instructions",
+          pages: phaseTwoInstructions,
+          allow_keys: false,
+          show_page_number: true,
+          show_clickable_nav: true,
+        }],
+        conditional_function: () => {
+          // Check if the response from the previous trial was correct
+          const data = jsPsych.data.get().last(1).values()[0];
+          if (data.correct === true) {
+            return false;
+          } else {
+            return true;
+          }
+        }
       });
 
       timeline.push({
@@ -560,7 +621,26 @@ for (let i = 0; i < dataCollection.length; i++) {
         feedback_correct:
           "Correct! Your total correct answers will be multiplied by 10 and added to your points.",
         feedback_incorrect:
-          "Incorrect. Your total correct answers will be multiplied by 10 and added to your points.",
+          "Incorrect. Your total correct answers will be multiplied by 10 and added to your points. Please review the following instructions.",
+      });
+
+      timeline.push({
+        timeline: [{
+          type: "instructions",
+          pages: phaseTwoInstructions,
+          allow_keys: false,
+          show_page_number: true,
+          show_clickable_nav: true,
+        }],
+        conditional_function: () => {
+          // Check if the response from the previous trial was correct
+          const data = jsPsych.data.get().last(1).values()[0];
+          if (data.correct === true) {
+            return false;
+          } else {
+            return true;
+          }
+        }
       });
 
       // Insert instructions to let the participant know they will
@@ -627,39 +707,41 @@ for (let i = 0; i < dataCollection.length; i++) {
         clearScreen: true,
       });
 
+      const phaseThreeInstructions = [
+        // Part three instructions
+        react2html(
+          <Grommet>
+            <Box style={{ maxWidth: "50%", margin: "auto" }}>
+              <Heading level={1} margin="small" fill>
+                Instructions
+              </Heading>
+              <Heading level={2} margin="small" fill>
+                Stage three
+              </Heading>
+              <Paragraph margin="small" size="large" fill>
+                In the final stage of this game, <b>you</b> will again be
+                choosing how the points are split between yourself and your
+                partner. As before, you may choose to distribute the points
+                however you like.
+              </Paragraph>
+              <Paragraph margin="small" size="large" fill>
+                Remember, your partner will be different to the ones you have
+                previously played. You will not know how many points they have
+                accumulated over the course of the game so far.
+              </Paragraph>
+              <Paragraph margin="small" size="large" fill>
+                Click 'Next &gt;' to be matched with your partner and start
+                stage three. There will be no practice trials beforehand.
+              </Paragraph>
+            </Box>
+          </Grommet>
+        ),
+      ];
+
       // Add the second break instructions
       timeline.push({
         type: "instructions",
-        pages: [
-          // Part three instructions
-          react2html(
-            <Grommet>
-              <Box style={{ maxWidth: "50%", margin: "auto" }}>
-                <Heading level={1} margin="small" fill>
-                  Instructions
-                </Heading>
-                <Heading level={2} margin="small" fill>
-                  Stage three
-                </Heading>
-                <Paragraph margin="small" size="large" fill>
-                  In the final stage of this game, <b>you</b> will again be
-                  choosing how the points are split between yourself and your
-                  partner. As before, you may choose to distribute the points
-                  however you like.
-                </Paragraph>
-                <Paragraph margin="small" size="large" fill>
-                  Remember, your partner will be different to the ones you have
-                  previously played. You will not know how many points they have
-                  accumulated over the course of the game so far.
-                </Paragraph>
-                <Paragraph margin="small" size="large" fill>
-                  Click 'Next &gt;' to be matched with your partner and start
-                  stage three. There will be no practice trials beforehand.
-                </Paragraph>
-              </Box>
-            </Grommet>
-          ),
-        ],
+        pages: phaseThreeInstructions,
         allow_keys: false,
         show_page_number: true,
         show_clickable_nav: true,
@@ -679,7 +761,26 @@ for (let i = 0; i < dataCollection.length; i++) {
         feedback_correct:
           "Correct! You will be interacting with a new anonymous partner in this next phase.",
         feedback_incorrect:
-          "Incorrect. You will be interacting with a new anonymous partner in this next phase.",
+          "Incorrect. You will be interacting with a new anonymous partner in this next phase. Please review the following instructions.",
+      });
+
+      timeline.push({
+        timeline: [{
+          type: "instructions",
+          pages: phaseThreeInstructions,
+          allow_keys: false,
+          show_page_number: true,
+          show_clickable_nav: true,
+        }],
+        conditional_function: () => {
+          // Check if the response from the previous trial was correct
+          const data = jsPsych.data.get().last(1).values()[0];
+          if (data.correct === true) {
+            return false;
+          } else {
+            return true;
+          }
+        }
       });
 
       timeline.push({

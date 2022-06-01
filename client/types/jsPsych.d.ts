@@ -12,7 +12,7 @@ declare type Timeline = TimelineNode[];
 // Timeline node type, representing different timeline
 // element parameter types
 declare type TimelineNode = {
-  type: string;
+  type?: string;
 
   // Fullscreen plugin
   message?: string;
@@ -48,4 +48,8 @@ declare type TimelineNode = {
   confirmation?: boolean;
   feedback_correct?: string;
   feedback_incorrect?: string;
+
+  // Loop nodes
+  timeline?: any[];
+  conditional_function?: () => boolean;
 };
