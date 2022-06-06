@@ -51,10 +51,8 @@ const Trial: FC<Props.Screens.Trial> = (
   const [trialHeader, setTrialHeader] = useState(defaultHeader);
 
   // Points state
-  const [participantPoints, setParticipantPoints] = useState(
-    props.participantPoints
-  );
-  const [partnerPoints, setPartnerPoints] = useState(props.partnerPoints);
+  const [participantPoints, setParticipantPoints] = useState("");
+  const [partnerPoints, setPartnerPoints] = useState("");
 
   // Number of correct answers
   const [correctCount, setCorrectCount] = useState(0);
@@ -141,10 +139,10 @@ const Trial: FC<Props.Screens.Trial> = (
    * @param {number} participant updated points for the participant
    * @param {number} partner updated points for the partner
    */
-  const addPoints = (participant: number, partner: number): void => {
+  const addPoints = (participant: string, partner: string): void => {
     // Update the point totals
-    setParticipantPoints(participantPoints + participant);
-    setPartnerPoints(partnerPoints + partner);
+    setParticipantPoints(participant);
+    setPartnerPoints(partner);
   };
 
   /**
@@ -166,8 +164,8 @@ const Trial: FC<Props.Screens.Trial> = (
    */
   const updatePoints = (option: Options): void => {
     // Points to apply
-    let participantPoints = 0;
-    let partnerPoints = 0;
+    let participantPoints = "";
+    let partnerPoints = "";
 
     // Check what Phase is running
     if (props.display.toLowerCase().includes("guess")) {
@@ -184,31 +182,31 @@ const Trial: FC<Props.Screens.Trial> = (
       // Participant points
       participantPoints =
         answer === "Option 1"
-          ? displayPoints.options.one.participant
-          : displayPoints.options.two.participant;
+          ? displayPoints.options.one.participant.toString()
+          : displayPoints.options.two.participant.toString();
 
       // Partner points
       partnerPoints =
         answer === "Option 1"
-          ? displayPoints.options.one.partner
-          : displayPoints.options.two.partner;
+          ? displayPoints.options.one.partner.toString()
+          : displayPoints.options.two.partner.toString();
     } else {
       // 'playerChoice' trials simply update the points as required
       // Participant points
       participantPoints =
         option === "Option 1"
-          ? displayPoints.options.one.participant
-          : displayPoints.options.two.participant;
+          ? displayPoints.options.one.participant.toString()
+          : displayPoints.options.two.participant.toString();
 
       // Partner points
       partnerPoints =
         option === "Option 1"
-          ? displayPoints.options.one.partner
-          : displayPoints.options.two.partner;
+          ? displayPoints.options.one.partner.toString()
+          : displayPoints.options.two.partner.toString();
     }
 
     // Apply the points
-    addPoints(participantPoints, partnerPoints);
+    addPoints(`+${participantPoints}`, `+${partnerPoints}`);
 
     // Call the selection handler
     handler(option);
@@ -300,6 +298,10 @@ const Trial: FC<Props.Screens.Trial> = (
             optionOneNode.style.pointerEvents = "auto";
             optionTwoNode.style.pointerEvents = "auto";
 
+            // Update the point values to trigger animation
+            setParticipantPoints("");
+            setPartnerPoints("");
+
             // End the trial
             endTrial(trialSelection);
           }, 2000);
@@ -344,6 +346,10 @@ const Trial: FC<Props.Screens.Trial> = (
             optionOneNode.style.pointerEvents = "auto";
             optionTwoNode.style.pointerEvents = "auto";
 
+            // Update the point values to trigger animation
+            setParticipantPoints("");
+            setPartnerPoints("");
+
             // Reset the header state
             setTrialHeader(defaultHeader);
 
@@ -370,12 +376,9 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerChoicePractice":
       case "playerChoice2": {
         content = (
-          <Box pad="small" align="center">
-            <Text size="large" margin="small">
-              You chose <b>{selectedOption}</b>.
-            </Text>
-            <Text size="large" margin="small">
-              That means you get{" "}
+          <Box pad="xsmall" align="center" width="large" gap="xsmall">
+            <Text size="medium" margin="small">
+              You chose <b>{selectedOption}</b>. That means you get{" "}
               {selectedOption === "Option 1"
                 ? displayPoints.options.one.participant
                 : displayPoints.options.two.participant}{" "}
@@ -392,7 +395,7 @@ const Trial: FC<Props.Screens.Trial> = (
               color="button"
               label="Continue"
               size="medium"
-              margin="small"
+              margin="xsmall"
               icon={<LinkNext />}
               reverse
               onClick={() => {
@@ -407,13 +410,10 @@ const Trial: FC<Props.Screens.Trial> = (
       case "playerGuess":
       case "playerGuessPractice": {
         content = (
-          <Box pad="small" align="center">
-            <Text size="large" margin="small">
+          <Box pad="xsmall" align="center" width="large" gap="xsmall">
+            <Text size="medium" margin="small">
               {selectedOption === answer ? "Correct! " : "Incorrect. "}
-              Your partner chose <b>{answer}</b>.
-            </Text>
-            <Text size="large" margin="small">
-              That means you get{" "}
+              Your partner chose <b>{answer}</b>. That means you get{" "}
               {answer === "Option 1"
                 ? displayPoints.options.one.participant
                 : displayPoints.options.two.participant}{" "}
@@ -580,8 +580,8 @@ const Trial: FC<Props.Screens.Trial> = (
       {/* Practice overlay */}
       {showOverlay && Configuration.enableTutorialOverlay && (
         <Layer position="top">
-          <Box pad="small" align="center">
-            <Heading margin="xsmall" size="auto">
+          <Box pad="small" align="center" gap="xsmall">
+            <Heading margin="xsmall" level="2">
               Practice
             </Heading>
             {/* Display the overlay content */}

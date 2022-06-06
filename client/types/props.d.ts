@@ -34,7 +34,7 @@ declare namespace Props {
     type Card = {
       gridArea: string;
       name: string;
-      points: number;
+      points: string;
       avatar: string;
     };
 

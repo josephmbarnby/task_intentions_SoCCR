@@ -6,6 +6,7 @@
 // Test utilities
 import { waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import "jest-canvas-mock";
 
 // Custom render function
 import { render } from "test/utils/functions";

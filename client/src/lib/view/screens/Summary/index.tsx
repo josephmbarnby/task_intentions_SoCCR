@@ -8,14 +8,17 @@
  */
 
 // React import
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useState } from "react";
 
 // Logging library
 import consola from "consola";
 
 // Grommet UI components
-import { Box, Button, Grid, Heading, Layer, WorldMap } from "grommet";
+import { Box, Button, Heading, Layer, WorldMap } from "grommet";
 import { LinkNext } from "grommet-icons";
+
+// Confetti
+import Confetti from "react-confetti";
 
 // Custom components
 import Card from "src/lib/view/components/Card";
@@ -25,6 +28,7 @@ import { Configuration } from "src/configuration";
 
 // Utility functions
 import { calculatePoints } from "src/lib/util";
+import useWindowSize from "react-use/lib/useWindowSize";
 
 /**
  * @summary Generate a 'Summary' screen with two cards displaying each avatar
@@ -40,44 +44,38 @@ const Summary: FC<Props.Screens.Summary> = (
   // Get the participant's and the partner's avatars
   const experiment = window.Experiment;
   const participantAvatar = experiment.getState().get("participantAvatar");
-  const partnerAvatar = experiment.getState().get("partnerAvatar");
 
   // Get the participant's and the partner's points
-  const participantPoints = calculatePoints(
-    props.postPhase,
-    "playerPoints_selected"
-  );
-  const partnerPoints = calculatePoints(
-    props.postPhase,
-    "partnerPoints_selected"
-  );
+  const totalParticipantPoints =
+    calculatePoints("playerChoice", "playerPoints_selected") +
+    calculatePoints("playerChoice2", "playerPoints_selected") +
+    calculatePoints("playerGuess", "playerPoints_selected");
+
+  // Convert to strings for display
+  const participantPoints = totalParticipantPoints.toString();
+
+  // Configure confetti animation
+  const { width, height } = useWindowSize();
+  const [runConfetti, setRunConfetti] = useState(true);
 
   return (
     <>
+      <Confetti width={width} height={height} run={runConfetti} />
       <WorldMap color="map" fill="horizontal" />
       <Layer plain>
-        {/* Heading */}
-        <Heading
-          level="1"
-          fill
-          alignSelf="center"
-          margin={{
-            top: "large",
-          }}
-        >
-          Summary
-        </Heading>
-        {/* Participant and partner info */}
-        <Grid
-          rows={["auto"]}
-          columns={["medium", "medium"]}
-          justifyContent="center"
-          gap="small"
-          areas={[
-            { name: "participantArea", start: [0, 0], end: [0, 0] },
-            { name: "partnerArea", start: [1, 0], end: [1, 0] },
-          ]}
-        >
+        <Box direction="column" justify="center" width={{ min: "large" }} fill>
+          {/* Heading */}
+          <Heading
+            level="1"
+            fill
+            alignSelf="center"
+            margin={{
+              top: "large",
+            }}
+          >
+            Summary
+          </Heading>
+
           {/* Participant */}
           <Card
             gridArea="participantArea"
@@ -86,29 +84,25 @@ const Summary: FC<Props.Screens.Summary> = (
             points={participantPoints}
           />
 
-          {/* Partner */}
-          <Card
-            gridArea="partnerArea"
-            name="Partner"
-            avatar={Configuration.avatars.names.partner[partnerAvatar]}
-            points={partnerPoints}
-          />
-        </Grid>
+          {/* Continue button */}
+          <Box justify="center" align="center" margin="small">
+            <Button
+              primary
+              color="button"
+              label="Continue"
+              size="large"
+              margin="medium"
+              icon={<LinkNext />}
+              reverse
+              onClick={() => {
+                // Stop the confetti
+                setRunConfetti(false);
 
-        {/* Continue button */}
-        <Box justify="center" align="center" margin="small">
-          <Button
-            primary
-            color="button"
-            label="Continue"
-            size="large"
-            margin="medium"
-            icon={<LinkNext />}
-            reverse
-            onClick={() => {
-              props.handler();
-            }}
-          />
+                // Run the handler function
+                props.handler();
+              }}
+            />
+          </Box>
         </Box>
       </Layer>
     </>

@@ -23,7 +23,7 @@ expect.extend(toHaveNoViolations);
 
 test("loads and displays Card component", async () => {
   await waitFor(() =>
-    render(<Card gridArea="a" name="Henry" points={0} avatar="a" />)
+    render(<Card gridArea="a" name="Henry" points={"0"} avatar="a" />)
   );
 
   await waitFor(() => expect(screen.getByText("Henry")).toBeInTheDocument());
@@ -31,7 +31,7 @@ test("loads and displays Card component", async () => {
 
 test("check Card component accessibility", async () => {
   const { container } = render(
-    <Card gridArea="a" name="Henry" points={0} avatar="a" />
+    <Card gridArea="a" name="Henry" points={"0"} avatar="a" />
   );
 
   await act(async () => {
