@@ -93,5 +93,6 @@
     "neurocog": "^0.3.5",
     "react-confetti": "^6.1.0",
     "react-text-transition": "^1.3.0"
+    "regenerator-runtime": "^0.13.9"
   }
 }
