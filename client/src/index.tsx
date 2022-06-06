@@ -280,14 +280,20 @@ timeline.push({
   prompt:
     "In this stage of the game, who will be choosing the " +
     "number of points that you and your partner get?",
-  options: ["My partner", "Me", "By lottery"],
-  options_radio: true,
-  option_correct: 1,
-  confirmation: true,
-  feedback_correct:
-    "Correct! " + "You will be choosing the points you and your partner get.",
-  feedback_incorrect:
-    "Incorrect. You will be choosing the points. Please review the following instructions.",
+  responses: [
+    {value: "My partner", key: null, correct: false},
+    {value: "Me", key: null, correct: true},
+    {value: "By lottery", key: null, correct: false}
+  ],
+  style: "radio",
+  continue: {
+    confirm: true,
+    key: null,
+  },
+  feedback: {
+    correct: "Correct! You will be choosing the points you and your partner get.",
+    incorrect: "Incorrect. You will be choosing the points. Please review the following instructions.",
+  }
 });
 
 timeline.push({
@@ -315,14 +321,16 @@ timeline.push({
   type: "attention-check",
   prompt:
     "How many points do you need to earn across all three phases of the game to be entered into the bonus lottery?",
-  options: ["1000", "500"],
-  options_radio: true,
-  option_correct: 0,
-  confirmation: true,
-  feedback_correct:
-    "Correct! You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery.",
-  feedback_incorrect:
-    "Incorrect. You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery. Please review the following instructions.",
+  responses: [{value: "1000", key: null, correct: true}, {value: "500", key: null, correct: false}],
+  style: "radio",
+  continue: {
+    confirm: true,
+    key: null,
+  },
+  feedback: {
+    correct: "Correct! You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery.",
+    incorrect: "Incorrect. You need to earn 1000 points across all three phases of the game to be entered into the bonus lottery. Please review the following instructions.",
+  }
 });
 
 timeline.push({
@@ -577,16 +585,16 @@ for (let i = 0; i < dataCollection.length; i++) {
         prompt:
           "In this part of task, " +
           "who will be choosing the points you and your partner get?",
-        options: ["Me", "By lottery", "My partner"],
-        options_radio: true,
-        option_correct: 2,
-        confirmation: true,
-        feedback_correct:
-          "Correct! " +
-          "Your partner will be choosing the points you and your " +
-          "partner get.",
-        feedback_incorrect:
-          "Incorrect. Your partner will be choosing the points. Please review the following instructions.",
+        responses: [{value: "Me", key: null, correct: false}, {value: "By lottery", key: null, correct: false}, {value: "My partner", key: null, correct: true}],
+        style: "radio",
+        continue: {
+          confirm: true,
+          key: null,
+        },
+        feedback: {
+          correct: "Correct! Your partner will be choosing the points you and your partner get.",
+          incorrect: "Incorrect. Your partner will be choosing the points. Please review the following instructions.",
+        }
       });
 
       timeline.push({
@@ -614,17 +622,19 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: "attention-check",
         prompt:
           "What multiplier will be added to your total correct predictions about your partner?",
-        options: [
-          "My total correct answers will be multiplied by 5 and added to my points.",
-          "My total correct answers will be multiplied by 10 and added to my points.",
+        responses: [
+          {value: "My total correct answers will be multiplied by 5 and added to my points.", key: null, correct: false},
+          {value: "My total correct answers will be multiplied by 10 and added to my points.", key: null, correct: true},
         ],
-        options_radio: true,
-        option_correct: 1,
-        confirmation: true,
-        feedback_correct:
-          "Correct! Your total correct answers will be multiplied by 10 and added to your points.",
-        feedback_incorrect:
-          "Incorrect. Your total correct answers will be multiplied by 10 and added to your points. Please review the following instructions.",
+        style: "radio",
+        continue: {
+          confirm: true,
+          key: null,
+        },
+        feedback: {
+          correct: "Correct! Your total correct answers will be multiplied by 10 and added to your points.",
+          incorrect: "Incorrect. Your total correct answers will be multiplied by 10 and added to your points. Please review the following instructions.",
+        }
       });
 
       timeline.push({
@@ -756,17 +766,19 @@ for (let i = 0; i < dataCollection.length; i++) {
         type: "attention-check",
         prompt:
           "Who is going to be your interaction partner in this next phase?",
-        options: [
-          "A new anonymous partner.",
-          "My partner from the last phase.",
+        responses: [
+          {value: "A new anonymous partner.", key: null, correct: true},
+          {value: "My partner from the last phase.", key: null, correct: false},
         ],
-        options_radio: true,
-        option_correct: 0,
-        confirmation: true,
-        feedback_correct:
-          "Correct! You will be interacting with a new anonymous partner in this next phase.",
-        feedback_incorrect:
-          "Incorrect. You will be interacting with a new anonymous partner in this next phase. Please review the following instructions.",
+        style: "radio",
+        continue: {
+          confirm: true,
+          key: null,
+        },
+        feedback: {
+          correct: "Correct! You will be interacting with a new anonymous partner in this next phase.",
+          incorrect: "Incorrect. You will be interacting with a new anonymous partner in this next phase. Please review the following instructions.",
+        }
       });
 
       timeline.push({
