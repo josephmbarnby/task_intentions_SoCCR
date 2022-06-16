@@ -311,7 +311,7 @@ timeline.push({
   conditional_function: () => {
     // Check if the response from the previous trial was correct
     const data = jsPsych.data.get().last(1).values()[0];
-    if (data.correct === true) {
+    if (data.attentionCorrect === true) {
       return false;
     } else {
       return true;
@@ -353,7 +353,7 @@ timeline.push({
   conditional_function: () => {
     // Check if the response from the previous trial was correct
     const data = jsPsych.data.get().last(1).values()[0];
-    if (data.correct === true) {
+    if (data.attentionCorrect === true) {
       return false;
     } else {
       return true;
@@ -623,7 +623,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         conditional_function: () => {
           // Check if the response from the previous trial was correct
           const data = jsPsych.data.get().last(1).values()[0];
-          if (data.correct === true) {
+          if (data.attentionCorrect === true) {
             return false;
           } else {
             return true;
@@ -675,7 +675,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         conditional_function: () => {
           // Check if the response from the previous trial was correct
           const data = jsPsych.data.get().last(1).values()[0];
-          if (data.correct === true) {
+          if (data.attentionCorrect === true) {
             return false;
           } else {
             return true;
@@ -825,7 +825,7 @@ for (let i = 0; i < dataCollection.length; i++) {
         conditional_function: () => {
           // Check if the response from the previous trial was correct
           const data = jsPsych.data.get().last(1).values()[0];
-          if (data.correct === true) {
+          if (data.attentionCorrect === true) {
             return false;
           } else {
             return true;

@@ -7,10 +7,12 @@ library(jsonlite)
 library(RestRserve)
 library(tidyverse)
 
-# Create a new application with CORS middleware
-application <- Application$new(
-  middleware = list(CORSMiddleware$new())
-)
+# Flag to disable CORS, set to FALSE when deploying
+disable_cors <- FALSE
+valid_origins <- c("https://app.gorilla.sc", "https://research.sc")
+
+# Create a new application
+application <- Application$new()
 
 # Configure the logger to use files
 if (dir.exists("logs") == FALSE) {
@@ -45,6 +47,10 @@ log_appender(appender_tee(
 # Start the server
 log_info("Starting server...", namespace = "server")
 
+if (disable_cors == TRUE) {
+  log_warn("CORS checking is disabled, this should be enabled when deployed", namespace = "server")
+}
+
 # Load the full data
 full_data <- read.csv("./data/fullData.csv") %>% dplyr::select(-X)
 
@@ -54,23 +60,30 @@ precan_df <- precan_partners(full_data)
 log_debug("Ready to start!", namespace = "server")
 
 handler <- function(.req, .res) {
-  # Print the headers
-  log_debug("Host: ", as.character(.req$headers["host"]), namespace = "server")
-
   # Parse the ID from the body of the request
   # Check for a valid ID
   valid_id <- FALSE
   if ("participantID" %in% attributes(.req$parameters_query)$names) {
+    # Extract the participantID and serialize to a set of characters
     participant_id <- as.character(.req$parameters_query["participantID"])
-    if (!is.na(participant_id)) {
-      valid_id <- TRUE
-    }
+
+    # Check that participantID has been specified
+    valid_specification <- !is.na(participant_id)
+
+    # Check the participantID is valid format using a Regex matching pattern
+    valid_format <- str_detect(participant_id, regex("ppt_[0-9]{13}", ignore_case = FALSE))
+
+    # Check the participantID contains the correct number of characters
+    valid_length <- nchar(participant_id) == 17
+
+    # Finalize the validation of the participantID
+    valid_id <- valid_specification == TRUE && valid_format == TRUE && valid_length == TRUE
   }
 
   # Reply with a HTTPError if any issues with participant ID
   if (valid_id == FALSE) {
     log_error("Participant ID invalid or not specified", namespace = "server")
-    raise(HTTPError$bad_request())
+    raise(HTTPError$bad_request(body = "Invalid ID specified"))
   }
 
   # Parse the participant responses
@@ -99,7 +112,7 @@ handler <- function(.req, .res) {
   # Reply with a HTTPError if any issues with participant responses
   if (valid_response == FALSE) {
     log_error("\'participantResponses\' invalid or not specified", namespace = "server")
-    raise(HTTPError$bad_request())
+    raise(HTTPError$bad_request(body = "Invalid response format"))
   } else {
     log_debug("Successfully parsed participant responses", namespace = "server")
   }
@@ -178,6 +191,23 @@ handler <- function(.req, .res) {
     )
   )
 
+  # Get the request origin and update the response origin if it is valid
+  request_origin <- as.character(.req$headers["origin"])
+  log_debug("Request origin: ", request_origin, namespace = "server")
+  if (disable_cors == FALSE) {
+    # If we are enforcing CORS, we have deployed the server and need to
+    # check it is one of the two allowed origins
+    valid_origin <- match(request_origin, valid_origins)
+
+    if (!is.na(valid_origin)) {
+      # Update the header if a valid origin has been provided
+      log_debug("Request origin \'{request_origin}\' is valid", namespace = "server")
+      .res$set_header("Access-Control-Allow-Origin", request_origin)
+    } else {
+      log_warn("Request origin \'{request_origin}\' is not valid", namespace = "server")
+    }
+  }
+
   # Configure the response body
   .res$set_body(toJSON(list(
     participantID = participant_id,
@@ -193,4 +223,4 @@ application$add_get(path = "/task/intentions", FUN = handler)
 
 # Start the server
 backend <- BackendRserve$new()
-backend$start(application, http_port = 8000)
+backend$start(application, http_port = 8123)
