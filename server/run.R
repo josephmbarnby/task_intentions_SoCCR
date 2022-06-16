@@ -11,10 +11,8 @@ library(tidyverse)
 disable_cors <- FALSE
 valid_origins <- c("https://app.gorilla.sc", "https://research.sc")
 
-# Create a new application with CORS middleware
-application <- Application$new(
-  middleware = list(CORSMiddleware$new(routes = "/task/intentions", match = "exact"))
-)
+# Create a new application
+application <- Application$new()
 
 # Configure the logger to use files
 if (dir.exists("logs") == FALSE) {
@@ -205,6 +203,8 @@ handler <- function(.req, .res) {
       # Update the header if a valid origin has been provided
       log_debug("Request origin \'{request_origin}\' is valid", namespace = "server")
       .res$set_header("Access-Control-Allow-Origin", request_origin)
+    } else {
+      log_warn("Request origin \'{request_origin}\' is not valid", namespace = "server")
     }
   }
 
