@@ -7,6 +7,10 @@ library(jsonlite)
 library(RestRserve)
 library(tidyverse)
 
+# Flag to disable CORS, set to FALSE when deploying
+disable_cors <- FALSE
+valid_origins <- c("https://app.gorilla.sc", "https://research.sc")
+
 # Create a new application with CORS middleware
 application <- Application$new(
   middleware = list(CORSMiddleware$new(routes = "/task/intentions", match = "exact"))
@@ -44,6 +48,10 @@ log_appender(appender_tee(
 
 # Start the server
 log_info("Starting server...", namespace = "server")
+
+if (disable_cors == TRUE) {
+  log_warn("CORS checking is disabled, this should be enabled when deployed", namespace = "server")
+}
 
 # Load the full data
 full_data <- read.csv("./data/fullData.csv") %>% dplyr::select(-X)
@@ -185,6 +193,21 @@ handler <- function(.req, .res) {
     )
   )
 
+  # Get the request origin and update the response origin if it is valid
+  request_origin <- as.character(.req$headers["origin"])
+  log_debug("Request origin: ", request_origin, namespace = "server")
+  if (disable_cors == FALSE) {
+    # If we are enforcing CORS, we have deployed the server and need to
+    # check it is one of the two allowed origins
+    valid_origin <- match(request_origin, valid_origins)
+
+    if (!is.na(valid_origin)) {
+      # Update the header if a valid origin has been provided
+      log_debug("Request origin \'{request_origin}\' is valid", namespace = "server")
+      .res$set_header("Access-Control-Allow-Origin", request_origin)
+    }
+  }
+
   # Configure the response body
   .res$set_body(toJSON(list(
     participantID = participant_id,
@@ -193,7 +216,6 @@ handler <- function(.req, .res) {
     partnerChoices = toJSON(partner_choices)
   )))
   .res$set_content_type("text/plain")
-  .res$set_header("Access-Control-Allow-Origin", "https://app.gorilla.sc")
 }
 
 # Specify the API endpoint and handler
