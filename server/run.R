@@ -54,23 +54,30 @@ precan_df <- precan_partners(full_data)
 log_debug("Ready to start!", namespace = "server")
 
 handler <- function(.req, .res) {
-  # Print the headers
-  log_debug("Host: ", as.character(.req$headers["host"]), namespace = "server")
-
   # Parse the ID from the body of the request
   # Check for a valid ID
   valid_id <- FALSE
   if ("participantID" %in% attributes(.req$parameters_query)$names) {
+    # Extract the participantID and serialize to a set of characters
     participant_id <- as.character(.req$parameters_query["participantID"])
-    if (!is.na(participant_id)) {
-      valid_id <- TRUE
-    }
+
+    # Check that participantID has been specified
+    valid_specification <- !is.na(participant_id)
+
+    # Check the participantID is valid format using a Regex matching pattern
+    valid_format <- str_detect(participant_id, regex("ppt_[0-9]{13}", ignore_case = FALSE))
+
+    # Check the participantID contains the correct number of characters
+    valid_length <- nchar(participant_id) == 17
+
+    # Finalize the validation of the participantID
+    valid_id <- valid_specification == TRUE && valid_format == TRUE && valid_length == TRUE
   }
 
   # Reply with a HTTPError if any issues with participant ID
   if (valid_id == FALSE) {
     log_error("Participant ID invalid or not specified", namespace = "server")
-    raise(HTTPError$bad_request())
+    raise(HTTPError$bad_request(body = "Invalid ID specified"))
   }
 
   # Parse the participant responses
@@ -99,7 +106,7 @@ handler <- function(.req, .res) {
   # Reply with a HTTPError if any issues with participant responses
   if (valid_response == FALSE) {
     log_error("\'participantResponses\' invalid or not specified", namespace = "server")
-    raise(HTTPError$bad_request())
+    raise(HTTPError$bad_request(body = "Invalid response format"))
   } else {
     log_debug("Successfully parsed participant responses", namespace = "server")
   }
