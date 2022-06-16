@@ -7,7 +7,7 @@ from types import FunctionType
 
 
 # Constants
-ADDR = "http://localhost:8000/task/intentions"
+ADDR = "http://localhost:8123/task/intentions"
 
 
 # Configure logging

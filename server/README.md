@@ -22,7 +22,7 @@ After installing all dependencies, run:
 Rscript run.R
 ```
 
-As defined in `run.R`, the endpoint by default will listen on port 8000 via the endpoint `/task/intentions`.
+As defined in `run.R`, the endpoint by default will listen on port 8123 via the endpoint `/task/intentions`.
 
 Additional configuration is required when deploying this endpoint in an online scenario.
 
