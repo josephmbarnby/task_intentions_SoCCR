@@ -8,7 +8,9 @@ library(RestRserve)
 library(tidyverse)
 
 # Create a new application with CORS middleware
-application <- Application$new()
+application <- Application$new(
+  middleware = list(CORSMiddleware$new(routes = "/task/intentions", match = "exact"))
+)
 
 # Configure the logger to use files
 if (dir.exists("logs") == FALSE) {
@@ -191,6 +193,7 @@ handler <- function(.req, .res) {
     partnerChoices = toJSON(partner_choices)
   )))
   .res$set_content_type("text/plain")
+  .res$set_header("Access-Control-Allow-Origin", "https://app.gorilla.sc")
 }
 
 # Specify the API endpoint and handler
@@ -198,4 +201,4 @@ application$add_get(path = "/task/intentions", FUN = handler)
 
 # Start the server
 backend <- BackendRserve$new()
-backend$start(application, http_port = 8123)
+backend$start(application, http_port = 8000)
