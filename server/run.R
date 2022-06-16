@@ -8,9 +8,7 @@ library(RestRserve)
 library(tidyverse)
 
 # Create a new application with CORS middleware
-application <- Application$new(
-  middleware = list(CORSMiddleware$new())
-)
+application <- Application$new()
 
 # Configure the logger to use files
 if (dir.exists("logs") == FALSE) {
