@@ -9,7 +9,7 @@ library(tidyverse)
 
 # Flag to disable CORS, set to FALSE when deploying
 disable_cors <- FALSE
-valid_origins <- c("https://app.gorilla.sc", "https://research.sc")
+valid_origins <- c("https://app.gorilla.sc", "https://research.sc", "http://localhost:8080")
 
 # Create a new application
 application <- Application$new()
@@ -71,10 +71,10 @@ handler <- function(.req, .res) {
     valid_specification <- !is.na(participant_id)
 
     # Check the participantID is valid format using a Regex matching pattern
-    valid_format <- str_detect(participant_id, regex("ppt_[0-9]{13}", ignore_case = FALSE))
+    valid_format <- str_detect(participant_id, regex("[0-9]{4}", ignore_case = FALSE))
 
     # Check the participantID contains the correct number of characters
-    valid_length <- nchar(participant_id) == 17
+    valid_length <- nchar(participant_id) == 4
 
     # Finalize the validation of the participantID
     valid_id <- valid_specification == TRUE && valid_format == TRUE && valid_length == TRUE
