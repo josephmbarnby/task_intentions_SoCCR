@@ -153,7 +153,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       // If no custom participant ID has been specified, generate our own
       // using ID protocol `ppt_<timestamp>`
       consola.debug(`Generating custom participant ID...`);
-      experiment.getState().set("participantID", `ppt_${Date.now()}`);
+      experiment.getState().set("participantID", `5${Date.now().toString().slice(0, 3)}`);
       consola.debug(
         `Generated participant ID:`,
         experiment.getState().get("participantID")
