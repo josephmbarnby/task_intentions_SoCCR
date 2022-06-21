@@ -136,6 +136,30 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       return false;
     });
 
+    // Determine the ID of the participant
+    const hasInputID = jsPsych.data.get().filter({
+      trial_type: 'survey-html-form'
+    }).values().length > 0;
+
+    if (hasInputID === true) {
+      // Check first if a participant ID has been specified
+      const givenID =  jsPsych.data.get().filter({
+        trial_type: 'survey-html-form'
+      }).values()[0].response?.participantID;
+
+      // Update the participant ID
+      experiment.getState().set("participantID", givenID);
+    } else if (experiment.getState().get("participantID") === "default") {
+      // If no custom participant ID has been specified, generate our own
+      // using ID protocol `ppt_<timestamp>`
+      consola.debug(`Generating custom participant ID...`);
+      experiment.getState().set("participantID", `ppt_${Date.now()}`);
+      consola.debug(
+        `Generated participant ID:`,
+        experiment.getState().get("participantID")
+      );
+    }
+
     const startTime = performance.now();
 
     // Display the screen with the generated props

@@ -5042,7 +5042,7 @@ grommet-styles@^0.2.0:
   resolved "https://registry.yarnpkg.com/grommet-styles/-/grommet-styles-0.2.0.tgz#b2eac2b7e2747cb523434d21728ce5234f8ce4f4"
   integrity sha512-0OMSYuGeyifYKpg4Gv2HzL8rUdd0ddnJ5LbCBKgDuloC71XIwr9g/Fxa6rs737MbPV7OZ4pEm4wvrjH4epzf1A==
 
-grommet@^2.17.3, grommet@^2.23.0:
+grommet@^2.17.3, grommet@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/grommet/-/grommet-2.24.0.tgz#402c198ddf25f1b898cfcb866b690472c3145a5f"
   integrity sha512-MsIQyT6TtbO1Bp0BXE48pQytU+6LhDfIUp1/IjPEiqdbxVtvdwL6Ti6mIjAgzssqRt+EGCcDR3eB0uBxSOiqzA==
@@ -6504,18 +6504,18 @@ json5@2.x, json5@^2.1.2, json5@^2.2.1:
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.1.tgz#655d50ed1e6f95ad1a3caababd2b0efda10b395c"
   integrity sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==
 
-jspsych-attention-check@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/jspsych-attention-check/-/jspsych-attention-check-2.0.5.tgz#c10f55a2656cfca388992ac183dfbaea61efbf83"
-  integrity sha512-mW/FBlN0UT+alDpJ1IQP7bfvpr9HXbdCiaSLFxDr0y5uREpOHGystw0eo6rzImOsPLnBPTqiFodUkSJ4zFFWVg==
+jspsych-attention-check@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/jspsych-attention-check/-/jspsych-attention-check-2.0.6.tgz#c61736c02071daf8ba66bf16cdab8c18d59f6923"
+  integrity sha512-IMNumKVr4BYYbkiBsBNk1bTY5G6SLxS7LNzRaAXKY0OtQtfIKP3/WwEpxoXbnSx1wrQnvxTXpAq+zpKUZV9/rw==
   dependencies:
-    grommet "^2.23.0"
+    grommet "^2.24.0"
     grommet-icons "^4.7.0"
     jspsych "6.3"
     polished "^4.2.2"
     react "^18.1.0"
     react-dom "^18.1.0"
-    react-key-icons "^1.0.0"
+    react-key-icons "^1.0.1"
     styled-components "^5.3.5"
     usehooks-ts "^2.5.4"
 
@@ -7855,10 +7855,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-key-icons@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-key-icons/-/react-key-icons-1.0.0.tgz#68b8ea4c4d11a8b455a3e94c3583967303eaa565"
-  integrity sha512-hJ9fxN4P+lbOvfD7a3Z+pt0ASf7KI0kuuBkEdVYgdparojh7ZeyD9Jbj1dD/WpmOA0taS3zjJnDdRKEF3m3OiQ==
+react-key-icons@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-key-icons/-/react-key-icons-1.0.1.tgz#b813c7a578f1cb54a5e95f8571b009233bbcb6c9"
+  integrity sha512-/eGczfWsvZJ5FhBrYIt3zf+dYShLgLZ/Y4gvsFmoDH5AQiRKofjOuQotbnrEwsMwVE7E1oBDKL6pAo+QeIbG2A==
 
 react-spring@^8.0.27:
   version "8.0.27"

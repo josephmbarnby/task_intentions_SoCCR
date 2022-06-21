@@ -50,4 +50,8 @@ declare type TimelineNode = {
   // Loop nodes
   timeline?: any[];
   conditional_function?: () => boolean;
+
+  // HTML input plugin
+  preamble?: string;
+  html?: string;
 };

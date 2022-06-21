@@ -33,6 +33,7 @@ import { Experiment } from "neurocog";
 // Import jsPsych plugins
 import "jspsych/plugins/jspsych-fullscreen";
 import "jspsych/plugins/jspsych-instructions";
+import "jspsych/plugins/jspsych-survey-html-form";
 import "jspsych-attention-check";
 
 // Import the custom plugin before adding it to the timeline
@@ -50,6 +51,14 @@ for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
   Configuration.avatars.names.partner[i] = `${partner} ${performance.now()}`;
 }
 
+if (experiment.getPlatform().valueOf() !== "gorilla") {
+  timeline.push({
+    type: "survey-html-form",
+    preamble: `<p>Please enter the participant ID (optional).</p>`,
+    html: `<input name="participantID" type="text" /></br></br>`,
+  });
+}
+
 // Set the experiment to run in fullscreen mode
 if (Configuration.fullscreen === true) {
   timeline.push({
@@ -57,18 +66,6 @@ if (Configuration.fullscreen === true) {
     message: `<p>Click 'Continue' to enter fullscreen mode.</p>`,
     fullscreen_mode: true,
   });
-}
-
-// Determine the ID of the participant
-if (experiment.getState().get("participantID") === "default") {
-  // If no custom participant ID has been specified, generate our own
-  // using ID protocol `ppt_<timestamp>`
-  consola.debug(`Generating custom participant ID...`);
-  experiment.getState().set("participantID", `ppt_${Date.now()}`);
-  consola.debug(
-    `Generated participant ID:`,
-    experiment.getState().get("participantID")
-  );
 }
 
 const phaseOneInstructions = [
