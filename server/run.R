@@ -8,11 +8,17 @@ library(RestRserve)
 library(tidyverse)
 
 # Flag to disable CORS, set to FALSE when deploying
-disable_cors <- FALSE
-valid_origins <- c("https://app.gorilla.sc", "https://research.sc", "http://localhost:8080")
+enable_cors <- TRUE
+valid_remote_origins <- c("https://app.gorilla.sc", "https://research.sc")
 
 # Create a new application
-application <- Application$new()
+if (enable_cors) {
+  application <- Application$new(
+    middleware = list(CORSMiddleware$new())
+  )
+} else {
+  application <- Application$new()
+}
 
 # Configure the logger to use files
 if (dir.exists("logs") == FALSE) {
@@ -47,8 +53,8 @@ log_appender(appender_tee(
 # Start the server
 log_info("Starting server...", namespace = "server")
 
-if (disable_cors == TRUE) {
-  log_warn("CORS checking is disabled, this should be enabled when deployed", namespace = "server")
+if (enable_cors == FALSE) {
+  log_warn("CORS is disabled, origins will be restricted", namespace = "server")
 }
 
 # Load the full data
@@ -71,18 +77,25 @@ handler <- function(.req, .res) {
     valid_specification <- !is.na(participant_id)
 
     # Check the participantID is valid format using a Regex matching pattern
-    valid_format <- str_detect(participant_id, regex("[0-9]{4}", ignore_case = FALSE))
+    valid_format <-
+      str_detect(participant_id, regex("[0-9]{4}", ignore_case = FALSE))
 
     # Check the participantID contains the correct number of characters
     valid_length <- nchar(participant_id) == 4
 
     # Finalize the validation of the participantID
-    valid_id <- valid_specification == TRUE && valid_format == TRUE && valid_length == TRUE
+    valid_id <-
+      valid_specification == TRUE &&
+      valid_format == TRUE &&
+      valid_length == TRUE
   }
 
   # Reply with a HTTPError if any issues with participant ID
   if (valid_id == FALSE) {
-    log_error("Participant ID invalid or not specified", namespace = "server")
+    log_error(
+      "Participant ID invalid or not specified",
+      namespace = "server"
+    )
     raise(HTTPError$bad_request(body = "Invalid ID specified"))
   }
 
@@ -111,17 +124,32 @@ handler <- function(.req, .res) {
 
   # Reply with a HTTPError if any issues with participant responses
   if (valid_response == FALSE) {
-    log_error("\'participantResponses\' invalid or not specified", namespace = "server")
+    log_error(
+      "\'participantResponses\' invalid or not specified",
+      namespace = "server"
+    )
     raise(HTTPError$bad_request(body = "Invalid response format"))
   } else {
-    log_debug("Successfully parsed participant responses", namespace = "server")
+    log_debug(
+      "Successfully parsed participant responses",
+      namespace = "server"
+    )
   }
 
-  log_success("Valid request received", namespace = "server")
-  log_info("Computing for ID: {participant_id}", namespace = "participants")
+  log_success(
+    "Valid request received",
+    namespace = "server"
+  )
+  log_info(
+    "Computing for ID: {participant_id}",
+    namespace = "participants"
+  )
 
   # Run the matching function
-  log_debug("Running matching function...", namespace = "server")
+  log_debug(
+    "Running matching function...",
+    namespace = "server"
+  )
 
   computed <- list()
   tryCatch({
@@ -151,9 +179,13 @@ handler <- function(.req, .res) {
   # Generate file path
   file_path <- paste0("participants/", participant_id, "/")
   file_time <- as.character(round(as.numeric(as.POSIXct(Sys.time()))))
-  responses_file_name <- paste(participant_id, file_time, "responses.csv", sep = "_")
-  parameters_file_name <- paste(participant_id, file_time, "parameters.csv", sep = "_")
-  partner_file_name <- paste(participant_id, file_time, "partner.csv", sep = "_")
+
+  responses_file_name <-
+    paste(participant_id, file_time, "responses.csv", sep = "_")
+  parameters_file_name <-
+    paste(participant_id, file_time, "parameters.csv", sep = "_")
+  partner_file_name <-
+    paste(participant_id, file_time, "partner.csv", sep = "_")
 
   # Write the responses CSV file
   write.csv(
@@ -193,18 +225,28 @@ handler <- function(.req, .res) {
 
   # Get the request origin and update the response origin if it is valid
   request_origin <- as.character(.req$headers["origin"])
-  log_debug("Request origin: ", request_origin, namespace = "server")
-  if (disable_cors == FALSE) {
+  log_debug(
+    "Request origin: ", request_origin,
+    namespace = "server"
+  )
+
+  if (enable_cors == FALSE) {
     # If we are enforcing CORS, we have deployed the server and need to
     # check it is one of the two allowed origins
-    valid_origin <- match(request_origin, valid_origins)
+    valid_origin <- match(request_origin, valid_remote_origins)
 
     if (!is.na(valid_origin)) {
       # Update the header if a valid origin has been provided
-      log_debug("Request origin \'{request_origin}\' is valid", namespace = "server")
+      log_debug(
+        "Request origin \'{request_origin}\' is valid",
+        namespace = "server"
+      )
       .res$set_header("Access-Control-Allow-Origin", request_origin)
     } else {
-      log_warn("Request origin \'{request_origin}\' is not valid", namespace = "server")
+      log_warn(
+        "Request origin \'{request_origin}\' is not valid",
+        namespace = "server"
+      )
     }
   }
 
