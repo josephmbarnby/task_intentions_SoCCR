@@ -78,10 +78,10 @@ handler <- function(.req, .res) {
 
     # Check the participantID is valid format using a Regex matching pattern
     valid_format <-
-      str_detect(participant_id, regex("[0-9]{4}", ignore_case = FALSE))
+      str_detect(participant_id, regex("[0-9]{8}", ignore_case = FALSE))
 
     # Check the participantID contains the correct number of characters
-    valid_length <- nchar(participant_id) == 4
+    valid_length <- nchar(participant_id) == 8
 
     # Finalize the validation of the participantID
     valid_id <-

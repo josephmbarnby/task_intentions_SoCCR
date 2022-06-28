@@ -143,8 +143,8 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       }).values()[0].response.participantID;
 
       const validInputID =
-        inputData.length === 4 &&
-        /[0-9]{4}/.test(inputData);
+        inputData.length === 8 &&
+        /[0-9]{8}/.test(inputData);
 
       if (validInputID === true) {
         // Check first if a participant ID has been specified
@@ -157,9 +157,8 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         experiment.getState().set("participantID", givenID);
       } else {
         // If no custom participant ID has been specified, generate our own
-        // using ID protocol `ppt_<timestamp>`
         consola.debug(`Generating custom participant ID...`);
-        experiment.getState().set("participantID", `5${performance.now().toString().slice(0, 3)}`);
+        experiment.getState().set("participantID", `0000${Math.round(performance.now() * experiment.random())}`);
         consola.info(
           `Generated participant ID:`,
           experiment.getState().get("participantID")
