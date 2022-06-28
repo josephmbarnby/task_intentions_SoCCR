@@ -54,8 +54,8 @@ for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
 if (experiment.getPlatform().valueOf() !== "gorilla") {
   timeline.push({
     type: "survey-html-form",
-    preamble: `<p>Please enter the participant ID (must be 8 digits).</p>`,
-    html: `<input name="participantID" type="text" /></br></br>`,
+    preamble: `<p>Please enter the participant LUID (8 digits).</p>`,
+    html: `<input name="participantID" type="text" required/></br></br>`,
   });
 }
 
