@@ -1,7 +1,6 @@
 const path = require("path");
 
-// Obfuscation library
-const WebpackObfuscator = require("webpack-obfuscator");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = () => {
   return {
@@ -12,6 +11,11 @@ module.exports = () => {
       index: "./src/index.tsx",
     },
     devtool: "inline-source-map",
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: "Intentions Game",
+      }),
+    ],
     module: {
       rules: [
         {
@@ -58,14 +62,6 @@ module.exports = () => {
         },
       ],
     },
-    plugins: [
-      new WebpackObfuscator(
-        {
-          rotateStringArray: true,
-        },
-        []
-      ),
-    ],
     resolve: {
       modules: [
         path.resolve(__dirname, "./"),

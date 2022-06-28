@@ -136,28 +136,34 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       return false;
     });
 
-    // Determine the ID of the participant
-    const hasInputID = jsPsych.data.get().filter({
-      trial_type: 'survey-html-form'
-    }).values().length > 0;
-
-    if (hasInputID === true) {
-      // Check first if a participant ID has been specified
-      const givenID =  jsPsych.data.get().filter({
+    if (experiment.getState().get("participantID") === "default") {
+      // Determine the ID of the participant
+      const inputData = jsPsych.data.get().filter({
         trial_type: 'survey-html-form'
-      }).values()[0].response?.participantID;
+      }).values()[0].response.participantID;
 
-      // Update the participant ID
-      experiment.getState().set("participantID", givenID);
-    } else if (experiment.getState().get("participantID") === "default") {
-      // If no custom participant ID has been specified, generate our own
-      // using ID protocol `ppt_<timestamp>`
-      consola.debug(`Generating custom participant ID...`);
-      experiment.getState().set("participantID", `5${Date.now().toString().slice(0, 3)}`);
-      consola.debug(
-        `Generated participant ID:`,
-        experiment.getState().get("participantID")
-      );
+      const validInputID =
+        inputData.length === 8 &&
+        /[0-9]{8}/.test(inputData);
+
+      if (validInputID === true) {
+        // Check first if a participant ID has been specified
+        const givenID = jsPsych.data.get().filter({
+          trial_type: 'survey-html-form'
+        }).values()[0].response?.participantID;
+
+        // Update the participant ID
+        consola.info("Using given ID:", givenID);
+        experiment.getState().set("participantID", givenID);
+      } else {
+        // If no custom participant ID has been specified, generate our own
+        consola.debug(`Generating custom participant ID...`);
+        experiment.getState().set("participantID", `0000${Math.round(performance.now() * experiment.random())}`);
+        consola.info(
+          `Generated participant ID:`,
+          experiment.getState().get("participantID")
+        );
+      }
     }
 
     const startTime = performance.now();
