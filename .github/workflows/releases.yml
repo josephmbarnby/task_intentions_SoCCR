@@ -19,13 +19,13 @@ jobs:
       - name: Install 🚦
         run: yarn
       - name: Build 🔨
-        run: yarn build
+        run: cd client && yarn build:client
       - name: Package 📦
-        run: yarn pack
+        run: cd client && yarn pack
       - name: Release 🎉
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
           files: |
-            *.tgz
+            ./client/**/*.tgz
