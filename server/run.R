@@ -13,9 +13,7 @@ valid_remote_origins <- c("https://app.gorilla.sc", "https://research.sc")
 
 # Create a new application
 if (enable_cors) {
-  application <- Application$new(
-    middleware = list(CORSMiddleware$new())
-  )
+  application <- Application$new(middleware = list(CORSMiddleware$new()))
 } else {
   application <- Application$new()
 }
