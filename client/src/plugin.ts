@@ -136,7 +136,7 @@ jsPsych.plugins[Configuration.studyName] = (() => {
       return false;
     });
 
-    if (experiment.getState().get("participantID") === "default") {
+    if (Configuration.manipulations.requireID === true) {
       // Determine the ID of the participant
       const inputData = jsPsych.data.get().filter({
         trial_type: 'survey-html-form'
@@ -155,15 +155,16 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         // Update the participant ID
         consola.info("Using given ID:", givenID);
         experiment.getState().set("participantID", givenID);
-      } else {
-        // If no custom participant ID has been specified, generate our own
-        consola.debug(`Generating custom participant ID...`);
-        experiment.getState().set("participantID", `0000${Math.round(performance.now() * experiment.random())}`);
-        consola.info(
-          `Generated participant ID:`,
-          experiment.getState().get("participantID")
-        );
       }
+    } else {
+      // If no custom participant ID has been required, generate our own
+      // to ensure the system works
+      consola.debug(`Generating custom participant ID...`);
+      experiment.getState().set("participantID", `0000${Math.round(performance.now() * experiment.random())}`);
+      consola.info(
+        `Generated participant ID:`,
+        experiment.getState().get("participantID")
+      );
     }
 
     const startTime = performance.now();
