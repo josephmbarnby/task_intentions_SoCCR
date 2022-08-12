@@ -153,18 +153,25 @@ jsPsych.plugins[Configuration.studyName] = (() => {
         }).values()[0].response?.participantID;
 
         // Update the participant ID
-        consola.info("Using given ID:", givenID);
+        consola.debug("Using given ID:", givenID);
         experiment.getState().set("participantID", givenID);
       }
     } else {
       // If no custom participant ID has been required, generate our own
       // to ensure the system works
-      consola.debug(`Generating custom participant ID...`);
-      experiment.getState().set("participantID", `0000${Math.round(performance.now() * experiment.random())}`);
-      consola.info(
-        `Generated participant ID:`,
-        experiment.getState().get("participantID")
-      );
+      if (experiment.getState().get("participantID") === "default") {
+        consola.debug(`Generating custom participant ID...`);
+        experiment.getState().set("participantID", `7000${Math.round(performance.now() * experiment.random())}`.slice(0, 8));
+        consola.debug(
+          `Generated participant ID:`,
+          experiment.getState().get("participantID")
+        );
+      } else {
+        consola.debug(
+          `Using participant ID:`,
+          experiment.getState().get("participantID")
+        );
+      }
     }
 
     const startTime = performance.now();
