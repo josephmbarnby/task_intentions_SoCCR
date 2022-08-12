@@ -23,6 +23,7 @@ export const Configuration = {
   // Manipulations that are configured in Gorilla
   manipulations: {
     partner: "default",
+    requireID: true,
   },
 
   // Collection of any stimuli used in the trials

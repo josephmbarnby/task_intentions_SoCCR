@@ -51,10 +51,10 @@ for (let i = 0; i < Configuration.avatars.names.partner.length; i++) {
   Configuration.avatars.names.partner[i] = `${partner} ${performance.now()}`;
 }
 
-if (experiment.getPlatform().valueOf() !== "gorilla") {
+if (Configuration.manipulations.requireID === true) {
   timeline.push({
     type: "survey-html-form",
-    preamble: `<p>Please enter the participant LUID (8 digits).</p>`,
+    preamble: `<p>Please enter your 8 digit participant ID.</p>`,
     html: `<input name="participantID" type="text" required/></br></br>`,
   });
 }
