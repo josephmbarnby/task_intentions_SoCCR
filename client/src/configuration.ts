@@ -58,7 +58,7 @@ export const Configuration = {
   endpoint:
     process.env.NODE_ENV === "development"
       ? "http://localhost:8123/task/intentions"
-      : "https://ccdresearch.wustl.edu/task/intentions",
+      : "https://soccrlab.co.uk/task/intentions",
 
   // Avatar configuration details, including colours and names
   avatars: {

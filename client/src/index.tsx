@@ -93,7 +93,7 @@ const phaseOneInstructions = [
           number of points you each managed to accumulate while playing. If you
           earn over 1000 points in total across all three stages, you will
           automatically be placed into a lottery for your chance to win an extra
-          $20.
+          £20.
         </Paragraph>
       </Box>
     </Grommet>
